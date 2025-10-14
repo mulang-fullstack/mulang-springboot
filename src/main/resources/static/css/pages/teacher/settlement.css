@@ -1,0 +1,153 @@
+@charset "UTF-8";
+
+/* -------------------- 기본 -------------------- */
+body {
+    display: block;
+    width: 100%;
+    margin: 0;
+    padding: 0;
+
+    background-color: var(--bg-white);
+    font-family: "Noto Sans KR", sans-serif;
+    color: var(--text-primary);
+}
+
+/* -------------------- 메인 -------------------- */
+.main {
+    display: flex;
+    justify-content: center;
+    padding: 60px 80px;
+    background-color: var(--bg-white);
+}
+
+/* -------------------- 대시보드 -------------------- */
+.dashboard {
+    display: flex;
+    width: 1280px;
+    gap: 60px;
+    align-items: flex-start;
+}
+
+/* -------------------- 콘텐츠 -------------------- */
+.content {
+    flex: 1;
+    background-color: var(--bg-white);
+}
+
+.content h2 {
+    font-size: 24px;
+    font-weight: 700;
+    margin-bottom: 30px;
+    color: var(--text-primary);
+}
+
+/* -------------------- 정산 요약 -------------------- */
+.settlement-summary {
+    display: flex;
+    gap: 40px;
+    margin-bottom: 25px;
+}
+
+.summary-box {
+    flex: 1;
+    border: var(--border-default);
+    border-radius: 12px;
+    padding: 20px 30px;
+    background-color: var(--bg-white);
+}
+
+.summary-box h3 {
+    font-size: 15px;
+    font-weight: 600;
+    color: var(--text-secondary);
+    margin-bottom: 12px;
+}
+
+.summary-box .amount {
+    font-size: 22px;
+    font-weight: 700;
+    color: var(--text-primary);
+}
+
+.summary-box .amount span {
+    font-size: 14px;
+    font-weight: 400;
+    color: var(--text-subtle);
+    margin-left: 6px;
+}
+
+/* -------------------- 액션 영역 -------------------- */
+.action-bar {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 20px;
+}
+
+.apply-btn,
+.pending-btn {
+    border: var(--border-default);
+    border-radius: 8px;
+    background-color: var(--bg-secondary);
+    color: var(--text-muted);
+    font-size: 14px;
+    font-weight: 500;
+    padding: 10px 20px;
+    cursor: not-allowed;
+}
+
+/* -------------------- 안내 박스 -------------------- */
+.tip-box {
+    background-color: var(--bg-secondary);
+    border-radius: 8px;
+    padding: 14px 20px;
+    margin-bottom: 20px;
+}
+
+.tip-box p {
+    font-size: 14px;
+    color: var(--text-secondary);
+}
+
+.tip-box a {
+    color: var(--text-point-main);
+    font-weight: 600;
+    text-decoration: none;
+}
+
+.tip-box a:hover {
+    text-decoration: underline;
+}
+
+/* -------------------- 테이블 -------------------- */
+.settlement-table {
+    width: 100%;
+    border-top: 2px solid var(--text-point-main);
+    background-color: var(--bg-white);
+    margin-bottom: 30px;
+}
+
+/*   신청서번호 / 정산 상태 / 클래스명 / 정산 대상 금액 */
+.table-header {
+    display: grid;
+    grid-template-columns: 180px 180px 1fr 180px;
+    align-items: center;
+    padding: 14px 20px;
+
+    font-size: 15px;
+    font-weight: 600;
+    color: var(--text-secondary);
+
+    border-bottom: var(--border-default);
+    background-color: var(--bg-white);
+}
+
+.table-header span {
+    text-align: left;
+}
+
+.table-body {
+    padding: 60px 0;
+    text-align: center;
+    color: var(--text-muted);
+    font-size: 15px;
+}
