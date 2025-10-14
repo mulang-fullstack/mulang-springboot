@@ -1,0 +1,117 @@
+/* -------------------- 기본 -------------------- */
+body {
+    display: block;
+    width: 100%;
+    margin: 0;
+    padding: 0;
+
+    background-color: var(--bg-white);
+    font-family: "Noto Sans KR", sans-serif;
+    color: var(--text-primary);
+}
+
+/* -------------------- 메인 -------------------- */
+.main {
+    display: flex;
+    justify-content: center;
+    padding: 60px 80px;
+    background-color: var(--bg-white);
+}
+
+/* -------------------- 대시보드 -------------------- */
+.dashboard {
+    display: flex;
+    width: 1280px;
+    gap: 60px;
+}
+
+/* -------------------- 콘텐츠 -------------------- */
+.content {
+    flex: 1;
+    background-color: var(--bg-white);
+}
+
+.content h2 {
+    font-size: 24px;
+    font-weight: 700;
+    margin-bottom: 30px;
+    color: var(--text-primary);
+}
+
+/* -------------------- 클래스 테이블 -------------------- */
+.class-table {
+    width: 100%;
+    border-top: 2px solid var(--text-point-main);
+    border-collapse: collapse;
+    margin-top: 10px;
+    background-color: var(--bg-white);
+}
+
+/* -------------------- 테이블 헤더 -------------------- */
+.table-header {
+    display: grid;
+    grid-template-columns: 180px 1fr 120px 120px 120px;
+    padding: 15px 20px;
+
+    font-size: 15px;
+    font-weight: 600;
+    color: var(--text-secondary);
+
+    border-bottom: var(--border-default);
+    background-color: var(--bg-white);
+}
+
+/* -------------------- 테이블 바디 -------------------- */
+.table-body {
+    display: flex;
+    flex-direction: column;
+}
+
+.table-row {
+    display: grid;
+    grid-template-columns: 180px 1fr 120px 120px 120px;
+    align-items: center;
+    padding: 18px 20px;
+
+    font-size: 15px;
+    color: var(--text-primary);
+
+    border-bottom: 1px solid #efefef;
+    background-color: var(--bg-white);
+}
+
+/* -------------------- 썸네일 -------------------- */
+.thumb {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-right: 20px;
+}
+
+.thumb img {
+    width: 160px;
+    height: 90px;
+    border-radius: 6px;
+    object-fit: cover;
+}
+
+/* -------------------- 제목 -------------------- */
+.title {
+    font-size: 15px;
+    padding-left: 20px;
+    color: var(--text-primary);
+}
+
+/* -------------------- 태그 -------------------- */
+.tag {
+    display: inline-block;
+    font-size: 13px;
+    font-weight: 500;
+    padding: 4px 10px;
+    border-radius: 16px;
+}
+
+.tag.gray {
+    background-color: var(--bg-secondary);
+    color: var(--text-subtle);
+}

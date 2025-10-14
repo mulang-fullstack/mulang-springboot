@@ -1,0 +1,198 @@
+/* -------------------- 기본 -------------------- */
+body {
+    display: block;
+    width: 100%;
+    margin: 0;
+    padding: 0;
+
+    background-color: var(--bg-white);
+    font-family: "Noto Sans KR", sans-serif;
+    color: var(--text-primary);
+}
+
+/* -------------------- 메인 -------------------- */
+.main {
+    display: flex;
+    justify-content: center;
+    padding: 60px 80px;
+    background-color: var(--bg-white);
+}
+
+/* -------------------- 대시보드 -------------------- */
+.dashboard {
+    display: flex;
+    width: 1280px;
+    gap: 60px;
+}
+
+/* -------------------- 사이드바 -------------------- */
+.sidebar {
+    flex-shrink: 0;
+    margin-top: 40px; /* 마이페이지 기준 상단 여백 보정 */
+}
+
+/* -------------------- 콘텐츠 -------------------- */
+.content {
+    flex: 1;
+    background-color: var(--bg-white);
+}
+
+.content h2 {
+    font-size: 24px;
+    font-weight: 700;
+    margin-bottom: 30px;
+    color: var(--text-primary);
+}
+
+/* -------------------- 프로필 섹션 -------------------- */
+.profile-section {
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+}
+
+/* -------------------- 필드 -------------------- */
+.field {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding-bottom: 20px;
+    border-bottom: var(--border-default);
+}
+
+.field label {
+    width: 160px;
+    font-size: 15px;
+    font-weight: 600;
+    color: var(--text-secondary);
+}
+
+.field-content {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+/* -------------------- 프로필 이미지 -------------------- */
+.profile-img-wrap {
+    position: relative;
+    width: 100px;
+    height: 100px;
+}
+
+.profile-img-wrap img {
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+.camera-btn {
+    position: absolute;
+    bottom: 5px;
+    right: 5px;
+    width: 32px;
+    height: 32px;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    border: var(--border-default);
+    border-radius: 50%;
+    background: var(--bg-white);
+    cursor: pointer;
+    transition: background 0.2s ease;
+    overflow: hidden;
+}
+
+.camera-btn img {
+    width: 16px;
+    height: 16px;
+    object-fit: contain;
+}
+
+.camera-btn:hover {
+    background: var(--bg-secondary);
+}
+
+/* -------------------- 입력 박스 -------------------- */
+.input-wrap {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex: 1;
+    max-width: 600px;
+}
+
+input,
+textarea {
+    flex: 1;
+    padding: 10px 12px;
+    border: var(--border-default);
+    border-radius: 8px;
+    font-size: 14px;
+    color: var(--text-primary);
+    background-color: var(--bg-white);
+    resize: none;
+}
+
+.check-icon {
+    color: var(--text-point-main);
+    font-weight: 700;
+    font-size: 16px;
+}
+
+/* -------------------- 수정 버튼 -------------------- */
+.edit-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 6px 10px;
+    border: var(--border-default);
+    border-radius: 20px;
+    background: var(--bg-white);
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--text-point-main);
+    cursor: pointer;
+    transition: background 0.2s ease;
+}
+
+.edit-btn:hover {
+    background: var(--bg-secondary);
+}
+
+/* -------------------- 일반 버튼 -------------------- */
+.add-btn {
+    padding: 8px 14px;
+    border: var(--border-default);
+    border-radius: 8px;
+    background: var(--bg-white);
+    color: var(--text-tertiary);
+    font-size: 14px;
+    cursor: pointer;
+    transition: background 0.2s ease;
+}
+
+.add-btn:hover {
+    background: var(--bg-secondary);
+}
+
+/* -------------------- 소셜 미디어 -------------------- */
+.social-icons {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.icon-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.icon-item img {
+    width: 24px;
+    height: 24px;
+}
