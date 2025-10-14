@@ -1,0 +1,128 @@
+/* FOOTER */
+footer {
+    width: 100%;
+    border-top: var(--border-default);
+    padding: 40px 0 20px;
+    margin-top: 80px;
+}
+
+footer .footer-inner {
+    max-width: 1280px;
+    width: 90%;
+    margin: 0 auto;
+    position: relative;
+}
+
+/* 상단 네비게이션 */
+.footer-nav {
+    display: flex;
+    gap: 24px;
+    padding-bottom: 12px;
+    border-bottom: var(--border-default);
+    margin-bottom: 24px;
+}
+
+.footer-nav a {
+    color: var(--text-subtle);
+    text-decoration: none;
+    font-size: 14px;
+    transition: color 0.2s ease;
+}
+
+.footer-nav a:hover {
+    color: var(--bg-point-hover);
+}
+
+/* 회사 정보 */
+.footer-content {
+    display: flex;
+    gap: 32px;
+    align-items: flex-start;
+    margin-bottom: 24px;
+}
+
+.footer-logo img {
+    height: 50px;
+}
+
+.footer-info {
+    flex: 1;
+}
+
+.footer-info p {
+    margin: 0;
+    padding: 4px 0;
+    color: var(--text-muted);
+    font-size: 13px;
+    line-height: 1.6;
+}
+
+/* 저작권 */
+.footer-copyright {
+    padding-top: 20px;
+    border-top: var(--border-default);
+}
+
+.footer-copyright p {
+    margin: 0;
+    color: var(--text-muted);
+    font-size: 12px;
+}
+
+/* TOP 버튼 */
+.btn-top {
+    position: absolute;
+    top: 40px;
+    right: 0;
+    background: var(--bg-white);
+    padding: 12px 20px;
+    cursor: pointer;
+    font-size: 13px;
+    transition: all 0.2s ease;
+    border-radius: 4px;
+}
+
+.btn-top:hover {
+    background: var(--bg-white-hover);
+    border-color: var(--border-default);
+}
+
+/* 모바일 반응형 */
+@media screen and (max-width: 760px) {
+    footer {
+        padding: 30px 0 20px;
+        margin-top: 60px;
+    }
+
+    .footer-nav {
+        flex-wrap: wrap;
+        gap: 12px 16px;
+    }
+
+    .footer-nav a {
+        font-size: 13px;
+    }
+
+    .footer-content {
+        flex-direction: column;
+        gap: 16px;
+    }
+
+    .footer-logo img {
+        height: 40px;
+    }
+
+    .footer-info p {
+        font-size: 12px;
+    }
+
+    .btn-top {
+        position: fixed;
+        top: auto;
+        bottom: 20px;
+        right: 20px;
+        z-index: 100;
+        padding: 10px 16px;
+        box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+    }
+}
