@@ -1,23 +1,3 @@
-/* -------------------- 기본 -------------------- */
-body {
-    display: block;
-    width: 100%;
-    margin: 0;
-    padding: 0;
-
-    background-color: var(--bg-white);
-    font-family: "Noto Sans KR", sans-serif;
-    color: var(--text-primary);
-}
-
-/* -------------------- 메인 -------------------- */
-.main {
-    display: flex;
-    justify-content: center;
-    padding: 60px 80px;
-    background-color: var(--bg-white);
-}
-
 /* -------------------- 대시보드 -------------------- */
 .dashboard {
     display: flex;
@@ -32,18 +12,18 @@ body {
 }
 
 .content h2 {
+    margin-bottom: 0;
     font-size: 24px;
     font-weight: 700;
-    margin-bottom: 0px;
     color: var(--text-primary);
 }
 
 /* -------------------- 클래스 테이블 -------------------- */
 .class-table {
     width: 100%;
+    margin-top: 10px;
     border-top: 2px solid var(--text-point-main);
     border-collapse: collapse;
-    margin-top: 10px;
     background-color: var(--bg-white);
 }
 
@@ -52,13 +32,12 @@ body {
     display: grid;
     grid-template-columns: 180px 1fr 120px 120px 120px;
     padding: 15px 20px;
+    border-bottom: var(--border-default);
+    background-color: var(--bg-white);
 
     font-size: 15px;
     font-weight: 600;
     color: var(--text-secondary);
-
-    border-bottom: var(--border-default);
-    background-color: var(--bg-white);
 }
 
 /* -------------------- 테이블 바디 -------------------- */
@@ -72,19 +51,18 @@ body {
     grid-template-columns: 180px 1fr 120px 120px 120px;
     align-items: center;
     padding: 18px 20px;
+    border-bottom: 1px solid var(--bg-overlay);
+    background-color: var(--bg-white);
 
     font-size: 15px;
     color: var(--text-primary);
-
-    border-bottom: 1px solid #efefef;
-    background-color: var(--bg-white);
 }
 
 /* -------------------- 썸네일 -------------------- */
 .thumb {
     display: flex;
-    align-items: center;
     justify-content: center;
+    align-items: center;
     margin-right: 20px;
 }
 
@@ -97,16 +75,17 @@ body {
 
 /* -------------------- 제목 -------------------- */
 .title {
-    font-size: 15px;
     padding-left: 20px;
+    font-size: 15px;
     color: var(--text-primary);
 }
+
 /* -------------------- 제목 + 버튼 -------------------- */
 .title-wrap {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-bottom: 0px;
+    margin-bottom: 0;
 }
 
 .create-class-btn {
@@ -114,7 +93,7 @@ body {
     align-items: center;
     gap: 6px;
     padding: 8px 16px;
-    border: 1px solid var(--border-primary);
+    border: var(--border-default);
     border-radius: 8px;
     background: var(--bg-white);
     color: var(--text-primary);
@@ -125,9 +104,9 @@ body {
 }
 
 .create-class-btn .plus {
-    color: var(--text-primary);
     font-size: 18px;
     font-weight: 600;
+    color: var(--text-black);
 }
 
 .create-class-btn:hover {
@@ -138,10 +117,10 @@ body {
 /* -------------------- 태그 -------------------- */
 .tag {
     display: inline-block;
-    font-size: 13px;
-    font-weight: 500;
     padding: 4px 10px;
     border-radius: 16px;
+    font-size: 13px;
+    font-weight: 500;
 }
 
 .tag.gray {
