@@ -1,47 +1,23 @@
-/* -------------------- 기본 -------------------- */
-body {
-    display: block;
-    width: 100%;
-    margin: 0;
-    padding: 0;
-
-    background-color: var(--bg-white);
-    font-family: "Noto Sans KR", sans-serif;
-    color: var(--text-primary);
-}
-
-/* -------------------- 메인 -------------------- */
-.main {
+.mypage {
     display: flex;
-    justify-content: center;
-    padding: 60px 80px;
-    background-color: var(--bg-white);
-}
-
-/* -------------------- 대시보드 -------------------- */
-.dashboard {
-    display: flex;
-    width: 1280px;
     gap: 60px;
+    align-items: flex-start;
 }
 
-/* -------------------- 사이드바 -------------------- */
-.sidebar {
-    flex-shrink: 0;
-    margin-top: 40px;
-}
-
-/* -------------------- 콘텐츠 -------------------- */
 .content {
     flex: 1;
-    background-color: var(--bg-white);
+    background: #fff;
+    border: 1px solid #e0e0e0;
+    border-radius: 10px;
+    padding: 40px 60px;
+    box-sizing: border-box;
 }
 
 .content h2 {
-    font-size: 24px;
+    font-size: 28px;
     font-weight: 700;
-    margin-bottom: 30px;
-    color: var(--text-primary);
+    margin-bottom: 40px;
+    color: #1a1a1a;
 }
 
 /* -------------------- 프로필 섹션 -------------------- */

@@ -1,44 +1,23 @@
-@charset "UTF-8";
-
-/* -------------------- 기본 -------------------- */
-body {
-    display: block;
-    width: 100%;
-    margin: 0;
-    padding: 0;
-
-    background-color: var(--bg-white);
-    font-family: "Noto Sans KR", sans-serif;
-    color: var(--text-primary);
-}
-
-/* -------------------- 메인 -------------------- */
-.main {
+.mypage {
     display: flex;
-    justify-content: center;
-    padding: 60px 80px;
-    background-color: var(--bg-white);
-}
-
-/* -------------------- 대시보드 -------------------- */
-.dashboard {
-    display: flex;
-    width: 1280px;
     gap: 60px;
     align-items: flex-start;
 }
 
-/* -------------------- 콘텐츠 -------------------- */
 .content {
     flex: 1;
-    background-color: var(--bg-white);
+    background: #fff;
+    border: 1px solid #e0e0e0;
+    border-radius: 10px;
+    padding: 40px 60px;
+    box-sizing: border-box;
 }
 
 .content h2 {
-    font-size: 24px;
+    font-size: 28px;
     font-weight: 700;
-    margin-bottom: 30px;
-    color: var(--text-primary);
+    margin-bottom: 40px;
+    color: #1a1a1a;
 }
 
 /* -------------------- 정산 요약 -------------------- */
@@ -101,6 +80,7 @@ body {
 }
 
 /* -------------------- 테이블 -------------------- */
+/* ✅ 테이블 전체 영역 */
 .settlement-table {
     width: 100%;
     border-top: 2px solid var(--text-point-main);
@@ -108,17 +88,20 @@ body {
     margin-bottom: 30px;
 }
 
-/*   신청서번호 / 정산 상태 / 클래스명 / 정산 대상 금액 */
-.table-header {
+/* ✅ 헤더와 데이터 행 공통 그리드 구조 */
+.table-header,
+.table-row {
     display: grid;
-    grid-template-columns: 180px 180px 1fr 180px;
+    grid-template-columns: 1fr 1fr 2fr 1fr;
     align-items: center;
     padding: 14px 20px;
+}
 
+/* ✅ 헤더 전용 스타일 */
+.table-header {
     font-size: 15px;
     font-weight: 600;
     color: var(--text-secondary);
-
     border-bottom: var(--border-default);
     background-color: var(--bg-white);
 }
@@ -127,9 +110,26 @@ body {
     text-align: left;
 }
 
+/* ✅ 데이터 영역 */
 .table-body {
-    padding: 60px 0;
-    text-align: center;
+    display: flex;
+    flex-direction: column;
+    border-top: 1px solid #ddd;
     color: var(--text-muted);
     font-size: 15px;
+    /* padding 제거 또는 최소화 */
+    padding: 0;
+}
+
+.table-row {
+    border-bottom: 1px solid #eee;
+}
+
+.table-row span {
+    font-size: 15px;
+    color: #333;
+}
+
+.table-row:nth-child(even) {
+    background-color: #fafafa;
 }

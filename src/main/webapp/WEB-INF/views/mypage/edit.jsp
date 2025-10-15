@@ -17,9 +17,10 @@
 
 <%@include file="../common/header.jsp" %>
 
-<main class="main">
-    <section class="dashboard">
-        <%@include file="sidebar.jsp" %>
+<main>
+    <div class="contents">
+        <section class="mypage">
+            <%@include file="sidebar.jsp" %>
 
         <section class="content">
             <div class="profile-main">
@@ -40,7 +41,7 @@
                         <label>프로필 이미지</label>
                         <div class="field-content">
                             <div class="profile-img-wrap">
-                                <img src="https://placehold.co/120x120" alt="프로필 이미지">
+                                <img src="/img/dummy/profile.jpg" alt="프로필 이미지">
                             </div>
                             <button type="button" class="camera-btn">
                                 <img src="/img/icon/bx-camera.svg" alt="사진 변경">
@@ -85,6 +86,7 @@
             </div>
         </section>
     </section>
+    </div>
 </main>
 <%@include file="../common/footer.jsp" %>
 </body>

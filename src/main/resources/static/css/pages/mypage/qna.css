@@ -20,7 +20,6 @@
     color: #1a1a1a;
 }
 
-
 /* -------------------- 탭 메뉴 -------------------- */
 .tab-menu {
     display: flex;
@@ -54,7 +53,8 @@
     height: 2px;
     background-color: var(--text-point-main);
 }
-.apply-btn{
+
+.apply-btn {
     border: var(--border-default);
     border-radius: 8px;
     background-color: var(--bg-secondary);
@@ -100,8 +100,8 @@
     color: var(--text-primary);
 }
 
-/* -------------------- 리뷰 목록 -------------------- */
-.review-list {
+/* -------------------- Q&A 리스트 -------------------- */
+.qna-list {
     border-top: 2px solid var(--text-point-main);
     background-color: var(--bg-white);
     min-height: 300px;
@@ -109,7 +109,7 @@
     text-align: center;
 }
 
-.review-list .empty {
+.qna-list .empty {
     color: var(--text-muted);
     font-size: 15px;
 }
@@ -138,7 +138,7 @@
 }
 
 /* -------------------- 공백 및 일관성 -------------------- */
-.review-list,
+.qna-list,
 .tab-menu,
 .filter-bar,
 .pagination {
