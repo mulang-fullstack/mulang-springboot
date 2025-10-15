@@ -9,7 +9,7 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <link rel="icon" href="img/favicon.svg" type="image/png">
     <link rel="stylesheet" href="css/global.css"/>
-    <link rel="stylesheet" href="css/pages/lecture-list.css"/>
+    <link rel="stylesheet" href="css/pages/lecture/lecture-list.css"/>
     <title>Mulang?</title>
 </head>
 <body>
@@ -32,7 +32,7 @@
             <div class="search-box">
                 <!-- 검색박스 내부 요소들 -->
                 <div class="search-input">
-                    <input type="text"><button><img src="/img/search-icon.svg" alt="검색 아이콘"></button>
+                    <input type="text"><button><img src="/img/icon/search-icon.svg" alt="검색 아이콘"></button>
                 </div>
                 <div class="search-icon"></div>
             </div>
@@ -53,18 +53,16 @@
                 <div class="rating">
                     <span class="score">4.7</span>
                     <span class="stars">
-                        <img src="/img/star-full.svg" alt="별">
-                        <img src="/img/star-full.svg" alt="별">
-                        <img src="/img/star-full.svg" alt="별">
-                        <img src="/img/star-full.svg" alt="별">
-                        <img src="/img/star-half.svg" alt="별 반개">
+                        <img src="/img/icon/star-full.svg" alt="별">
+                        <img src="/img/icon/star-full.svg" alt="별">
+                        <img src="/img/icon/star-full.svg" alt="별">
+                        <img src="/img/icon/star-full.svg" alt="별">
+                        <img src="/img/icon/star-half.svg" alt="별 반개">
                     </span>
                     <span class="review-count">(1000)</span>
                 </div>
-                <div class="heart-icon">
-                    <img src="/img/heart-full.svg" alt="찜 아이콘">
-                </div>
-                <div class="price-box">
+                <button class="heart-icon"><img src="/img/icon/heart-full.svg" alt="찜 아이콘"></button>
+                <div class="lecture-purchase">
                     <span class="price">155,000원</span>
                     <button class="purchase-btn">결제하기</button>
                 </div>
@@ -77,18 +75,18 @@
                 <div class="rating">
                     <span class="score">4.0</span>
                     <span class="stars">
-                        <img src="/img/star-full.svg" alt="별">
-                        <img src="/img/star-full.svg" alt="별">
-                        <img src="/img/star-full.svg" alt="별">
-                        <img src="/img/star-full.svg" alt="별">
-                        <img src="/img/star-empty.svg" alt="별 반개">
+                        <img src="/img/icon/star-full.svg" alt="별">
+                        <img src="/img/icon/star-full.svg" alt="별">
+                        <img src="/img/icon/star-full.svg" alt="별">
+                        <img src="/img/icon/star-full.svg" alt="별">
+                        <img src="/img/icon/star-empty.svg" alt="별 반개">
                     </span>
                     <span class="review-count">(1000)</span>
                 </div>
                 <div class="heart-icon">
-                    <img src="/img/heart.svg" alt="찜 아이콘">
+                    <img src="/img/icon/heart.svg" alt="찜 아이콘">
                 </div>
-                <div class="price-box">
+                <div class="lecture-purchase">
                     <span class="price">155,000원</span>
                     <button class="purchase-btn">결제하기</button>
                 </div>
@@ -101,18 +99,18 @@
                 <div class="rating">
                     <span class="score">4.8</span>
                     <span class="stars">
-                        <img src="/img/star-full.svg" alt="별">
-                        <img src="/img/star-full.svg" alt="별">
-                        <img src="/img/star-full.svg" alt="별">
-                        <img src="/img/star-full.svg" alt="별">
-                        <img src="/img/star-full.svg" alt="별">
+                        <img src="/img/icon/star-full.svg" alt="별">
+                        <img src="/img/icon/star-full.svg" alt="별">
+                        <img src="/img/icon/star-full.svg" alt="별">
+                        <img src="/img/icon/star-full.svg" alt="별">
+                        <img src="/img/icon/star-full.svg" alt="별">
                     </span>
                     <span class="review-count">(1000)</span>
                 </div>
                 <div class="heart-icon">
-                    <img src="/img/heart.svg" alt="찜 아이콘">
+                    <img src="/img/icon/heart.svg" alt="찜 아이콘">
                 </div>
-                <div class="price-box">
+                <div class="lecture-purchase">
                     <span class="price">120,000원</span>
                     <button class="purchase-btn">결제하기</button>
                 </div>
@@ -125,18 +123,18 @@
                 <div class="rating">
                     <span class="score">4.8</span>
                     <span class="stars">
-                        <img src="/img/star-full.svg" alt="별">
-                        <img src="/img/star-full.svg" alt="별">
-                        <img src="/img/star-full.svg" alt="별">
-                        <img src="/img/star-full.svg" alt="별">
-                        <img src="/img/star-full.svg" alt="별">
+                        <img src="/img/icon/star-full.svg" alt="별">
+                        <img src="/img/icon/star-full.svg" alt="별">
+                        <img src="/img/icon/star-full.svg" alt="별">
+                        <img src="/img/icon/star-full.svg" alt="별">
+                        <img src="/img/icon/star-full.svg" alt="별">
                     </span>
                     <span class="review-count">(1000)</span>
                 </div>
                 <div class="heart-icon">
-                    <img src="/img/heart.svg" alt="찜 아이콘">
+                    <img src="/img/icon/heart.svg" alt="찜 아이콘">
                 </div>
-                <div class="price-box">
+                <div class="lecture-purchase">
                     <span class="price">80,000원</span>
                     <button class="purchase-btn">결제하기</button>
                 </div>
@@ -145,11 +143,11 @@
 
         <!-- 페이지네이션 -->
         <section class="pagination">
-            <button class="prev"><img src="/img/left-page.svg" alt="왼쪽 아이콘"></button>
+            <button class="prev"><img src="/img/icon/left-page.svg" alt="왼쪽 아이콘"></button>
             <span class="page-numbers">
                 <span class="current">1</span><span>2</span><span>3</span><span>4</span><span>5</span>
             </span>
-            <button class="next"><img src="/img/right-page.svg" alt="오른쪽 아이콘"></button>
+            <button class="next"><img src="/img/icon/right-page.svg" alt="오른쪽 아이콘"></button>
         </section>
     </div>
 </main>
