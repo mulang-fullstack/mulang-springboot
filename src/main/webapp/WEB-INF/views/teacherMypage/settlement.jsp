@@ -9,7 +9,6 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <link rel="icon" href="/img/favicon.svg" type="image/png">
 
-    <!-- 공통 및 정산 전용 CSS -->
     <link rel="stylesheet" href="/css/global.css"/>
     <link rel="stylesheet" href="/css/pages/teacher/settlement.css"/>
 
