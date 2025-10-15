@@ -6,14 +6,15 @@
 <aside class="sidebar">
     <div class="profile">
         <div class="profile-img-wrap">
-            <img src="https://placehold.co/120x120" alt="프로필 이미지">
+            <img src="/img/dummy/teacher1.png" alt="프로필 이미지">
         </div>
         <h3 class="nickname">최윤서</h3>
     </div>
 
     <ul class="menu">
-        <li class="active"><a href="teacherMypage.do">클래스관리</a></li>
-        <li><a href="profile.do">프로필관리</a></li>
+        <li><a href="profile.do">강사프로필</a></li>
+        <li><a href="profileEdit.do">프로필관리</a></li>
+        <li ><a href="classEdit.do">클래스관리</a></li>
         <li><a href="review.do">리뷰</a></li>
         <li><a href="settlement.do">정산신청</a></li>
     </ul>
