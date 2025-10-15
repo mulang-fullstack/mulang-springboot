@@ -1,9 +1,7 @@
-
 <%@ page contentType="text/html;charset=utf-8" %>
 <%@ taglib prefix="c" uri="jakarta.tags.core" %>
-<meta charset="UTF-8">
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ko">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport"
@@ -11,8 +9,8 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <link rel="icon" href="img/favicon.svg" type="image/png">
 
-    <link rel="stylesheet" href="css/global.css"/>
-    <link rel="stylesheet" href="css/pages/teacher/mypage.css"/>
+    <link rel="stylesheet" href="/css/global.css"/>
+    <link rel="stylesheet" href="/css/pages/teacher/classEdit.css"/>
     <title>Mulang?</title>
 </head>
 <body>
@@ -25,7 +23,15 @@
         <%@include file="sidebar.jsp" %>
 
         <section class="content">
-            <h2>클래스 관리</h2>
+
+            <!-- 제목 + 버튼 -->
+            <div class="title-wrap">
+                <h2>클래스 관리</h2>
+                <a href="classUpload.do" class="create-class-btn">
+                    <span class="plus">+</span> 클래스 만들기
+                </a>
+            </div>
+
             <div class="class-table">
                 <div class="table-header">
                     <span>썸네일</span>
@@ -72,8 +78,6 @@
         </section>
     </section>
 </main>
-
 <%@include file="../common/footer.jsp" %>
-
 </body>
 </html>
