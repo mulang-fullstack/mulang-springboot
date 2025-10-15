@@ -75,7 +75,7 @@ header .header-inner {
 }
 
 .btn-login:hover {
-    background: var(--bg-point-hover, #f5f5f5);
+    color: var(--text-point-main);
 }
 
 .btn-join {

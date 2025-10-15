@@ -12,12 +12,12 @@
     <title>Mulang?</title>
 </head>
 <body>
-<%@include file="common/header.jsp" %>
+<%@include file="../common/header.jsp" %>
 <main>
     <div class="contents">
 
     </div>
 </main>
-<%@include file="common/footer.jsp" %>
+<%@include file="../common/footer.jsp" %>
 </body>
 </html>

@@ -21,12 +21,12 @@
     <div class="contents">
         <!-- 카테고리 버튼 영역 -->
         <section class="category-menu">
-            <a href="#"><img src="/img/icon/왕관.png"/>실시간 랭킹</a>
-            <a href="#"><img src="/img/icon/왕관.png"/>신규 클래스</a>
-            <a href="#"><img src="/img/icon/말하기.png"/>일상 회화</a>
-            <a href="#"><img src="/img/icon/하트책.png"/>자격증 시험</a>
-            <a href="#"><img src="/img/icon/그래프.png"/>레벨 테스트</a>
-            <a href="#"><img src="/img/icon/달력.png"/>학습 현황</a>
+            <a href="#"><img src="/img/icon/crown.png"/>실시간 랭킹</a>
+            <a href="#"><img src="/img/icon/lightning.png"/>신규 클래스</a>
+            <a href="#"><img src="/img/icon/talk.png"/>일상 회화</a>
+            <a href="#"><img src="/img/icon/hartbook.png"/>자격증 시험</a>
+            <a href="#"><img src="/img/icon/leveltest.png"/>레벨 테스트</a>
+            <a href="#"><img src="/img/icon/calendar.png"/>학습 현황</a>
         </section>
 
         <!-- BEST 인기 클래스 -->
