@@ -6,7 +6,7 @@
 <aside class="sidebar">
     <div class="profile">
         <div class="profile-img-wrap">
-            <img src="https://placehold.co/120x120" alt="프로필 이미지">
+            <img src="/img/dummy/profile.jpg" alt="프로필 이미지">
         </div>
         <h3 class="nickname">최윤서</h3>
     </div>

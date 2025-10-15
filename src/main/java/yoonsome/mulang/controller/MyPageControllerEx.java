@@ -31,4 +31,8 @@ public class MyPageControllerEx {
     public String edit(){
         return "mypage/edit";
     }
+    @GetMapping("qna")
+    public String qna(){
+        return "mypage/qna";
+    }
 }

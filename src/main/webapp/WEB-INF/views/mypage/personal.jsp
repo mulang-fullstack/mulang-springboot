@@ -1,4 +1,3 @@
-
 <%@ page contentType="text/html;charset=utf-8" %>
 <%@ taglib prefix="c" uri="jakarta.tags.core" %>
 <meta charset="UTF-8">
@@ -22,34 +21,34 @@
 <main>
     <div class="contents">
         <section class="mypage">
-        <jsp:include page="/WEB-INF/views/mypage/sidebar.jsp" />
+            <jsp:include page="/WEB-INF/views/mypage/sidebar.jsp" />
 
-        <!-- 메인 콘텐츠 -->
-        <section class="content">
-            <h2>개인정보</h2>
+            <!-- 메인 콘텐츠 -->
+            <section class="content">
+                <h2>개인정보</h2>
 
-            <div class="info-grid">
-                <div class="info-labels">
-                    <div>이름</div>
-                    <div>이메일</div>
-                    <div>생년월일</div>
-                    <div>전화번호</div>
-                    <div>비밀번호</div>
+                <div class="info-grid">
+                    <div class="info-labels">
+                        <div>이름</div>
+                        <div>이메일</div>
+                        <div>생년월일</div>
+                        <div>전화번호</div>
+                        <div>비밀번호</div>
+                    </div>
+                    <div class="info-values">
+                        <div>최윤서</div>
+                        <div>071112yoonseo@naver.com</div>
+                        <div>2007.11.12</div>
+                        <div>010-5849-0283</div>
+                        <div>************</div>
+                    </div>
                 </div>
-                <div class="info-values">
-                    <div>최윤서</div>
-                    <div>071112yoonseo@naver.com</div>
-                    <div>2007.11.12</div>
-                    <div>010-5849-0283</div>
-                    <div>************</div>
-                </div>
-            </div>
+            </section>
         </section>
-    </section>
-    </div>
-</main>
+        </div>
+    </main>
 
-<%@include file="../common/footer.jsp" %>
+    <%@include file="../common/footer.jsp" %>
 
-</body>
-</html>
+    </body>
+    </html>
