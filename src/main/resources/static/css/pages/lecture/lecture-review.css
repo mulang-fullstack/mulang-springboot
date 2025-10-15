@@ -1,0 +1,29 @@
+/* ===============================
+   📦 lecture-detail.css
+   작성 순서: 레이아웃 → 박스모델 → 테두리 → 배경 → 타이포그래피 → 비주얼 → 기타
+================================= */
+
+/* 본문 내용 */
+.lecture-content {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    width: 1280px;
+    margin: 0;
+    padding: 0;
+    gap: 12px;
+}
+
+.lecture-content h2 {
+    font-size: 20px;
+    font-weight: 700;
+    color: var(--text-primary);
+}
+
+.lecture-content p {
+    font-size: 14px;
+    line-height: 1.6;
+    color: var(--text-tertiary);
+}
+
+
