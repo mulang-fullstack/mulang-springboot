@@ -15,28 +15,7 @@
 <%@include file="common/header.jsp" %>
 <main>
     <div class="contents">
-        <!-- 여기부터 작성 -->
-        <div>
-            <a href="teacherMypage.do">teacherMypage</a>
-        </div>
-        <div>test</div>
-        <div>test</div>
-        <div>test</div>
-        <div>test</div>
-        <div>test</div>
-        <div>test</div>
-        <div>test</div>
-        <div>test</div>
-        <div>test</div>
-        <div>test</div>
-        <div>test</div>
-        <div>test</div>
-        <div>test</div>
-        <div>test</div>
-        <div>test</div>
-        <div>test</div>
-        <div>test</div>
-        <div>test</div>
+
     </div>
 </main>
 <%@include file="common/footer.jsp" %>
