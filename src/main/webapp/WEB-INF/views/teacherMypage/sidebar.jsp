@@ -2,7 +2,7 @@
 <!DOCTYPE html>
 <html lang="ko">
 <meta charset="UTF-8">
-<link rel="stylesheet" href="/css/pages/teacher/sidebar.css">
+<link rel="stylesheet" href="/css/pages/mypage/sidebar.css">
 <aside class="sidebar">
     <div class="profile">
         <div class="profile-img-wrap">

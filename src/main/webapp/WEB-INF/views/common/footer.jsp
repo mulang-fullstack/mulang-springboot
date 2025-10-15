@@ -16,7 +16,7 @@
         <!-- 회사 정보 -->
         <div class="footer-content">
             <div class="footer-logo">
-                <img src="img/logo.svg" alt="머랭">
+                <img src="/img/logo.svg" alt="머랭">
             </div>
 
             <div class="footer-info">

@@ -10,8 +10,8 @@
     <link rel="icon" href="/img/favicon.svg" type="image/png">
 
     <link rel="stylesheet" href="/css/global.css"/>
-    <link rel="stylesheet" href="/css/pages/mypage/save.css"/>
-    <title>찜</title>
+    <link rel="stylesheet" href="/css/pages/mypage/edit.css"/>
+    <title>내 프로필 수정</title>
 </head>
 <body>
 
@@ -20,14 +20,15 @@
 <main class="main">
     <section class="dashboard">
         <%@include file="sidebar.jsp" %>
+
         <section class="content">
             <div class="profile-main">
-                <h2>찜</h2>
+                <h2>내 프로필 수정</h2>
 
                 <section class="profile-section">
                     <!-- 튜터명 -->
                     <div class="field">
-                        <label>튜터명</label>
+                        <label>이름</label>
                         <div class="field-content">
                             <span>최윤서</span>
                             <button class="edit-btn">수정</button>
@@ -51,30 +52,34 @@
                     <div class="field">
                         <label>전화번호</label>
                         <div class="input-wrap">
-                            <input type="text" value="010 9593 8009" readonly>
+                            <input type="text" value="010-5849-0283" readonly>
+                            <span class="check-icon">✔</span>
+                        </div>
+                    </div>
+                    <!-- 생년월일 -->
+                    <div class="field">
+                        <label>생년월일</label>
+                        <div class="input-wrap">
+                            <input type="text" value="2007-11-12" readonly>
                             <span class="check-icon">✔</span>
                         </div>
                     </div>
 
-                    <!-- 튜터 소개 -->
+                    <!-- 이메일 -->
                     <div class="field">
-                        <label>튜터 소개</label>
+                        <label>이메일</label>
                         <div class="input-wrap">
-                            <textarea rows="2" readonly>나는 귀여운 윤서양</textarea>
+                            <textarea rows="1" readonly>071112yoonseo@naver.com</textarea>
                             <button class="edit-btn">수정</button>
                         </div>
                     </div>
 
-                    <!-- 이력 -->
-                    <div class="field">
-                        <label>이력 (권장사항)</label>
-                        <button class="add-btn">+ 이력 추가하기</button>
-                    </div>
-
-                    <!-- 클래스 장소 -->
-                    <div class="field">
-                        <label>클래스 장소</label>
-                        <button class="add-btn">+ 장소 추가하기</button>
+                        <div class="field">
+                         <label>비밀번호</label>
+                         <div class="input-wrap">
+                             <textarea rows="1" readonly>abcd1234</textarea>
+                             <button class="edit-btn">수정</button>
+                         </div>
                     </div>
                 </section>
             </div>
