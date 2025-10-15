@@ -10,8 +10,9 @@
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <link rel="icon" href="img/favicon.svg" type="image/png">
+
     <link rel="stylesheet" href="css/global.css"/>
-    <link rel="stylesheet" href="css/teacher/mypage.css"/>
+    <link rel="stylesheet" href="css/pages/teacher/mypage.css"/>
     <title>Mulang?</title>
 </head>
 <body>

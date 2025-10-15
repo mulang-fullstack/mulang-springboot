@@ -12,4 +12,12 @@ public class TeacherController {
     public String profile(){
         return "teacherMypage/profile";
     }
+    @GetMapping("review.do")
+    public String review(){
+        return "teacherMypage/review";
+    }
+    @GetMapping("settlement.do")
+    public String settlement(){
+        return "teacherMypage/settlement";
+    }
 }
