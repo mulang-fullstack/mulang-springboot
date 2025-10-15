@@ -12,7 +12,7 @@ html {
 :root {
     /* 배경색 */
     /* 메인 배경 */
-    --bg-primary: #ffffcc;               /* 페이지 전체, 주요 영역 배경 */
+    --bg-primary: #fefefe;               /* 페이지 전체, 주요 영역 배경 */
     /* 서브/보조 배경 */
     --bg-secondary: #F9F9FB;                /* 카드, 섹션 배경 */
     --bg-overlay: rgba(102, 108, 117, 0.3); /* 오버레이, 반투명 배경 */

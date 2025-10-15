@@ -20,15 +20,15 @@
         <!-- RIGHT: 로그인/회원가입 또는 프로필 -->
         <div class="header-right">
             <c:choose>
-                <c:when test="${not empty sessionScope.tests}">
+                <c:when test="${not empty sessionScope.loginUser}">
                     <button class="write-button">작성</button>
                     <div class="profile-area">
                         <button class="profile-toggle">
                             <img src="img/profile.png" alt="프로필 이미지">
                         </button>
                         <div class="profile-dropdown">
-                            <p class="profile-email">${tests.email}</p>
-                            <p class="profile-nick">${tests.email}님, 안녕하세요.</p>
+                            <p class="profile-email">${loginUser.email}</p>
+                            <p class="profile-nick">${loginUser.email}님, 안녕하세요.</p>
                             <div class="profile-divider"></div>
                             <a href="/mypage.do?tap=my" class="profile-link">마이페이지</a>
                             <a href="auth.do?mode=logout" class="profile-link">로그아웃</a>
@@ -36,8 +36,8 @@
                     </div>
                 </c:when>
                 <c:otherwise>
-                    <a href="auth.do?mode=login" class="btn-login">로그인</a>
-                    <a href="auth.do?mode=join" class="btn-join">회원가입</a>
+                    <a href="/auth/login" class="btn-login">로그인</a>
+                    <a href="/auth/signup" class="btn-join">회원가입</a>
                 </c:otherwise>
             </c:choose>
 
@@ -63,7 +63,7 @@
     </div>
     <div class="mobile-panel-bottom">
         <c:choose>
-            <c:when test="${empty sessionScope.tests}">
+            <c:when test="${empty sessionScope.loginUser}">
                 <a href="auth.do?mode=login">로그인</a>
                 <a href="auth.do?mode=join">회원가입</a>
             </c:when>
