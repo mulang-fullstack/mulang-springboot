@@ -10,9 +10,9 @@
     <link rel="icon" href="/img/favicon.svg" type="image/png">
 
     <link rel="stylesheet" href="/css/global.css"/>
-    <link rel="stylesheet" href="/css/pages/teacher/profile.css"/>
+    <link rel="stylesheet" href="/css/pages/teacher/profileEdit.css"/>
 
-    <title>강사 프로필</title>
+    <title>강사 프로필 관리</title>
 </head>
 <body>
 
@@ -24,14 +24,14 @@
 
         <section class="content">
             <div class="profile-main">
-                <h2>강사 프로필</h2>
+                <h2>강사 프로필 관리</h2>
 
                 <section class="profile-section">
                     <!-- 강사명 -->
                     <div class="field">
                         <label>강사명</label>
                         <div class="field-content">
-                            <span class="text-value">최윤서</span>
+                            <span>최윤서</span>
                         </div>
                     </div>
 
@@ -40,41 +40,50 @@
                         <label>프로필 이미지</label>
                         <div class="field-content">
                             <div class="profile-img-wrap">
-                                <img src="/img/dummy/teacher1.png" alt="프로필 이미지">
+                                <img src="https://placehold.co/120x120" alt="프로필 이미지">
                             </div>
+                            <button type="button" class="camera-btn">
+                                <img src="/img/icon/bx-camera.svg" alt="사진 변경">
+                            </button>
                         </div>
                     </div>
 
                     <!-- 전화번호 -->
                     <div class="field">
                         <label>전화번호</label>
-                        <div class="field-content">
-                            <span class="text-value">010-1234-4567</span>
+                        <div class="input-wrap">
+                            <input type="text" value="010 9593 8009">
+                            <span class="check-icon">✔</span>
                         </div>
                     </div>
 
                     <!-- 강사 소개 -->
                     <div class="field">
                         <label>강사 소개</label>
-                        <div class="field-content">
-                            <p class="text-area">안녕하세요 중국어 일타강사 최윤서입니다</p>
+                        <div class="input-wrap">
+                            <textarea rows="2">나는 귀여운 윤서양</textarea>
                         </div>
                     </div>
 
                     <!-- 이력 -->
                     <div class="field">
-                        <label>이력</label>
-                        <div class="field-content">
-                            <p class="text-area">조선족 출신 중국어강의 경력10년</p>
+                        <label>이력 (권장사항)</label>
+                        <div class="input-wrap">
+                            <input type="text" placeholder="+ 이력 입력">
                         </div>
                     </div>
 
                     <!-- 클래스 장소 -->
                     <div class="field">
                         <label>클래스 장소</label>
-                        <div class="field-content">
-                            <p class="text-area">온오프라인 케이스 할수도있나?</p>
+                        <div class="input-wrap">
+                            <input type="text" placeholder="+ 장소 입력">
                         </div>
+                    </div>
+
+                    <!-- 수정 버튼 -->
+                    <div class="submit-wrap">
+                        <button type="submit" class="submit-btn">수정하기</button>
                     </div>
                 </section>
             </div>

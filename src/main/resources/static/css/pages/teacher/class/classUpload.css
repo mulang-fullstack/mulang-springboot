@@ -1,0 +1,209 @@
+/* -------------------- 기본 -------------------- */
+body {
+    background-color: var(--bg-white);
+    font-family: "Noto Sans KR", sans-serif;
+    color: var(--text-primary);
+}
+
+/* -------------------- 레이아웃 -------------------- */
+.main {
+    display: flex;
+    justify-content: center;
+    padding: 60px 80px;
+}
+
+.dashboard {
+    display: flex;
+    width: 1280px;
+    gap: 60px;
+}
+
+.sidebar {
+    flex-shrink: 0;
+    margin-top: 40px;
+}
+
+.content {
+    flex: 1;
+}
+
+.content h2 {
+    font-size: 24px;
+    font-weight: 700;
+    margin-bottom: 30px;
+    color: var(--text-primary);
+}
+
+/* -------------------- 필드 -------------------- */
+.field {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    padding-bottom: 20px;
+    margin-bottom: 24px;
+}
+
+/* 클래스 이름 */
+.field.title {
+    border-bottom: 1px solid var(--bg-overlay);
+}
+
+/* 언어 */
+.field.language {
+    border-bottom: 1px solid var(--bg-overlay);
+}
+
+/* 카테고리 */
+.field.category {
+    border-bottom: 1px solid var(--bg-overlay);
+}
+
+/* 수강비 */
+.field.price {
+    border-bottom: 1px solid var(--bg-overlay);
+}
+
+/* 나머지 필드는 기본색 유지 */
+.field:not(.title):not(.language):not(.category):not(.price) {
+    border-bottom: var(--border-default);
+}
+
+.field label {
+    width: 160px;
+    font-size: 15px;
+    font-weight: 600;
+    color: var(--text-secondary);
+    padding-top: 10px;
+}
+
+.field-content {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+/* -------------------- 입력 요소 -------------------- */
+input[type="text"],
+input[type="file"],
+input[type="number"],
+input[type="date"],
+select,
+textarea {
+    padding: 10px 12px;
+    border: var(--border-default);
+    border-radius: 8px;
+    font-size: 14px;
+    color: var(--text-primary);
+    background-color: var(--bg-secondary);
+    transition: border-color 0.2s ease, background 0.2s ease;
+}
+
+input[name="title"],
+input[name="price"] {
+    width: 200px;
+}
+
+input:focus,
+textarea:focus,
+select:focus {
+    outline: none;
+    border-color: var(--bg-point-main);
+    background-color: var(--bg-white);
+}
+
+/* -------------------- 셀렉트박스 -------------------- */
+.field select {
+    width: 200px;
+    appearance: none;
+    background: var(--bg-secondary)
+    url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='14' height='8'><path fill='%234b5563' d='M7 8L0 0h14z'/></svg>")
+    no-repeat right 10px center;
+    background-size: 10px;
+    cursor: pointer;
+}
+
+.field select:hover {
+    background-color: var(--bg-white-hover);
+}
+
+/* -------------------- 날짜 선택 -------------------- */
+.field-content.date-range {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 10px;
+}
+
+.field-content.date-range input[type="date"] {
+    width: 180px;
+    text-align: center;
+}
+
+.field-content.date-range span {
+    font-size: 15px;
+    color: var(--text-tertiary);
+}
+
+/* -------------------- 에디터 -------------------- */
+#editor {
+    min-height: 400px;
+    border: var(--border-default);
+    border-radius: 8px;
+    background: var(--bg-white);
+}
+
+/* -------------------- 안내문 -------------------- */
+.hint {
+    font-size: 13px;
+    color: var(--text-tertiary);
+    line-height: 1.5;
+}
+
+/* -------------------- 버튼 -------------------- */
+.submit-wrap {
+    display: flex;
+    justify-content: flex-end;
+    border-top: var(--border-default);
+    padding-top: 30px;
+}
+
+.submit-btn {
+    width: 120px;
+    height: 40px;
+    background: var(--bg-point-main);
+    color: var(--text-white);
+    font-size: 15px;
+    font-weight: 600;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background 0.2s ease, transform 0.1s ease;
+}
+
+.submit-btn:hover {
+    background: var(--bg-point-hover);
+    transform: translateY(-1px);
+}
+
+/* -------------------- 파일 입력 -------------------- */
+input[type="file"] {
+    background: var(--bg-white);
+    cursor: pointer;
+}
+
+input[type="file"]::file-selector-button {
+    padding: 6px 14px;
+    margin-right: 10px;
+    border-radius: 6px;
+    border: var(--border-default);
+    background: var(--bg-point-sub);
+    color: var(--text-point-main);
+    font-size: 13px;
+    cursor: pointer;
+    transition: background 0.2s ease;
+}
+
+input[type="file"]::file-selector-button:hover {
+    background: var(--bg-secondary);
+}

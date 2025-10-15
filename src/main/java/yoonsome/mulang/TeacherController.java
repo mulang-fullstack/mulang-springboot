@@ -4,13 +4,13 @@ import org.springframework.web.bind.annotation.GetMapping;
 
 @Controller
 public class TeacherController {
-    @GetMapping("teacherMypage.do")
+    @GetMapping("classEdit.do")
     public String mypage(){
-        return "teacherMypage/teacherMypage";
+        return "teacherMypage/classEdit";
     }
-    @GetMapping("profile.do")
-    public String profile(){
-        return "teacherMypage/profile";
+    @GetMapping("profileEdit.do")
+    public String profileEdit(){
+        return "teacherMypage/profileEdit";
     }
     @GetMapping("review.do")
     public String review(){
@@ -19,5 +19,13 @@ public class TeacherController {
     @GetMapping("settlement.do")
     public String settlement(){
         return "teacherMypage/settlement";
+    }
+    @GetMapping("profile.do")
+    public String profile(){
+        return "teacherMypage/profile";
+    }
+    @GetMapping("classUpload.do")
+    public String classUpload(){
+        return "teacherClass/classUpload";
     }
 }
