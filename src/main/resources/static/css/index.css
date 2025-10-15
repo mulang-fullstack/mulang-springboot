@@ -1,0 +1,130 @@
+
+/* Category */
+.category-menu {
+    display: flex;
+    justify-content: center;
+    gap: 40px;
+    padding: 40px 0;
+}
+
+.category-menu a {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+    width: 80px;
+    height: 80px;
+    border: none;
+    border-radius: 16px;
+    background-color: #fff;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
+
+    text-decoration: none;
+    color: #111;
+    font-weight: 500;
+    font-size: 14px;
+    transition: all 0.25s ease;
+    cursor: pointer;
+}
+
+.category-menu a:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.12);
+}
+
+.category-menu a img {
+    width: 44px;
+    height: 44px;
+}
+
+/* Best Class */
+.best-class {
+    width: 1280px;
+    padding: 40px 0 80px;
+}
+
+.class-list {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 24px;
+}
+
+.class-card {
+    background: #fff;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 1px 5px rgba(0,0,0,0.1);
+}
+
+.class-card img {
+    width: 100%;
+    height: 180px;
+    object-fit: cover;
+}
+
+.class-info {
+    padding: 16px;
+}
+
+.class-info h4 {
+    font-size: 16px;
+    font-weight: 600;
+    margin-bottom: 6px;
+}
+
+.price {
+    font-weight: 700;
+    color: #333;
+}
+
+/* --- 태블릿 (max 1024px) --- */
+@media (max-width: 1024px) {
+    .category-menu {
+        flex-wrap: wrap;
+        gap: 16px;
+    }
+
+    .best-class {
+        width: 90%;
+    }
+
+    .class-list {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+/* --- 모바일 (max 600px) --- */
+@media (max-width: 600px) {
+    .category-menu button {
+        width: 100%;
+        padding: 12px 0;
+        font-size: 15px;
+    }
+
+    .best-class h3 {
+        font-size: 18px;
+        text-align: center;
+    }
+
+    .class-list {
+        grid-template-columns: 1fr;
+        gap: 20px;
+    }
+
+    .class-card img {
+        height: 160px;
+    }
+
+    .class-info {
+        padding: 12px;
+    }
+
+    .class-info h4 {
+        font-size: 15px;
+    }
+
+    .price {
+        font-size: 14px;
+    }
+}

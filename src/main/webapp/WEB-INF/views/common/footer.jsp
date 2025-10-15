@@ -1,6 +1,6 @@
 <%@ page contentType="text/html;charset=utf-8" %>
 
-<link rel="stylesheet" href="css/common/footer.css"/>
+<link rel="stylesheet" href="/css/common/footer.css"/>
 <footer>
     <div class="footer-inner">
         <!-- 상단 네비게이션 -->

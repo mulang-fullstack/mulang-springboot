@@ -1,6 +1,6 @@
 <%@ page contentType="text/html;charset=utf-8" import="java.sql.*" %>
 
-<link rel="stylesheet" href="css/common/header.css"/>
+<link rel="stylesheet" href="/css/common/header.css"/>
 <script src="js/header.js"></script>
 <header>
     <div class="header-inner">
