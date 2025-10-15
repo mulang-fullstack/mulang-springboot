@@ -1,16 +1,16 @@
+@charset "UTF-8";
+
 /* -------------------- 사이드바 -------------------- */
 .sidebar {
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
     align-items: center;
-
     width: 220px;
-    height: 70vh;
+    min-height: 600px;
     flex-shrink: 0;
     margin: 0;
     padding: 30px 0;
-
     border: var(--border-default);
     border-radius: 12px;
     background-color: var(--bg-white);
@@ -21,18 +21,16 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-
-    margin: 0 0 24px 0;
+    margin-bottom: 24px;
 }
 
 .profile-img-wrap {
     width: 120px;
     height: 120px;
+    margin-bottom: 8px;
+    border: 2px solid var(--bg-point-sub);
     border-radius: 50%;
     overflow: hidden;
-
-    border: 2px solid var(--bg-point-sub);
-    margin: 0 0 8px 0;
 }
 
 .profile-img-wrap img {
@@ -42,10 +40,10 @@
 }
 
 .nickname {
+    margin-bottom: 24px;
     font-size: 17px;
     font-weight: 600;
     color: var(--text-primary);
-    margin-bottom: 24px;
     text-align: center;
 }
 
@@ -55,31 +53,26 @@
     flex-direction: column;
     align-items: center;
     justify-content: center;
-
     width: 100%;
     gap: 8px;
 }
 
 .menu li {
-    list-style: none;
     width: 100%;
+    list-style: none;
     text-align: center;
 }
 
 .menu a {
     display: block;
     width: 100%;
-    text-align: center;
-
     padding: 12px 0;
     border-radius: 8px;
-
     background-color: transparent;
     font-size: 15px;
     font-weight: 500;
     color: var(--text-tertiary);
     text-decoration: none;
-
     transition: background 0.2s ease, color 0.2s ease;
 }
 
@@ -89,13 +82,9 @@
 }
 
 .menu .active a {
-    background-color: transparent;
-    color: var(--text-primary);
-}
-
-.menu .active a:hover {
     background-color: var(--bg-point-sub);
-    color: var(--text-primary);
+    color: var(--text-point-main);
+    font-weight: 600;
 }
 
 /* -------------------- 가이드북 버튼 -------------------- */
@@ -106,16 +95,13 @@
 
 .guidebook a {
     display: block;
-    text-align: center;
-
     padding: 14px 0;
     border-radius: 10px;
-
     background-color: var(--bg-secondary);
-    color: var(--text-primary);
     font-weight: 600;
+    color: var(--text-primary);
+    text-align: center;
     text-decoration: none;
-
     transition: background 0.2s ease;
 }
 

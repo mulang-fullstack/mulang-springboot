@@ -1,85 +1,87 @@
 <%@ page contentType="text/html;charset=utf-8" %>
 <%@ taglib prefix="c" uri="jakarta.tags.core" %>
-<!DOCTYPE html>
+<!doctype html>
 <html lang="ko">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport"
-          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <link rel="icon" href="/img/favicon.svg" type="image/png">
 
     <link rel="stylesheet" href="/css/global.css"/>
     <link rel="stylesheet" href="/css/pages/teacher/profile.css"/>
 
-    <title>강사 프로필</title>
+    <title>강사 프로필 | Mulang?</title>
 </head>
 <body>
-
 <%@include file="../common/header.jsp" %>
 
-<main class="main">
-    <section class="dashboard">
-        <%@include file="sidebar.jsp" %>
+<main>
+    <div class="contents">
 
-        <section class="content">
-            <div class="profile-main">
-                <h2>강사 프로필</h2>
+        <section class="dashboard">
+            <%@ include file="sidebar.jsp" %>
 
-                <section class="profile-section">
-                    <!-- 강사명 -->
-                    <div class="field">
-                        <label>강사명</label>
-                        <div class="field-content">
-                            <span class="text-value">최윤서</span>
-                        </div>
-                    </div>
+            <section class="content">
+                <div class="profile-main">
+                    <h2>강사 프로필</h2>
 
-                    <!-- 프로필 이미지 -->
-                    <div class="field">
-                        <label>프로필 이미지</label>
-                        <div class="field-content">
-                            <div class="profile-img-wrap">
-                                <img src="/img/dummy/teacher1.png" alt="프로필 이미지">
+                    <section class="profile-section">
+                        <!-- 강사명 -->
+                        <div class="field">
+                            <label>강사명</label>
+                            <div class="field-content">
+                                <span class="text-value">최윤서</span>
                             </div>
                         </div>
-                    </div>
 
-                    <!-- 전화번호 -->
-                    <div class="field">
-                        <label>전화번호</label>
-                        <div class="field-content">
-                            <span class="text-value">010-1234-4567</span>
+                        <!-- 프로필 이미지 -->
+                        <div class="field">
+                            <label>프로필 이미지</label>
+                            <div class="field-content">
+                                <div class="profile-img-wrap">
+                                    <img src="/img/dummy/teacher1.png" alt="프로필 이미지">
+                                </div>
+                            </div>
                         </div>
-                    </div>
 
-                    <!-- 강사 소개 -->
-                    <div class="field">
-                        <label>강사 소개</label>
-                        <div class="field-content">
-                            <p class="text-area">안녕하세요 중국어 일타강사 최윤서입니다</p>
+                        <!-- 전화번호 -->
+                        <div class="field">
+                            <label>전화번호</label>
+                            <div class="field-content">
+                                <span class="text-value">010-1234-4567</span>
+                            </div>
                         </div>
-                    </div>
 
-                    <!-- 이력 -->
-                    <div class="field">
-                        <label>이력</label>
-                        <div class="field-content">
-                            <p class="text-area">조선족 출신 중국어강의 경력10년</p>
+                        <!-- 강사 소개 -->
+                        <div class="field">
+                            <label>강사 소개</label>
+                            <div class="field-content">
+                                <p class="text-area">안녕하세요 중국어 일타강사 최윤서입니다.</p>
+                            </div>
                         </div>
-                    </div>
 
-                    <!-- 클래스 장소 -->
-                    <div class="field">
-                        <label>클래스 장소</label>
-                        <div class="field-content">
-                            <p class="text-area">온오프라인 케이스 할수도있나?</p>
+                        <!-- 이력 -->
+                        <div class="field">
+                            <label>이력</label>
+                            <div class="field-content">
+                                <p class="text-area">조선족 출신 중국어 강의 경력 10년</p>
+                            </div>
                         </div>
-                    </div>
-                </section>
-            </div>
+
+                        <!-- 클래스 장소 -->
+                        <div class="field">
+                            <label>클래스 장소</label>
+                            <div class="field-content">
+                                <p class="text-area">온오프라인 병행 가능</p>
+                            </div>
+                        </div>
+                    </section>
+                </div>
+            </section>
         </section>
-    </section>
+
+    </div>
 </main>
 
 <%@include file="../common/footer.jsp" %>
