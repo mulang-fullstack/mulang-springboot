@@ -12,8 +12,8 @@
     <link rel="icon" href="img/favicon.svg" type="image/png">
 
     <link rel="stylesheet" href="/css/global.css"/>
-    <link rel="stylesheet" href="/css/pages/mypage/mypage.css"/>
-    <title>Mulang?</title>
+    <link rel="stylesheet" href="/css/pages/mypage/course.css"/>
+    <title>나의 학습방</title>
 </head>
 <body>
 
@@ -25,23 +25,23 @@
         <%@include file="sidebar.jsp" %>
 
         <section class="content">
-            <h2>클래스 관리</h2>
+            <h2>나의 학습방</h2>
             <div class="class-table">
                 <div class="table-header">
-                    <span>썸네일</span>
-                    <span>클래스명</span>
-                    <span>운영방식</span>
-                    <span>운영상태</span>
-                    <span>등록일</span>
+                    <span>담당강사</span>
+                    <span>제목</span>
+                    <span>총 강의 수</span>
+                    <span>진행률</span>
+                    <span>수강기간</span>
                 </div>
 
                 <div class="table-body">
                     <div class="table-row">
                         <div class="thumb"><img src="https://placehold.co/160x90" alt=""></div>
-                        <div class="title">나는 개똥벌레 친구가 없네</div>
-                        <div class="type">VOD</div>
-                        <div class="status"><span class="tag gray">임시 저장</span></div>
-                        <div class="date">2025-10-02</div>
+                        <div class="title">toeic</div>
+                        <div class="type">35</div>
+                        <div class="status"><span class="tag gray">70</span></div>
+                        <div class="date">2025-10-02 ~ 2025-10-30</div>
                     </div>
 
                     <div class="table-row">

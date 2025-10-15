@@ -1,13 +1,13 @@
 <%@ page contentType="text/html;charset=utf-8" import="java.sql.*" %>
 
-<link rel="stylesheet" href="css/common/header.css"/>
+<link rel="stylesheet" href="/css/common/header.css"/>
 <script src="js/header.js"></script>
 <header>
     <div class="header-inner">
         <!-- LEFT: 로고 + 네비게이션 -->
         <div class="header-left">
             <a href="/" class="logo">
-                <img id="logo-img" src="img/logo.svg" alt="로고">
+                <img id="logo-img" src="/img/logo.svg" alt="로고">
             </a>
             <ul>
                 <li><a href="#">영어</a></li>
@@ -53,7 +53,7 @@
 <div class="overlay" hidden></div>
 <nav id="mobilePanel" class="mobile-panel" aria-hidden="true">
     <div class="mobile-panel-top">
-        <a href="/"><img src="img/logo.svg" alt="로고"></a>
+        <a href="/"><img src="/img/logo.svg" alt="로고"></a>
         <ul class="mobile-nav">
             <li><a href="#">영어</a></li>
             <li><a href="#">중국어</a></li>

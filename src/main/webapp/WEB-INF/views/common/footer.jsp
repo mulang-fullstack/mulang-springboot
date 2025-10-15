@@ -1,6 +1,6 @@
 <%@ page contentType="text/html;charset=utf-8" %>
 
-<link rel="stylesheet" href="css/common/footer.css"/>
+<link rel="stylesheet" href="/css/common/footer.css"/>
 <footer>
     <div class="footer-inner">
         <!-- 상단 네비게이션 -->
@@ -16,7 +16,7 @@
         <!-- 회사 정보 -->
         <div class="footer-content">
             <div class="footer-logo">
-                <img src="img/logo.svg" alt="머랭">
+                <img src="/img/logo.svg" alt="머랭">
             </div>
 
             <div class="footer-info">

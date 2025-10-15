@@ -2,7 +2,7 @@
 <!DOCTYPE html>
 <html lang="ko">
 <meta charset="UTF-8">
-<link rel="stylesheet" href="/css/pages/teacher/sidebar.css">
+<link rel="stylesheet" href="/css/pages/mypage/sidebar.css">
 <aside class="sidebar">
     <div class="profile">
         <div class="profile-img-wrap">
@@ -12,9 +12,9 @@
     </div>
 
     <ul class="menu">
-        <li class="active"><a href="teacherMypage.do">클래스관리</a></li>
-        <li><a href="profile.do">프로필관리</a></li>
-        <li><a href="review.do">리뷰</a></li>
-        <li><a href="settlement.do">정산신청</a></li>
+        <li class="active"><a href="teacherMypage">클래스관리</a></li>
+        <li><a href="profile">프로필관리</a></li>
+        <li><a href="review">리뷰</a></li>
+        <li><a href="settlement">정산신청</a></li>
     </ul>
 </aside>

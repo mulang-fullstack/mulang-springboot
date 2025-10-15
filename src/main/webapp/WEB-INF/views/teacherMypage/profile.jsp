@@ -10,7 +10,7 @@
     <link rel="icon" href="/img/favicon.svg" type="image/png">
 
     <link rel="stylesheet" href="/css/global.css"/>
-    <link rel="stylesheet" href="/css/pages/teacher/profile.css"/>
+    <link rel="stylesheet" href="/css/pages/mypage/profile.css"/>
 
     <title>튜터 프로필 · 채널 관리</title>
 </head>
