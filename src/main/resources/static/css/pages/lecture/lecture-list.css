@@ -49,7 +49,6 @@ body {
     color: var(--text-point-main);
 }
 
-
 /* 정렬/검색 */
 .lecture-sort {
     display: flex;
@@ -99,7 +98,6 @@ body {
 .sort-item {
     font-size: 17px;
     font-weight: 500;
-    cursor: pointer;
 }
 
 .sort-item.active {
@@ -216,7 +214,7 @@ body {
     display: flex;
     justify-content: center;
     gap: 10px;
-    margin: 5px 0;
+    margin: 30px 0;
 }
 
 .pagination button {
@@ -238,34 +236,3 @@ body {
 .page-numbers .current {
     color: var(--text-point-main);
 }
-
-/* 푸터
-.footer {
-    display: flex;
-    flex-direction: column;
-    width: 100%;
-}
-
-.footer-top {
-    display: flex;
-    justify-content: space-between;
-    border-top: 1px #B3B3B3 solid;
-    border-bottom: 1px #B3B3B3 solid;
-    padding: 0 80px;
-    height: 40px;
-    align-items: center;
-}
-
-.footer-menu {
-    display: flex;
-    gap: 40px;
-}
-
-.footer-bottom {
-    padding: 20px 80px;
-    display: flex;
-    flex-direction: column;
-    gap: 5px;
-    font-size: 15px;
-    color: #4D4D4D;
-}*/

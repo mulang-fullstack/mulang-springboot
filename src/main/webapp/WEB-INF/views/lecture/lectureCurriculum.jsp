@@ -15,26 +15,30 @@
 <body>
 <%@include file="../common/header.jsp" %>
 <main>
-    <%@include file="lectureInfo.jsp" %>
-    <div class="lecture-tabs">
-        <a href="lectureDetail.do"><div class="tab">강의소개</div></a>
-        <a href="lectureCurriculum.do"><div class="tab active">커리큘럼</div></a>
-        <a href="lectureReview.do"><div class="tab">리뷰</div></a>
-    </div>
-    <div class="lecture-curriculum">
-        <div class="curriculum-header">
-            <div class="no">강의 번호</div>
-            <div class="title header">제목</div>
-            <div class="time">영상 길이</div>
-        </div>
-
-        <c:forEach var="i" begin="1" end="20">
-            <div class="curriculum-row">
-                <div class="no">${i}</div>
-                <div class="title">Dining Out!</div>
-                <div class="time">00:12:43</div>
+    <div class="contents">
+        <div class="lecture-curriculum-contents">
+            <%@include file="lectureInfo.jsp" %>
+            <div class="lecture-tabs">
+                <a href="lectureDetail.do"><div class="tab">강의소개</div></a>
+                <a href="lectureCurriculum.do"><div class="tab active">커리큘럼</div></a>
+                <a href="lectureReview.do"><div class="tab">리뷰</div></a>
             </div>
-        </c:forEach>
+            <div class="lecture-curriculum">
+                <div class="curriculum-header">
+                    <div class="no">강의 번호</div>
+                    <div class="title header">제목</div>
+                    <div class="time">영상 길이</div>
+                </div>
+
+                <c:forEach var="i" begin="1" end="20">
+                    <div class="curriculum-row">
+                        <div class="no">${i}</div>
+                        <div class="title">Dining Out!</div>
+                        <div class="time">00:12:43</div>
+                    </div>
+                </c:forEach>
+            </div>
+        </div>
     </div>
 </main>
 <%@include file="../common/footer.jsp" %>
