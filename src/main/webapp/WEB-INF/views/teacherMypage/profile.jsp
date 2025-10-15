@@ -9,9 +9,8 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <link rel="icon" href="/img/favicon.svg" type="image/png">
 
-    <!-- 공통 및 프로필 전용 CSS -->
     <link rel="stylesheet" href="/css/global.css"/>
-    <link rel="stylesheet" href="/css/teacher/profile.css"/>
+    <link rel="stylesheet" href="/css/pages/teacher/profile.css"/>
 
     <title>튜터 프로필 · 채널 관리</title>
 </head>
@@ -40,10 +39,12 @@
                     <!-- 프로필 이미지 -->
                     <div class="field">
                         <label>프로필 이미지</label>
-                        <div class="profile-img-wrap">
-                            <img src="https://placehold.co/120x120" alt="프로필 이미지">
+                        <div class="field-content">
+                            <div class="profile-img-wrap">
+                                <img src="https://placehold.co/120x120" alt="프로필 이미지">
+                            </div>
                             <button type="button" class="camera-btn">
-                                <img src="/img/bx-camera.svg" alt="사진 변경">
+                                <img src="/img/icon/bx-camera.svg" alt="사진 변경">
                             </button>
                         </div>
                     </div>
@@ -82,8 +83,6 @@
         </section>
     </section>
 </main>
-
 <%@include file="../common/footer.jsp" %>
-
 </body>
 </html>

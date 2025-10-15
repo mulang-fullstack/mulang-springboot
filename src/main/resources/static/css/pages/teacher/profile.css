@@ -28,7 +28,7 @@ body {
 /* -------------------- 사이드바 -------------------- */
 .sidebar {
     flex-shrink: 0;
-    margin-top: 40px; /* 마이페이지 기준 상단 여백 보정 */
+    margin-top: 40px;
 }
 
 /* -------------------- 콘텐츠 -------------------- */
@@ -71,11 +71,11 @@ body {
     display: flex;
     align-items: center;
     gap: 10px;
+    position: relative;
 }
 
 /* -------------------- 프로필 이미지 -------------------- */
 .profile-img-wrap {
-    position: relative;
     width: 100px;
     height: 100px;
 }
@@ -87,6 +87,7 @@ body {
     object-fit: cover;
 }
 
+/* -------------------- 카메라 버튼 -------------------- */
 .camera-btn {
     position: absolute;
     bottom: 5px;
@@ -104,6 +105,7 @@ body {
     cursor: pointer;
     transition: background 0.2s ease;
     overflow: hidden;
+    pointer-events: auto;
 }
 
 .camera-btn img {
