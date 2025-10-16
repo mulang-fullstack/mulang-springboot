@@ -1,27 +1,4 @@
 /*color: #F4B734; 별점 용 노랑색 */
-/* 공통 */
-body {
-    margin: 0;
-    font-family: 'Noto Sans KR', sans-serif;
-    background: var(--bg-white);
-    color: var(--text-primary);
-}
-
-.contents {
-    width: 1440px;
-    margin: 0 auto;
-    display: flex;
-    flex-direction: column;
-}
-
-/* 본문 */
-.main {
-    flex: 1;
-    padding: 0 80px;
-    display: flex;
-    flex-direction: column;
-}
-
 .lecture-category h1 {
     font-size: 24px;
     font-weight: 700;
@@ -113,6 +90,8 @@ body {
 
 .lecture-card {
     display: flex;
+    justify-content: space-between;
+    align-items: center;
     position: relative;
     height: 200px;
     border-bottom: var(--border-default);
@@ -121,31 +100,39 @@ body {
 .lecture-card img {
     width: 250px;
     height: 180px;
-    position: absolute;
-    top: 10px;
-    left: 0;
+    //position: absolute;
+    //top: 10px;
+    //left: 0;
 }
 
+.lecture-list-info {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    gap: 10px;
+    padding: 0 180px;
+    justify-content: center;
+}
 .lecture-card h2 {
-    position: absolute;
-    top: 30px;
-    left: 377px;
+    //position: absolute;
+    //top: 30px;
+    //left: 377px;
     font-size: 24px;
     font-weight: 400;
 }
 
-.subtitle {
-    position: absolute;
-    top: 89px;
-    left: 377px;
+.subtitle, .teacher {
+    //position: absolute;
+    //top: 89px;
+    //left: 377px;
     font-size: 16px;
     color: var(--text-secondary);
 }
 
 .rating {
-    position: absolute;
-    top: 129px;
-    left: 379px;
+    //position: absolute;
+    //top: 129px;
+    //left: 377px;
     display: flex;
     align-items: center;
     gap: 10px;
@@ -171,20 +158,33 @@ body {
     font-size: 16px;
 }
 
-.lecture-purchase {
+.heart-purchase-wrap {
     position: absolute;
-    left: 1160px;
-    top: 76px;
+    right: 0;
+    bottom: 10px;
+    display: flex;
+    align-items: flex-end;
+    gap: 20px;
+}
+
+.lecture-purchase {
+    //position: absolute;
+    //left: 1160px;
+    //top: 76px;
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 20px
+    gap: 20px;
+}
+
+.heart-icon {
+    margin-bottom: 15px;
 }
 
 .heart-icon img {
-    position: absolute;
-    left: 1110px;
-    top: 138px;
+    //position: absolute;
+    //left: 1110px;
+    //top: 138px;
     width: 20px;
     height: 20px;
     cursor: pointer;
@@ -198,7 +198,7 @@ body {
 .purchase-btn {
     /*position: absolute;
     left: 1160px;*/
-    top: 129px;
+    //top: 129px;
     width: 120px;
     height: 50px;
     background: var(--bg-point-main);

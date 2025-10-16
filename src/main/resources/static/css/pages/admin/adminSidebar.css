@@ -1,0 +1,34 @@
+/* 메뉴 */
+.menu {
+    flex: 1;
+    font-size: 15px;
+}
+.menu-section {
+    border-top: 1px solid rgba(255,255,255,0.1);
+}
+.menu-section button {
+    width: 100%;
+    background: none;
+    color: #fff;
+    padding: 12px 20px;
+    border: none;
+    text-align: left;
+    cursor: pointer;
+}
+.menu-section.active button {
+    background-color: #30477b;
+}
+.submenu {
+    list-style: none;
+    padding: 4px 0 4px 30px;
+    background-color: #3b4250;
+}
+.submenu li a {
+    display: block;
+    padding: 8px 0;
+    color: #ccc;
+    text-decoration: none;
+}
+.submenu li a:hover {
+    color: #fff;
+}

@@ -2,21 +2,22 @@
    📦 lecture-detail.css
    작성 순서: 레이아웃 → 박스모델 → 테두리 → 배경 → 타이포그래피 → 비주얼 → 기타
 ================================= */
+/*
 body {
     display: flex;
     flex-direction: column;
     align-items: center;
-    width: 100%;
+    //width: 100%;
     margin: 0;
     background: var(--bg-white);
     font-family: 'Inter', 'Noto Sans KR', sans-serif;
     color: var(--text-secondary);
-}
+}*/
 /*강의명*/
 .lecture-name {
     display: flex;
     justify-content: flex-start;
-    width: 100%;
+    //width: 100%;
     padding: 50px 0 20px;
 }
 
@@ -28,9 +29,9 @@ body {
 /* 요약 박스 */
 .lecture-summary {
     display: flex;
-    align-items: flex-start;
+    justify-content: space-between;
+    //align-items: flex-start;
     gap: 40px;
-    width: 1280px;
     height: 300px;
     border-top: var(--border-primary);
     border-bottom: var(--border-primary);
@@ -50,7 +51,7 @@ body {
     display: flex;
     flex-direction: column;
     gap: 20px;
-    width: 560px;
+    flex: 1;
 }
 
 .lecture-desc {
@@ -106,20 +107,20 @@ body {
 /* 탭 메뉴 */
 .lecture-tabs {
     display: flex;
-    justify-content: center;
+    //justify-content: center;
     align-items: center;
-    width: 1280px;
+    width: 100%;
+    cursor: pointer;
 }
 
 .tab {
     display: flex;
     justify-content: center;
     align-items: center;
-    width: 425px;
+    flex: 1;
     padding: 10px;
     font-size: 20px;
     color: var(--text-primary);
-    cursor: pointer;
 }
 
 .tab.active, .tab:hover {

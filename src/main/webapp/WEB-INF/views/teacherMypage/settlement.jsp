@@ -12,7 +12,7 @@
     <link rel="stylesheet" href="/css/global.css"/>
     <link rel="stylesheet" href="/css/pages/teacher/settlement.css"/>
 
-    <title>정산 현황 | Mulang?</title>
+    <title>클래스 판매 현황 | Mulang?</title>
 </head>
 <body>
 
@@ -25,24 +25,14 @@
             <%@ include file="sidebar.jsp" %>
 
             <section class="content">
-                <h2>정산 현황</h2>
+                <h2>클래스 판매 현황</h2>
 
                 <!-- 정산 요약 -->
                 <div class="settlement-summary">
                     <div class="summary-box">
-                        <h3>정산 가능한 금액</h3>
+                        <h3>클래스 판매 금액</h3>
                         <p class="amount">0원 <span>(0건)</span></p>
                     </div>
-                    <div class="summary-box">
-                        <h3>정산 신청한 금액</h3>
-                        <p class="amount">0원 <span>(0건)</span></p>
-                    </div>
-                </div>
-
-                <!-- 정산 액션 -->
-                <div class="action-bar">
-                    <button class="apply-btn" disabled>정산 요청</button>
-                    <button class="pending-btn" disabled>정산 미신청만 보기</button>
                 </div>
 
                 <!-- 정산 테이블 -->

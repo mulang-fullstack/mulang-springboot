@@ -4,28 +4,36 @@ import org.springframework.web.bind.annotation.GetMapping;
 
 @Controller
 public class TeacherController {
-    @GetMapping("classEdit.do")
-    public String mypage(){
+    @GetMapping("classEdit")
+    public String classmain(){
         return "teacherMypage/classEdit";
     }
-    @GetMapping("profileEdit.do")
+    @GetMapping("profileEdit")
     public String profileEdit(){
         return "teacherMypage/profileEdit";
     }
-    @GetMapping("review.do")
+    @GetMapping("review")
     public String review(){
         return "teacherMypage/review";
     }
-    @GetMapping("settlement.do")
+    @GetMapping("settlement")
     public String settlement(){
         return "teacherMypage/settlement";
     }
-    @GetMapping("profile.do")
+    @GetMapping("profile")
     public String profile(){
         return "teacherMypage/profile";
     }
-    @GetMapping("classUpload.do")
+    @GetMapping("classUpload")
     public String classUpload(){
         return "teacherClass/classUpload";
+    }
+    @GetMapping("classUpdate")
+    public String classUpdate(){
+        return "teacherClass/classUpdate";
+    }
+    @GetMapping("QnA")
+    public String QnA(){
+        return "teacherMypage/QnA";
     }
 }

@@ -27,8 +27,8 @@
 /* -------------------- 필드 -------------------- */
 .field {
     display: flex;
-    justify-content: space-between;
-    align-items: center;
+    justify-content: flex-start;
+    align-items: flex-start;
     padding-bottom: 20px;
     border-bottom: var(--border-default);
 }
@@ -114,26 +114,6 @@ textarea {
     font-size: 16px;
     font-weight: 700;
     color: var(--text-point-main);
-}
-
-/* -------------------- 수정 버튼 -------------------- */
-.edit-btn {
-    display: inline-flex;
-    justify-content: center;
-    align-items: center;
-    padding: 6px 10px;
-    border: var(--border-default);
-    border-radius: 20px;
-    background: var(--bg-white);
-    font-size: 14px;
-    font-weight: 500;
-    color: var(--text-point-main);
-    cursor: pointer;
-    transition: background 0.2s ease;
-}
-
-.edit-btn:hover {
-    background: var(--bg-secondary);
 }
 
 /* -------------------- 일반 버튼 -------------------- */

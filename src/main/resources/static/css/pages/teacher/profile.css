@@ -33,7 +33,7 @@
 /* -------------------- 필드 -------------------- */
 .field {
     display: flex;
-    justify-content: space-between;
+    justify-content: flex-start;
     align-items: flex-start;
     padding-bottom: 20px;
     border-bottom: var(--border-default);
@@ -92,3 +92,31 @@
     height: 100%;
     object-fit: cover;
 }
+
+/* -------------------- 수정하기 버튼 -------------------- */
+.submit-wrap {
+    display: flex;
+    justify-content: flex-start;
+    margin-top: 0px;
+}
+
+.submit-btn {
+    padding: 8px 16px;
+    border: none;
+    border-radius: 6px;
+    background-color: var(--bg-point-main);
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--text-white);
+    cursor: pointer;
+    transition: opacity 0.2s ease, transform 0.1s ease;
+}
+
+.submit-btn:hover {
+    opacity: 0.9;
+}
+
+.submit-btn:active {
+    transform: scale(0.98);
+}
+
