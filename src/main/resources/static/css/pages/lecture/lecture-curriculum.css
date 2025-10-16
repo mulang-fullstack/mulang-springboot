@@ -36,4 +36,5 @@
 
 .lecture-curriculum .curriculum-row:hover {
     background-color: var(--bg-point-sub);
+    cursor: pointer;
 }

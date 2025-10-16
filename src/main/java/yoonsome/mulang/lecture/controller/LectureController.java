@@ -5,19 +5,19 @@ import org.springframework.web.bind.annotation.GetMapping;
 
 @Controller
 public class LectureController {
-    @GetMapping("lecture.do")
+    @GetMapping("lecture")
     public String getLectureList(){
         return "lecture/lectureList";
     }
-    @GetMapping("lectureDetail.do")
+    @GetMapping("lectureDetail")
     public String getLectureDetail(){
         return "lecture/lectureDetail";
     }
-    @GetMapping("lectureCurriculum.do")
+    @GetMapping("lectureCurriculum")
     public String getLectureCurriculum(){
         return "lecture/lectureCurriculum";
     }
-    @GetMapping("lectureReview.do")
+    @GetMapping("lectureReview")
     public String getLectureReview(){
         return "lecture/lectureReview";
     }

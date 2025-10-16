@@ -14,12 +14,11 @@
                     <div><span class="label">수강기간</span> <span>2025.11.01.~2025.12.31.</span></div>
                     <div><span class="label">강의 수</span> <span>20강</span></div>
                 </div>
-            </div>
-
-            <div class="lecture-purchase">
-                <button class="heart-icon"><img src="/img/icon/heart-full.svg" alt="찜 아이콘"></button>
-                <span class="price">155,000원</span>
-                <button class="purchase-btn">결제하기</button>
+                <div class="lecture-purchase">
+                    <button class="heart-icon"><img src="/img/icon/heart-full.svg" alt="찜 아이콘"></button>
+                    <span class="price">155,000원</span>
+                    <button class="purchase-btn">결제하기</button>
+                </div>
             </div>
         </div>
     </div>

@@ -46,7 +46,7 @@
 
             <section class="lecture-list">
                 <div class="lecture-card">
-                    <a href="lectureDetail.do">
+                    <a href="lectureDetail">
                         <img src="https://placehold.co/250x180" alt="lecture">
                         <h2>틀에 박힌 한국식 영어는 이제 그만! - 찐 원어민 기초 회화!</h2>
                     </a>

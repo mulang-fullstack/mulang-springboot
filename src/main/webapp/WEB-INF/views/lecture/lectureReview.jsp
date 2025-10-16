@@ -19,9 +19,9 @@
         <div class="lecture-review-contents">
             <%@include file="lectureInfo.jsp" %>
             <div class="lecture-tabs">
-                <a href="lectureDetail.do"><div class="tab">강의소개</div></a>
-                <a href="lectureCurriculum.do"><div class="tab">커리큘럼</div></a>
-                <a href="lectureReview.do"><div class="tab active">리뷰</div></a>
+                <div class="tab" onclick="location.href='lectureDetail'">강의소개</div>
+                <div class="tab" onclick="location.href='lectureCurriculum'">커리큘럼</div>
+                <div class="tab active" onclick="location.href='lectureReview'">리뷰</div>
             </div>
             <div class="review-sort">
                 <a href="#"><div class="sort-item active">별점순</div></a>
