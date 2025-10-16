@@ -27,7 +27,7 @@ public class AuthController {
         return "auth/signup";
     }
 
-    @PostMapping("login.do")
+    @PostMapping("login")
     public String login(
             @RequestParam String email,
             @RequestParam String password,
@@ -44,7 +44,7 @@ public class AuthController {
         }
     }
 
-    @GetMapping("logout.do")
+    @GetMapping("logout")
     public String logout(HttpSession session){
         session.removeAttribute("loginUser");
         return "redirect:/";

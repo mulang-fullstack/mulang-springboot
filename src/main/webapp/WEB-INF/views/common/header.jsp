@@ -37,7 +37,7 @@
                                 <a href="#" class="profile-link">프로필 설정</a>
                                 <a href="#" class="profile-link">결제 내역</a>
                                 <a href="#" class="profile-link">고객센터</a>
-                                <a href="" class="profile-link">로그아웃</a>
+                                <a href="/auth/logout" class="profile-link">로그아웃</a>
                             </div>
                         </div>
                     </div>
