@@ -57,6 +57,13 @@
     font-size: 15px;
     color: var(--text-primary);
 }
+.table-row .title a {
+    color: inherit;
+    text-decoration: none;
+}
+.table-row .title a:hover {
+    text-decoration: underline;
+}
 
 /* -------------------- 썸네일 -------------------- */
 .thumb {
@@ -126,4 +133,56 @@
 .tag.gray {
     background-color: var(--bg-secondary);
     color: var(--text-subtle);
+}
+@media (max-width: 768px) {
+    .sidebar {
+        display: none;
+    }
+}
+.menu-wrap {
+    position: relative;
+    display: inline-block;
+    margin-left: 8px;
+}
+
+.menu-btn {
+    background: none;
+    border: none;
+    font-size: 20px;
+    cursor: pointer;
+    color: var(--text-tertiary);
+    padding: 0 4px;
+}
+
+.menu-dropdown {
+    display: none;
+    position: absolute;
+    right: 0;
+    top: 24px;
+    min-width: 100px;
+    background: var(--bg-white);
+    border: var(--border-default);
+    border-radius: 6px;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
+    z-index: 10;
+}
+
+.menu-dropdown.show {
+    display: flex;
+    flex-direction: column;
+}
+
+.menu-item {
+    padding: 8px 14px;
+    background: transparent;
+    border: none;
+    font-size: 14px;
+    color: var(--text-primary);
+    text-align: left;
+    cursor: pointer;
+    transition: background 0.2s ease;
+}
+
+.menu-item:hover {
+    background: var(--bg-secondary);
 }

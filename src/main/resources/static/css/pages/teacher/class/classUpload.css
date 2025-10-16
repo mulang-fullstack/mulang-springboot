@@ -1,3 +1,4 @@
+/* -------------------- 대시보드 -------------------- */
 .dashboard {
     display: flex;
     width: 1280px;
@@ -136,7 +137,7 @@ select:focus {
 .submit-wrap {
     display: flex;
     justify-content: flex-end;
-    border-top: var(--border-default);
+    border-top: none;
     padding-top: 30px;
 }
 
@@ -193,6 +194,7 @@ input[type="file"]::file-selector-button:hover {
     gap: 12px;
 }
 
+/* -------------------- 챕터 입력 -------------------- */
 .chapter-input {
     flex: 1;
     max-width: 300px;
@@ -218,45 +220,38 @@ input[type="file"]::file-selector-button:hover {
     background: var(--bg-white);
 }
 
-/* -------------------- 추가/삭제 버튼 -------------------- */
-.add-video-btn {
-    align-self: flex-start;
-    margin-top: 4px;
-    padding: 6px 14px;
-    border: var(--border-default);
-    border-radius: 8px;
-    background: var(--bg-point-sub);
-    color: var(--text-point-main);
-    font-size: 14px;
-    font-weight: 600;
-    cursor: pointer;
-    transition: background 0.2s ease, transform 0.1s ease;
+/* -------------------- 챕터 버튼 그룹 -------------------- */
+.video-btn-wrap {
+    display: flex;
+    gap: 6px;
 }
 
-.add-video-btn:hover {
-    background: var(--bg-secondary);
-}
-
-.add-video-btn:active {
-    transform: scale(0.98);
-}
-
+.add-video-btn,
 .remove-video-btn {
     padding: 6px 10px;
     border: var(--border-default);
     border-radius: 8px;
     background: var(--bg-white);
-    color: var(--text-error);
     font-size: 16px;
     font-weight: 600;
     cursor: pointer;
     transition: background 0.2s ease, transform 0.1s ease;
 }
 
+.add-video-btn {
+    color: var(--text-point-main);
+}
+
+.remove-video-btn {
+    color: var(--text-error);
+}
+
+.add-video-btn:hover,
 .remove-video-btn:hover {
     background: var(--bg-secondary);
 }
 
+.add-video-btn:active,
 .remove-video-btn:active {
-    transform: scale(0.95);
+    transform: scale(0.97);
 }
