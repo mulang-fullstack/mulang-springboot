@@ -42,7 +42,7 @@
                             <label>프로필 이미지</label>
                             <div class="field-content profile-img-area">
                                 <div class="profile-img-wrap">
-                                    <img src="https://placehold.co/120x120" alt="프로필 이미지">
+                                    <img src="/img/dummy/yoon.png" alt="프로필 이미지">
                                 </div>
                                 <button type="button" class="camera-btn">
                                     <img src="/img/icon/bx-camera.svg" alt="사진 변경">
@@ -52,10 +52,9 @@
 
                         <!-- 전화번호 -->
                         <div class="field">
-                            <label>전화번호</label>
+                            <label>이메일</label>
                             <div class="input-wrap">
-                                <input type="text" value="010-9593-8009">
-                                <span class="check-icon">✔</span>
+                                <input type="text" value="test@test">
                             </div>
                         </div>
 
@@ -63,7 +62,7 @@
                         <div class="field">
                             <label>강사 소개</label>
                             <div class="input-wrap">
-                                <textarea rows="2">나는 귀여운 윤서양</textarea>
+                                <input type="text">
                             </div>
                         </div>
 
@@ -71,7 +70,7 @@
                         <div class="field">
                             <label>이력 (권장사항)</label>
                             <div class="input-wrap">
-                                <input type="text" placeholder="+ 이력 입력">
+                                <input type="text">
                             </div>
                         </div>
 
@@ -79,7 +78,7 @@
                         <div class="field">
                             <label>클래스 장소</label>
                             <div class="input-wrap">
-                                <input type="text" placeholder="+ 장소 입력">
+                                <input type="text">
                             </div>
                         </div>
 

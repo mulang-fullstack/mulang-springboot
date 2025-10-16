@@ -10,17 +10,15 @@
 
     <link rel="stylesheet" href="/css/global.css"/>
     <link rel="stylesheet" href="/css/pages/teacher/class/classUpload.css"/>
-
     <title>VOD 클래스 업로드 | Mulang?</title>
 </head>
 <body>
-
 <%@ include file="../common/header.jsp" %>
-
 <main>
     <div class="contents">
 
         <section class="dashboard">
+            <%@ include file="../teacherMypage/sidebar.jsp" %>
             <section class="content">
                 <div class="class-upload">
                     <h2>CLASS</h2>
@@ -30,6 +28,14 @@
                         <label>클래스 이름</label>
                         <div class="field-content">
                             <input type="text" name="title" placeholder="클래스 이름을 입력하세요" required>
+                        </div>
+                    </div>
+
+                    <!-- 부제목 -->
+                    <div class="field">
+                        <label>제목</label>
+                        <div class="field-content">
+                            <input type="text" name="subtitle" placeholder="강의 부제목을 입력하세요" required>
                         </div>
                     </div>
 
@@ -62,7 +68,7 @@
 
                     <!-- 수강비 -->
                     <div class="field">
-                        <label>수강비</label>
+                        <label>수강비용</label>
                         <div class="field-content">
                             <input type="number" name="price" min="0" placeholder="금액을 입력하세요" required>
                         </div>
@@ -89,24 +95,14 @@
 
                     <!-- 영상 업로드 -->
                     <div class="field" id="video-section">
-                        <label>강의 영상</label>
+                        <label>챕터 강의</label>
                         <div class="field-content video-list">
-                            <!-- 기본 1행 -->
-                            <div class="video-item">
-                                <input type="text" name="chapter_name[]" placeholder="챕터 이름을 입력하세요" class="chapter-input" required>
-                                <input type="file" name="videoFile[]" accept="video/mp4,video/webm,video/mov" class="video-input" required>
-                            </div>
-
-                            <!-- 추가 버튼 -->
-                            <button type="button" class="add-video-btn">＋ 추가</button>
-
-                            <p class="hint">10GB 이하의 mp4, webm, mov 형식만 업로드 가능합니다. (최대 10개)</p>
                         </div>
                     </div>
 
-                    <!-- 클래스 소개 -->
+                    <!-- 강의 소개 -->
                     <div class="field">
-                        <label>클래스 소개</label>
+                        <label>강의 소개</label>
                         <div class="field-content">
                             <textarea id="editor" name="content"></textarea>
                         </div>
@@ -121,12 +117,11 @@
         </section>
     </div>
 </main>
-
 <%@ include file="../common/footer.jsp" %>
 
 <!-- CKEditor5 -->
 <script src="https://cdn.ckeditor.com/ckeditor5/43.0.0/classic/ckeditor.js"></script>
-<script src="/js/ckeditor5.js"></script>
-
+<script src="/js/pages/teacher/ckeditor5.js"></script>
+<script src="/js/pages/teacher/classVideo.js"></script>
 </body>
 </html>

@@ -75,29 +75,6 @@
     cursor: not-allowed;
 }
 
-/* -------------------- 안내 박스 -------------------- */
-.tip-box {
-    margin-bottom: 20px;
-    padding: 14px 20px;
-    border-radius: 8px;
-    background-color: var(--bg-secondary);
-}
-
-.tip-box p {
-    font-size: 14px;
-    color: var(--text-secondary);
-}
-
-.tip-box a {
-    font-weight: 600;
-    color: var(--text-point-main);
-    text-decoration: none;
-}
-
-.tip-box a:hover {
-    text-decoration: underline;
-}
-
 /* -------------------- 테이블 -------------------- */
 .settlement-table {
     width: 100%;

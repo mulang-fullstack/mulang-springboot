@@ -40,16 +40,16 @@
                             <label>프로필 이미지</label>
                             <div class="field-content">
                                 <div class="profile-img-wrap">
-                                    <img src="/img/dummy/teacher1.png" alt="프로필 이미지">
+                                    <img src="/img/dummy/yoon.png" alt="프로필 이미지">
                                 </div>
                             </div>
                         </div>
 
                         <!-- 전화번호 -->
                         <div class="field">
-                            <label>전화번호</label>
+                            <label>이메일</label>
                             <div class="field-content">
-                                <span class="text-value">010-1234-4567</span>
+                                <span class="text-value">test@test</span>
                             </div>
                         </div>
 
@@ -75,6 +75,10 @@
                             <div class="field-content">
                                 <p class="text-area">온오프라인 병행 가능</p>
                             </div>
+                        </div>
+                        <!-- 수정 버튼 -->
+                        <div class="submit-wrap">
+                            <button type="submit" class="submit-btn">수정하기</button>
                         </div>
                     </section>
                 </div>
