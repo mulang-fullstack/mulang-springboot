@@ -34,7 +34,7 @@
             <h3>주간 BEST 인기 클래스</h3>
             <div class="class-list">
                 <article class="class-card">
-                    <img src="/img/class1.jpg" alt="영어 클래스 썸네일">
+                    <img src="/img/dummy/teacher1.png" alt="영어 클래스 썸네일">
                     <div class="class-info">
                         <h4>톰에 박힌 한국식 영어는 이제 그만!</h4>
                         <p>⭐ 4.8 (1000)</p>
@@ -43,7 +43,7 @@
                 </article>
 
                 <article class="class-card">
-                    <img src="/img/class2.jpg" alt="문법 토크쇼">
+                    <img src="/img/dummy/teacher2.png" alt="문법 토크쇼">
                     <div class="class-info">
                         <h4>하루 단 10분 실생활 영문법 토크쇼</h4>
                         <p>⭐ 4.8 (1000)</p>
@@ -52,7 +52,7 @@
                 </article>
 
                 <article class="class-card">
-                    <img src="/img/class2.jpg" alt="문법 토크쇼">
+                    <img src="/img/dummy/teacher3.png" alt="문법 토크쇼">
                     <div class="class-info">
                         <h4>하루 단 10분 실생활 영문법 토크쇼</h4>
                         <p>⭐ 4.8 (1000)</p>
@@ -61,7 +61,7 @@
                 </article>
 
                 <article class="class-card">
-                    <img src="/img/class2.jpg" alt="문법 토크쇼">
+                    <img src="/img/dummy/teacher1.png" alt="문법 토크쇼">
                     <div class="class-info">
                         <h4>하루 단 10분 실생활 영문법 토크쇼</h4>
                         <p>⭐ 4.8 (1000)</p>

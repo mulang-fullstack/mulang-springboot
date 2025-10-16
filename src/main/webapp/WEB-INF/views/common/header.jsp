@@ -21,17 +21,24 @@
         <div class="header-right">
             <c:choose>
                 <c:when test="${not empty sessionScope.loginUser}">
-                    <button class="write-button">작성</button>
-                    <div class="profile-area">
-                        <button class="profile-toggle">
-                            <img src="img/profile.png" alt="프로필 이미지">
-                        </button>
-                        <div class="profile-dropdown">
-                            <p class="profile-email">${loginUser.email}</p>
-                            <p class="profile-nick">${loginUser.email}님, 안녕하세요.</p>
-                            <div class="profile-divider"></div>
-                            <a href="/mypage.do?tap=my" class="profile-link">마이페이지</a>
-                            <a href="auth.do?mode=logout" class="profile-link">로그아웃</a>
+                    <div class="user-menu">
+                        <a href="/mypage.do?tap=my" class="menu-item">내 학습</a>
+                        <div class="menu-divider"></div>
+                        <div class="profile-section">
+                            <button class="profile-toggle">
+                                내 정보
+                                <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="chevron">
+                                    <polyline points="6 9 12 15 18 9"></polyline>
+                                </svg>
+                            </button>
+                            <div class="profile-dropdown">
+                                <p class="profile-name"><span>${loginUser.name}</span>님 안녕하세요!</p>
+                                <div class="profile-divider"></div>
+                                <a href="#" class="profile-link">프로필 설정</a>
+                                <a href="#" class="profile-link">결제 내역</a>
+                                <a href="#" class="profile-link">고객센터</a>
+                                <a href="" class="profile-link">로그아웃</a>
+                            </div>
                         </div>
                     </div>
                 </c:when>
