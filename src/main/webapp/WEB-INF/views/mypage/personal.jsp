@@ -85,12 +85,11 @@
                             </div>
                         </div>
 
-                        <form action="/mypage/edit" method="get">
+                        <form id="editForm">
                             <div class="submit-wrap">
                                 <button type="submit" class="submit-btn">수정하기</button>
                             </div>
                         </form>
-
                     </section>
                 </div>
             </section>
@@ -99,6 +98,8 @@
     </div>
 </main>
 
+<script src = "/js/mypage/personal.js"></script>
 <%@include file="../common/footer.jsp" %>
+
 </body>
 </html>
