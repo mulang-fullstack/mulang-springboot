@@ -47,97 +47,118 @@
             <section class="lecture-list">
                 <div class="lecture-card">
                     <a href="lectureDetail">
-                        <img src="https://placehold.co/250x180" alt="lecture">
-                        <h2>틀에 박힌 한국식 영어는 이제 그만! - 찐 원어민 기초 회화!</h2>
-                    </a>
-                    <p class="subtitle">틀에 박힌 한국식 영어는 이제 그만! - 찐 원어민 기초 회화!</p>
-                    <div class="rating">
-                        <span class="score">4.7</span>
-                        <span class="stars">
-                            <img src="/img/icon/star-full.svg" alt="별">
-                            <img src="/img/icon/star-full.svg" alt="별">
-                            <img src="/img/icon/star-full.svg" alt="별">
-                            <img src="/img/icon/star-full.svg" alt="별">
-                            <img src="/img/icon/star-half.svg" alt="별 반개">
-                        </span>
-                        <span class="review-count">(1000)</span>
+                    <img src="https://placehold.co/250x180" alt="lecture"></a>
+                    <div class="lecture-list-info">
+                        <h2><a href="lectureDetail">왕초보 기초회화</a></h2>
+                        <p class="subtitle">틀에 박힌 한국식 영어는 이제 그만! - 찐 원어민 기초 회화!</p>
+                        <p class="teacher">Sean Pablo</p>
+                        <div class="rating">
+                            <span class="score">4.7</span>
+                            <span class="stars">
+                                <img src="/img/icon/star-full.svg" alt="별">
+                                <img src="/img/icon/star-full.svg" alt="별">
+                                <img src="/img/icon/star-full.svg" alt="별">
+                                <img src="/img/icon/star-full.svg" alt="별">
+                                <img src="/img/icon/star-half.svg" alt="별 반개">
+                            </span>
+                            <span class="review-count">(1000)</span>
+                        </div>
                     </div>
-                    <button class="heart-icon"><img src="/img/icon/heart-full.svg" alt="찜 아이콘"></button>
-                    <div class="lecture-purchase">
-                        <span class="price">155,000원</span>
-                        <button class="purchase-btn">결제하기</button>
-                    </div>
-                </div>
-
-                <div class="lecture-card">
-                    <img src="https://placehold.co/250x180" alt="lecture">
-                    <h2>하루 딱 10분! 신박한 영문법 토크쇼</h2>
-                    <p class="subtitle">워라벨 시대에 적합한 짧고 굵은 강의!</p>
-                    <div class="rating">
-                        <span class="score">4.0</span>
-                        <span class="stars">
-                            <img src="/img/icon/star-full.svg" alt="별">
-                            <img src="/img/icon/star-full.svg" alt="별">
-                            <img src="/img/icon/star-full.svg" alt="별">
-                            <img src="/img/icon/star-full.svg" alt="별">
-                            <img src="/img/icon/star-empty.svg" alt="별 반개">
-                        </span>
-                        <span class="review-count">(1000)</span>
-                    </div>
-                    <div class="heart-icon">
-                        <img src="/img/icon/heart.svg" alt="찜 아이콘">
-                    </div>
-                    <div class="lecture-purchase">
-                        <span class="price">155,000원</span>
-                        <button class="purchase-btn">결제하기</button>
+                    <div class="heart-purchase-wrap">
+                        <button class="heart-icon"><img src="/img/icon/heart-full.svg" alt="찜 아이콘"></button>
+                        <div class="lecture-purchase">
+                            <span class="price">155,000원</span>
+                            <button class="purchase-btn">결제하기</button>
+                        </div>
                     </div>
                 </div>
 
                 <div class="lecture-card">
-                    <img src="https://placehold.co/250x180" alt="lecture">
-                    <h2>Basic Grammar in Use</h2>
-                    <p class="subtitle">영어의 기본기를 잡아주는 쉬운 문법강의! (이론 강의)</p>
-                    <div class="rating">
-                        <span class="score">4.8</span>
-                        <span class="stars">
-                            <img src="/img/icon/star-full.svg" alt="별">
-                            <img src="/img/icon/star-full.svg" alt="별">
-                            <img src="/img/icon/star-full.svg" alt="별">
-                            <img src="/img/icon/star-full.svg" alt="별">
-                            <img src="/img/icon/star-full.svg" alt="별">
-                        </span>
-                        <span class="review-count">(1000)</span>
+                    <a href="lectureDetail">
+                        <img src="https://placehold.co/250x180" alt="lecture"></a>
+                    <div class="lecture-list-info">
+                        <h2>하루 딱 10분! 신박한 영문법 토크쇼</h2>
+                        <p class="subtitle">워라벨 시대에 적합한 짧고 굵은 강의!</p>
+                        <p class="teacher">Sean Pablo</p>
+                        <div class="rating">
+                            <span class="score">4.0</span>
+                            <span class="stars">
+                                <img src="/img/icon/star-full.svg" alt="별">
+                                <img src="/img/icon/star-full.svg" alt="별">
+                                <img src="/img/icon/star-full.svg" alt="별">
+                                <img src="/img/icon/star-full.svg" alt="별">
+                                <img src="/img/icon/star-empty.svg" alt="별 반개">
+                            </span>
+                            <span class="review-count">(1000)</span>
+                        </div>
                     </div>
-                    <div class="heart-icon">
-                        <img src="/img/icon/heart.svg" alt="찜 아이콘">
+                    <div class="heart-purchase-wrap">
+                        <div class="heart-icon">
+                            <img src="/img/icon/heart.svg" alt="찜 아이콘">
+                        </div>
+                        <div class="lecture-purchase">
+                            <span class="price">155,000원</span>
+                            <button class="purchase-btn">결제하기</button>
+                        </div>
                     </div>
-                    <div class="lecture-purchase">
-                        <span class="price">120,000원</span>
-                        <button class="purchase-btn">결제하기</button>
+                </div>
+                <div class="lecture-card">
+                    <a href="lectureDetail">
+                        <img src="https://placehold.co/250x180" alt="lecture"></a>
+                    <div class="lecture-list-info">
+                        <h2>Basic Grammar in Use</h2>
+                        <p class="subtitle">영어의 기본기를 잡아주는 쉬운 문법강의! (이론 강의)</p>
+                        <p class="teacher">Sean Pablo</p>
+                        <div class="rating">
+                            <span class="score">4.8</span>
+                            <span class="stars">
+                                <img src="/img/icon/star-full.svg" alt="별">
+                                <img src="/img/icon/star-full.svg" alt="별">
+                                <img src="/img/icon/star-full.svg" alt="별">
+                                <img src="/img/icon/star-full.svg" alt="별">
+                                <img src="/img/icon/star-full.svg" alt="별">
+                            </span>
+                            <span class="review-count">(1000)</span>
+                        </div>
+                    </div>
+                    <div class="heart-purchase-wrap">
+                        <div class="heart-icon">
+                            <img src="/img/icon/heart.svg" alt="찜 아이콘">
+                        </div>
+                        <div class="lecture-purchase">
+                            <span class="price">120,000원</span>
+                            <button class="purchase-btn">결제하기</button>
+                        </div>
                     </div>
                 </div>
 
                 <div class="lecture-card">
-                    <img src="https://placehold.co/250x180" alt="lecture">
-                    <h2>Business Negotiation</h2>
-                    <p class="subtitle">한권으로 끝내는 협상 테이블의 바이블 강의</p>
-                    <div class="rating">
-                        <span class="score">4.8</span>
-                        <span class="stars">
-                            <img src="/img/icon/star-full.svg" alt="별">
-                            <img src="/img/icon/star-full.svg" alt="별">
-                            <img src="/img/icon/star-full.svg" alt="별">
-                            <img src="/img/icon/star-full.svg" alt="별">
-                            <img src="/img/icon/star-full.svg" alt="별">
-                        </span>
-                        <span class="review-count">(1000)</span>
+                    <a href="lectureDetail">
+                        <img src="https://placehold.co/250x180" alt="lecture"></a>
+                    <div class="lecture-list-info">
+                        <h2>Business Negotiation</h2>
+                        <p class="subtitle">한권으로 끝내는 협상 테이블의 바이블 강의</p>
+                        <p class="teacher">Sean Pablo</p>
+                        <div class="rating">
+                            <span class="score">4.8</span>
+                            <span class="stars">
+                                <img src="/img/icon/star-full.svg" alt="별">
+                                <img src="/img/icon/star-full.svg" alt="별">
+                                <img src="/img/icon/star-full.svg" alt="별">
+                                <img src="/img/icon/star-full.svg" alt="별">
+                                <img src="/img/icon/star-full.svg" alt="별">
+                            </span>
+                            <span class="review-count">(1000)</span>
+                        </div>
                     </div>
-                    <div class="heart-icon">
-                        <img src="/img/icon/heart.svg" alt="찜 아이콘">
-                    </div>
-                    <div class="lecture-purchase">
-                        <span class="price">80,000원</span>
-                        <button class="purchase-btn">결제하기</button>
+                    <div class="heart-purchase-wrap">
+                        <div class="heart-icon">
+                            <img src="/img/icon/heart.svg" alt="찜 아이콘">
+                        </div>
+                        <div class="lecture-purchase">
+                            <span class="price">80,000원</span>
+                            <button class="purchase-btn">결제하기</button>
+                        </div>
                     </div>
                 </div>
             </section>
