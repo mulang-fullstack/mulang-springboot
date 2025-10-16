@@ -43,4 +43,10 @@ public class AuthController {
             return "redirect:/auth/login";
         }
     }
+
+    @GetMapping("logout.do")
+    public String logout(HttpSession session){
+        session.removeAttribute("loginUser");
+        return "redirect:/";
+    }
 }
