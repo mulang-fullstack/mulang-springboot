@@ -1,6 +1,6 @@
 <%@ page contentType="text/html;charset=utf-8" %>
 <%@ taglib prefix="c" uri="jakarta.tags.core" %>
-<!DOCTYPE html>
+<!doctype html>
 <html lang="ko">
 <head>
     <meta charset="UTF-8">
@@ -11,83 +11,105 @@
 
     <link rel="stylesheet" href="/css/global.css"/>
     <link rel="stylesheet" href="/css/pages/mypage/edit.css"/>
-    <title>내 프로필 수정</title>
+
+    <title>강사 프로필 관리 | Mulang?</title>
 </head>
 <body>
 
-<%@include file="../common/header.jsp" %>
+<%@ include file="../common/header.jsp" %>
 
 <main>
     <div class="contents">
-        <section class="mypage">
-            <%@include file="sidebar.jsp" %>
 
-        <section class="content">
-            <div class="profile-main">
-                <h2>내 프로필 수정</h2>
+        <section class="dashboard">
+            <%@ include file="sidebar.jsp" %>
 
-                <section class="profile-section">
-                    <!-- 튜터명 -->
-                    <div class="field">
-                        <label>이름</label>
-                        <div class="field-content">
-                            <span>최윤서</span>
-                            <button class="edit-btn">수정</button>
-                        </div>
-                    </div>
+            <section class="content">
+                <div class="profile-main">
+                    <h2>강사 프로필 관리</h2>
 
-                    <!-- 프로필 이미지 -->
-                    <div class="field">
-                        <label>프로필 이미지</label>
-                        <div class="field-content">
-                            <div class="profile-img-wrap">
-                                <img src="/img/dummy/profile.jpg" alt="프로필 이미지">
-                            </div>
-                            <button type="button" class="camera-btn">
-                                <img src="/img/icon/bx-camera.svg" alt="사진 변경">
-                            </button>
-                        </div>
-                    </div>
-
-                    <!-- 전화번호 -->
-                    <div class="field">
-                        <label>전화번호</label>
-                        <div class="input-wrap">
-                            <input type="text" value="010-5849-0283" readonly>
-                            <span class="check-icon">✔</span>
-                        </div>
-                    </div>
-                    <!-- 생년월일 -->
-                    <div class="field">
-                        <label>생년월일</label>
-                        <div class="input-wrap">
-                            <input type="text" value="2007-11-12" readonly>
-                            <span class="check-icon">✔</span>
-                        </div>
-                    </div>
-
-                    <!-- 이메일 -->
-                    <div class="field">
-                        <label>이메일</label>
-                        <div class="input-wrap">
-                            <textarea rows="1" readonly>071112yoonseo@naver.com</textarea>
-                            <button class="edit-btn">수정</button>
-                        </div>
-                    </div>
-
+                    <section class="profile-section">
+                        <!-- 강사명 -->
                         <div class="field">
-                         <label>비밀번호</label>
-                         <div class="input-wrap">
-                             <textarea rows="1" readonly>abcd1234</textarea>
-                             <button class="edit-btn">수정</button>
-                         </div>
-                    </div>
-                </section>
-            </div>
+                            <label>강사명</label>
+                            <div class="field-content">
+                                <span>${user.name}</span>
+                            </div>
+                        </div>
+
+                        <!-- 프로필 이미지 -->
+                        <div class="field">
+                            <label>프로필 이미지</label>
+                            <div class="field-content profile-img-area">
+                                <div class="profile-img-wrap">
+                                    <img id="profile-preview" src="/img/dummy/profile.jpg" alt="프로필 이미지">
+                                </div>
+
+                                <!-- 카메라 버튼 -->
+                                <button type="button" class="camera-btn" onclick="document.getElementById('fileInput').click();">
+                                    <img src="/img/icon/bx-camera.svg" alt="사진 변경">
+                                </button>
+
+                                <!-- 숨겨진 파일 업로드 input -->
+                                <input type="file" id="fileInput" name="file" accept="image/*" style="display:none;">
+                            </div>
+                        </div>
+
+
+
+
+                        <!-- 전화번호 -->
+                        <div class="field">
+                            <label>전화번호</label>
+                            <div class="input-wrap">
+                                <input type="text" value="${user.phone}">
+                            </div>
+                        </div>
+                        <!-- 닉네임 -->
+                        <div class="field">
+                            <label>닉네임</label>
+                            <div class="input-wrap">
+                                <input type="text" value="${user.nickname}">
+                            </div>
+                        </div>
+
+                        <!-- 생년월일 -->
+                        <div class="field">
+                            <label>생년월일</label>
+                            <div class="input-wrap">
+                                <input type="text" value="${user.createTime}">
+                            </div>
+                        </div>
+                        <!-- 이메일 -->
+                        <div class="field">
+                            <label>이메일</label>
+                            <div class="input-wrap">
+                                <input type="text" value="${user.email}">
+                            </div>
+                        </div>
+
+                        <!-- 비밀번호 -->
+                        <div class="field">
+                            <label>비밀번호</label>
+                            <div class="input-wrap">
+                                <input type="text" value="${user.password}">
+                            </div>
+                        </div>
+
+
+
+                        <!-- 수정 버튼 -->
+                        <div class="submit-wrap">
+                            <button type="submit" class="submit-btn">수정하기</button>
+                        </div>
+                    </section>
+                </div>
+            </section>
         </section>
-    </section>
+
     </div>
 </main>
-<%@include file="../common/footer.jsp" %>
+<script src = "/js/mypage/edit.js"></script>
+<%@ include file="../common/footer.jsp" %>
 </body>
 </html>

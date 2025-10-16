@@ -13,7 +13,6 @@
 
     <ul class="menu">
         <li class="active"><a href="personal">프로필</a></li>
-        <li><a href="edit">프로필수정</a></li>
         <li><a href="save">찜</a></li>
         <li><a href="course">나의 학습방</a></li>
         <li><a href="pay">결제내역</a></li>

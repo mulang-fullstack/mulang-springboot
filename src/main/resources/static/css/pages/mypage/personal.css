@@ -1,48 +1,120 @@
-/* ===== 기본 레이아웃 ===== */
-/* ===== 마이페이지 기본 레이아웃 (가로 정렬) ===== */
-.mypage {
+
+.dashboard {
     display: flex;
+    width: 1280px;
+    margin: 0 auto;
     gap: 60px;
-    align-items: flex-start;
+}
+
+.sidebar {
+    flex-shrink: 0;
+    margin-top: 40px;
 }
 
 .content {
     flex: 1;
-    background: #fff;
-    border: 1px solid #e0e0e0;
-    border-radius: 10px;
-    padding: 40px 60px;
-    box-sizing: border-box;
+    background-color: var(--bg-white);
 }
 
 .content h2 {
-    font-size: 28px;
+    margin-bottom: 30px;
+    font-size: 24px;
     font-weight: 700;
-    margin-bottom: 40px;
-    color: #1a1a1a;
+    color: var(--text-primary);
 }
 
-/* ===== 정보 레이아웃 ===== */
-.info-grid {
-    display: flex;
-    gap: 60px;
-}
-
-.info-labels,
-.info-values {
+/* -------------------- 프로필 섹션 -------------------- */
+.profile-section {
     display: flex;
     flex-direction: column;
-    gap: 25px;
+    gap: 30px;
 }
 
-.info-labels div {
-    font-size: 18px;
+/* -------------------- 필드 -------------------- */
+.field {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    padding-bottom: 20px;
+    border-bottom: var(--border-default);
+}
+
+.field label {
+    width: 160px;
+    font-size: 15px;
     font-weight: 600;
-    color: #1a1a1a;
+    color: var(--text-secondary);
 }
 
-.info-values div {
-    font-size: 17px;
-    color: #4d4d4d;
+.field-content {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+/* -------------------- 텍스트 -------------------- */
+.text-value {
+    font-size: 15px;
+    color: var(--text-primary);
+}
+
+.text-area {
+    font-size: 14px;
+    line-height: 1.6;
+    color: var(--text-primary);
+    white-space: pre-line;
+}
+
+/* -------------------- 리스트 -------------------- */
+.list {
+    padding-left: 20px;
+    list-style: disc;
+}
+
+.list li {
+    font-size: 14px;
+    line-height: 1.6;
+    color: var(--text-primary);
+}
+
+/* -------------------- 프로필 이미지 -------------------- */
+.profile-img-wrap {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    overflow: hidden;
+    background-color: var(--bg-secondary);
+}
+
+.profile-img-wrap img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+.submit-wrap {
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 20px;
+}
+
+.submit-btn {
+    padding: 8px 16px;
+    border: none;
+    border-radius: 6px;
+    background-color: var(--bg-point-main);
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--text-white);
+    cursor: pointer;
+    transition: opacity 0.2s ease, transform 0.1s ease;
+}
+
+.submit-btn:hover {
+    opacity: 0.9;
+}
+
+.submit-btn:active {
+    transform: scale(0.98);
 }
 

@@ -1,54 +1,104 @@
 <%@ page contentType="text/html;charset=utf-8" %>
 <%@ taglib prefix="c" uri="jakarta.tags.core" %>
-<meta charset="UTF-8">
-<!DOCTYPE html>
-<html lang="en">
+<!doctype html>
+<html lang="ko">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport"
-          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <link rel="icon" href="img/favicon.svg" type="image/png">
+    <link rel="icon" href="/img/favicon.svg" type="image/png">
 
     <link rel="stylesheet" href="/css/global.css"/>
     <link rel="stylesheet" href="/css/pages/mypage/personal.css"/>
-    <title>Mulang?</title>
+
+    <title>강사 프로필 | Mulang?</title>
 </head>
 <body>
-
 <%@include file="../common/header.jsp" %>
 
 <main>
     <div class="contents">
-        <section class="mypage">
-            <jsp:include page="/WEB-INF/views/mypage/sidebar.jsp" />
 
-            <!-- 메인 콘텐츠 -->
+        <section class="dashboard">
+            <%@ include file="sidebar.jsp" %>
+
             <section class="content">
-                <h2>개인정보</h2>
+                <div class="profile-main">
+                    <h2>강사 프로필</h2>
 
-                <div class="info-grid">
-                    <div class="info-labels">
-                        <div>이름</div>
-                        <div>이메일</div>
-                        <div>생년월일</div>
-                        <div>전화번호</div>
-                        <div>비밀번호</div>
-                    </div>
-                    <div class="info-values">
-                        <div>최윤서</div>
-                        <div>071112yoonseo@naver.com</div>
-                        <div>2007.11.12</div>
-                        <div>010-5849-0283</div>
-                        <div>************</div>
-                    </div>
+                    <section class="profile-section">
+                        <!-- 강사명 -->
+                        <div class="field">
+                            <label>강사명</label>
+                            <div class="field-content">
+                                <span class="text-value">${user.name}</span>
+                            </div>
+                        </div>
+
+                        <!-- 프로필 이미지 -->
+                        <div class="field">
+                            <label>프로필 이미지</label>
+                            <div class="field-content">
+                                <div class="profile-img-wrap">
+                                    <img src="/img/dummy/profile.jpg" alt="프로필 이미지">
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- 닉네임 -->
+                        <div class="field">
+                            <label>닉네임</label>
+                            <div class="field-content">
+                                <span class="text-value">${user.nickname}</span>
+                            </div>
+                        </div>
+
+                        <!-- 전화번호 -->
+                        <div class="field">
+                            <label>전화번호</label>
+                            <div class="field-content">
+                                <span class="text-value">${user.phone}</span>
+                            </div>
+                        </div>
+
+                        <!-- 강사 소개 -->
+                        <div class="field">
+                            <label>생년월일</label>
+                            <div class="field-content">
+                                <p class="text-area">${user.createTime}</p>
+                            </div>
+                        </div>
+
+                        <!-- 이력 -->
+                        <div class="field">
+                            <label>이메일</label>
+                            <div class="field-content">
+                                <p class="text-area">${user.email}</p>
+                            </div>
+                        </div>
+
+                        <!-- 클래스 장소 -->
+                        <div class="field">
+                            <label>비밀번호</label>
+                            <div class="field-content">
+                                <p class="text-area">${user.password}</p>
+                            </div>
+                        </div>
+
+                        <form action="/mypage/edit" method="get">
+                            <div class="submit-wrap">
+                                <button type="submit" class="submit-btn">수정하기</button>
+                            </div>
+                        </form>
+
+                    </section>
                 </div>
             </section>
         </section>
-        </div>
-    </main>
 
-    <%@include file="../common/footer.jsp" %>
+    </div>
+</main>
 
-    </body>
-    </html>
+<%@include file="../common/footer.jsp" %>
+</body>
+</html>

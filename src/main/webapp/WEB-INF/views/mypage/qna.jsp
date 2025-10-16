@@ -18,7 +18,7 @@
 
 <main>
     <div class="contents">
-        <section class="dashboard">
+        <section class="mypage">
 
             <%@include file="sidebar.jsp" %>
 
