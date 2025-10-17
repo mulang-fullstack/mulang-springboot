@@ -1,5 +1,5 @@
 /* ===============================
-   📦 lecture-detail.css
+   📦 course-detail.css
    작성 순서: 레이아웃 → 박스모델 → 테두리 → 배경 → 타이포그래피 → 비주얼 → 기타
 ================================= */
 /*
@@ -14,20 +14,20 @@ body {
     color: var(--text-secondary);
 }*/
 /*강의명*/
-.lecture-name {
+.course-name {
     display: flex;
     justify-content: flex-start;
     //width: 100%;
     padding: 50px 0 20px;
 }
 
-.lecture-name h1 {
+.course-name h1 {
     font-size: 36px;
     font-weight: 400;
 }
 
 /* 요약 박스 */
-.lecture-summary {
+.course-summary {
     display: flex;
     justify-content: space-between;
     //align-items: flex-start;
@@ -41,42 +41,42 @@ body {
 }
 
 /* 강의 이미지 */
-.lecture-thumb {
+.course-thumb {
     width: 347px;
     height: 250px;
 }
 
 /* 강의 정보 */
-.lecture-info {
+.course-info {
     display: flex;
     flex-direction: column;
     gap: 20px;
     flex: 1;
 }
 
-.lecture-desc {
+.course-desc {
     font-size: 20px;
 }
 
-.lecture-meta {
+.course-meta {
     display: flex;
     flex-direction: column;
     gap: 12px;
 }
 
-.lecture-meta > div {
+.course-meta > div {
     display: flex;
     align-items: center;
 }
 
-.lecture-meta .label {
+.course-meta .label {
     width: 90px;
     font-weight: 700;
     margin-right: 10px;
 }
 
 /* 가격 및 결제 버튼 */
-.lecture-purchase {
+.course-purchase {
     display: flex;
     flex-direction: row;
     align-items: center;
@@ -105,7 +105,7 @@ body {
 }
 
 /* 탭 메뉴 */
-.lecture-tabs {
+.course-tabs {
     display: flex;
     //justify-content: center;
     align-items: center;

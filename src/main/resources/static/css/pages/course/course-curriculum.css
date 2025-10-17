@@ -1,16 +1,16 @@
 /* ===============================
-   📦 lecture-detail.css
+   📦 course-detail.css
    작성 순서: 레이아웃 → 박스모델 → 테두리 → 배경 → 타이포그래피 → 비주얼 → 기타
 ================================= */
-.lecture-curriculum {
+.course-curriculum {
     width: 1280px;
     display: flex;
     flex-direction: column; /* 항목이 위에서 아래로 쌓임 */
     padding: 10px 0;
 }
 
-.lecture-curriculum .curriculum-header,
-.lecture-curriculum .curriculum-row {
+.course-curriculum .curriculum-header,
+.course-curriculum .curriculum-row {
     display: flex;          /* 가로 배치 */
     flex-direction: row;    /* 명시적으로 가로 */
     align-items: center;
@@ -19,22 +19,22 @@
     padding: 5px;          /* 위아래 padding 조금 늘림 */
 }
 
-.lecture-curriculum .curriculum-header .title {
+.course-curriculum .curriculum-header .title {
     text-align: center;
 }
 
-.lecture-curriculum .no,
-.lecture-curriculum .time{
+.course-curriculum .no,
+.course-curriculum .time{
     width: 100px;
     text-align: center;
 }
 
-.lecture-curriculum .title {
+.course-curriculum .title {
     flex: 1;
     padding: 0 10px;
 }
 
-.lecture-curriculum .curriculum-row:hover {
+.course-curriculum .curriculum-row:hover {
     background-color: var(--bg-point-sub);
     cursor: pointer;
 }

@@ -9,7 +9,7 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <link rel="icon" href="img/favicon.svg" type="image/png">
     <link rel="stylesheet" href="css/global.css"/>
-    <link rel="stylesheet" href="css/pages/lecture/lecture-detail.css"/>
+    <link rel="stylesheet" href="css/pages/course/course-detail.css"/>
     <title>Mulang?</title>
 </head>
 <body>
@@ -17,13 +17,13 @@
 <main>
     <div class="contents">
         <div class="leture-detail-contents">
-            <%@include file="lectureInfo.jsp" %>
-            <div class="lecture-tabs">
-                <div class="tab active" onclick="location.href='lectureDetail'">강의소개</div>
-                <div class="tab" onclick="location.href='lectureCurriculum'">커리큘럼</div>
-                <div class="tab" onclick="location.href='lectureReview'">리뷰</div>
+            <%@include file="courseInfo.jsp" %>
+            <div class="course-tabs">
+                <div class="tab active" onclick="location.href='courseDetail'">강의소개</div>
+                <div class="tab" onclick="location.href='courseCurriculum'">커리큘럼</div>
+                <div class="tab" onclick="location.href='courseReview'">리뷰</div>
             </div>
-            <div class="lecture-content">
+            <div class="course-content">
                 <h2>왕초보 기초회화</h2>
                 <p>
                     틀에 박힌 한국식 영어는 이제 그만! 유학파 및 원어민 강사가 알려주는 신비한 뉘앙스의 세계 - 찐 원어민 회화 패키지!<br />
