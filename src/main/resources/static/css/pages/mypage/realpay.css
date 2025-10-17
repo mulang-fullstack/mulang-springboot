@@ -22,10 +22,10 @@
 /* 주문 요약 */
 .order-summary {
     flex: 0 0 280px;
-    border: 1px solid #e0e0e0;
+    border: var(--border-default);
     border-radius: 12px;
     padding: 24px;
-    background: #fff;
+    background: var(--bg-white);
     box-shadow: 0 2px 6px rgba(0,0,0,0.05);
 }
 
@@ -49,29 +49,29 @@
 .promo-input {
     width: 100%;
     padding: 8px;
-    border: 1px solid #ccc;
+    border: var(--border-default);
     border-radius: 6px;
     margin-top: 12px;
 }
 
 .promo-text {
     font-size: 12px;
-    color: #666;
+    color: var(--text-subtle);
     margin-top: 4px;
 }
 
 .total {
     font-weight: 700;
     font-size: 15px;
-    border-top: 1px solid #ddd;
+    border-top: var(--border-default);
     padding-top: 10px;
 }
 
 /* 결제 폼 */
 .payment-form { ,
     flex: 1;
-    background: #fff;
-    border: 1px solid #eee;
+    background: var(--bg-white);
+    border: var(--border-primary);
     border-radius: 12px;
     padding: 30px 40px;
     box-shadow: 0 2px 8px rgba(0,0,0,0.05);
@@ -86,13 +86,13 @@
 .payment-form label {
     font-size: 14px;
     font-weight: 500;
-    color: #333;
+    color: var(--text-black);
 }
 
 .payment-form input,
 .payment-form select {
     padding: 10px;
-    border: 1px solid #ccc;
+    border: var(--border-primary);
     border-radius: 6px;
     font-size: 14px;
     width: 100%;
@@ -122,7 +122,7 @@
 
 .submit-btn {
     background-color: var(--text-point-main);
-    color: #fff;
+    color: var(--text-white);
     padding: 12px 28px;
     border: none;
     border-radius: 8px;
@@ -133,5 +133,5 @@
 }
 
 .submit-btn:hover {
-    background-color: var(--text-point-hover);
+    background-color: var(--bg-point-hover);
 }

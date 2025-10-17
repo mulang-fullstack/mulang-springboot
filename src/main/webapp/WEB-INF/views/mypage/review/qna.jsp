@@ -23,11 +23,10 @@
             <%@include file="../sidebar.jsp" %>
 
             <section class="content">
-                <h2>리뷰 · Q&A</h2>
+                <h2>Q&A</h2>
 
                 <!-- 탭 메뉴 -->
                 <div class="tab-menu">
-                    <a href="" class="tab">리뷰</a>
                     <a href="qna" class="tab active">Q&A</a>
                 </div>
 

@@ -57,18 +57,19 @@
 
 
                     <form action="/mypage/edit" method="post">
-                        <!-- 전화번호 -->
-                        <div class="field">
-                            <label>전화번호</label>
-                            <div class="input-wrap">
-                                <input type="text" name="phone" value="${user.phone}">
-                            </div>
-                        </div>
                         <!-- 닉네임 -->
                         <div class="field">
                             <label>닉네임</label>
                             <div class="input-wrap">
                                 <input type="text" name="nickname" value="${user.nickname}">
+                            </div>
+                        </div>
+
+                        <!-- 전화번호 -->
+                        <div class="field">
+                            <label>전화번호</label>
+                            <div class="input-wrap">
+                                <input type="text" name="phone" value="${user.phone}">
                             </div>
                         </div>
 
