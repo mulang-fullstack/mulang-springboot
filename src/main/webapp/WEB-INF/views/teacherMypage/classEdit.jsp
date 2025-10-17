@@ -46,7 +46,7 @@
                                 <img src="https://placehold.co/160x90" alt="클래스 썸네일">
                             </div>
                             <div class="title">
-                                <a href="lectureDetail.do">왕초보 기초회화</a>
+                                <a href="lectureDetail">왕초보 기초회화</a>
                             </div>
                             <div class="type">VOD</div>
                             <div class="status"><span class="tag gray">임시 저장</span></div>

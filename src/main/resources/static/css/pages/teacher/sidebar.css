@@ -62,10 +62,10 @@
 .menu li {
     width: 100%;
     list-style: none;
-    text-align: center;
 }
 
 .menu a {
+    position: relative;
     display: block;
     width: 100%;
     padding: 12px 0;
@@ -76,16 +76,27 @@
     color: var(--text-tertiary);
     text-decoration: none;
     transition: background 0.2s ease, color 0.2s ease;
+    text-align: center;
+}
+
+.menu a img {
+    position: absolute;
+    left: 40px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 16px;
+    height: 16px;
+    object-fit: contain;
 }
 
 .menu a:hover {
-    background-color: var(--bg-point-sub);
-    color: var(--text-primary);
+    background-color: var(--bg-point-hover);
+    color: var(--text-white);
 }
 
 .menu .active a {
-    background-color: var(--bg-point-sub);
-    color: var(--text-point-main);
+    background-color: var(--bg-point-main);
+    color: var(--text-white);
     font-weight: 600;
 }
 
@@ -99,17 +110,19 @@
     display: block;
     padding: 14px 0;
     border-radius: 10px;
-    background-color: var(--bg-secondary);
+    background-color: var(--bg-point-main);
     font-weight: 600;
-    color: var(--text-primary);
+    color: var(--text-white);
     text-align: center;
     text-decoration: none;
     transition: background 0.2s ease;
 }
 
 .guidebook a:hover {
-    background-color: var(--bg-white-hover);
+    background-color: var(--bg-point-hover);
 }
+
+/* -------------------- 반응형 -------------------- */
 @media (max-width: 768px) {
     .sidebar {
         display: none;

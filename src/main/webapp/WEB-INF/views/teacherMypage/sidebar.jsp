@@ -16,13 +16,13 @@
     </div>
 
     <ul class="menu">
-        <li><a href="profile">프로필</a></li>
-        <li><a href="classEdit">클래스관리</a></li>
-        <li><a href="classUpload">클래스생성</a></li>
-        <li><a href="QnA">QnA</a></li>
-        <li><a href="settlement">판매현황</a></li>
+        <li><a href="profile"><img src="/img/icon/profile.png" alt="">프로필</a></li>
+        <li><a href="classEdit"><img src="/img/icon/classEdit.png" alt="">클래스관리</a></li>
+        <li><a href="classUpload"><img src="/img/icon/classUpload.png" alt="">클래스생성</a></li>
+        <li><a href="QnA"><img src="/img/icon/QnA.png" alt="">QnA</a></li>
+        <li><a href="settlement"><img src="/img/icon/money.png" alt="">판매현황</a></li>
     </ul>
-</aside>
 
+</aside>
 </body>
 </html>
