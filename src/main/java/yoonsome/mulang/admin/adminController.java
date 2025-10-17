@@ -9,6 +9,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 public class adminController {
     @GetMapping("/visitor")
     public String visitor(){
-        return "admin/visitorStatus";
+        return "admin/visitor";
     }
 }

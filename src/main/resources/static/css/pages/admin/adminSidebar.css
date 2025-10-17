@@ -1,12 +1,36 @@
-/* 메뉴 */
+@charset "UTF-8";
+
+/* Sidebar Layout */
+aside {
+    display: flex;
+    flex-direction: column;
+    width: 240px;
+    height: 100vh;
+    background-color: #2c323d;
+    color: #fff;
+}
+
+.logo-area {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 80px;
+}
+
+.logo {
+    width: 80px;
+}
+
+/* Menu */
 .menu {
-    flex: 1;
     font-size: 15px;
 }
 .menu-section {
-    border-top: 1px solid rgba(255,255,255,0.1);
+    border-bottom: 1px solid rgba(255,255,255,0.1);
 }
 .menu-section button {
+    display: flex;
+    gap: 10px;
     width: 100%;
     background: none;
     color: #fff;
@@ -20,7 +44,7 @@
 }
 .submenu {
     list-style: none;
-    padding: 4px 0 4px 30px;
+    padding: 6px 0 6px 30px;
     background-color: #3b4250;
 }
 .submenu li a {
@@ -31,4 +55,8 @@
 }
 .submenu li a:hover {
     color: #fff;
+}
+
+button img {
+    width: 24px;
 }
