@@ -85,14 +85,22 @@
                             <label>이메일</label>
                             <div class="input-wrap">
                                 <input type="text" name="email" value="${user.email}">
+
+                                <!-- 유효성 검사 에러 메시지 -->
+                                <c:if test="${not empty emailerror}">
+                                    <p class="error">${emailerror}</p>
+                                </c:if>
                             </div>
                         </div>
-
                         <!-- 비밀번호 -->
                         <div class="field">
                             <label>비밀번호</label>
                             <div class="input-wrap">
                                 <input type="text" name="password" value="${user.password}">
+                                <c:if test="${not empty passworderror}">
+                                    <p class="error">${passworderror}</p>
+                                </c:if>
+                            </div>
                             </div>
                         </div>
 

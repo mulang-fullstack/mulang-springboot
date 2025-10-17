@@ -10,7 +10,7 @@
     <link rel="icon" href="/img/favicon.svg" type="image/png">
     <link rel="stylesheet" href="/css/global.css"/>
     <link rel="stylesheet" href="/css/pages/mypage/review/qna.css"/>
-    <title>리뷰 · Q&A</title>
+    <title>리뷰</title>
 </head>
 <body>
 
@@ -23,12 +23,13 @@
             <%@include file="../sidebar.jsp" %>
 
             <section class="content">
-                <h2>Q&A</h2>
+                <h2>리뷰</h2>
 
                 <!-- 탭 메뉴 -->
+                <!-- 탭 메뉴 -->
                 <div class="tab-menu">
-                    <a href="review" class="tab">리뷰</a>
-                    <a href="qna" class="tab active">Q&A</a>
+                    <a href="review" class="tab active">리뷰</a>
+                    <a href="qna" class="tab">Q&A</a>
                 </div>
 
                 <!-- 필터 영역 -->

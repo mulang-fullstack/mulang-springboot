@@ -114,6 +114,12 @@ textarea {
     font-weight: 700;
     color: var(--text-point-main);
 }
+.error {
+    color: var(--text-error); /* 붉은색 */
+    font-size: 13px;
+    margin-top: 4px;
+}
+
 
 /* -------------------- 수정 버튼 -------------------- */
 .edit-btn {
