@@ -8,7 +8,6 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import yoonsome.mulang.course.entity.Course;
 import yoonsome.mulang.course.repository.CourseRepository;
-
 import java.util.Optional;
 
 @Transactional
@@ -53,6 +52,6 @@ public class CourseServiceImpl implements CourseService {
 
     @Override
     public void deleteCourse(long id) {
-
+        courseRepository.deleteById(id);
     }
 }
