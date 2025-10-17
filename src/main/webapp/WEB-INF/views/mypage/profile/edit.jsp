@@ -57,18 +57,19 @@
 
 
                     <form action="/mypage/edit" method="post">
-                        <!-- 전화번호 -->
-                        <div class="field">
-                            <label>전화번호</label>
-                            <div class="input-wrap">
-                                <input type="text" name="phone" value="${user.phone}">
-                            </div>
-                        </div>
                         <!-- 닉네임 -->
                         <div class="field">
                             <label>닉네임</label>
                             <div class="input-wrap">
                                 <input type="text" name="nickname" value="${user.nickname}">
+                            </div>
+                        </div>
+
+                        <!-- 전화번호 -->
+                        <div class="field">
+                            <label>전화번호</label>
+                            <div class="input-wrap">
+                                <input type="text" name="phone" value="${user.phone}">
                             </div>
                         </div>
 
@@ -84,14 +85,22 @@
                             <label>이메일</label>
                             <div class="input-wrap">
                                 <input type="text" name="email" value="${user.email}">
+
+                                <!-- 유효성 검사 에러 메시지 -->
+                                <c:if test="${not empty emailerror}">
+                                    <p class="error">${emailerror}</p>
+                                </c:if>
                             </div>
                         </div>
-
                         <!-- 비밀번호 -->
                         <div class="field">
                             <label>비밀번호</label>
                             <div class="input-wrap">
                                 <input type="text" name="password" value="${user.password}">
+                                <c:if test="${not empty passworderror}">
+                                    <p class="error">${passworderror}</p>
+                                </c:if>
+                            </div>
                             </div>
                         </div>
 

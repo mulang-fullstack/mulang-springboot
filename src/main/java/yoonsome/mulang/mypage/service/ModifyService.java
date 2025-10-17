@@ -15,7 +15,6 @@ public class ModifyService {
     @Transactional
     public void updateUser(String nickname, String email, String phone, String password){
         User user = modify.findById(2l);
-
         user.setEmail(email);
         user.setNickname(nickname);
         user.setPhone(phone);

@@ -1,14 +1,7 @@
-
 .dashboard {
     display: flex;
     width: 1280px;
-    margin: 0 auto;
     gap: 60px;
-}
-
-.sidebar {
-    flex-shrink: 0;
-    margin-top: 40px;
 }
 
 .content {
@@ -33,8 +26,8 @@
 /* -------------------- 필드 -------------------- */
 .field {
     display: flex;
-    justify-content: space-between;
-    align-items: flex-start;
+    justify-content: flex-start;      /* 수정하기 폼 기준으로 변경 */
+    align-items: center;              /* 텍스트 수직 중앙 맞춤 */
     padding-bottom: 20px;
     border-bottom: var(--border-default);
 }
@@ -47,9 +40,9 @@
 }
 
 .field-content {
-    flex: 1;
+    position: relative;
     display: flex;
-    flex-direction: column;
+    align-items: center;              /* label과 텍스트 수직 중앙 정렬 */
     gap: 10px;
 }
 
@@ -57,6 +50,7 @@
 .text-value {
     font-size: 15px;
     color: var(--text-primary);
+    line-height: 1.4;                 /* 수정폼과 시각적으로 동일한 높이 */
 }
 
 .text-area {
@@ -92,6 +86,8 @@
     height: 100%;
     object-fit: cover;
 }
+
+/* -------------------- 수정하기 버튼 -------------------- */
 .submit-wrap {
     display: flex;
     justify-content: flex-end;
@@ -107,7 +103,7 @@
     font-weight: 600;
     color: var(--text-white);
     cursor: pointer;
-    transition: opacity 0.2s ease, transform 0.1s ease;
+    transition: opacity 0.2s ease;
 }
 
 .submit-btn:hover {
@@ -115,6 +111,5 @@
 }
 
 .submit-btn:active {
-    transform: scale(0.98);
+    transform: none; /* 수정폼과 동일하게 움찔 현상 제거 */
 }
-

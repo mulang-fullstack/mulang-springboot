@@ -26,28 +26,6 @@
                     <h2>주문 요약</h2>
 
                     <section class="realpay-section">
-                        <div class="order-summary">
-                            <h3>주문 요약</h3>
-                            <p class="item-name">왕초보 영어 회화</p>
-
-                            <div class="item-row">
-                                <span>1</span>
-                                <span>$115</span>
-                            </div>
-
-                            <input type="text" placeholder="프로모션 코드를 입력하세요" class="promo-input">
-                            <p class="promo-text">프로모션 코드가 있습니까?</p>
-
-                            <div class="summary-row">
-                                <span>세금</span>
-                                <span>+$10.21</span>
-                            </div>
-
-                            <div class="total">
-                                <span>세금 포함 합계</span>
-                                <span>$125.21</span>
-                            </div>
-                        </div>
 
                         <div class="payment-form">
                             <form action="/order/submit" method="post">
@@ -113,6 +91,25 @@
                                     <button type="submit" class="submit-btn">주문 확인</button>
                                 </div>
                             </form>
+                        </div>
+                        <div class="order-summary">
+                            <h3>주문 요약</h3>
+                            <p class="item-name">왕초보 영어 회화</p>
+
+                            <div class="item-row">
+                                <span>1</span>
+                                <span>130,000원</span>
+                            </div>
+
+                            <div class="summary-row">
+                                <span>세금</span>
+                                <span>2300원</span>
+                            </div>
+
+                            <div class="total">
+                                <span>합계</span>
+                                <span>132,300원</span>
+                            </div>
                         </div>
                     </section>
                 </div>

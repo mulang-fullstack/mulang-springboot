@@ -9,8 +9,8 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <link rel="icon" href="/img/favicon.svg" type="image/png">
     <link rel="stylesheet" href="/css/global.css"/>
-    <link rel="stylesheet" href="/css/pages/mypage/review/review.css"/>
-    <title>리뷰 · Q&A</title>
+    <link rel="stylesheet" href="/css/pages/mypage/review/qna.css"/>
+    <title>리뷰</title>
 </head>
 <body>
 
@@ -23,24 +23,26 @@
             <%@include file="../sidebar.jsp" %>
 
             <section class="content">
-                <h2>리뷰 · Q&A</h2>
+                <h2>리뷰</h2>
 
+                <!-- 탭 메뉴 -->
+                <!-- 탭 메뉴 -->
                 <div class="tab-menu">
-                    <a href="" class="tab active">리뷰</a>
+                    <a href="review" class="tab active">리뷰</a>
                     <a href="qna" class="tab">Q&A</a>
                 </div>
 
+                <!-- 필터 영역 -->
                 <div class="filter-bar">
                     <select class="sort-select">
                         <option>최신순</option>
                         <option>오래된순</option>
                     </select>
-                        <button class="apply-btn">작성하기</button>
-
+                    <button class="apply-btn">작성하기</button>
                 </div>
 
-
-                <div class="review-list">
+                <!-- Q&A 리스트 -->
+                <div class="qna-list">
                     <div class="empty">데이터가 없습니다.</div>
                 </div>
             </section>
