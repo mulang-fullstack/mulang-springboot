@@ -9,18 +9,18 @@
     <link rel="icon" href="/img/favicon.svg" type="image/png">
 
     <link rel="stylesheet" href="/css/global.css"/>
-    <link rel="stylesheet" href="/css/pages/mypage/personal.css"/>
+    <link rel="stylesheet" href="/css/pages/mypage/profile/personal.css"/>
 
     <title>강사 프로필 | Mulang?</title>
 </head>
 <body>
-<%@include file="../common/header.jsp" %>
+<%@include file="../../common/header.jsp" %>
 
 <main>
     <div class="contents">
 
         <section class="dashboard">
-            <%@ include file="sidebar.jsp" %>
+            <%@ include file="../sidebar.jsp" %>
 
             <section class="content">
                 <div class="profile-main">
@@ -99,7 +99,7 @@
 </main>
 
 <script src = "/js/mypage/personal.js"></script>
-<%@include file="../common/footer.jsp" %>
+<%@include file="../../common/footer.jsp" %>
 
 </body>
 </html>

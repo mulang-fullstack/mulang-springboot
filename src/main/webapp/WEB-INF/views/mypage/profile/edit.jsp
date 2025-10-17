@@ -10,19 +10,19 @@
     <link rel="icon" href="/img/favicon.svg" type="image/png">
 
     <link rel="stylesheet" href="/css/global.css"/>
-    <link rel="stylesheet" href="/css/pages/mypage/edit.css"/>
+    <link rel="stylesheet" href="/css/pages/mypage/profile/edit.css"/>
 
     <title>강사 프로필 관리 | Mulang?</title>
 </head>
 <body>
 
-<%@ include file="../common/header.jsp" %>
+<%@ include file="../../common/header.jsp" %>
 
 <main>
     <div class="contents">
 
         <section class="dashboard">
-            <%@ include file="sidebar.jsp" %>
+            <%@ include file="../sidebar.jsp" %>
 
             <section class="content">
                 <div class="profile-main">
@@ -31,7 +31,7 @@
                     <section class="profile-section">
                         <!-- 강사명 -->
                         <div class="field">
-                            <label>강사명</label>
+                            <label>이름</label>
                             <div class="field-content">
                                 <span>${user.name}</span>
                             </div>
@@ -56,20 +56,19 @@
                         </div>
 
 
-
-
+                    <form action="/mypage/edit" method="post">
                         <!-- 전화번호 -->
                         <div class="field">
                             <label>전화번호</label>
                             <div class="input-wrap">
-                                <input type="text" value="${user.phone}">
+                                <input type="text" name="phone" value="${user.phone}">
                             </div>
                         </div>
                         <!-- 닉네임 -->
                         <div class="field">
                             <label>닉네임</label>
                             <div class="input-wrap">
-                                <input type="text" value="${user.nickname}">
+                                <input type="text" name="nickname" value="${user.nickname}">
                             </div>
                         </div>
 
@@ -77,14 +76,14 @@
                         <div class="field">
                             <label>생년월일</label>
                             <div class="input-wrap">
-                                <input type="text" value="${user.createTime}">
+                                <input type="text" name="birthday" value="${user.createTime}">
                             </div>
                         </div>
                         <!-- 이메일 -->
                         <div class="field">
                             <label>이메일</label>
                             <div class="input-wrap">
-                                <input type="text" value="${user.email}">
+                                <input type="text" name="email" value="${user.email}">
                             </div>
                         </div>
 
@@ -92,7 +91,7 @@
                         <div class="field">
                             <label>비밀번호</label>
                             <div class="input-wrap">
-                                <input type="text" value="${user.password}">
+                                <input type="text" name="password" value="${user.password}">
                             </div>
                         </div>
 
@@ -102,7 +101,9 @@
                         <div class="submit-wrap">
                             <button type="submit" class="submit-btn">수정하기</button>
                         </div>
+                    </form>
                     </section>
+
                 </div>
             </section>
         </section>
@@ -110,6 +111,6 @@
     </div>
 </main>
 <script src = "/js/mypage/edit.js"></script>
-<%@ include file="../common/footer.jsp" %>
+<%@ include file="../../common/footer.jsp" %>
 </body>
 </html>

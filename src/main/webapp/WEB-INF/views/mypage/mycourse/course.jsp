@@ -12,18 +12,18 @@
     <link rel="icon" href="img/favicon.svg" type="image/png">
 
     <link rel="stylesheet" href="/css/global.css"/>
-    <link rel="stylesheet" href="/css/pages/mypage/course.css"/>
+    <link rel="stylesheet" href="/css/pages/mypage/mycourse/course.css"/>
     <title>나의 학습방</title>
 </head>
 <body>
 
-<%@include file="../common/header.jsp" %>
+<%@include file="../../common/header.jsp" %>
 
 <main>
     <div class="contents">
         <section class="mypage">
 
-            <%@include file="sidebar.jsp" %>
+            <%@include file="../sidebar.jsp" %>
 
             <section class="content">
                 <h2>나의 학습방</h2>
@@ -75,7 +75,7 @@
     </div>
 </main>
 
-    <%@include file="../common/footer.jsp" %>
+    <%@include file="../../common/footer.jsp" %>
 
     </body>
     </html>

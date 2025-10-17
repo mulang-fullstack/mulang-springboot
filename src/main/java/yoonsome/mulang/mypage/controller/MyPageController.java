@@ -21,44 +21,43 @@ public class MyPageController {
 
         User user = em.find(User.class, 2L);
         model.addAttribute("user", user);
-        return "mypage/personal";
+        return "mypage/profile/personal";
     }
 
-    @GetMapping("edit")
-    public String edit(Model model) {
 
-        User user = em.find(User.class, 2L);
-        model.addAttribute("user", user);
-        return "mypage/edit";
-    }
 
     @GetMapping("save")
     public String save(Model model) {
 
-        return "mypage/save";
+        return "mypage/like/save";
     }
 
     @GetMapping("pay")
     public String pay() {
 
-        return "mypage/pay";
+        return "mypage/payhistory/pay";
     }
 
     @GetMapping("course")
     public String coruse() {
 
-        return "mypage/course";
+        return "mypage/mycourse/course";
     }
 
     @GetMapping("review")
     public String review() {
 
-        return "mypage/review";
+        return "mypage/review/review";
     }
 
     @GetMapping("qna")
     public String qna() {
 
-        return "mypage/qna";
+        return "mypage/review/qna";
+    }
+    @GetMapping("realpay")
+    public String realpay() {
+
+        return "mypage/realpay";
     }
 }
