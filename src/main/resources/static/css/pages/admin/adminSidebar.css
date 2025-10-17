@@ -28,7 +28,12 @@ aside {
 .menu-section {
     border-bottom: 1px solid rgba(255,255,255,0.1);
 }
-.menu-section button {
+
+.menu-section img {
+    width: 24px;
+}
+
+.menu-section > div {
     display: flex;
     gap: 10px;
     width: 100%;
@@ -39,7 +44,7 @@ aside {
     text-align: left;
     cursor: pointer;
 }
-.menu-section.active button {
+.menu-section.active > div {
     background-color: #30477b;
 }
 .submenu {
@@ -57,6 +62,25 @@ aside {
     color: #fff;
 }
 
-button img {
-    width: 24px;
+
+.menu-section.active > div {
+    background-color: #30477b;
+}
+
+.submenu li a.active {
+    color: #fff;
+    font-weight: 600;
+    position: relative;
+}
+
+.submenu li a.active::before {
+    content: "";
+    position: absolute;
+    left: -14px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background-color: #4b7bec;
 }
