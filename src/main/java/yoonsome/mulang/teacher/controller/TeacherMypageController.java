@@ -2,7 +2,7 @@ package yoonsome.mulang.teacher.controller;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 
-//@Controller
+@Controller
 public class TeacherMypageController {
     @GetMapping("classEdit")
     public String classmain(){
@@ -20,10 +20,10 @@ public class TeacherMypageController {
     public String settlement(){
         return "teacherMypage/settlement";
     }
-    /*@GetMapping("profile")
+    @GetMapping("profile")
     public String profile(){
         return "teacherMypage/profile";
-    }*/
+    }
     @GetMapping("classUpload")
     public String classUpload(){
         return "teacherClass/classUpload";
