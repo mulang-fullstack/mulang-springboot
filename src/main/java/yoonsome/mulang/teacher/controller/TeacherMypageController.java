@@ -4,10 +4,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 
 @Controller
 public class TeacherMypageController {
-    @GetMapping("classEdit")
-    public String classmain(){
-        return "teacherMypage/classEdit";
-    }
+
     @GetMapping("profileEdit")
     public String profileEdit(){
         return "teacherMypage/profileEdit";
