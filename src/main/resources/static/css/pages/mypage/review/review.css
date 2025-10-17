@@ -54,15 +54,19 @@
     height: 2px;
     background-color: var(--text-point-main);
 }
-.apply-btn{
+.apply-btn {
+    background-color: var(--bg-point-main);
     border: var(--border-default);
     border-radius: 8px;
-    background-color: var(--bg-secondary);
-    color: var(--text-muted);
+    color: #fff;
     font-size: 14px;
     font-weight: 500;
     padding: 10px 20px;
-    cursor: not-allowed;
+    cursor: pointer;
+}
+
+.apply-btn:hover {
+    opacity: 0.9;
 }
 
 /* -------------------- 필터 영역 -------------------- */

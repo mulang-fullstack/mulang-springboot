@@ -1,0 +1,137 @@
+@charset "UTF-8";
+
+.dashboard {
+    display: flex;
+    width: 1280px;
+    margin: 0 auto;
+    gap: 60px;
+}
+.profile-main h2 {
+    font-size: 24px;
+    font-weight: 700;
+    margin-bottom: 30px;
+    color: var(--text-primary);
+}
+
+.realpay-section {
+    display: flex;
+    gap: 60px;
+    align-items: flex-start;
+}
+
+/* 주문 요약 */
+.order-summary {
+    flex: 0 0 280px;
+    border: 1px solid #e0e0e0;
+    border-radius: 12px;
+    padding: 24px;
+    background: #fff;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+}
+
+.order-summary h3 {
+    font-size: 18px;
+    margin-bottom: 15px;
+}
+
+.item-name {
+    font-size: 15px;
+    margin-bottom: 10px;
+}
+
+.item-row, .summary-row, .total {
+    display: flex;
+    justify-content: space-between;
+    margin: 8px 0;
+    font-size: 14px;
+}
+
+.promo-input {
+    width: 100%;
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    margin-top: 12px;
+}
+
+.promo-text {
+    font-size: 12px;
+    color: #666;
+    margin-top: 4px;
+}
+
+.total {
+    font-weight: 700;
+    font-size: 15px;
+    border-top: 1px solid #ddd;
+    padding-top: 10px;
+}
+
+/* 결제 폼 */
+.payment-form { ,
+    flex: 1;
+    background: #fff;
+    border: 1px solid #eee;
+    border-radius: 12px;
+    padding: 30px 40px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+}
+
+.payment-form form {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.payment-form label {
+    font-size: 14px;
+    font-weight: 500;
+    color: #333;
+}
+
+.payment-form input,
+.payment-form select {
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    font-size: 14px;
+    width: 100%;
+    box-sizing: border-box;
+    transition: border-color 0.2s ease;
+}
+
+.payment-form input:focus,
+.payment-form select:focus {
+    border-color: var(--text-point-main);
+    outline: none;
+}
+
+.card-info,
+.address-row {
+    display: flex;
+    gap: 10px;
+}
+
+
+
+.submit-wrap {
+    margin-top: 20px;
+    display: flex;
+    justify-content: flex-start;
+}
+
+.submit-btn {
+    background-color: var(--text-point-main);
+    color: #fff;
+    padding: 12px 28px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 15px;
+    font-weight: 600;
+    transition: 0.2s;
+}
+
+.submit-btn:hover {
+    background-color: var(--text-point-hover);
+}

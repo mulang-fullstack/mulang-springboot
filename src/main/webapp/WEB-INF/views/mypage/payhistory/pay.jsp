@@ -10,19 +10,19 @@
     <link rel="icon" href="/img/favicon.svg" type="image/png">
 
     <link rel="stylesheet" href="/css/global.css"/>
-    <link rel="stylesheet" href="/css/pages/mypage/pay.css"/>
+    <link rel="stylesheet" href="/css/pages/mypage/payhistory/pay.css"/>
 
     <title>결제내역</title>
 </head>
 <body>
 
-<%@include file="../common/header.jsp" %>
+<%@include file="../../common/header.jsp" %>
 
 <main>
     <div class="contents">
         <section class="mypage">
 
-            <%@include file="sidebar.jsp" %>
+            <%@include file="../sidebar.jsp" %>
 
             <section class="content">
                 <h2>결제내역</h2>
@@ -76,7 +76,7 @@
     </div>
 </main>
 
-    <%@include file="../common/footer.jsp" %>
+    <%@include file="../../common/footer.jsp" %>
 
     </body>
     </html>

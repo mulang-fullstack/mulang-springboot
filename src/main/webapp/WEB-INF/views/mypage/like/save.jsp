@@ -10,12 +10,12 @@
     <link rel="icon" href="/img/favicon.svg" type="image/png">
 
     <link rel="stylesheet" href="/css/global.css"/>
-    <link rel="stylesheet" href="/css/pages/mypage/save.css"/>
+    <link rel="stylesheet" href="/css/pages/mypage/like/save.css"/>
     <title>찜</title>
 </head>
 <body>
 
-<%@include file="../common/header.jsp" %>
+<%@include file="../../common/header.jsp" %>
 
 <main>
     <div class="contents">
@@ -129,6 +129,6 @@
     </section>
     </div>
 </main>
-<%@include file="../common/footer.jsp" %>
+<%@include file="../../common/footer.jsp" %>
 </body>
 </html>
