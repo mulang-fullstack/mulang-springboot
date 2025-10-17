@@ -34,6 +34,7 @@ public class AuthController {
             HttpSession session,
             RedirectAttributes redirectAttributes
     ) {
+        System.out.println("나 찍힘");
         try {
             User user = userService.loginUser(email, password);
             session.setAttribute("loginUser", user);
