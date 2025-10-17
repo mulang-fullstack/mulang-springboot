@@ -57,7 +57,7 @@
                         <div class="field">
                             <label>강사 소개</label>
                             <div class="field-content">
-                                <p class="text-area">안녕하세요 중국어 일타강사 최윤서입니다.</p>
+                                ${tutor.disc}
                             </div>
                         </div>
 
