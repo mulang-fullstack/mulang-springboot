@@ -9,21 +9,21 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <link rel="icon" href="img/favicon.svg" type="image/png">
     <link rel="stylesheet" href="css/global.css"/>
-    <link rel="stylesheet" href="css/pages/lecture/lecture-curriculum.css"/>
+    <link rel="stylesheet" href="css/pages/course/course-curriculum.css"/>
     <title>Mulang?</title>
 </head>
 <body>
 <%@include file="../common/header.jsp" %>
 <main>
     <div class="contents">
-        <div class="lecture-curriculum-contents">
-            <%@include file="lectureInfo.jsp" %>
-            <div class="lecture-tabs">
-                <div class="tab" onclick="location.href='lectureDetail'">강의소개</div>
-                <div class="tab active" onclick="location.href='lectureCurriculum'">커리큘럼</div>
-                <div class="tab" onclick="location.href='lectureReview'">리뷰</div>
+        <div class="course-curriculum-contents">
+            <%@include file="courseInfo.jsp" %>
+            <div class="course-tabs">
+                <div class="tab" onclick="location.href='courseDetail'">강의소개</div>
+                <div class="tab active" onclick="location.href='courseCurriculum'">커리큘럼</div>
+                <div class="tab" onclick="location.href='courseReview'">리뷰</div>
             </div>
-            <div class="lecture-curriculum">
+            <div class="course-curriculum">
                 <div class="curriculum-header">
                     <div class="no">강의 번호</div>
                     <div class="title header">제목</div>

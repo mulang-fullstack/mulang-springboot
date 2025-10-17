@@ -9,17 +9,17 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <link rel="icon" href="img/favicon.svg" type="image/png">
     <link rel="stylesheet" href="css/global.css"/>
-    <link rel="stylesheet" href="css/pages/lecture/lecture-list.css"/>
+    <link rel="stylesheet" href="css/pages/course/course-list.css"/>
     <title>Mulang?</title>
 </head>
 <body>
 <%@include file="../common/header.jsp" %>
 <main class="main">
     <div class="contents">
-        <div class="lecture-list-contents">
-            <section class="lecture-category">
+        <div class="course-list-contents">
+            <section class="course-category">
                 <h1>영어</h1>
-                <div class="lecture-tabs">
+                <div class="course-tabs">
                     <div class="tab active">기초</div>
                     <div class="tab">문법</div>
                     <div class="tab">어휘</div>
@@ -29,7 +29,7 @@
                 </div>
             </section>
 
-            <section class="lecture-sort">
+            <section class="course-sort">
                 <div class="search-box">
                     <!-- 검색박스 내부 요소들 -->
                     <div class="search-input">
@@ -44,12 +44,12 @@
                 </div>
             </section>
 
-            <section class="lecture-list">
-                <div class="lecture-card">
-                    <a href="lectureDetail">
-                    <img src="https://placehold.co/250x180" alt="lecture"></a>
-                    <div class="lecture-list-info">
-                        <h2><a href="lectureDetail">왕초보 기초회화</a></h2>
+            <section class="course-list">
+                <div class="course-card">
+                    <a href="courseDetail">
+                    <img src="https://placehold.co/250x180" alt="course"></a>
+                    <div class="course-list-info">
+                        <h2><a href="courseDetail">왕초보 기초회화</a></h2>
                         <p class="subtitle">틀에 박힌 한국식 영어는 이제 그만! - 찐 원어민 기초 회화!</p>
                         <p class="teacher">Sean Pablo</p>
                         <div class="rating">
@@ -66,17 +66,17 @@
                     </div>
                     <div class="heart-purchase-wrap">
                         <button class="heart-icon"><img src="/img/icon/heart-full.svg" alt="찜 아이콘"></button>
-                        <div class="lecture-purchase">
+                        <div class="course-purchase">
                             <span class="price">155,000원</span>
                             <button class="purchase-btn">결제하기</button>
                         </div>
                     </div>
                 </div>
 
-                <div class="lecture-card">
-                    <a href="lectureDetail">
-                        <img src="https://placehold.co/250x180" alt="lecture"></a>
-                    <div class="lecture-list-info">
+                <div class="course-card">
+                    <a href="courseDetail">
+                        <img src="https://placehold.co/250x180" alt="course"></a>
+                    <div class="course-list-info">
                         <h2>하루 딱 10분! 신박한 영문법 토크쇼</h2>
                         <p class="subtitle">워라벨 시대에 적합한 짧고 굵은 강의!</p>
                         <p class="teacher">Sean Pablo</p>
@@ -96,16 +96,16 @@
                         <div class="heart-icon">
                             <img src="/img/icon/heart.svg" alt="찜 아이콘">
                         </div>
-                        <div class="lecture-purchase">
+                        <div class="course-purchase">
                             <span class="price">155,000원</span>
                             <button class="purchase-btn">결제하기</button>
                         </div>
                     </div>
                 </div>
-                <div class="lecture-card">
-                    <a href="lectureDetail">
-                        <img src="https://placehold.co/250x180" alt="lecture"></a>
-                    <div class="lecture-list-info">
+                <div class="course-card">
+                    <a href="courseDetail">
+                        <img src="https://placehold.co/250x180" alt="course"></a>
+                    <div class="course-list-info">
                         <h2>Basic Grammar in Use</h2>
                         <p class="subtitle">영어의 기본기를 잡아주는 쉬운 문법강의! (이론 강의)</p>
                         <p class="teacher">Sean Pablo</p>
@@ -125,17 +125,17 @@
                         <div class="heart-icon">
                             <img src="/img/icon/heart.svg" alt="찜 아이콘">
                         </div>
-                        <div class="lecture-purchase">
+                        <div class="course-purchase">
                             <span class="price">120,000원</span>
                             <button class="purchase-btn">결제하기</button>
                         </div>
                     </div>
                 </div>
 
-                <div class="lecture-card">
-                    <a href="lectureDetail">
-                        <img src="https://placehold.co/250x180" alt="lecture"></a>
-                    <div class="lecture-list-info">
+                <div class="course-card">
+                    <a href="courseDetail">
+                        <img src="https://placehold.co/250x180" alt="course"></a>
+                    <div class="course-list-info">
                         <h2>Business Negotiation</h2>
                         <p class="subtitle">한권으로 끝내는 협상 테이블의 바이블 강의</p>
                         <p class="teacher">Sean Pablo</p>
@@ -155,7 +155,7 @@
                         <div class="heart-icon">
                             <img src="/img/icon/heart.svg" alt="찜 아이콘">
                         </div>
-                        <div class="lecture-purchase">
+                        <div class="course-purchase">
                             <span class="price">80,000원</span>
                             <button class="purchase-btn">결제하기</button>
                         </div>
