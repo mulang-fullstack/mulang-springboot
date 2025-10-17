@@ -6,8 +6,8 @@
 
 .content {
     flex: 1;
-    background: #fff;
-    border: 1px solid #e0e0e0;
+    background: var(--bg-white);
+    border: var(--border-default);
     border-radius: 10px;
     padding: 40px 60px;
     box-sizing: border-box;
@@ -17,7 +17,7 @@
     font-size: 28px;
     font-weight: 700;
     margin-bottom: 40px;
-    color: #1a1a1a;
+    color: var(--text-black);
 }
 /* -------------------- 클래스 테이블 -------------------- */
 .class-table {
@@ -57,7 +57,7 @@
     font-size: 15px;
     color: var(--text-primary);
 
-    border-bottom: 1px solid #efefef;
+    border-bottom: var(--border-default);
     background-color: var(--bg-white);
 }
 

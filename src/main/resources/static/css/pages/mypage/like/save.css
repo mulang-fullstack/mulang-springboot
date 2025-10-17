@@ -16,7 +16,7 @@
     font-size: 28px;
     font-weight: 700;
     margin-bottom: 40px;
-    color: #1a1a1a;
+    color: var(--text-black);
 }
 /* 툴바 */
 .likes-toolbar {
@@ -43,7 +43,7 @@
     gap: 16px;
     border: var(--border-primary);
     border-radius: 10px;
-    background: #fff;
+    background: var(--bg-white);
     padding: 16px;
 }
 .thumb img {
@@ -58,7 +58,7 @@
 }
 .meta .subject { padding-left:10px; border-left:var(--border-primary); }
 .meta .title {
-    font-size: 18px; font-weight: 600; color:#1A1A1A; margin: 2px 0 6px;
+    font-size: 18px; font-weight: 600; color:var(--text-black); margin: 2px 0 6px;
     overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
 }
 .meta .sub { font-size: 14px; color:var(--text-tertiary); margin-bottom: 6px; }
@@ -85,7 +85,7 @@
 }
 .page-btn {
     min-width:36px; height:36px; border-radius:8px;
-    border:1px solid #EFEAF5; background:#fff; font-size:14px; color:#1A1A1A; cursor:pointer;
+    border:1px solid var(--border-primary); background:var(--bg-white); font-size:14px; color:var(--text-black); cursor:pointer;
 }
 .page-btn.active { background:var(--bg-point-main); color:var(--text-white); border-color:var(--border-primary); }
 .page-btn:hover { background:var(--bg-white); }

@@ -8,11 +8,9 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import yoonsome.mulang.user.entity.User;
 
-import java.sql.*;
-
 @RequestMapping("mypage")
 @Controller
-public class MyPageController {
+public class PersonalController {
     @PersistenceContext
     private EntityManager em;
 
@@ -24,40 +22,4 @@ public class MyPageController {
         return "mypage/profile/personal";
     }
 
-
-
-    @GetMapping("save")
-    public String save(Model model) {
-
-        return "mypage/like/save";
-    }
-
-    @GetMapping("pay")
-    public String pay() {
-
-        return "mypage/payhistory/pay";
-    }
-
-    @GetMapping("course")
-    public String coruse() {
-
-        return "mypage/mycourse/course";
-    }
-
-    @GetMapping("review")
-    public String review() {
-
-        return "mypage/review/review";
-    }
-
-    @GetMapping("qna")
-    public String qna() {
-
-        return "mypage/review/qna";
-    }
-    @GetMapping("realpay")
-    public String realpay() {
-
-        return "mypage/realpay";
-    }
 }
