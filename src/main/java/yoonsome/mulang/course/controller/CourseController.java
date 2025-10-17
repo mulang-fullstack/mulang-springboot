@@ -6,19 +6,19 @@ import org.springframework.web.bind.annotation.GetMapping;
 @Controller
 public class CourseController {
     @GetMapping("course")
-    public String getLectureList(){
+    public String getCourseList(){
         return "course/courseList";
     }
     @GetMapping("courseDetail")
-    public String getLectureDetail(){
+    public String getCourseDetail(){
         return "course/courseDetail";
     }
     @GetMapping("courseCurriculum")
-    public String getLectureCurriculum(){
+    public String getCourseCurriculum(){
         return "course/courseCurriculum";
     }
     @GetMapping("courseReview")
-    public String getLectureReview(){
+    public String getCourseReview(){
         return "course/courseReview";
     }
 }
