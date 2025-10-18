@@ -59,6 +59,6 @@ public class Course {
     @JoinColumn(name = "category_id", nullable = false)
     private Category category;
 
-    // Tutor는 엔티티 만들어지고 나중에 추가 예정
+    // Teacher 엔티티 만들어지고 나중에 추가 예정
 }
 
