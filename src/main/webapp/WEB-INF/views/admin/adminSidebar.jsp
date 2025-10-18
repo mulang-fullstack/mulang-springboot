@@ -3,7 +3,7 @@
 <link rel="stylesheet" href="/css/pages/admin/adminSidebar.css"/>
 <script src="/js/pages/admin/dashboard/adminSidebar.js"></script>
 <script src="/js/pages/admin/dashboard/activeMenu.js"></script>
-<aside>
+<aside  data-active-menu="${activeMenu}" data-active-submenu="${activeSubmenu}">
     <div class="logo-area">
         <img src="/img/logo-white.png" alt="어램 로고" class="logo">
     </div>
@@ -23,7 +23,7 @@
                 <ul class="submenu">
                     <li><a href="#">회원 관리</a></li>
                     <li><a href="#">강사 관리</a></li>
-                    <li><a href="#">사용자 로그 관리</a></li>
+                    <li><a href="#">사용자 로그</a></li>
                 </ul>
             </li>
 
@@ -47,10 +47,10 @@
             <li class="menu-section">
                 <div><img src="/img/icon/admin-setting.png"> 시스템 관리</div>
                 <ul class="submenu">
-                    <li><a href="#">공지사항 관리</a></li>
+                    <li><a href="#">공지사항</a></li>
                     <li><a href="#">1대1 문의</a></li>
                     <li><a href="#">관리자 리스트</a></li>
-                    <li><a href="#">관리자 로그 관리</a></li>
+                    <li><a href="#">관리자 로그</a></li>
                 </ul>
             </li>
         </ul>

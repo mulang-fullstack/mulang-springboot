@@ -3,15 +3,7 @@
     display: flex;
     width: 100%;
     min-height: 100vh;
-    background-color: var(--bg-page, #f5f7fa);
-}
-
-/* -------------------- 사이드바 -------------------- */
-aside {
-    flex-shrink: 0;
-    width: 240px;
-    background-color: #2c323d;
-    color: #fff;
+    background-color: var(--admin-bg-main, #f5f7fa);
 }
 
 /* -------------------- 오른쪽 컨테이너 -------------------- */
@@ -29,7 +21,7 @@ aside {
     align-items: center;
     height: 80px;
     padding: 0 50px;
-    background-color: var(--bg-white, #fff);
+    background-color: var(--bg-white);
     border-bottom: var(--border-primary, 1px solid #e5e8eb);
 }
 
@@ -57,6 +49,7 @@ h1 {
     border-radius: 8px;
     transition: background-color 0.2s;
 }
+
 .logout:hover {
     background-color: var(--bg-white-hover, #f0f2f5);
 }
@@ -66,7 +59,6 @@ h1 {
     flex: 1;
     padding: 15px;
     margin: 40px;
-    background: var(--bg-white, #fff);
     border-radius: 12px;
 }
 
@@ -79,9 +71,9 @@ h1 {
 }
 
 .content-header h2 {
-    font-size: 24px;
-    font-weight: 700;
-    color: #1a1a1a;
+    font-size: 20px;
+    font-weight: 500;
+    color: var(--text-secondary);
 }
 
 .date-range {
@@ -98,16 +90,31 @@ h1 {
 
 .card {
     flex: 1;
-    background-color: #fff;
+    position: relative;
+    background: #fff;
     border-radius: 12px;
     padding: 20px 24px;
-    box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    transition: all 0.2s ease;
+    border-left: 4px solid #4b7bec; /* 파란 포인트 */
 }
+
+.card:hover {
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+    transform: translateY(-2px);
+}
+
 .card h3 {
-    font-size: 15px;
-    color: #666;
-    margin-bottom: 8px;
+    font-size: 13px;
+    color: #4b7bec;
+    font-weight: 500;
+    display: flex;
+    align-items: center;
 }
+
 .card .value {
     font-size: 22px;
     font-weight: 700;
@@ -117,102 +124,85 @@ h1 {
 /* -------------------- 차트 & 테이블 -------------------- */
 .chart-table {
     display: flex;
+    gap: 20px;
+}
+
+.chart-section, .table-section {
+    display: flex;
+    flex-direction: column;
     justify-content: space-between;
-    align-items: stretch;
-    gap: 24px;
     width: 100%;
-    box-sizing: border-box;
+    border-radius: 16px;
+    padding: 20px 24px;
+    background: linear-gradient(180deg, #ffffff 0%, #f7f9fc 100%);
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.06);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    height: 500px; /* 부모에 고정 높이 지정 */
 }
 
-/* -------- 차트 -------- */
-.chart {
-    flex: 0 0 calc(57% - 12px);
-    background: linear-gradient(180deg, #ffffff 0%, #f9fafc 100%);
-    border-radius: 14px;
-    padding: 24px 28px;
-    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.06);
-    box-sizing: border-box;
-    display: flex;
-    flex-direction: column;
-    height: 420px; /* 잘림 방지 */
-    overflow: hidden;
-    transition: transform 0.2s ease, box-shadow 0.2s ease;
+.chart-header, .table-header {
+    margin-bottom: 24px;
 }
-.chart:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 6px 14px rgba(0, 0, 0, 0.08);
-}
-.chart h2 {
+
+.chart-header h3, .table-header h3 {
     font-size: 17px;
-    font-weight: 700;
-    color: #222;
-    margin-bottom: 14px;
+    font-weight: 600;
+    color: #1a1a1a;
     border-left: 4px solid #4b7bec;
-    padding-left: 10px;
+    padding-left: 12px;
 }
-.chart canvas {
+
+.chart-body, .table-body {
     flex: 1;
-    width: 100%;
-    height: 100% !important;
-    max-height: 100%;
+    position: relative;
 }
 
-/* -------- 테이블 -------- */
-.table-section {
-    flex: 0 0 calc(43% - 12px);
-    background: linear-gradient(180deg, #ffffff 0%, #f9fafc 100%);
-    border-radius: 14px;
-    padding: 24px 28px;
-    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.06);
-    box-sizing: border-box;
-    display: flex;
-    flex-direction: column;
-    transition: transform 0.2s ease, box-shadow 0.2s ease;
-}
-.table-section:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 6px 14px rgba(0, 0, 0, 0.08);
-}
-.table-section h2 {
-    font-size: 17px;
-    font-weight: 700;
-    color: #222;
-    margin-bottom: 14px;
-    border-left: 4px solid #4b7bec;
-    padding-left: 10px;
+.chart-body canvas {
+    width: 100% !important;
+    height: 100% !important; /* 가득 채우기 */
+    display: block;
 }
 
-/* -------- 표 -------- */
-.table-section table {
+/* 표 스타일 */
+.table-body table {
     width: 100%;
+    height: 100%;
     border-collapse: collapse;
     background-color: transparent;
+    border-radius: 8px;
 }
-.table-section thead {
+
+.table-body thead {
     background-color: #eef2f7;
-    border-radius: 6px;
 }
-.table-section th,
-.table-section td {
-    padding: 12px 8px;
+
+.table-body th,
+.table-body td {
+    padding: 13px 10px;
     text-align: center;
     font-size: 14px;
     border-bottom: 1px solid #e5e8eb;
 }
-.table-section th {
+
+.table-body th {
     color: #333;
     font-weight: 600;
     letter-spacing: -0.2px;
 }
-.table-section td {
+
+.table-body td {
     color: #444;
 }
-.table-section tr:last-child td {
+
+.table-body tr:last-child td {
     border-bottom: none;
 }
-.table-section tbody tr {
+
+/* hover */
+.table-body tbody tr {
     transition: background-color 0.15s ease;
 }
-.table-section tbody tr:hover {
+
+.table-body tbody tr:hover {
     background-color: #f4f8ff;
 }

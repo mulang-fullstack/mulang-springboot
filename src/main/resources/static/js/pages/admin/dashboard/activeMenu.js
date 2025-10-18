@@ -1,14 +1,17 @@
 document.addEventListener('DOMContentLoaded', () => {
-    const activeMenu = document.body.dataset.activeMenu;
-    const activeSub = document.body.dataset.activeSubmenu;
+    const aside = document.querySelector('aside');
+    if (!aside) return;
+
+    const activeMenu = aside.dataset.activeMenu;
+    const activeSub = aside.dataset.activeSubmenu;
 
     if (activeMenu) {
-        const section = document.querySelector(`.menu-section[data-menu="${activeMenu}"]`);
+        const section = aside.querySelector(`.menu-section[data-menu="${activeMenu}"]`);
         if (section) section.classList.add('active');
     }
 
     if (activeSub) {
-        const link = document.querySelector(`.submenu a[data-submenu="${activeSub}"]`);
+        const link = aside.querySelector(`.submenu a[data-submenu="${activeSub}"]`);
         if (link) link.classList.add('active');
     }
 });
