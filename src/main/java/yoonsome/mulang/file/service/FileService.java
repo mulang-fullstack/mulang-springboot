@@ -1,0 +1,20 @@
+package yoonsome.mulang.file.service;
+
+import org.springframework.core.io.Resource;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.multipart.MultipartFile;
+import yoonsome.mulang.course.entity.Lecture;
+import yoonsome.mulang.file.entity.File;
+
+import java.io.IOException;
+import java.util.List;
+import java.util.Optional;
+
+public interface FileService {
+
+    File createFile(MultipartFile multipartFile, Lecture lecture) throws IOException;
+    List<File> getFileList();
+    Optional<File> getFileById(long id);
+    void deleteFile(File file);
+    ResponseEntity<Resource> downloadFile(long id);
+}

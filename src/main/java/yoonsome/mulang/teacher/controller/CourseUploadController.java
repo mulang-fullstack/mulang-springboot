@@ -5,8 +5,12 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 import yoonsome.mulang.course.entity.Course;
 import yoonsome.mulang.course.service.CourseService;
+import java.io.IOException;
+import java.util.List;
 
 @Controller
 @RequiredArgsConstructor
@@ -14,18 +18,18 @@ public class CourseUploadController {
 
     private final CourseService courseService;
 
-    @GetMapping("/teacherClass/courseUpload")
+    @GetMapping("classUpload")
     public String courseUpload(){
-        return "courseUpload";
+        return "teacherMypage/classUpload";
     }
 
-    @PostMapping("/teacherClass/courseUpload")
+    @PostMapping("Edit")
     public String insertCourse(@ModelAttribute Course course) {
         courseService.registerCourse(course);
-        return "redirect:/teacherMypage/classEdit";
+        return "redirect:classEdit";
     }
 
-    @GetMapping("/teacherMypage/classEdit")
+    @GetMapping("classEdit")
     public String classEdit() {
         return "teacherMypage/classEdit";
     }
