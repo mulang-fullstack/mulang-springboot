@@ -21,13 +21,9 @@ public class TeacherMypageController {
     public String profile(){
         return "teacherMypage/profile";
     }
-    @GetMapping("classUpload")
-    public String classUpload(){
-        return "teacherClass/classUpload";
-    }
     @GetMapping("classUpdate")
     public String classUpdate(){
-        return "teacherClass/classUpdate";
+        return "teacherMypage/classUpdate";
     }
     @GetMapping("QnA")
     public String QnA(){

@@ -2,6 +2,7 @@ package yoonsome.mulang.teacher.entity;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import yoonsome.mulang.course.entity.Language;
@@ -10,6 +11,7 @@ import yoonsome.mulang.user.entity.User;
 @Entity
 @AllArgsConstructor
 @NoArgsConstructor
+@Builder
 @Data
 public class Teacher {
     @Id
