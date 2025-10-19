@@ -12,26 +12,41 @@ import yoonsome.mulang.course.service.CourseService;
 import java.io.IOException;
 import java.util.List;
 
+/**
+ * <p>강좌 업로드 및 편집을 처리하는 교사 마이페이지 컨트롤러</p>
+ * <p>강좌 등록, 챕터(VOD) 업로드, 강좌 수정 등 기능을 담당</p>
+ * @author 양진석
+ */
 @Controller
 @RequiredArgsConstructor
 public class CourseUploadController {
 
     private final CourseService courseService;
 
+    /**
+     * 클래스 업로드 폼 페이지로 이동한다.
+     * @return teacherMypage/classUpload.jsp 뷰
+     */
     @GetMapping("classUpload")
-    public String courseUpload(){
+    public String getClassUploadForm() {
         return "teacherMypage/classUpload";
     }
 
-    @PostMapping("Edit")
-    public String insertCourse(@ModelAttribute Course course) {
-        courseService.registerCourse(course);
+    @PostMapping("classEdit")
+    public String createCourse(
+            @ModelAttribute Course course,
+            @RequestParam(value = "lectureTitle", required = false) List<String> lectureTitles,
+            @RequestParam(value = "lectureVideo", required = false) List<MultipartFile> lectureVideos
+    ) throws IOException {
+        courseService.createCourseWithLectures(course, lectureTitles, lectureVideos);
         return "redirect:classEdit";
     }
-
+    /**
+     * 클래스 수정 페이지로 이동한다.
+     * @return teacherMypage/classEdit.jsp 뷰
+     */
     @GetMapping("classEdit")
-    public String classEdit() {
+    public String getClassEditForm() {
         return "teacherMypage/classEdit";
     }
-
 }

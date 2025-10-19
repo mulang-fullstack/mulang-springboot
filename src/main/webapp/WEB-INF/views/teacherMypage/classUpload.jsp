@@ -14,24 +14,27 @@
 </head>
 <body>
 <%@ include file="../common/header.jsp" %>
+
 <main>
     <div class="contents">
-
         <section class="dashboard">
             <%@ include file="../teacherMypage/sidebar.jsp" %>
+
             <section class="content">
                 <div class="class-upload">
                     <h2>CLASS</h2>
 
-                    <form action="classEdit" method="post" enctype="multipart/form-data">
-                        <!-- 클래스 이름 -->
+                    <!-- 클래스 등록 폼 -->
+                    <form action="/classEdit" method="post" enctype="multipart/form-data">
+
+                        <!-- -------------------- 기본 정보 -------------------- -->
                         <div class="field">
                             <label>클래스 이름</label>
                             <div class="field-content">
                                 <input type="text" name="title" placeholder="클래스 이름을 입력하세요" required>
                             </div>
                         </div>
-                        <!-- 언어 선택 -->
+
                         <div class="field">
                             <label>언어</label>
                             <div class="field-content">
@@ -44,7 +47,6 @@
                             </div>
                         </div>
 
-                        <!-- 카테고리 선택 -->
                         <div class="field">
                             <label>카테고리</label>
                             <div class="field-content">
@@ -58,7 +60,6 @@
                             </div>
                         </div>
 
-                        <!-- 수강비 -->
                         <div class="field">
                             <label>수강비용</label>
                             <div class="field-content">
@@ -66,7 +67,6 @@
                             </div>
                         </div>
 
-                        <!-- 접수 일정 -->
                         <div class="field">
                             <label>접수 기간</label>
                             <div class="field-content date-range">
@@ -76,7 +76,6 @@
                             </div>
                         </div>
 
-                        <!-- 강의 시작/종료일 -->
                         <div class="field">
                             <label>클래스 운영 기간</label>
                             <div class="field-content date-range">
@@ -85,8 +84,24 @@
                                 <input type="date" name="endedAt" required>
                             </div>
                         </div>
+                        <!-- -------------------- VOD 업로드 영역 -------------------- -->
+                        <div class="field vod-section">
+                            <label>챕터 업로드</label>
+                            <div class="field-content">
+                                <div class="video-list">
+                                    <!-- 기본 1개 챕터 행 -->
+                                    <div class="video-item">
+                                        <input type="text" name="lectureTitle[]" placeholder="챕터 제목을 입력하세요" class="chapter-input" required>
+                                        <input type="file" name="lectureVideo[]" accept="video/mp4,video/webm,video/mov" class="video-input" required>
+                                        <div class="video-btn-wrap">
+                                            <button type="button" class="add-video-btn">＋</button>
+                                            <button type="button" class="remove-video-btn">－</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
 
-                        <!-- 강의 소개 -->
                         <div class="field">
                             <label>강의 소개</label>
                             <div class="field-content">
@@ -94,26 +109,26 @@
                             </div>
                         </div>
 
-                        <!-- 필수값 기본 지정 -->
+                        <!-- -------------------- 기본값 설정 -------------------- -->
                         <input type="hidden" name="status" value="true">
                         <input type="hidden" name="currentStudent" value="0">
                         <input type="hidden" name="lectureCount" value="1">
                         <input type="hidden" name="type" value="VOD">
 
-                        <!-- 저장 버튼 -->
+                        <!-- -------------------- 저장 버튼 -------------------- -->
                         <div class="submit-wrap">
                             <button type="submit" class="submit-btn">저장하기</button>
                         </div>
                     </form>
-
                 </div>
             </section>
         </section>
     </div>
 </main>
+
 <%@ include file="../common/footer.jsp" %>
 
-<!-- CKEditor5 -->
+<!-- -------------------- JS 연결 -------------------- -->
 <script src="https://cdn.ckeditor.com/ckeditor5/43.0.0/classic/ckeditor.js"></script>
 <script src="/js/pages/teacher/ckeditor5.js"></script>
 <script src="/js/pages/teacher/classVideo.js"></script>
