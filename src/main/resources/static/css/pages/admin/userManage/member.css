@@ -1,0 +1,630 @@
+/* ==========================================================
+   관리자 회원 관리 페이지 스타일
+   Path: /css/pages/admin/userManage/member.css
+   ========================================================== */
+
+/* -------------------- 전체 컨테이너 -------------------- */
+.main-container {
+    display: flex;
+    width: 100%;
+    min-height: 100vh;
+    background-color: var(--admin-bg-main, #f5f7fa);
+}
+
+/* -------------------- 오른쪽 컨테이너 -------------------- */
+.right-container {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    background-color: var(--bg-page, #f5f7fa);
+}
+
+/* -------------------- 헤더 -------------------- */
+.right-container header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 80px;
+    padding: 0 50px;
+    background-color: var(--bg-white, #fff);
+    border-bottom: var(--border-primary, 1px solid #e5e8eb);
+    box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+}
+
+h1 {
+    color: var(--text-subtle, #555);
+    font-size: 20px;
+    font-weight: 500;
+}
+
+.header-info {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    font-size: 14px;
+    color: var(--text-secondary, #666);
+}
+
+.info-box span {
+    color: var(--text-point-main, #4b7bec);
+    font-weight: 600;
+}
+
+.logout {
+    padding: 6px 12px;
+    border: 1px solid #e5e8eb;
+    border-radius: 8px;
+    transition: background-color 0.2s;
+    text-decoration: none;
+    color: #666;
+}
+
+.logout:hover {
+    background-color: #f0f2f5;
+}
+
+/* -------------------- 콘텐츠 공통 -------------------- */
+.content-wrap {
+    flex: 1;
+    padding: 40px;
+}
+
+.content-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 28px;
+}
+
+.content-header h2 {
+    font-size: 24px;
+    font-weight: 600;
+    color: #333;
+}
+
+.date-range {
+    font-size: 13px;
+    color: #777;
+}
+
+/* ==========================================================
+   필터 바
+   ========================================================== */
+.filter-bar {
+    background: #fff;
+    border-radius: 12px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+    padding: 24px;
+    margin-bottom: 24px;
+}
+
+.filter-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 24px;
+    margin-bottom: 20px;
+}
+
+.filter-group {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.filter-label {
+    font-size: 12px;
+    font-weight: 600;
+    color: #666;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+/* 체크박스/라디오 그룹 스타일 */
+.checkbox-group,
+.radio-group {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+}
+
+.checkbox-group label,
+.radio-group label {
+    display: flex;
+    align-items: center;
+    padding: 8px 14px;
+    border: 1px solid #e0e0e0;
+    border-radius: 8px;
+    font-size: 14px;
+    color: #444;
+    cursor: pointer;
+    transition: all 0.2s;
+    background: #fff;
+}
+
+.checkbox-group label:hover,
+.radio-group label:hover {
+    border-color: #4b7bec;
+    background: #f8f9ff;
+}
+
+.checkbox-group input[type="checkbox"],
+.radio-group input[type="radio"] {
+    margin-right: 6px;
+    accent-color: #4b7bec;
+}
+
+.checkbox-group label:has(input:checked),
+.radio-group label:has(input:checked) {
+    background: #eef4ff;
+    border-color: #4b7bec;
+    color: #4b7bec;
+    font-weight: 500;
+}
+
+/* 셀렉트 박스 스타일 */
+.select-wrapper {
+    position: relative;
+}
+
+.select-wrapper select {
+    width: 100%;
+    padding: 10px 36px 10px 14px;
+    border-radius: 8px;
+    border: 1px solid #e0e0e0;
+    background-color: #fff;
+    font-size: 14px;
+    color: #333;
+    appearance: none;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.select-wrapper select:hover {
+    border-color: #4b7bec;
+}
+
+.select-wrapper select:focus {
+    outline: none;
+    border-color: #4b7bec;
+    box-shadow: 0 0 0 3px rgba(75, 123, 236, 0.1);
+}
+
+.select-wrapper::after {
+    content: '▼';
+    position: absolute;
+    right: 14px;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 12px;
+    color: #666;
+    pointer-events: none;
+}
+
+/* 검색 영역 */
+.search-section {
+    display: flex;
+    gap: 12px;
+    padding-top: 20px;
+    border-top: 1px solid #f0f0f0;
+}
+
+.search-form {
+    flex: 1;
+    display: flex;
+    gap: 8px;
+}
+
+.search-form input {
+    flex: 1;
+    padding: 10px 16px;
+    border-radius: 8px;
+    border: 1px solid #e0e0e0;
+    font-size: 14px;
+    transition: all 0.2s;
+}
+
+.search-form input:focus {
+    border-color: #4b7bec;
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(75, 123, 236, 0.1);
+}
+
+.search-form button,
+.filter-reset {
+    padding: 10px 20px;
+    background: #4b7bec;
+    border: none;
+    color: #fff;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: 500;
+    transition: all 0.2s;
+}
+
+.search-form button:hover {
+    background: #3968c3;
+    transform: translateY(-1px);
+    box-shadow: 0 4px 8px rgba(75, 123, 236, 0.2);
+}
+
+.filter-reset {
+    background: #6c757d;
+}
+
+.filter-reset:hover {
+    background: #5a6268;
+    transform: translateY(-1px);
+    box-shadow: 0 4px 8px rgba(108, 117, 125, 0.2);
+}
+
+/* ==========================================================
+   테이블
+   ========================================================== */
+.table-wrap {
+    background: #fff;
+    border-radius: 12px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+    overflow: hidden;
+}
+
+.table-wrap table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.table-wrap thead {
+    background: linear-gradient(to bottom, #f8f9fa, #f3f4f6);
+}
+
+.table-wrap th,
+.table-wrap td {
+    padding: 14px 16px;
+    text-align: center;
+    font-size: 14px;
+    border-bottom: 1px solid #e5e8eb;
+}
+
+.table-wrap th {
+    font-weight: 600;
+    color: #444;
+    font-size: 13px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.table-wrap td {
+    color: #555;
+}
+
+.table-wrap tbody tr {
+    transition: background-color 0.2s;
+}
+
+.table-wrap tbody tr:hover {
+    background-color: #f8f9ff;
+}
+
+.table-wrap tbody tr.editing {
+    background-color: #fff9e6;
+}
+
+/* 상태 배지 */
+.status-badge {
+    display: inline-block;
+    padding: 4px 10px;
+    border-radius: 12px;
+    font-size: 12px;
+    font-weight: 500;
+}
+
+.status-badge.active {
+    background: #d4f4dd;
+    color: #22a55a;
+}
+
+.status-badge.inactive {
+    background: #ffe4e6;
+    color: #e11d48;
+}
+
+/* 권한 배지 */
+.role-badge {
+    display: inline-block;
+    padding: 4px 10px;
+    border-radius: 6px;
+    font-size: 12px;
+    font-weight: 500;
+}
+
+.role-badge.user {
+    background: #e0e7ff;
+    color: #4f46e5;
+}
+
+.role-badge.tutor {
+    background: #fef3c7;
+    color: #d97706;
+}
+
+/* 상태 수정 모드 */
+.status-select {
+    padding: 4px 8px;
+    border: 1px solid #4b7bec;
+    border-radius: 6px;
+    background: #fff;
+    color: #333;
+    font-size: 13px;
+}
+
+/* 관리 버튼 */
+.actions {
+    display: flex;
+    gap: 6px;
+    justify-content: center;
+}
+
+.actions button {
+    padding: 6px 12px;
+    border-radius: 6px;
+    font-size: 12px;
+    font-weight: 500;
+    border: none;
+    cursor: pointer;
+    transition: all 0.2s;
+    white-space: nowrap;
+}
+
+.btn-edit {
+    background: #4b7bec;
+    color: #fff;
+}
+
+.btn-edit:hover {
+    background: #3968c3;
+    transform: translateY(-1px);
+    box-shadow: 0 2px 4px rgba(75, 123, 236, 0.3);
+}
+
+.btn-delete {
+    background: #ef4444;
+    color: #fff;
+}
+
+.btn-delete:hover {
+    background: #dc2626;
+    transform: translateY(-1px);
+    box-shadow: 0 2px 4px rgba(239, 68, 68, 0.3);
+}
+
+.btn-save {
+    background: #10b981;
+    color: #fff;
+}
+
+.btn-save:hover {
+    background: #059669;
+}
+
+.btn-cancel {
+    background: #6b7280;
+    color: #fff;
+}
+
+.btn-cancel:hover {
+    background: #4b5563;
+}
+
+.no-data {
+    color: #888;
+    padding: 40px 0;
+    text-align: center;
+    font-size: 15px;
+}
+
+/* ==========================================================
+   페이징
+   ========================================================== */
+.pagination {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 32px;
+    gap: 4px;
+}
+
+.pagination button,
+.pagination span {
+    min-width: 36px;
+    height: 36px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid #e0e0e0;
+    background-color: #fff;
+    color: #555;
+    font-size: 14px;
+    cursor: pointer;
+    transition: all 0.2s;
+    font-weight: 500;
+}
+
+.pagination button:first-child,
+.pagination button:last-child {
+    border-radius: 8px 0 0 8px;
+}
+
+.pagination button:last-child {
+    border-radius: 0 8px 8px 0;
+}
+
+.pagination button:hover:not(:disabled) {
+    background-color: #f3f4f6;
+    border-color: #4b7bec;
+    color: #4b7bec;
+}
+
+.pagination button.active {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: #fff;
+    border-color: transparent;
+    font-weight: 600;
+    box-shadow: 0 2px 4px rgba(102, 126, 234, 0.3);
+}
+
+.pagination button:disabled {
+    opacity: 0.4;
+    cursor: not-allowed;
+    background: #f9fafb;
+}
+
+.pagination .ellipsis {
+    border: none;
+    background: none;
+    cursor: default;
+    color: #9ca3af;
+    min-width: 24px;
+}
+
+.pagination .page-info {
+    margin: 0 16px;
+    color: #6b7280;
+    font-size: 13px;
+    border: none;
+    background: none;
+}
+
+/* ==========================================================
+   모달
+   ========================================================== */
+.modal-overlay {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.5);
+    z-index: 1000;
+    align-items: center;
+    justify-content: center;
+}
+
+.modal-overlay.show {
+    display: flex;
+}
+
+.modal-content {
+    background: #fff;
+    border-radius: 12px;
+    padding: 32px;
+    max-width: 400px;
+    width: 90%;
+    box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
+    animation: modalSlideIn 0.3s ease;
+}
+
+@keyframes modalSlideIn {
+    from {
+        opacity: 0;
+        transform: translateY(-20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.modal-header {
+    margin-bottom: 20px;
+}
+
+.modal-header h3 {
+    font-size: 20px;
+    color: #333;
+    margin: 0;
+}
+
+.modal-body {
+    margin-bottom: 24px;
+    color: #555;
+    line-height: 1.6;
+}
+
+.modal-body .warning {
+    color: #ef4444;
+    margin-top: 12px;
+}
+
+.modal-footer {
+    display: flex;
+    gap: 12px;
+    justify-content: flex-end;
+}
+
+.modal-footer button {
+    padding: 10px 20px;
+    border-radius: 8px;
+    border: none;
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.modal-btn-cancel {
+    background: #e5e7eb;
+    color: #374151;
+}
+
+.modal-btn-cancel:hover {
+    background: #d1d5db;
+}
+
+.modal-btn-confirm {
+    background: #ef4444;
+    color: #fff;
+}
+
+.modal-btn-confirm:hover {
+    background: #dc2626;
+}
+
+/* ==========================================================
+   반응형 디자인
+   ========================================================== */
+@media (max-width: 1024px) {
+    .filter-container {
+        grid-template-columns: 1fr;
+    }
+
+    .right-container header {
+        padding: 0 30px;
+    }
+
+    .content-wrap {
+        padding: 20px;
+    }
+}
+
+@media (max-width: 768px) {
+    .search-section {
+        flex-direction: column;
+    }
+
+    .table-wrap {
+        overflow-x: auto;
+    }
+
+    .table-wrap table {
+        min-width: 600px;
+    }
+
+    .pagination button span {
+        display: none;
+    }
+
+    .pagination .page-info {
+        font-size: 12px;
+    }
+}

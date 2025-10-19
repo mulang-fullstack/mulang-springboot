@@ -29,17 +29,72 @@
                 <p class="date-range" id="current-time"></p>
             </div>
             <div class="main-content">
-            <div class="main-content"> <!-- 요약 카드 -->
-                <section class="summary">
-                    <div class="card"><h3>실시간 접속자</h3>
-                        <p class="value">117</p></div>
-                    <div class="card"><h3>총 방문자</h3>
-                        <p class="value">292</p></div>
-                    <div class="card"><h3>신규 가입자</h3>
-                        <p class="value">52</p></div>
-                    <div class="card"><h3>전체 회원</h3>
-                        <p class="value">504</p></div>
-                </section>
+                <!-- -------------------- 통계 카드 -------------------- -->
+                <div class="stats-container">
+                    <div class="stat-card">
+                        <div class="stat-icon login">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                 stroke-width="2">
+                                <path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4"/>
+                                <polyline points="10 17 15 12 10 7"/>
+                                <line x1="15" y1="12" x2="3" y2="12"/>
+                            </svg>
+                        </div>
+                        <div class="stat-info">
+                            <h3>오늘 로그인</h3>
+                            <p class="stat-number">132</p>
+                            <span class="stat-trend up">↑ 12% 어제 대비</span>
+                        </div>
+                    </div>
+
+                    <div class="stat-card">
+                        <div class="stat-icon active">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                 stroke-width="2">
+                                <circle cx="12" cy="12" r="10"/>
+                                <circle cx="12" cy="12" r="3" fill="currentColor"/>
+                            </svg>
+                        </div>
+                        <div class="stat-info">
+                            <h3>현재 활성 사용자</h3>
+                            <p class="stat-number">54</p>
+                            <span class="stat-trend">실시간</span>
+                        </div>
+                    </div>
+
+                    <div class="stat-card">
+                        <div class="stat-icon logout">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                 stroke-width="2">
+                                <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/>
+                                <polyline points="16 17 21 12 16 7"/>
+                                <line x1="21" y1="12" x2="9" y2="12"/>
+                            </svg>
+                        </div>
+                        <div class="stat-info">
+                            <h3>신규 사용자</h3>
+                            <p class="stat-number">117</p>
+                            <span class="stat-trend">정상 종료</span>
+                        </div>
+                    </div>
+
+                    <div class="stat-card">
+                        <div class="stat-icon total">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                 stroke-width="2">
+                                <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/>
+                                <circle cx="9" cy="7" r="4"/>
+                                <path d="M23 21v-2a4 4 0 0 0-3-3.87"/>
+                                <path d="M16 3.13a4 4 0 0 1 0 7.75"/>
+                            </svg>
+                        </div>
+                        <div class="stat-info">
+                            <h3>전체 사용자</h3>
+                            <p class="stat-number">1,024</p>
+                            <span class="stat-trend">등록된 회원</span>
+                        </div>
+                    </div>
+                </div>
                 <div class="chart-table">
                     <!-- 차트 -->
                     <section class="chart-section">

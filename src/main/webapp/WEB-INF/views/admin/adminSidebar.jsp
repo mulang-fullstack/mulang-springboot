@@ -1,7 +1,6 @@
 <%@ page contentType="text/html;charset=utf-8" %>
 
 <link rel="stylesheet" href="/css/pages/admin/adminSidebar.css"/>
-<script src="/js/pages/admin/dashboard/adminSidebar.js"></script>
 <script src="/js/pages/admin/dashboard/activeMenu.js"></script>
 <aside  data-active-menu="${activeMenu}" data-active-submenu="${activeSubmenu}">
     <div class="logo-area">
@@ -13,24 +12,23 @@
             <li class="menu-section" data-menu="dashboard">
                 <div><img src="/img/icon/dashboard.png"> 대시보드</div>
                 <ul class="submenu">
-                    <li><a href="/admin/visitor" data-submenu="visitor">방문자 현황</a></li>
-                    <li><a href="/admin/sales" data-submenu="sales">매출 현황</a></li>
+                    <li><a href="/admin/dashboard/visitor" data-submenu="visitor">방문자 현황</a></li>
+                    <li><a href="/admin/dashboard/sales" data-submenu="sales">매출 현황</a></li>
                 </ul>
             </li>
 
             <li class="menu-section" data-menu="userManage">
                 <div><img src="/img/icon/admin-user.png"> 사용자 관리</div>
                 <ul class="submenu">
-                    <li><a href="#">회원 관리</a></li>
-                    <li><a href="#">강사 관리</a></li>
-                    <li><a href="#">사용자 로그</a></li>
+                    <li><a href="/admin/userManage/member" data-submenu="member">회원 관리</a></li>
+                    <li><a href="/admin/userManage/userLog" data-submenu="userLog">사용자 로그</a></li>
                 </ul>
             </li>
 
             <li class="menu-section">
-                <div><img src="/img/icon/calendar-edit.png"> 콘텐츠 관리</div>
+                <div><img src="/img/icon/calendar-edit.png" data-menu="contentManage"> 콘텐츠 관리</div>
                 <ul class="submenu">
-                    <li><a href="#">강좌 관리</a></li>
+                    <li><a href="/admin/contentManage/courseManage" data-submenu="courseManage">강좌 관리</a></li>
                     <li><a href="#">리뷰 관리</a></li>
                     <li><a href="#">Q&A 관리</a></li>
                 </ul>
