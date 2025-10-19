@@ -135,7 +135,6 @@ public class FileServiceImpl implements FileService {
                     .notFound()
                     .build();
         }
-
         Resource resource = new FileSystemResource(filePath);
         return ResponseEntity.ok()
                 .header("Content-Disposition", "attachment; filename=\"" + fileEntity.getOriginalName() + "\"")

@@ -16,10 +16,10 @@ public class Lecture {
     @Column(nullable = false, length = 100)
     private String title;
 
-    @Column(nullable = false, columnDefinition = "TEXT")
+    @Column(nullable = true, columnDefinition = "TEXT")
     private String content;
 
-    @Column(nullable = false, length = 10)
+    @Column(nullable = true, length = 10)
     private String length;
 
     @ManyToOne(fetch = FetchType.LAZY)

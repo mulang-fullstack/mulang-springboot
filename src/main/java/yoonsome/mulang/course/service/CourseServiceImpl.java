@@ -6,8 +6,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 import yoonsome.mulang.course.entity.Course;
 import yoonsome.mulang.course.repository.CourseRepository;
+
+import java.io.IOException;
+import java.util.List;
 import java.util.Optional;
 
 @Transactional
@@ -16,6 +20,8 @@ import java.util.Optional;
 public class CourseServiceImpl implements CourseService {
     @Autowired
     private final CourseRepository courseRepository;
+    @Autowired
+    private LectureService lectureService;
 
     @Override
     public Page<Course> getCourseListByLanguage(Long languageId, Pageable pageable) {
@@ -54,4 +60,29 @@ public class CourseServiceImpl implements CourseService {
     public void deleteCourse(long id) {
         courseRepository.deleteById(id);
     }
+    /**
+     * 강좌를 저장하고, 전달받은 리스트를 이용해 여러 개의 강의를 생성
+     */
+    public void createCourseWithLectures(
+            Course course,
+            List<String> lectureTitles,
+            List<MultipartFile> lectureVideos
+    ) throws IOException {
+
+        Course savedCourse = courseRepository.save(course);
+
+        if (lectureTitles == null || lectureTitles.isEmpty()) {
+            return;
+        }
+        for (int i = 0; i < lectureTitles.size(); i++) {
+            String title = lectureTitles.get(i);
+
+            MultipartFile video = null;
+            if (lectureVideos != null && lectureVideos.size() > i) {
+                video = lectureVideos.get(i);
+            }
+            lectureService.createLectureWithFile(title, savedCourse, video);
+        }
+    }
+
 }

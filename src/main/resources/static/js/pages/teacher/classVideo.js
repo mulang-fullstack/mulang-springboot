@@ -1,64 +1,68 @@
+// 페이지가 완전히 로드되면 실행
 document.addEventListener("DOMContentLoaded", () => {
-    const videoList = document.querySelector(".video-list");
-    const maxCount = 10;
+    const videoList = document.querySelector(".video-list"); // 영상 입력 목록 영역
+    const maxCount = 10; // 최대 추가 가능 개수
+    const form = document.querySelector("form"); // 업로드 폼
+
     if (!videoList) return;
 
-    // -------------------- 챕터 행 생성 함수 --------------------
+    /** -------------------- 새로운 챕터 입력 행 생성 -------------------- */
     function createVideoItem() {
-        const item = document.createElement("div");
-        item.classList.add("video-item");
-        item.innerHTML = `
-            <input type="text" name="chapter_name[]" placeholder="챕터 이름을 입력하세요" class="chapter-input" required>
-            <input type="file" name="videoFile[]" accept="video/mp4,video/webm,video/mov" class="video-input" required>
+        const newItem = document.createElement("div");
+        newItem.classList.add("video-item");
+        newItem.innerHTML = `
+            <input type="text" name="lectureTitle[]" 
+                   placeholder="챕터 제목을 입력하세요" class="chapter-input" required>
+
+            <input type="file" name="lectureVideo[]" 
+                   accept="video/mp4,video/webm,video/mov" class="video-input" required>
+
             <div class="video-btn-wrap">
                 <button type="button" class="add-video-btn">＋</button>
                 <button type="button" class="remove-video-btn">－</button>
             </div>
         `;
-        return item;
+        return newItem;
     }
 
-    // -------------------- 기본 1행 생성 --------------------
+    /** -------------------- 기본 1행 생성 -------------------- */
     if (videoList.children.length === 0) {
         videoList.appendChild(createVideoItem());
     }
 
-    // -------------------- 이벤트 위임 --------------------
-    videoList.addEventListener("click", (e) => {
-        const target = e.target;
+    /** -------------------- + / - 버튼 처리 -------------------- */
+    videoList.addEventListener("click", (event) => {
+        const target = event.target;
 
-        // 챕터 추가
+        // [+] 추가
         if (target.classList.contains("add-video-btn")) {
-            const currentItem = target.closest(".video-item");
-            const hint = videoList.querySelector(".hint");
             const count = videoList.querySelectorAll(".video-item").length;
             if (count >= maxCount) {
                 alert("최대 10개의 강의만 추가할 수 있습니다.");
                 return;
             }
-
-            const newItem = createVideoItem();
-            newItem.style.opacity = "0";
-            videoList.insertBefore(newItem, hint || currentItem.nextSibling);
-
-            requestAnimationFrame(() => {
-                newItem.style.transition = "opacity 0.25s ease";
-                newItem.style.opacity = "1";
-            });
+            videoList.appendChild(createVideoItem());
         }
 
-        // 챕터 삭제
+        // [−] 삭제
         if (target.classList.contains("remove-video-btn")) {
             const items = videoList.querySelectorAll(".video-item");
             if (items.length <= 1) {
                 alert("최소 1개의 강의는 있어야 합니다.");
                 return;
             }
+            target.closest(".video-item").remove();
+        }
+    });
 
-            const item = target.closest(".video-item");
-            item.style.transition = "opacity 0.2s ease";
-            item.style.opacity = "0";
-            setTimeout(() => item.remove(), 200);
+    /** -------------------- 폼 제출 시 파일 검증 -------------------- */
+    form.addEventListener("submit", (e) => {
+        const fileInputs = videoList.querySelectorAll('input[type="file"][name="lectureVideo[]"]');
+        const hasFile = Array.from(fileInputs).some(input => input.files && input.files.length > 0);
+
+        if (!hasFile) {
+            e.preventDefault();
+            alert("최소 1개의 강의 영상을 업로드해야 합니다.");
         }
     });
 });
