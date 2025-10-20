@@ -72,8 +72,8 @@
                                 <div class="menu-wrap">
                                     <button class="menu-btn">⋯</button>
                                     <div class="menu-dropdown">
-                                        <button class="menu-item edit-btn" data-id="${lecture.lectureId}">수정</button>
-                                        <button class="menu-item delete-btn" data-id="${lecture.lectureId}">삭제</button>
+                                        <button class="menu-item edit-btn" data-id="">수정</button>
+                                        <button class="menu-item delete-btn" data-id="">삭제</button>
                                     </div>
                                 </div>
                             </div>
@@ -91,8 +91,8 @@
                                 <div class="menu-wrap">
                                     <button class="menu-btn">⋯</button>
                                     <div class="menu-dropdown">
-                                        <button class="menu-item edit-btn" data-id="${lecture.lectureId}">수정</button>
-                                        <button class="menu-item delete-btn" data-id="${lecture.lectureId}">삭제</button>
+                                        <button class="menu-item edit-btn" data-id="">수정</button>
+                                        <button class="menu-item delete-btn" data-id="">삭제</button>
                                     </div>
                                 </div>
                             </div>

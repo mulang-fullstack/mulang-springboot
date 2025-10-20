@@ -9,7 +9,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 import yoonsome.mulang.course.entity.Course;
 import yoonsome.mulang.course.repository.CourseRepository;
-
+import yoonsome.mulang.file.entity.File;
+import yoonsome.mulang.file.service.FileService;
 import java.io.IOException;
 import java.util.List;
 import java.util.Optional;
@@ -22,6 +23,8 @@ public class CourseServiceImpl implements CourseService {
     private final CourseRepository courseRepository;
     @Autowired
     private LectureService lectureService;
+    @Autowired
+    private final FileService fileService;
 
     @Override
     public Page<Course> getCourseListByLanguage(Long languageId, Pageable pageable) {
@@ -66,8 +69,13 @@ public class CourseServiceImpl implements CourseService {
     public void createCourseWithLectures(
             Course course,
             List<String> lectureTitles,
-            List<MultipartFile> lectureVideos
+            List<MultipartFile> lectureVideos,
+            MultipartFile thumbnail
     ) throws IOException {
+        if (thumbnail != null && !thumbnail.isEmpty()) {
+            File savedThumbnail = fileService.createFile(thumbnail);
+            course.setThumbnail(savedThumbnail.getPath());
+        }
 
         Course savedCourse = courseRepository.save(course);
 

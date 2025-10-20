@@ -15,6 +15,6 @@ public interface CourseService {
     Course registerCourse(Course course);
     void modifyCourse(Course course);
     void deleteCourse(long id);
-    void createCourseWithLectures(Course course, List<String> lectureTitles, List<MultipartFile> lectureVideos)
+    void createCourseWithLectures(Course course, List<String> lectureTitles, List<MultipartFile> lectureVideos,MultipartFile thumbnail)
             throws IOException;
 }

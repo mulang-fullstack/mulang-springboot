@@ -140,4 +140,38 @@ public class FileServiceImpl implements FileService {
                 .header("Content-Disposition", "attachment; filename=\"" + fileEntity.getOriginalName() + "\"")
                 .body(resource);
     }
+    /**
+     * 파일 업로드 메서드 이다.
+     * 오버로딩 썸네일용 업로드이다.
+     */
+    @Override
+    public File createFile(MultipartFile multipartFile) throws IOException {
+        Path dirPath = Paths.get(fileDir);
+        if (!Files.exists(dirPath)) {
+            Files.createDirectories(dirPath);
+        }
+
+        if (multipartFile.isEmpty()) {
+            return null;
+        }
+        String originalFileName = multipartFile.getOriginalFilename();
+        String fileExtension = originalFileName.substring(originalFileName.lastIndexOf("."));
+        String uuid = UUID.randomUUID().toString();
+        String savedFileName = uuid + fileExtension;
+        String savedFilePath = fileDir + savedFileName;
+
+        Path savedPath = Paths.get(savedFilePath);
+        Files.copy(multipartFile.getInputStream(), savedPath, StandardCopyOption.REPLACE_EXISTING);
+
+        File entity = File.builder()
+                .originalName(originalFileName)
+                .savedName(savedFileName)
+                .path(savedFilePath)
+                .size(multipartFile.getSize())
+                .contentType(multipartFile.getContentType())
+                .lecture(null)
+                .build();
+
+        return fileRepository.save(entity);
+    }
 }

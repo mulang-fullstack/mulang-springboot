@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import yoonsome.mulang.course.entity.Course;
 import yoonsome.mulang.course.service.CourseService;
+import yoonsome.mulang.file.service.FileService;
 import java.io.IOException;
 import java.util.List;
 
@@ -21,6 +22,7 @@ import java.util.List;
 public class CourseUploadController {
 
     private final CourseService courseService;
+    private final FileService fileService;
 
     /**
      * [GET] 새 강좌 업로드 폼 페이지
@@ -38,10 +40,12 @@ public class CourseUploadController {
     public String createCourse(
             @ModelAttribute Course course,
             @RequestParam(value = "lectureTitle", required = false) List<String> lectureTitles,
-            @RequestParam(value = "lectureVideo", required = false) List<MultipartFile> lectureVideos
+            @RequestParam(value = "lectureVideo", required = false) List<MultipartFile> lectureVideos,
+            @RequestParam(value = "thumbnailFile", required = false) MultipartFile thumbnailFile
     ) throws IOException {
-        courseService.createCourseWithLectures(course, lectureTitles, lectureVideos);
-        return "redirect:/teacher/mypage/classEdit";
+        courseService.createCourseWithLectures(course, lectureTitles, lectureVideos,thumbnailFile);
+        return "redirect:/teacher/mypage/classes/edit";
+
     }
 
     @DeleteMapping("/{courseId}")
