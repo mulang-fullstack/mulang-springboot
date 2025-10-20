@@ -38,7 +38,7 @@ public class ModifyController {
                         @RequestParam String phone,
                         @RequestParam String password,
                         @RequestParam String nickname) {
-        if(!email.contains("@")) {
+        if(!email.contains("@") || !email.contains(".")) {
             User user = em.find(User.class, 2L);
             model.addAttribute("user", user);
             model.addAttribute("emailerror", "이메일 형식이 올바르지 않습니다.");
@@ -48,6 +48,12 @@ public class ModifyController {
             User user = em.find(User.class, 2L);
             model.addAttribute("user", user);
             model.addAttribute("passworderror", "비밀번호는 8자에서 15자 사이를 입력하세요");
+            return "/mypage/profile/edit";
+        }
+        if(phone.length()!=11 && phone.contains("010")){
+            User user = em.find(User.class, 2L);
+            model.addAttribute("user", user);
+            model.addAttribute("phoneerror", "알맞은 정화번호를 입력하세요(전화번호의 형식은 010-****-**** 입니다)");
             return "/mypage/profile/edit";
         }
 

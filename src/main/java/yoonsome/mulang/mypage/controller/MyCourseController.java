@@ -12,5 +12,9 @@ public class MyCourseController {
     public String course(Model model) {
         return "mypage/mycourse/course";
     }
+    @GetMapping("player")
+    public String player(Model model) {
+        return "mypage/mycourse/player";
+    }
 
 }
