@@ -1,7 +1,8 @@
-package yoonsome.mulang.course.entity;
+package yoonsome.mulang.lecture.entity;
 
 import jakarta.persistence.*;
 import lombok.*;
+import yoonsome.mulang.course.entity.Course;
 
 @Entity
 @AllArgsConstructor

@@ -8,7 +8,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
-import yoonsome.mulang.course.entity.Lecture;
+import yoonsome.mulang.lecture.entity.Lecture;
 import yoonsome.mulang.file.entity.File;
 import yoonsome.mulang.file.repo.FileRepository;
 import java.io.IOException;

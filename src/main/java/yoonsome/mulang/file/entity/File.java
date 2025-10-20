@@ -2,7 +2,7 @@ package yoonsome.mulang.file.entity;
 
 import jakarta.persistence.*;
 import lombok.*;
-import yoonsome.mulang.course.entity.Lecture;
+import yoonsome.mulang.lecture.entity.Lecture;
 
 @Entity
 @Getter

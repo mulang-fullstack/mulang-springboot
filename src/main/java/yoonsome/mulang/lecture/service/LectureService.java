@@ -1,4 +1,4 @@
-package yoonsome.mulang.course.service;
+package yoonsome.mulang.lecture.service;
 
 import org.springframework.web.multipart.MultipartFile;
 import yoonsome.mulang.course.entity.Course;
