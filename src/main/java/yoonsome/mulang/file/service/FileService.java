@@ -3,7 +3,7 @@ package yoonsome.mulang.file.service;
 import org.springframework.core.io.Resource;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.multipart.MultipartFile;
-import yoonsome.mulang.course.entity.Lecture;
+import yoonsome.mulang.lecture.entity.Lecture;
 import yoonsome.mulang.file.entity.File;
 
 import java.io.IOException;

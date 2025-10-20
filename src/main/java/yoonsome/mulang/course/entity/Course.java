@@ -2,6 +2,7 @@ package yoonsome.mulang.course.entity;
 
 import jakarta.persistence.*;
 import lombok.*;
+import yoonsome.mulang.language.entity.Language;
 import yoonsome.mulang.teacher.entity.Teacher;
 import java.time.LocalDate;
 

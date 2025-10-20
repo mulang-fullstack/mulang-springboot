@@ -1,4 +1,4 @@
-package yoonsome.mulang.course.entity;
+package yoonsome.mulang.language.entity;
 
 import jakarta.persistence.*;
 import lombok.*;

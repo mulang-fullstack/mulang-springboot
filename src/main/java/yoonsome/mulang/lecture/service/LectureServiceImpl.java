@@ -1,11 +1,11 @@
-package yoonsome.mulang.course.service;
+package yoonsome.mulang.lecture.service;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 import yoonsome.mulang.course.entity.Course;
-import yoonsome.mulang.course.entity.Lecture;
-import yoonsome.mulang.course.repository.LectureRepository;
+import yoonsome.mulang.lecture.entity.Lecture;
+import yoonsome.mulang.lecture.repository.LectureRepository;
 import yoonsome.mulang.file.service.FileService;
 import java.io.IOException;
 

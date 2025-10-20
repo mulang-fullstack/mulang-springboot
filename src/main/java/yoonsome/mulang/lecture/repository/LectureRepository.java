@@ -1,7 +1,7 @@
-package yoonsome.mulang.course.repository;
+package yoonsome.mulang.lecture.repository;
 
 import org.springframework.data.jpa.repository.JpaRepository;
-import yoonsome.mulang.course.entity.Lecture;
+import yoonsome.mulang.lecture.entity.Lecture;
 
 public interface LectureRepository extends JpaRepository<Lecture, Long> {
 }

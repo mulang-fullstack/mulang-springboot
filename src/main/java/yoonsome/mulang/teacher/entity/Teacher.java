@@ -5,7 +5,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import yoonsome.mulang.course.entity.Language;
+import yoonsome.mulang.language.entity.Language;
 import yoonsome.mulang.user.entity.User;
 
 @Entity
