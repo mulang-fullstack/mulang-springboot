@@ -8,6 +8,7 @@ import yoonsome.mulang.language.entity.Language;
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
+@Table(name = "category")
 public class Category {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

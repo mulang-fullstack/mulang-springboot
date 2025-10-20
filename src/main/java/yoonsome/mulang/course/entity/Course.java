@@ -10,6 +10,7 @@ import java.time.LocalDate;
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
+@Table(name = "course")
 public class Course {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -18,6 +19,9 @@ public class Course {
 
     @Column(nullable = false, length = 100)
     private String title;
+
+    @Column(nullable = false, length = 100)
+    private String subtitle;
 
     @Column(nullable = false, columnDefinition = "TEXT")
     private String content;
@@ -64,7 +68,6 @@ public class Course {
     @JoinColumn(name = "category_id", nullable = false)
     private Category category;
 
-    // Teacher 엔티티 만들어지고 나중에 추가 예정
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "teacher_id", nullable = false)
     private Teacher teacher;

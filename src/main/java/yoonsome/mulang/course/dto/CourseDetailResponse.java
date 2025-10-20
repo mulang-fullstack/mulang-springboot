@@ -2,7 +2,7 @@ package yoonsome.mulang.course.dto;
 
 import lombok.Data;
 import yoonsome.mulang.lecture.dto.LectureResponse;
-import yoonsome.mulang.review.dto.ReviewResponse;
+import yoonsome.mulang.courseReview.dto.ReviewResponse;
 
 import java.time.LocalDate;
 import java.util.List;

@@ -1,8 +1,10 @@
-package yoonsome.mulang.course.entity;
+package yoonsome.mulang.courseReview.entity;
 
 import jakarta.persistence.*;
+import jakarta.persistence.Table;
 import lombok.*;
 import org.hibernate.annotations.*;
+import yoonsome.mulang.course.entity.Course;
 import yoonsome.mulang.user.entity.User;
 import java.time.LocalDateTime;
 
@@ -10,6 +12,7 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
+@Table(name = "course_review")
 public class CourseReview {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

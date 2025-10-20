@@ -4,9 +4,10 @@ import lombok.Data;
 
 @Data
 public class CourseListRequest {
-    private Long languageId;
-    private Long categoryId;
-    private String sort;
+    private Long languageId =1L;
+    private Long categoryId = 1L;
+    //private String keyword;
+    //private String sort;
     private int page = 0;
     private int size = 4;
 }

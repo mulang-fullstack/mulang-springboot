@@ -7,6 +7,7 @@ import lombok.*;
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
+@Table(name = "language")
 public class Language {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
