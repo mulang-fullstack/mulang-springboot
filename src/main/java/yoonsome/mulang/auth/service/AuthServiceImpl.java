@@ -6,7 +6,7 @@ import yoonsome.mulang.auth.dto.LoginRequest;
 import yoonsome.mulang.auth.dto.SignupRequest;
 import yoonsome.mulang.user.entity.User;
 import yoonsome.mulang.user.service.UserService;
-import yoonsome.mulang.user.util.BCryptEncoder;
+import yoonsome.mulang.util.BCryptEncoder;
 
 @Service
 @RequiredArgsConstructor
@@ -24,23 +24,30 @@ public class AuthServiceImpl implements AuthService {
     }
 
     @Override
-    public void signup(SignupRequest request) {
+    public boolean signup(SignupRequest request) {
         // 비밀번호 암호화
         String encodedPassword = passwordEncoder.encode(request.getPassword());
 
         // User 엔티티 생성
-        User user = new User();
-        user.setEmail(request.getEmail());
-        user.setPassword(encodedPassword);
-        user.setUsername(request.getName());
-        user.setNickname(request.getNickname());
-        user.setRole(
-                request.getAccountType().equalsIgnoreCase("S")
-                        ? User.Role.STUDENT
-                        : User.Role.TEACHER
+        User newUser = new User();
+        newUser.setEmail(request.getEmail());
+        newUser.setPassword(encodedPassword);
+        newUser.setUsername(request.getUsername());
+        newUser.setNickname(request.getNickname());
+        newUser.setRole(
+                request.getAccountType().equalsIgnoreCase("T")
+                        ? User.Role.TEACHER
+                        : User.Role.STUDENT
         );
 
-        // DB 저장 (UserService 통해서)
-        userService.saveUser(user);
+        // DB 저장 & 저장된 정보 반환
+        User user = userService.saveUser(newUser);
+        // 저장 성공 여부 반환
+        return user != null && user.getId() != null;
+    }
+
+    @Override
+    public boolean isEmailExists(String email) {
+        return userService.existsByEmail(email);
     }
 }

@@ -7,6 +7,31 @@
  * 실시간 유효성 검사 설정
  */
 function setupRealTimeValidation() {
+
+    // 이름 길이 검사
+    const nameInput = document.getElementById('username');
+    if (nameInput) {
+        nameInput.addEventListener('blur', function() {
+            if (this.value && this.value.length < 2) {
+                setFieldStatus(this, 'error', '이름은 2자 이상이어야 합니다.');
+            } else if (this.value) {
+                clearFieldStatus(this);
+            }
+        });
+    }
+
+    // 닉네임 길이 검사
+    const nicknameInput = document.getElementById('nickname');
+    if (nicknameInput) {
+        nicknameInput.addEventListener('blur', function() {
+            if (this.value && this.value.length < 2) {
+                setFieldStatus(this, 'error', '닉네임은 2자 이상이어야 합니다.');
+            } else if (this.value) {
+                clearFieldStatus(this);
+            }
+        });
+    }
+
     // 이메일 형식 검사
     const emailInput = document.getElementById('email');
     if (emailInput) {
@@ -31,6 +56,11 @@ function setupRealTimeValidation() {
         });
     }
 
+    passwordInput.addEventListener('input', function() {
+        validatePasswordStrength(this);
+    });
+
+
     // 비밀번호 확인 일치 검사
     const passwordConfirm = document.getElementById('passwordConfirm');
     if (passwordConfirm) {
@@ -40,18 +70,6 @@ function setupRealTimeValidation() {
                 setFieldStatus(this, 'error', '비밀번호가 일치하지 않습니다.');
             } else if (this.value && this.value === pw) {
                 setFieldStatus(this, 'success', '비밀번호가 일치합니다.');
-            }
-        });
-    }
-
-    // 이름 길이 검사
-    const nameInput = document.getElementById('name');
-    if (nameInput) {
-        nameInput.addEventListener('blur', function() {
-            if (this.value && this.value.length < 2) {
-                setFieldStatus(this, 'error', '이름은 2자 이상이어야 합니다.');
-            } else if (this.value) {
-                clearFieldStatus(this);
             }
         });
     }
@@ -74,9 +92,80 @@ function validatePassword(password) {
 }
 
 /**
+ * 비밀번호 강도 검증 (강도 → 메시지 순서 고정)
+ */
+function validatePasswordStrength(input) {
+    const password = input.value;
+    const formGroup = input.closest('.form-group') || input.parentElement;
+
+    // 기존 강도 표시 제거
+    const existingStrength = formGroup.querySelector('.password-strength');
+    if (existingStrength) existingStrength.remove();
+
+    if (password.length > 0) {
+        let strength = 0;
+        if (password.length >= 6) strength++;
+        if (password.length >= 10) strength++;
+        if (/[a-z]/.test(password) && /[A-Z]/.test(password)) strength++;
+        if (/\d/.test(password)) strength++;
+        if (/[@$!%*#?&]/.test(password)) strength++;
+
+        const strengthText = ['매우 약함', '약함', '보통', '강함', '매우 강함'][strength];
+        const strengthColor = ['#dc3545', '#f59e0b', '#fbbf24', '#84cc16', '#22c55e'][strength];
+
+        const strengthDiv = document.createElement('div');
+        strengthDiv.className = 'password-strength';
+        strengthDiv.style.cssText = `
+            margin-top: 6px;
+            font-size: 12px;
+            color: ${strengthColor};
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            animation: fadeIn 0.3s ease;
+        `;
+
+        const strengthBar = document.createElement('div');
+        strengthBar.style.cssText = `
+            flex: 1;
+            height: 4px;
+            background: #e5e5e5;
+            border-radius: 2px;
+            overflow: hidden;
+        `;
+
+        const strengthFill = document.createElement('div');
+        strengthFill.style.cssText = `
+            height: 100%;
+            width: ${(strength / 4) * 100}%;
+            background: ${strengthColor};
+            transition: all 0.3s ease;
+        `;
+
+        strengthBar.appendChild(strengthFill);
+        strengthDiv.innerHTML = `<span>비밀번호 강도: ${strengthText}</span>`;
+        strengthDiv.appendChild(strengthBar);
+
+        const nextMessage = formGroup.querySelector('.error-message, .success-message');
+        if (nextMessage) {
+            formGroup.insertBefore(strengthDiv, nextMessage);
+        } else {
+            formGroup.appendChild(strengthDiv);
+        }
+    }
+}
+
+
+/**
  * 폼 전체 유효성 검사
  */
 function validateForm(formData, signupState) {
+    if (!formData.username || formData.username.length < 2)
+        return { isValid: false, message: '이름을 올바르게 입력해주세요.', field: 'username' };
+
+    if (!formData.nickname || formData.nickname.length < 2)
+        return { isValid: false, message: '닉네임을 올바르게 입력해주세요.', field: 'nickname' };
+
     if (!signupState.isEmailVerified)
         return { isValid: false, message: '이메일 인증 요청을 진행해주세요.', field: 'email' };
 
@@ -88,9 +177,5 @@ function validateForm(formData, signupState) {
 
     if (formData.password !== formData.passwordConfirm)
         return { isValid: false, message: '비밀번호가 일치하지 않습니다.', field: 'passwordConfirm' };
-
-    if (!formData.name || formData.name.length < 2)
-        return { isValid: false, message: '이름을 올바르게 입력해주세요.', field: 'name' };
-
     return { isValid: true };
 }
