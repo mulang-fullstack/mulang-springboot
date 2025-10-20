@@ -1,4 +1,4 @@
-package yoonsome.mulang.user.util;
+package yoonsome.mulang.util;
 
 import org.mindrot.jbcrypt.BCrypt;
 import org.springframework.stereotype.Component;

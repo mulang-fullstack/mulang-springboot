@@ -21,8 +21,8 @@
         <form id="signupForm" action="/auth/signup" method="post">
             <!-- 이름 -->
             <div class="form-group">
-                <label for="name">이름</label>
-                <input type="text" id="name" name="name" placeholder="이름 입력" required>
+                <label for="username">이름</label>
+                <input type="text" id="username" name="username" placeholder="이름 입력" required>
             </div>
 
             <!-- 닉네임 -->
@@ -71,11 +71,11 @@
                 <label>계정타입</label>
                 <div class="radio-group">
                     <label class="radio-label active">
-                        <input type="radio" name="accountType" value="student" checked>
+                        <input type="radio" name="accountType" value="S" checked>
                         학생
                     </label>
                     <label class="radio-label">
-                        <input type="radio" name="accountType" value="teacher">
+                        <input type="radio" name="accountType" value="T">
                         강사
                     </label>
                 </div>
@@ -84,14 +84,16 @@
             <!-- 버튼 영역 -->
             <div class="button-group">
                 <button type="submit" class="btn-primary">가입하기</button>
-                <button type="button" class="btn-secondary" onclick="location.href='login.jsp'">로그인</button>
+                <button type="button" class="btn-secondary" onclick="location.href='login'">로그인</button>
             </div>
         </form>
     </div>
 </div>
 <script src="/js/pages/auth/signup/signupUtils.js"></script>
 <script src="/js/pages/auth/signup/signupValidation.js"></script>
-<script src="/js/pages/auth/signup/signupApi.js"></script>
+<script src="/js/pages/auth/signup/signupFormUI.js"></script>
+<script src="/js/pages/auth/signup/signupEmail.js"></script>
+<script src="/js/pages/auth/signup/signupEmailCode.js"></script>
 <script src="/js/pages/auth/signup/signupMain.js"></script>
 </body>
 </html>
