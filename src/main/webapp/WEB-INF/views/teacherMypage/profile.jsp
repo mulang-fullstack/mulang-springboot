@@ -5,16 +5,15 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <link rel="icon" href="/img/favicon.svg" type="image/png">
 
     <link rel="stylesheet" href="/css/global.css"/>
     <link rel="stylesheet" href="/css/pages/teacher/profile.css"/>
 
-    <title>강사 프로필 | Mulang</title>
+    <title>강사 프로필 | Mulang?</title>
 </head>
 <body>
-<%@include file="../common/header.jsp" %>
+<%@ include file="../common/header.jsp" %>
 
 <main>
     <div class="contents">
@@ -26,63 +25,68 @@
                     <h2>강사 프로필</h2>
 
                     <section class="profile-section">
-                        <!-- 강사명 -->
+                        <!-- 이름 -->
                         <div class="field">
-                            <label>강사명</label>
+                            <label>이름</label>
                             <div class="field-content">
-                                <span class="text-value"></span>
+                                <span class="text-value">${teacher.user.username}</span>
                             </div>
                         </div>
 
+                        <!-- 프로필 이미지 -->
                         <div class="field">
                             <label>프로필 이미지</label>
                             <div class="field-content">
                                 <div class="profile-img-wrap">
-                                    <c:choose>
-                                        <c:when test="">
-                                            <img src="" alt="프로필 이미지">
-                                        </c:when>
-                                        <c:otherwise>
-                                            <img src="/img/default_profile.png" alt="기본 이미지">
-                                        </c:otherwise>
-                                    </c:choose>
+                                    <img src="<c:out value='${teacher.photo != null ? teacher.photo : teacher.user.profileImageUrl}'/>"
+                                         alt="프로필 이미지"
+                                         onerror="this.src='/img/dummy/yoon.png';">
                                 </div>
                             </div>
                         </div>
 
+                        <!-- 닉네임 -->
                         <div class="field">
-                            <label>이메일</label>
+                            <label>닉네임</label>
                             <div class="field-content">
-                                <span class="text-value"></span>
+                                <span class="text-value">${teacher.user.nickname}</span>
                             </div>
                         </div>
 
-                        <!-- 강사 소개 -->
+                        <!-- 이메일 -->
                         <div class="field">
-                            <label>강사 소개</label>
+                            <label>이메일</label>
                             <div class="field-content">
-                                <p class="text-area"></p>
+                                <span class="text-value">${teacher.user.email}</span>
                             </div>
                         </div>
+
+                        <!-- 담당 언어 -->
+                        <div class="field">
+                            <label>담당 언어</label>
+                            <div class="field-content">
+                                <span class="text-value">${teacher.language.name}</span>
+                            </div>
+                        </div>
+
+                        <!-- 소개 -->
+                        <div class="field">
+                            <label>소개</label>
+                            <div class="field-content">
+                                <p class="text-area">${teacher.introduction}</p>
+                            </div>
+                        </div>
+
                         <!-- 경력 -->
                         <div class="field">
                             <label>경력</label>
                             <div class="field-content">
-                                <p class="text-area"></p>
+                                <p class="text-area">${teacher.carreer}</p>
                             </div>
                         </div>
-                        <!-- 언어 -->
-                        <div class="field">
-                            <label>언어</label>
-                            <div class="field-content">
-                                <span class="text-value"></span>
-                            </div>
-                        </div>
-                        <!-- 수정 버튼 -->
+
                         <div class="submit-wrap">
-                            <form action="/teacher/mypage/profile" method="get">
-                                <button type="submit" class="submit-btn">수정하기</button>
-                            </form>
+                            <button type="button" class="submit-btn">수정하기</button>
                         </div>
                     </section>
                 </div>
@@ -91,7 +95,6 @@
     </div>
 </main>
 <script src="/js/pages/teacher/profile.js"></script>
-<%@include file="../common/footer.jsp" %>
+<%@ include file="../common/footer.jsp" %>
 </body>
-
 </html>

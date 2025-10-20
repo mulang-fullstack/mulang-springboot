@@ -24,7 +24,6 @@
                 <div class="class-upload">
                     <h2>CLASS</h2>
 
-                    <!-- 클래스 등록 폼 -->
                     <form action="/teacher/mypage/classes" method="post" enctype="multipart/form-data">
 
                         <div class="field">
@@ -85,7 +84,6 @@
                             </div>
                         </div>
 
-                        <!-- -------------------- VOD 업로드 영역 -------------------- -->
                         <div class="field vod-section">
                             <label>챕터 업로드</label>
                             <div class="field-content">
@@ -109,13 +107,15 @@
                             </div>
                         </div>
 
-                        <!-- -------------------- 기본값 설정 -------------------- -->
+                        <!-- 기본값 설정 -->
                         <input type="hidden" name="status" value="true">
                         <input type="hidden" name="currentStudent" value="0">
                         <input type="hidden" name="lectureCount" value="1">
                         <input type="hidden" name="type" value="VOD">
 
-                        <!-- -------------------- 저장 버튼 -------------------- -->
+                        <!-- 로그인된 강사 ID -->
+                        <input type="hidden" name="teacher.id" value="${teacher.id}">
+
                         <div class="submit-wrap">
                             <button type="submit" class="submit-btn">저장하기</button>
                         </div>
@@ -127,8 +127,6 @@
 </main>
 
 <%@ include file="../common/footer.jsp" %>
-
-<!-- -------------------- JS 연결 -------------------- -->
 <script src="https://cdn.ckeditor.com/ckeditor5/43.0.0/classic/ckeditor.js"></script>
 <script src="/js/pages/teacher/ckeditor5.js"></script>
 <script src="/js/pages/teacher/classVideo.js"></script>
