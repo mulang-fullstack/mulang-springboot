@@ -13,6 +13,8 @@ import yoonsome.mulang.auth.service.AuthService;
 import yoonsome.mulang.user.entity.User;
 import yoonsome.mulang.user.service.UserService;
 
+import java.util.Map;
+
 @RequestMapping("/auth")
 @Controller
 @RequiredArgsConstructor
@@ -24,22 +26,24 @@ public class AuthController {
      * 로그인 요청
      */
     @GetMapping("/login")
-    public String login(){
+    public String login() {
         return "auth/login";
     }
 
     @PostMapping("/login")
-    public String login(LoginRequest request,
-                        HttpSession session,
-                        Model model) {
+    @ResponseBody
+    public ResponseEntity<?> login(LoginRequest request, HttpSession session) {
         try {
             User user = authService.login(request);
             session.setAttribute("loginUser", user);
-            return "redirect:/";
-
+            return ResponseEntity.ok(Map.of(
+                    "status", "success"
+            ));
         } catch (IllegalArgumentException e) {
-            model.addAttribute("error", e.getMessage());
-            return "auth/login";
+            return ResponseEntity.badRequest().body(Map.of(
+                    "status", "error",
+                    "message", e.getMessage()
+            ));
         }
     }
 
@@ -47,7 +51,7 @@ public class AuthController {
      * 회원가입 요청
      */
     @GetMapping("/signup")
-    public String signup(){
+    public String signup() {
         return "auth/signup";
     }
 

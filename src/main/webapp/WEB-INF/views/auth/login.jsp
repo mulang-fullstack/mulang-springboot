@@ -47,6 +47,7 @@
                     </button>
                 </div>
             </div>
+            <div id="errorMessage" class="error-message"></div>
 
             <!-- 로그인 버튼 -->
             <button type="submit" class="btn-primary login-btn">로그인</button>
@@ -73,10 +74,31 @@
         </div>
     </div>
 </div>
+<script>
+    document.querySelector('#loginForm').addEventListener('submit', async (e) => {
+        e.preventDefault();
+        const form = e.target;
+        const formData = new FormData(form);
+        const params = new URLSearchParams(formData);
 
-<script src="/js/pages/auth/login/loginUtils.js"></script>
-<script src="/js/pages/auth/login/loginValidation.js"></script>
-<script src="/js/pages/auth/login/loginSocial.js"></script>
-<script src="/js/pages/auth/login/loginMain.js"></script>
+        try {
+            const res = await fetch(form.action, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+                body: params
+            });
+            const data = await res.json();
+
+            if (data.status === 'success') {
+                location.href = '/';
+            } else {
+                document.querySelector('#errorMessage').textContent = data.message;
+            }
+        } catch {
+            document.querySelector('#errorMessage').textContent = '서버 오류가 발생했습니다.';
+        }
+    });
+
+</script>
 </body>
 </html>
