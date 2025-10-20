@@ -18,11 +18,12 @@ document.addEventListener('DOMContentLoaded', () => {
         btn.addEventListener('click', () => {
             const lectureId = btn.dataset.id;
             if (!lectureId) return alert('강좌 ID를 찾을 수 없습니다.');
-            location.href = `classUpdate?lectureId=${lectureId}`;
+            // ✅ RESTful 경로에 맞춰 수정
+            location.href = `/teacher/mypage/classes/update/${lectureId}`;
         });
     });
 
-    // 삭제 버튼 → 삭제 요청
+    // 삭제 버튼
     document.querySelectorAll('.delete-btn').forEach(btn => {
         btn.addEventListener('click', async () => {
             const lectureId = btn.dataset.id;
@@ -30,8 +31,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
             if (confirm('정말 이 클래스를 삭제하시겠습니까?')) {
                 try {
-                    const res = await fetch(`/teacher/classDelete.do?lectureId=${lectureId}`, {
-                        method: 'POST',
+                    const res = await fetch(`/teacher/mypage/classes/${lectureId}`, {
+                        method: 'DELETE',
                         headers: { 'Content-Type': 'application/json' }
                     });
 

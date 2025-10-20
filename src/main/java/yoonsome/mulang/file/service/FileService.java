@@ -13,6 +13,7 @@ import java.util.Optional;
 public interface FileService {
 
     File createFile(MultipartFile multipartFile, Lecture lecture) throws IOException;
+    File createFile(MultipartFile multipartFile) throws IOException;
     List<File> getFileList();
     Optional<File> getFileById(long id);
     void deleteFile(File file);

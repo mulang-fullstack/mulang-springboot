@@ -76,10 +76,26 @@
 }
 
 /* -------------------- 제목 -------------------- */
+/* 공통 */
 .title {
     font-size: 15px;
     color: var(--text-primary);
 }
+
+/* 버튼을 div처럼 보이게 + 왼쪽 정렬 강제 */
+button.title {
+    display: block;        /* 인라인 → 블록 */
+    width: 100%;           /* 셀 가로폭 꽉 채움 */
+    text-align: left !important;
+    background: none;
+    border: 0;
+    padding: 0;
+    margin: 0;
+    font: inherit;         /* 폰트 동일 */
+    color: inherit;
+    cursor: pointer;
+}
+
 
 /* -------------------- 태그 -------------------- */
 .tag {

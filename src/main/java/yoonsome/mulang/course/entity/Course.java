@@ -3,7 +3,7 @@ package yoonsome.mulang.course.entity;
 import jakarta.persistence.*;
 import lombok.*;
 import yoonsome.mulang.language.entity.Language;
-
+import yoonsome.mulang.teacher.entity.Teacher;
 import java.time.LocalDate;
 
 @Entity
@@ -53,6 +53,9 @@ public class Course {
     @Column(name = "lecture_count", nullable = false)
     private Integer lectureCount;
 
+    @Column(name = "thumbnail", nullable = false, length = 255)
+    private String thumbnail;
+
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "language_id", nullable = false)
     private Language language;
@@ -62,5 +65,9 @@ public class Course {
     private Category category;
 
     // Teacher 엔티티 만들어지고 나중에 추가 예정
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "teacher_id", nullable = false)
+    private Teacher teacher;
+
 }
 

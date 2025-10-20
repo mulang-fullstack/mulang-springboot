@@ -18,7 +18,6 @@
         <div class="logo">
             <img src="/img/logo.svg" alt="머랭 로고" />
         </div>
-        <h1>로그인</h1>
         <form action="/auth/login" method="post">
             <input type="email" name="email" class="input-box" placeholder="이메일 입력" required>
             <input type="password" name="password" class="input-box" placeholder="비밀번호 입력" required>

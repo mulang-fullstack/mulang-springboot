@@ -25,7 +25,7 @@
                 <!-- 버튼 -->
                 <div class="title-wrap">
                     <h2>클래스 관리</h2>
-                    <a href="classUpload" class="create-class-btn">
+                    <a href="/teacher/mypage/classes/new" class="create-class-btn">
                         <span class="plus">+</span> 클래스 만들기
                     </a>
                 </div>
@@ -45,9 +45,7 @@
                             <div class="thumb">
                                 <img src="https://placehold.co/160x90" alt="클래스 썸네일">
                             </div>
-                            <div class="title">
-                                <a href="lectureDetail">왕초보 기초회화</a>
-                            </div>
+                            <div class="title">왕초보 기초회화</div>
                             <div class="type">VOD</div>
                             <div class="status"><span class="tag gray">임시 저장</span></div>
                             <div class="date">
@@ -74,8 +72,8 @@
                                 <div class="menu-wrap">
                                     <button class="menu-btn">⋯</button>
                                     <div class="menu-dropdown">
-                                        <button class="menu-item edit-btn" data-id="${lecture.lectureId}">수정</button>
-                                        <button class="menu-item delete-btn" data-id="${lecture.lectureId}">삭제</button>
+                                        <button class="menu-item edit-btn" data-id="">수정</button>
+                                        <button class="menu-item delete-btn" data-id="">삭제</button>
                                     </div>
                                 </div>
                             </div>
@@ -93,8 +91,8 @@
                                 <div class="menu-wrap">
                                     <button class="menu-btn">⋯</button>
                                     <div class="menu-dropdown">
-                                        <button class="menu-item edit-btn" data-id="${lecture.lectureId}">수정</button>
-                                        <button class="menu-item delete-btn" data-id="${lecture.lectureId}">삭제</button>
+                                        <button class="menu-item edit-btn" data-id="">수정</button>
+                                        <button class="menu-item delete-btn" data-id="">삭제</button>
                                     </div>
                                 </div>
                             </div>

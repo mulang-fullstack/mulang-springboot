@@ -32,7 +32,7 @@
                                 </svg>
                             </button>
                             <div class="profile-dropdown">
-                                <p class="profile-name"><span>${loginUser.name}</span>님 안녕하세요!</p>
+                                <p class="profile-name"><span>${loginUser.username}</span>님 안녕하세요!</p>
                                 <div class="profile-divider"></div>
                                 <a href="#" class="profile-link">프로필 설정</a>
                                 <a href="#" class="profile-link">결제 내역</a>

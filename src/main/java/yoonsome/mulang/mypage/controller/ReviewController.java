@@ -12,5 +12,9 @@ public class ReviewController {
     public String review(Model model) {
         return "mypage/review/review";
     }
+    @GetMapping("review/write")
+    public String reviewWrite() {
+        return "mypage/review/reviewwrite"; // JSP 경로
+    }
 
 }

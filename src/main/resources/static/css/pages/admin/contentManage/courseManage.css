@@ -179,7 +179,8 @@ h1 {
     box-shadow: 0 0 0 3px rgba(75, 123, 236, 0.1);
 }
 
-.search-form button {
+.search-form button,
+.filter-reset {
     padding: 10px 20px;
     background: #4b7bec;
     border: none;
@@ -188,24 +189,23 @@ h1 {
     cursor: pointer;
     font-size: 14px;
     font-weight: 500;
+    transition: all 0.2s;
 }
 
 .search-form button:hover {
     background: #3968c3;
+    transform: translateY(-1px);
+    box-shadow: 0 4px 8px rgba(75, 123, 236, 0.2);
 }
 
-.btn-add {
-    padding: 10px 16px;
-    border: none;
-    background: #10b981;
-    color: #fff;
-    border-radius: 8px;
-    cursor: pointer;
-    font-weight: 500;
+.filter-reset {
+    background: #6c757d;
 }
 
-.btn-add:hover {
-    background: #059669;
+.filter-reset:hover {
+    background: #5a6268;
+    transform: translateY(-1px);
+    box-shadow: 0 4px 8px rgba(108, 117, 125, 0.2);
 }
 
 /* 테이블 */

@@ -14,7 +14,8 @@ import yoonsome.mulang.course.repository.CourseRepository;
 import yoonsome.mulang.lecture.service.LectureService;
 import yoonsome.mulang.review.service.ReviewService;
 import yoonsome.mulang.user.service.UserService;
-
+import yoonsome.mulang.file.entity.File;
+import yoonsome.mulang.file.service.FileService;
 import java.io.IOException;
 import java.util.*;
 
@@ -30,6 +31,8 @@ public class CourseServiceImpl implements CourseService {
 
     @Autowired
     private LectureService lectureService;
+    @Autowired
+    private final FileService fileService;
 
     @Autowired
     private UserService userService;
@@ -115,8 +118,13 @@ public class CourseServiceImpl implements CourseService {
     public void createCourseWithLectures(
             Course course,
             List<String> lectureTitles,
-            List<MultipartFile> lectureVideos
+            List<MultipartFile> lectureVideos,
+            MultipartFile thumbnail
     ) throws IOException {
+        if (thumbnail != null && !thumbnail.isEmpty()) {
+            File savedThumbnail = fileService.createFile(thumbnail);
+            course.setThumbnail(savedThumbnail.getPath());
+        }
 
         Course savedCourse = courseRepository.save(course);
 
