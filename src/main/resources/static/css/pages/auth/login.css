@@ -136,6 +136,15 @@ body {
     color: var(--text-primary);
 }
 
+.error-message {
+    margin-top: 10px;
+    font-size: 14px;
+    color: var(--text-error, #e53935);
+    padding: 8px 12px;
+    border-radius: 6px;
+    line-height: 1.4;
+}
+
 /* 로그인 버튼 */
 .login-btn {
     width: 100%;
