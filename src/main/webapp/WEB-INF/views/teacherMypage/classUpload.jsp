@@ -25,9 +25,8 @@
                     <h2>CLASS</h2>
 
                     <!-- 클래스 등록 폼 -->
-                    <form action="/classEdit" method="post" enctype="multipart/form-data">
+                    <form action="/teacher/mypage/classes" method="post" enctype="multipart/form-data">
 
-                        <!-- -------------------- 기본 정보 -------------------- -->
                         <div class="field">
                             <label>클래스 이름</label>
                             <div class="field-content">
@@ -68,15 +67,6 @@
                         </div>
 
                         <div class="field">
-                            <label>접수 기간</label>
-                            <div class="field-content date-range">
-                                <input type="date" name="applyStartedAt" required>
-                                <span>~</span>
-                                <input type="date" name="applyEndedAt" required>
-                            </div>
-                        </div>
-
-                        <div class="field">
                             <label>클래스 운영 기간</label>
                             <div class="field-content date-range">
                                 <input type="date" name="startedAt" required>
@@ -84,12 +74,22 @@
                                 <input type="date" name="endedAt" required>
                             </div>
                         </div>
+
+                        <div class="field">
+                            <label>썸네일 이미지</label>
+                            <div class="field-content">
+                                <input type="file" name="thumbnailFile"
+                                       accept="image/png, image/jpeg, image/webp"
+                                       required>
+                                <p class="hint">※ 대표 이미지로 사용됩니다. 10MB 이하, JPG/PNG 권장</p>
+                            </div>
+                        </div>
+
                         <!-- -------------------- VOD 업로드 영역 -------------------- -->
                         <div class="field vod-section">
                             <label>챕터 업로드</label>
                             <div class="field-content">
                                 <div class="video-list">
-                                    <!-- 기본 1개 챕터 행 -->
                                     <div class="video-item">
                                         <input type="text" name="lectureTitle[]" placeholder="챕터 제목을 입력하세요" class="chapter-input" required>
                                         <input type="file" name="lectureVideo[]" accept="video/mp4,video/webm,video/mov" class="video-input" required>

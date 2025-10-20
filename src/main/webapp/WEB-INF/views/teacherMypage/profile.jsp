@@ -11,14 +11,13 @@
     <link rel="stylesheet" href="/css/global.css"/>
     <link rel="stylesheet" href="/css/pages/teacher/profile.css"/>
 
-    <title>강사 프로필 | Mulang?</title>
+    <title>강사 프로필 | Mulang</title>
 </head>
 <body>
 <%@include file="../common/header.jsp" %>
 
 <main>
     <div class="contents">
-
         <section class="dashboard">
             <%@ include file="sidebar.jsp" %>
 
@@ -31,25 +30,30 @@
                         <div class="field">
                             <label>강사명</label>
                             <div class="field-content">
-                                <span class="text-value">최윤서</span>
+                                <span class="text-value"></span>
                             </div>
                         </div>
 
-                        <!-- 프로필 이미지 -->
                         <div class="field">
                             <label>프로필 이미지</label>
                             <div class="field-content">
                                 <div class="profile-img-wrap">
-                                    <img src="/img/dummy/yoon.png" alt="프로필 이미지">
+                                    <c:choose>
+                                        <c:when test="">
+                                            <img src="" alt="프로필 이미지">
+                                        </c:when>
+                                        <c:otherwise>
+                                            <img src="/img/default_profile.png" alt="기본 이미지">
+                                        </c:otherwise>
+                                    </c:choose>
                                 </div>
                             </div>
                         </div>
 
-                        <!-- 전화번호 -->
                         <div class="field">
                             <label>이메일</label>
                             <div class="field-content">
-                                <span class="text-value">test@test</span>
+                                <span class="text-value"></span>
                             </div>
                         </div>
 
@@ -57,37 +61,37 @@
                         <div class="field">
                             <label>강사 소개</label>
                             <div class="field-content">
-                                ${tutor.disc}
+                                <p class="text-area"></p>
                             </div>
                         </div>
-
-                        <!-- 이력 -->
+                        <!-- 경력 -->
                         <div class="field">
-                            <label>이력</label>
+                            <label>경력</label>
                             <div class="field-content">
-                                <p class="text-area">조선족 출신 중국어 강의 경력 10년</p>
+                                <p class="text-area"></p>
                             </div>
                         </div>
-
-                        <!-- 클래스 장소 -->
+                        <!-- 언어 -->
                         <div class="field">
-                            <label>클래스 장소</label>
+                            <label>언어</label>
                             <div class="field-content">
-                                <p class="text-area">온오프라인 병행 가능</p>
+                                <span class="text-value"></span>
                             </div>
                         </div>
                         <!-- 수정 버튼 -->
                         <div class="submit-wrap">
-                            <button type="submit" class="submit-btn">수정하기</button>
+                            <form action="/teacher/mypage/profile" method="get">
+                                <button type="submit" class="submit-btn">수정하기</button>
+                            </form>
                         </div>
                     </section>
                 </div>
             </section>
         </section>
-
     </div>
 </main>
-
+<script src="/js/pages/teacher/profile.js"></script>
 <%@include file="../common/footer.jsp" %>
 </body>
+
 </html>

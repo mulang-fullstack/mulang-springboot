@@ -19,11 +19,14 @@ public class Teacher {
     @Column(name = "teacher_id")
     private Long id;
 
-    @Column(nullable = false)
-    private String disc;
+    @Column(nullable = true, length = 100)
+    private String introduction;
+
+    @Column(name = "profile_image_url", nullable = true, length = 100)
+    private String photo;
 
     @Column(nullable = true, length = 100)
-    private String photo;
+    private String carreer;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "language_id", nullable = false)

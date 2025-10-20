@@ -1,52 +1,57 @@
 package yoonsome.mulang.teacher.controller;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import yoonsome.mulang.course.entity.Course;
 import yoonsome.mulang.course.service.CourseService;
+import yoonsome.mulang.file.service.FileService;
 import java.io.IOException;
 import java.util.List;
 
 /**
- * <p>강좌 업로드 및 편집을 처리하는 교사 마이페이지 컨트롤러</p>
- * <p>강좌 등록, 챕터(VOD) 업로드, 강좌 수정 등 기능을 담당</p>
+ * <p>교사 마이페이지 - 강좌 업로드 및 수정 컨트롤러</p>
+ * <p>강좌 등록, 챕터(VOD) 업로드, 강좌 수정 등 담당</p>
  * @author 양진석
  */
 @Controller
 @RequiredArgsConstructor
+@RequestMapping("/teacher/mypage/classes")
 public class CourseUploadController {
 
     private final CourseService courseService;
+    private final FileService fileService;
 
     /**
-     * 클래스 업로드 폼 페이지로 이동한다.
-     * @return teacherMypage/classUpload.jsp 뷰
+     * [GET] 새 강좌 업로드 폼 페이지
+     * @return teacherMypage/classUpload.jsp
      */
-    @GetMapping("classUpload")
-    public String getClassUploadForm() {
+    @GetMapping("/new")
+    public String showCourseUploadForm() {
         return "teacherMypage/classUpload";
     }
 
-    @PostMapping("classEdit")
+    /**
+     * [POST] 새 강좌 등록 처리
+     */
+    @PostMapping
     public String createCourse(
             @ModelAttribute Course course,
             @RequestParam(value = "lectureTitle", required = false) List<String> lectureTitles,
-            @RequestParam(value = "lectureVideo", required = false) List<MultipartFile> lectureVideos
+            @RequestParam(value = "lectureVideo", required = false) List<MultipartFile> lectureVideos,
+            @RequestParam(value = "thumbnailFile", required = false) MultipartFile thumbnailFile
     ) throws IOException {
-        courseService.createCourseWithLectures(course, lectureTitles, lectureVideos);
-        return "redirect:classEdit";
+        courseService.createCourseWithLectures(course, lectureTitles, lectureVideos,thumbnailFile);
+        return "redirect:/teacher/mypage/classes/edit";
+
     }
-    /**
-     * 클래스 수정 페이지로 이동한다.
-     * @return teacherMypage/classEdit.jsp 뷰
-     */
-    @GetMapping("classEdit")
-    public String getClassEditForm() {
-        return "teacherMypage/classEdit";
+
+    @DeleteMapping("/{courseId}")
+    @ResponseBody
+    public ResponseEntity<?> deleteCourse(@PathVariable Long courseId) {
+        courseService.deleteCourse(courseId);
+        return ResponseEntity.ok().build();
     }
 }
