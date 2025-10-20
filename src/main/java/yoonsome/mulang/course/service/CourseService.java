@@ -11,7 +11,7 @@ import java.util.List;
 public interface CourseService {
     Page<Course> getCourseListByLanguage(Long languageId, Pageable pageable);
     Page<Course> getCourseListByCategory(Long categoryId, Pageable pageable);
-    Page<CourseListResponse> getCoursesByLanguageAndCategory(Long languageId, Long categoryId, Pageable pageable);
+    Page<CourseListResponse> getCourseListByLanguageAndCategory(Long languageId, Long categoryId, Pageable pageable);
     Course getCourseDetail(long id);
     Course registerCourse(Course course);
     void modifyCourse(Course course);

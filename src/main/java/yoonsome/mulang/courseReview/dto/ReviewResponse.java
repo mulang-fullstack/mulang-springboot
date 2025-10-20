@@ -1,4 +1,4 @@
-package yoonsome.mulang.review.dto;
+package yoonsome.mulang.courseReview.dto;
 
 import lombok.Data;
 import java.time.LocalDateTime;

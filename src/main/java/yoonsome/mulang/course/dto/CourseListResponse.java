@@ -6,7 +6,8 @@ import lombok.Data;
 @AllArgsConstructor
 @Data
 public class CourseListResponse {
-    private Long id;               // 상세페이지 이동용 (화면엔 안보임)
+    private Long id;               //courseId 상세페이지 이동용
+    private String thumbnail;      // 썸네일
     private String title;          // 강의 제목
     private String content;        // 강의 설명
     private String teacherName;    // 강사명

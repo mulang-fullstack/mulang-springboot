@@ -1,12 +1,12 @@
-package yoonsome.mulang.review.service;
+package yoonsome.mulang.courseReview.service;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import yoonsome.mulang.review.entity.Review;
+import yoonsome.mulang.courseReview.entity.CourseReview;
 
 public interface ReviewService {
     /*리뷰 리스트 조회*/
-    Page<Review> getReviewsByCourseId(Long courseId, Pageable pageable);
+    Page<CourseReview> getReviewsByCourseId(Long courseId, Pageable pageable);
     /*평균 별점*/
     double getAverageRatingByCourseId(Long courseId);
     /*리뷰 수*/
