@@ -17,9 +17,10 @@ html {
     --bg-secondary: #F9F9FB;                /* 카드, 섹션 배경 */
     --bg-overlay: rgba(102, 108, 117, 0.3); /* 오버레이, 반투명 배경 */
     /* 포인트 색상 */
-    --bg-point-main: #8F56CC;              /* 버튼, 강조 영역 */
-    --bg-point-hover: #7739B8;        /* 버튼 호버 시 */
-    --bg-point-sub: #EFEAF5;          /* 포인트 관련 서브 배경 (버튼 주변 등) */
+    --bg-point-main: #004f9a;              /* 버튼, 강조 영역 */
+    --bg-point-hover: #0066CC;        /* 버튼 호버 시 */
+    --bg-point-active: #003366;         /* 클릭/활성 상태 */
+    --bg-point-sub: #E5EEF6;          /* 포인트 관련 서브 배경 (버튼 주변 등) */
     /* 화이트 / 기본 */
     --bg-white: #ffffff;              /* 카드, 모달, 기본 배경 */
     --bg-white-hover: rgba(75, 85, 99, 0.1); /* 호버/마우스 오버 효과 */
@@ -34,10 +35,12 @@ html {
     --text-muted: #9e9e9e; /* 매우 약한 보조 텍스트 */
     /* 상태/포인트 텍스트 */
     --text-error: #dc3545;
-    --text-succes: #3498DB;
+    --text-success: #22C55E;
+    --text-warning: #F59E0B;
     --text-disabled: #b3b3b3;
-    --text-point-main: #5A2299;
-    --text-point-sub: #501C89;
+    --text-info: #3498DB;
+    --text-point-main: #004f9a;
+    --text-point-sub: #1E6ACD;
     /* 특수 */
     --text-placeholder: #808080;
     --text-white: #ffffff;
@@ -48,8 +51,10 @@ html {
     --border-default: 1px solid #e0e0e0;
 
     /* 그림자 */
-    --shadow-default: 0px 1px 4px 0px rgba(0, 0, 0, 0.3);
-    --shadow-primary: 0 4px 8px rgba(0, 0, 0, 0.1);
+    --shadow-sm: 0px 1px 2px 0px rgba(0, 0, 0, 0.05);     /* 추가: 작은 그림자 */
+    --shadow-default: 0px 1px 4px 0px rgba(0, 0, 0, 0.1); /* 수정: 0.3 → 0.1 (너무 진함) */
+    --shadow-md: 0 4px 8px rgba(0, 0, 0, 0.1);           /* 기존 primary를 md로 변경 */
+    --shadow-lg: 0 10px 25px rgba(0, 0, 0, 0.1);         /* 추가: 큰 그림자 */
 }
 
 /* 기본 reset */

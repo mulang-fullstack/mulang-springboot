@@ -69,12 +69,14 @@
                         </div>
                     </div>
 
+                    <!-- 검색 영역 -->
                     <div class="search-section">
-                        <form class="search-form">
-                            <input type="text" placeholder="강좌명, 강사명 검색">
+                        <form action="/admin/user/memberList" method="get" class="search-form">
+                            <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}">
+                            <input type="text" name="keyword" value="${param.keyword}" placeholder="이름 또는 이메일 검색">
                             <button type="submit">검색</button>
                         </form>
-                        <button class="btn-add" onclick="openAddModal()">+ 새 강좌 등록</button>
+                        <button class="filter-reset" onclick="resetFilters()">필터 초기화</button>
                     </div>
                 </div>
 

@@ -17,7 +17,6 @@ public class ModifyService {
         User user = modify.findById(2l);
         user.setEmail(email);
         user.setNickname(nickname);
-        user.setPhone(phone);
         user.setPassword(password);
 
         modify.update(user);
