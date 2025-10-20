@@ -13,6 +13,7 @@ import yoonsome.mulang.user.entity.User;
 @NoArgsConstructor
 @Builder
 @Data
+@Table(name = "teacher")
 public class Teacher {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
