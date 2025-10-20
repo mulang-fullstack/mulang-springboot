@@ -39,8 +39,8 @@
                     <div class="table-body">
                         <div class="table-row">
                             <div class="thumb"><img src="https://placehold.co/160x90" alt=""></div>
-                            <div class="title">toeic</div>
-                            <div class="type">35</div>
+                            <button type="button" class="title" onclick="openPlayer(1)">왕초보 기초회화</button>
+                            <div class="type">20</div>
                             <div class="status"><span class="tag gray">70</span></div>
                             <div class="date">2025-10-02 ~ 2025-10-30</div>
                         </div>
@@ -76,6 +76,6 @@
 </main>
 
     <%@include file="../../common/footer.jsp" %>
-
+    <script src="/js/pages/mypage/course.js" defer></script>
     </body>
     </html>

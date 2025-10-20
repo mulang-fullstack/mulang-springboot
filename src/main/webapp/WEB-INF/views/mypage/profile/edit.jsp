@@ -70,6 +70,10 @@
                             <label>전화번호</label>
                             <div class="input-wrap">
                                 <input type="text" name="phone" value="${user.phone}">
+
+                                <c:if test="${not empty phoneerror}">
+                                    <p class="error">${phoneerror}</p>
+                                </c:if>
                             </div>
                         </div>
 
@@ -102,7 +106,7 @@
                                 </c:if>
                             </div>
                             </div>
-                        </div>
+
 
 
 
@@ -119,7 +123,7 @@
 
     </div>
 </main>
-<script src = "/js/mypage/edit.js"></script>
+<script src = "/js/pages/mypage/edit.js"></script>
 <%@ include file="../../common/footer.jsp" %>
 </body>
 </html>
