@@ -1,4 +1,4 @@
-package yoonsome.mulang.mypage.DTO;
+package yoonsome.mulang.student.DTO;
 
 import lombok.Data;
 
@@ -8,5 +8,4 @@ public class MypageResponse {
     private String email;
     private String nickname;
     private String username;
-    private String password;
 }

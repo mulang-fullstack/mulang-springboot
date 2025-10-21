@@ -1,8 +1,9 @@
-package yoonsome.mulang.mypage.service;
+package yoonsome.mulang.student.service;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-import yoonsome.mulang.mypage.DTO.MypageResponse;
+import yoonsome.mulang.global.util.BCryptEncoder;
+import yoonsome.mulang.student.DTO.MypageResponse;
 import yoonsome.mulang.user.entity.User;
 import yoonsome.mulang.user.service.UserService;
 
@@ -11,6 +12,7 @@ import yoonsome.mulang.user.service.UserService;
 public class MypageServiceImpl implements MypageService {
 
     private final UserService userService;
+    private final BCryptEncoder bCryptEncoder;
 
     @Override
     public MypageResponse getUserInfo(Long userid) {
@@ -26,9 +28,8 @@ public class MypageServiceImpl implements MypageService {
         return userSearchInfoDTO;
     }
 
-    public boolean verifypassword(Long userid, String password) {
-        User user = userService.findById(userid);
-        return true;
+    public boolean verifyPassword(String password, String realpassword) {
+        return bCryptEncoder.matches(password, realpassword);
     }
 
 }
