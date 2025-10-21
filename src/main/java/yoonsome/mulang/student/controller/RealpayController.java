@@ -10,11 +10,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 public class RealpayController {
     @GetMapping("realpay")
     public String realpay(Model model) {
-        return "mypage/realpay";
+        return "student/realpay";
     }
     @GetMapping("paysuccess")
     public String paysuccess(Model model) {
-        return "mypage/paysuccess";
+        return "student/paysuccess";
     }
 
 }

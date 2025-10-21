@@ -7,10 +7,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 @RequestMapping("/student")
 @Controller
-public class SaveController {
+public class    SaveController {
     @GetMapping("save")
     public String save(Model model) {
-        return "mypage/like/save";
+        return "student/like/save";
     }
 
 }

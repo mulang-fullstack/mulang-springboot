@@ -10,11 +10,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 public class MyCourseController {
     @GetMapping("course")
     public String course(Model model) {
-        return "mypage/mycourse/course";
+        return "student/mycourse/course";
     }
     @GetMapping("player")
     public String player(Model model) {
-        return "mypage/mycourse/player";
+        return "student/mycourse/player";
     }
 
 }

@@ -24,10 +24,9 @@ import yoonsome.mulang.user.service.UserService;
 public class PersonalController {
 
     private final MypageService mypageService;
-    private final BCryptEncoder bCryptEncoder;
     private final UserService userService;
 
-    @GetMapping("/personal")
+    @GetMapping("personal")
     public String personal(@AuthenticationPrincipal CustomUserDetails userDetails, Model model) {
 
         Long id = userDetails.getUser().getId();
@@ -37,23 +36,20 @@ public class PersonalController {
     }
 
     @PostMapping("check-password") // serssion에는 비밀번호에 관한정보는 담겨있지 않기 때문에 findbyid로 다시 조회해야함
-    public String passwordCheck(HttpSession session,
+    public String passwordCheck(@AuthenticationPrincipal CustomUserDetails userDetails,
                                 @RequestParam String password,
                                 RedirectAttributes redirectAttributes) {
 
-        User loginUser = (User) session.getAttribute("loginUser");
+        Long id = userDetails.getUser().getId();
+        MypageResponse user = mypageService.getUserInfo(id);
 
-        User forPassword = userService.findById(loginUser.getId());
-
-        if (loginUser == null) {
-            return "redirect:/auth/login";
-        }
+        User forPassword = userService.findById(user.getId());
 
         if (!mypageService.verifyPassword(password, forPassword.getPassword())) {
             redirectAttributes.addFlashAttribute("passwordError", "비밀번호가 일치하지 않습니다.");
-            return "redirect:/mypage/personal";
+            return "redirect:/student/personal";
         }
 
-        return "redirect:/mypage/edit";
+        return "redirect:/student/edit";
     }
 }

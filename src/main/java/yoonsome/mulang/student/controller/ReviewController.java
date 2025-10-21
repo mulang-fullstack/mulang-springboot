@@ -10,11 +10,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 public class ReviewController {
     @GetMapping("review")
     public String review(Model model) {
-        return "mypage/review/review";
+        return "student/review/review";
     }
     @GetMapping("reviewwrite")
     public String reviewWrite() {
-        return "mypage/review/reviewwrite"; // JSP 경로
+        return "student/review/reviewwrite"; // JSP 경로
     }
 
 }
