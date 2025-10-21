@@ -38,7 +38,27 @@
         </form>
     </div>
 </div>
+<div id="passwordCheckModalpc" class="password-modal">
+    <div class="password-modal-content">
+        <h3>비밀번호 확인</h3>
+        <c:if test="${empty passwordError}">
+            <p>본인 확인을 위해 비밀번호를 입력해주세요.</p>
+        </c:if>
 
+        <c:if test="${not empty passwordError}">
+            <div class="error-message">${passwordError}</div>
+        </c:if>
+
+        <form action="/student/passwordchanging" method="post" id="passwordCheckFormpc">
+            <input type="password" name="password" placeholder="비밀번호 입력" required>
+            <div class="password-modal-buttons">
+                <button type="submit" class="confirm-btn">확인</button>
+                <button type="button" class="cancel-btn" onclick="closePasswordModal()">취소</button>
+            </div>
+
+        </form>
+    </div>
+</div>
 <main>
     <div class="contents">
 
@@ -47,16 +67,10 @@
 
             <section class="content">
                 <div class="profile-main">
-                    <h2>강사 프로필</h2>
+                    <h2>학생 프로필</h2>
 
                     <section class="profile-section">
-                        <!-- 강사명 -->
-                        <div class="field">
-                            <label>이름</label>
-                            <div class="field-content">
-                                <span class="text-value">${user.username}</span>
-                            </div>
-                        </div>
+
 
                         <!-- 프로필 이미지 -->
                         <div class="field">
@@ -68,11 +82,19 @@
                             </div>
                         </div>
 
+                        <!-- 강사명 -->
+                        <div class="field">
+                            <label>이름</label>
+                            <div class="field-content">
+                                <span class="text-value">${user.username}</span>
+                            </div>
+                        </div>
+
                         <!-- 닉네임 -->
                         <div class="field">
                             <label>닉네임</label>
                             <div class="field-content">
-                                <span class="text-value">${user.nickname}</span>
+                                <span class="text-area ">${user.nickname}</span>
                             </div>
                         </div>
 
@@ -84,13 +106,18 @@
                                 <p class="text-area">${user.email}</p>
                             </div>
                         </div>
-
-                        <!-- 클래스 장소 -->
-                        <div class="field">
-                            <label>비밀번호</label>
-                            <div class="field-content">
-                                <p class="text-area">***********</p>
+                        <div class="password-container">
+                            <div class="field">
+                                <label>비밀번호</label>
+                                <div class="field-content">
+                                    <p class="text-area">***********</p>
+                                </div>
                             </div>
+                            <form id="editpassword">
+                            <div class="passwordsubmit-wrap">
+                                <button type="submit" class="passwordsubmit-btn">비밀번호 변경</button>
+                            </div>
+                            </form>
                         </div>
 
                         <form id="editForm">

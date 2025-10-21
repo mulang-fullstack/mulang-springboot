@@ -4,7 +4,10 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import yoonsome.mulang.infra.security.CustomUserDetails;
 import yoonsome.mulang.api.student.dto.MypageResponse;
 import yoonsome.mulang.api.student.service.MypageService;
@@ -19,7 +22,38 @@ public class ModifyController {
         this.mypageService = mypageService;
     }
 
-    @GetMapping("edit")
+    @GetMapping("passwordchange")
+    public String passwordchange(){
+
+        return "student/profile/passwordchange";
+    }
+    @PostMapping("passwordchange")
+    public String passwordchage(@AuthenticationPrincipal CustomUserDetails userDetails
+                                , Model model,
+                                @RequestParam String newpassword,
+                                @RequestParam String confirmpassword,
+                                RedirectAttributes redirectAttributes){
+
+
+        Long userId = userDetails.getUser().getId();
+
+        if(newpassword.length()<5 && newpassword.length() != 0){
+            model.addAttribute("passworderror", "비밀번호는 6자 이상입력하세요");
+            return "student/profile/passwordchange";
+
+        }if(!newpassword.equals(confirmpassword)){
+            model.addAttribute("passworderror", "서로 비밀번호가 달라요");
+            return "student/profile/passwordchange";
+        }
+
+        mypageService.updatepassword(userId,newpassword);
+
+        redirectAttributes.addFlashAttribute("message", "비밀번호가 수정되었습니다.");
+        return "redirect:/student/personal";
+    }
+
+
+    @GetMapping("edit")  // 편집창에 정보 가져와서 보여주기
     public String edit(Model model, @AuthenticationPrincipal CustomUserDetails userDetails) {
 
         Long id = userDetails.getUser().getId();
@@ -28,36 +62,30 @@ public class ModifyController {
 
         return "student/profile/edit";
     }
-    /*@PostMapping("edit")
+    @PostMapping("edit")
     public  String edit(Model model,
+                        @AuthenticationPrincipal CustomUserDetails userDetails,
                         @RequestParam String email,
-                        @RequestParam String phone,
-                        @RequestParam String password,
-                        @RequestParam String nickname) {
+                        @RequestParam String nickname, RedirectAttributes redirectAttributes) {
+
+        Long userId = userDetails.getUser().getId();
+
+
+            // Service 메서드 호출 (자동으로 DB 저장됨!)
+            mypageService.updateUserInfo(userId, email, nickname);
+
+            redirectAttributes.addFlashAttribute("message", "프로필이 수정되었습니다.");
+
         if(!email.contains("@") || !email.contains(".")) {
-            User user = em.find(User.class, 2L);
+            MypageResponse user = mypageService.getUserInfo(userId);
             model.addAttribute("user", user);
             model.addAttribute("emailerror", "이메일 형식이 올바르지 않습니다.");
-            return "/mypage/profile/edit";
-        }
-        if(password.length()<7 && password.length() == 0 || password.length()>16){
-            if(password.length() == 0){
-
-            }
-            User user = em.find(User.class, 2L);
-            model.addAttribute("user", user);
-            model.addAttribute("passworderror", "비밀번호는 8자에서 15자 사이를 입력하세요");
-            return "/mypage/profile/edit";
-        }
-        if(phone.length()!=11 && phone.contains("010")){
-            User user = em.find(User.class, 2L);
-            model.addAttribute("user", user);
-            model.addAttribute("phoneerror", "알맞은 정화번호를 입력하세요(전화번호의 형식은 010-****-**** 입니다)");
-            return "/mypage/profile/edit";
+            return "student/profile/edit";
         }
 
-        modifyService.updateUser(nickname, email,  phone, password);
 
-        return "redirect:/mypage/personal";
-    }*/
+
+        return "redirect:/student/personal";
+    }
+
 }

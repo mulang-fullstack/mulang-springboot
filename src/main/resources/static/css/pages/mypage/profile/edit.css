@@ -27,9 +27,10 @@
 .field {
     display: flex;
     justify-content: flex-start;
-    align-items: center;
-    padding-bottom: 20px;
+    align-items: center; /* ⭐ 중앙 정렬 */
+    padding: 20px 0; /* ⭐ 상하 여백 동일하게 */
     border-bottom: var(--border-default);
+    min-height: 80px; /* ⭐ 최소 높이 증가 */
 }
 
 .field label {
@@ -37,13 +38,17 @@
     font-size: 15px;
     font-weight: 600;
     color: var(--text-secondary);
+    flex-shrink: 0;
+    align-self: center; /* ⭐ label도 중앙 정렬 */
 }
 
 .field-content {
     position: relative;
     display: flex;
-    align-items: center;
+    flex-direction: column; /* ⭐ 세로 배치 */
+    justify-content: center; /* ⭐ 세로 중앙 정렬 */
     gap: 10px;
+    flex: 1;
 }
 
 /* -------------------- 프로필 이미지 -------------------- */
@@ -53,6 +58,7 @@
     border-radius: 50%;
     overflow: hidden;
     background-color: var(--bg-secondary);
+    flex-shrink: 0;
 }
 
 .profile-img-wrap img {
@@ -91,22 +97,29 @@
 /* -------------------- 입력 박스 -------------------- */
 .input-wrap {
     display: flex;
-    align-items: center;
-    gap: 8px;
+    flex-direction: column; /* ⭐ 세로 배치 */
+    gap: 6px; /* ⭐ input과 error 사이 간격 */
     flex: 1;
     max-width: 600px;
 }
 
 input,
 textarea {
-    flex: 1;
-    padding: 10px 12px;
+    width: 100%; /* ⭐ 전체 너비 */
+    padding: 12px 14px; /* ⭐ 패딩 증가 */
     border: var(--border-default);
     border-radius: 8px;
     background-color: var(--bg-white);
     font-size: 14px;
     color: var(--text-primary);
     resize: none;
+    line-height: 1.5;
+}
+
+input:focus,
+textarea:focus {
+    outline: none;
+    border-color: var(--bg-point-main); /* ⭐ 포커스 시 테두리 색상 */
 }
 
 .check-icon {
@@ -114,12 +127,13 @@ textarea {
     font-weight: 700;
     color: var(--text-point-main);
 }
-.error {
-    color: var(--text-error); /* 붉은색 */
-    font-size: 13px;
-    margin-top: 4px;
-}
 
+.error {
+    color: var(--text-error);
+    font-size: 13px;
+    margin: 0; /* ⭐ 마진 제거 */
+    line-height: 1.4;
+}
 
 /* -------------------- 수정 버튼 -------------------- */
 .edit-btn {
@@ -135,6 +149,8 @@ textarea {
     color: var(--text-point-main);
     cursor: pointer;
     transition: background 0.2s ease;
+    flex-shrink: 0;
+    align-self: center; /* ⭐ 버튼도 중앙 정렬 */
 }
 
 .edit-btn:hover {
@@ -151,6 +167,8 @@ textarea {
     color: var(--text-tertiary);
     cursor: pointer;
     transition: background 0.2s ease;
+    flex-shrink: 0;
+    align-self: center; /* ⭐ 버튼도 중앙 정렬 */
 }
 
 .add-btn:hover {
@@ -179,25 +197,37 @@ textarea {
 .submit-wrap {
     display: flex;
     justify-content: flex-end;
-    margin-top: 20px;
+    margin-top: 30px; /* ⭐ 여백 증가 */
 }
 
 .submit-btn {
-    padding: 8px 16px;
+    padding: 12px 24px; /* ⭐ 패딩 증가 */
     border: none;
-    border-radius: 6px;
+    border-radius: 8px; /* ⭐ 라운드 증가 */
     background-color: var(--bg-point-main);
-    font-size: 14px;
+    font-size: 15px; /* ⭐ 폰트 크기 증가 */
     font-weight: 600;
     color: var(--text-white);
     cursor: pointer;
-    transition: opacity 0.2s ease, transform 0.1s ease;
+    transition: all 0.2s ease;
 }
 
 .submit-btn:hover {
-    opacity: 0.9;
+    background-color: var(--bg-point-hover);
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(0, 79, 154, 0.2);
 }
 
 .submit-btn:active {
-    transform: scale(0.98);
+    transform: translateY(0);
+}
+
+/* ⭐ 프로필 이미지 필드만 특별 처리 */
+.field.profile-image-field {
+    min-height: 120px; /* 이미지 필드는 더 높게 */
+}
+
+.field.profile-image-field .field-content {
+    flex-direction: row; /* 이미지는 가로 배치 */
+    align-items: center;
 }

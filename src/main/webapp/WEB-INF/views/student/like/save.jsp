@@ -22,7 +22,7 @@
     <section class="mypage">
 
         <!-- 사이드바 -->
-        <jsp:include page="/WEB-INF/views/mypage/sidebar.jsp" />
+        <%@ include file="../sidebar.jsp" %>
 
         <!-- 메인 컨텐츠 -->
         <section class="content">
