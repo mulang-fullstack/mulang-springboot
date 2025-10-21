@@ -85,20 +85,27 @@
             const res = await fetch(form.action, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-                body: params
+                body: params,
+                redirect: 'follow' // Security의 redirect 응답을 따라감
             });
-            const data = await res.json();
 
-            if (data.status === 'success') {
-                location.href = '/';
-            } else {
-                document.querySelector('#errorMessage').textContent = data.message;
+            // Spring Security는 로그인 성공 시 redirect를 보냄
+            if (res.redirected) {
+                location.href = res.url;
+                return;
+            }
+
+            // 실패 시 /auth/login?error 로 redirect되므로 처리
+            const text = await res.text();
+            if (text.includes('error') || text.includes('Invalid')) {
+                document.querySelector('#errorMessage').textContent =
+                    '이메일 또는 비밀번호가 올바르지 않습니다.';
             }
         } catch {
-            document.querySelector('#errorMessage').textContent = '서버 오류가 발생했습니다.';
+            document.querySelector('#errorMessage').textContent =
+                '서버 오류가 발생했습니다.';
         }
     });
-
 </script>
 </body>
 </html>

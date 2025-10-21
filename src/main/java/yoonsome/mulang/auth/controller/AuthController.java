@@ -30,23 +30,6 @@ public class AuthController {
         return "auth/login";
     }
 
-    @PostMapping("/login")
-    @ResponseBody
-    public ResponseEntity<?> login(LoginRequest request, HttpSession session) {
-        try {
-            User user = authService.login(request);
-            session.setAttribute("loginUser", user);
-            return ResponseEntity.ok(Map.of(
-                    "status", "success"
-            ));
-        } catch (IllegalArgumentException e) {
-            return ResponseEntity.badRequest().body(Map.of(
-                    "status", "error",
-                    "message", e.getMessage()
-            ));
-        }
-    }
-
     /**
      * 회원가입 요청
      */
