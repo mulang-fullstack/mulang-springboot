@@ -2,6 +2,7 @@ package yoonsome.mulang.student.controller;
 
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -9,6 +10,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+import yoonsome.mulang.global.security.CustomUserDetails;
 import yoonsome.mulang.global.util.BCryptEncoder;
 import yoonsome.mulang.student.DTO.MypageResponse;
 import yoonsome.mulang.student.service.MypageService;
@@ -25,19 +27,13 @@ public class PersonalController {
     private final BCryptEncoder bCryptEncoder;
     private final UserService userService;
 
-    @GetMapping("personal")
-    public String personal(HttpSession session, Model model) {
-        User loginUser = (User) session.getAttribute("loginUser");
+    @GetMapping("/personal")
+    public String personal(@AuthenticationPrincipal CustomUserDetails userDetails, Model model) {
 
-        if (loginUser == null) {
-            return "redirect:/auth/login";
-        }
-
-
-        Long id = loginUser.getId();
+        Long id = userDetails.getUser().getId();
         MypageResponse user = mypageService.getUserInfo(id);
         model.addAttribute("user", user);
-        return "mypage/profile/personal";
+        return "student/profile/personal";
     }
 
     @PostMapping("check-password") // serssion에는 비밀번호에 관한정보는 담겨있지 않기 때문에 findbyid로 다시 조회해야함
