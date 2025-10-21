@@ -1,5 +1,5 @@
 // MemberDTO.java
-package com.mulang.admin.dto;
+package yoonsome.mulang.api.admin.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

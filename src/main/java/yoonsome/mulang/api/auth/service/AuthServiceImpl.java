@@ -1,9 +1,9 @@
-package yoonsome.mulang.auth.service;
+package yoonsome.mulang.api.auth.service;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-import yoonsome.mulang.auth.dto.LoginRequest;
-import yoonsome.mulang.auth.dto.SignupRequest;
+import yoonsome.mulang.api.auth.dto.LoginRequest;
+import yoonsome.mulang.api.auth.dto.SignupRequest;
 import yoonsome.mulang.user.entity.User;
 import yoonsome.mulang.user.service.UserService;
 import yoonsome.mulang.global.util.BCryptEncoder;
