@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 public class PayController {
     @GetMapping("pay")
     public String pay(Model model) {
-        return "mypage/payhistory/pay";
+        return "student/payhistory/pay";
     }
 
 }

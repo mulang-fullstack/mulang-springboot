@@ -28,7 +28,7 @@
                 <div class="error-message">${passwordError}</div>
             </c:if>
 
-            <form action="/mypage/check-password" method="post" id="passwordCheckForm">
+            <form action="/student/check-password" method="post" id="passwordCheckForm">
                 <input type="password" name="password" placeholder="비밀번호 입력" required>
                 <div class="password-modal-buttons">
                     <button type="submit" class="confirm-btn">확인</button>

@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 public class QnaController {
     @GetMapping("qna")
     public String qna(Model model) {
-        return "mypage/review/qna";
+        return "student/review/qna";
     }
 
 }

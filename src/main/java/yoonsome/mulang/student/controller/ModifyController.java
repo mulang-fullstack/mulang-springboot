@@ -1,10 +1,12 @@
 package yoonsome.mulang.student.controller;
 
 import jakarta.servlet.http.HttpSession;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import yoonsome.mulang.global.security.CustomUserDetails;
 import yoonsome.mulang.student.DTO.MypageResponse;
 import yoonsome.mulang.student.service.MypageService;
 import yoonsome.mulang.user.entity.User;
@@ -20,17 +22,13 @@ public class ModifyController {
     }
 
     @GetMapping("edit")
-    public String edit(Model model, HttpSession session) {
+    public String edit(Model model, @AuthenticationPrincipal CustomUserDetails userDetails) {
 
-        User loginUser = (User) session.getAttribute("loginUser");
-
-        if (loginUser == null) {
-            return "redirect:/auth/login";
-        }
-        Long id = loginUser.getId();
+        Long id = userDetails.getUser().getId();
         MypageResponse user = mypageService.getUserInfo(id);
         model.addAttribute("user", user);
-        return "/mypage/profile/edit";
+
+        return "student/profile/edit";
     }
     /*@PostMapping("edit")
     public  String edit(Model model,
