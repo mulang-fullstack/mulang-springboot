@@ -20,12 +20,18 @@
             <section class="course-category">
                 <h1>영어</h1>
                 <div class="course-tabs">
+                    <c:forEach var="category" items="${categories}">
+                        <a href="/course?categoryId=${category.id}" class="tab">${category.name}</a>
+                    </c:forEach>
+
+                    <!--
                     <div class="tab">기초</div>
                     <div class="tab">문법</div>
                     <div class="tab">어휘</div>
                     <div class="tab">독해</div>
                     <div class="tab">비즈니스</div>
                     <div class="tab">CNN</div>
+                    -->
                 </div>
             </section>
 
@@ -45,6 +51,39 @@
             </section>
 
             <section class="course-list">
+
+                <c:forEach var="course" items="${courses}">
+                    <div class="course-card">
+                        <a href="courseDetail?id=${course.id}">
+                            <img src="${course.thumbnail}" alt="course">
+                        </a>
+                        <div class="course-list-info">
+                            <h2><a href="courseDetail?id=${course.id}">${course.title}</a></h2>
+                            <p class="subtitle">${course.subtitle}</p>
+                            <p class="teacher">${course.teacherName}</p>
+                            <div class="rating">
+                                <span class="score">${course.averageRating}</span>
+                                <span class="stars">
+                        <c:forEach begin="1" end="5" var="i">
+                            <img src="/img/icon/star-${i <= course.averageRating ? 'full' : (i - 0.5 <= course.averageRating ? 'half' : 'empty')}.svg" alt="별">
+                        </c:forEach>
+                    </span>
+                                <span class="review-count">(${course.reviewCount})</span>
+                            </div>
+                        </div>
+                        <div class="heart-purchase-wrap">
+                            <div class="heart-icon">
+                                <img src="/img/icon/heart-full.svg" alt="찜 아이콘">
+                            </div>
+                            <div class="course-purchase">
+                                <span class="price">${course.price}원</span>
+                                <button class="purchase-btn">결제하기</button>
+                            </div>
+                        </div>
+                    </div>
+                </c:forEach>
+
+                <!--
                 <div class="course-card">
                     <a href="courseDetail">
                     <img src="https://placehold.co/250x180" alt="course"></a>
@@ -161,6 +200,7 @@
                         </div>
                     </div>
                 </div>
+                -->
             </section>
 
             <!-- 페이지네이션 -->

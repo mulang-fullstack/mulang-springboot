@@ -3,29 +3,33 @@ package yoonsome.mulang.domain.course.repository;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
+import org.springframework.stereotype.Repository;
 import yoonsome.mulang.domain.course.entity.Course;
 
 import java.util.List;
 
+@Repository
 public interface CourseRepository extends JpaRepository<Course,Long> {
     Page<Course> findByLanguage_Id(Long languageId, Pageable pageable);
-    Page<Course> findByCategory_Id(Long categoryId, Pageable pageable);
     Page<Course> findByLanguage_IdAndCategory_Id(Long languageId, Long categoryId, Pageable pageable);
-    /*
+    //Page<Course> findByLanguageIdAndKeyword(Long languageId, String keyword, Pageable pageable);
     @Query("""
-        SELECT new com.example.dto.CourseListResponse(
-            c.id, c.title, t.name, COUNT(r.id), COALESCE(AVG(r.rating),0)
-        )
+        SELECT c
         FROM Course c
-        JOIN c.teacher t
-        LEFT JOIN c.reviews r
-        WHERE (:languageId IS NULL OR c.language.id = :languageId)
+        LEFT JOIN c.teacher t
+        LEFT JOIN t.user u
+        WHERE c.language.id = :languageId
           AND (:categoryId IS NULL OR c.category.id = :categoryId)
-          AND (:keyword IS NULL OR c.title LIKE %:keyword%)
-        GROUP BY c.id, t.name
+          AND (:keyword IS NULL OR :keyword = ''
+               OR c.title LIKE CONCAT('%', :keyword, '%')
+               OR (t IS NOT NULL AND u IS NOT NULL AND u.username LIKE CONCAT('%', :keyword, '%')))
     """)
-    Page<CourseListResponse> findWithTeacherAndReviewByLanguageAndCategory
-            (Long languageId, Long categoryId, Pageable pageable);*/
-    //Page<Course> findByTitleOrTeacher(String title, String teacher, Pageable pageable);
+    Page<Course> findByLanguageIdAndCategoryIdAndKeyword(
+            @Param("languageId") Long languageId,
+            @Param("categoryId") Long categoryId,
+            @Param("keyword") String keyword,
+            Pageable pageable);
     List<Course> findByTeacherId(Long teacherId);
 }

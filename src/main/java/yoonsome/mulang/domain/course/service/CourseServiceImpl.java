@@ -31,18 +31,13 @@ public class CourseServiceImpl implements CourseService {
     private LectureService lectureService;
     @Autowired
     private final FileService fileService;
-    @Autowired
-    private UserService userService;
 
+    /*
     @Override
     public Page<Course> getCourseListByLanguage(Long languageId, Pageable pageable) {
         return courseRepository.findByLanguage_Id(languageId, pageable);
-    }
+    }*/
 
-    @Override
-    public Page<Course> getCourseListByCategory(Long categoryId, Pageable pageable) {
-        return courseRepository.findByCategory_Id(categoryId, pageable);
-    }
 /*
     @Override
     public Page<CourseListResponse> getCourseListByLanguageAndCategory(Long languageId, Long categoryId, Pageable pageable) {
@@ -50,11 +45,24 @@ public class CourseServiceImpl implements CourseService {
     }*/
 
     @Override
-    public Page<CourseListResponse> getCourseListByLanguageAndCategory(CourseListRequest request, Pageable pageable) {
+    public Page<CourseListResponse> getCourseList(CourseListRequest request, Pageable pageable) {
         Long languageId = request.getLanguageId();
         Long categoryId = request.getCategoryId();
+        String keyword = request.getKeyword();
         // 1. Course 엔티티 조회
-        Page<Course> courses = courseRepository.findByLanguage_IdAndCategory_Id(languageId, categoryId, pageable);
+        Page<Course> courses = courseRepository.findByLanguageIdAndCategoryIdAndKeyword(languageId, categoryId, keyword, pageable);
+        System.out.println("#courses: " + courses);
+
+        /*
+        //LanguageId만 있는 경우(헤더 탭 클릭 시)
+        Page<Course> courses1 = courseRepository.findByLanguage_Id(languageId, pageable);
+        //LanguageId+CategoryId
+        Page<Course>  courses2 =courseRepository.findByLanguage_IdAndCategory_Id(languageId, categoryId, pageable);
+        //LanguageId+search
+        //Page<Course> courses3 =courseRepository.findByLanguageIdAndKeyword(languageId, keyword, pageable);
+        //LanguageId+CategoryId+search
+        Page<Course> courses4 =courseRepository.findByLanguageIdAndCategoryIdAndKeyword(languageId, categoryId, keyword, pageable);
+        */
 
         // 2. DTO 리스트 생성
         List<CourseListResponse> dtoList = new ArrayList<>();
@@ -63,12 +71,13 @@ public class CourseServiceImpl implements CourseService {
             // 리뷰 정보 가져오기
             //double averageRating = reviewService.getAverageRatingByCourseId(course.getId());
             //int reviewCount = reviewService.countReviewByCourseId(course.getId());
-            double averageRating = 4.5;
+            double averageRating = 2.5;
             int reviewCount = 1000;
 
             //강사 정보 가져오기
-            //String teacherName = userService.getName();
-            String teacherName = "예시 홍길동 선생님";
+            String teacherName = course.getTeacher().getUser().getUsername();
+            //System.out.println("#teacherName: " + teacherName);
+            //String teacherName = "예시 홍길동 선생님";
 
             // DTO 생성
             CourseListResponse dto = new CourseListResponse(
@@ -118,6 +127,8 @@ public class CourseServiceImpl implements CourseService {
     /**
      * 강좌를 저장하고, 전달받은 리스트를 이용해 여러 개의 강의를 생성
      */
+
+    @Override
     public void createCourseWithLectures(
             Course course,
             List<String> lectureTitles,
