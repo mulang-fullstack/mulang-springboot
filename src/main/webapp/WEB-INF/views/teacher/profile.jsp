@@ -38,9 +38,7 @@
                             <label>프로필 이미지</label>
                             <div class="field-content">
                                 <div class="profile-img-wrap">
-                                    <img src="<c:out value='${teacher.photo != null ? teacher.photo : teacher.user.profileImageUrl}'/>"
-                                         alt="프로필 이미지"
-                                         onerror="this.src='/img/dummy/yoon.png';">
+
                                 </div>
                             </div>
                         </div>
@@ -64,8 +62,9 @@
                         <!-- 담당 언어 -->
                         <div class="field">
                             <label>담당 언어</label>
-                            <div class="field-content">
-                                <span class="text-value">${teacher.language.name}</span>
+                            <div class="input-wrap">
+                                <input type="text" value="${teacher.language.name}" readonly>
+                                <input type="hidden" name="language.id" value="${teacher.language.id}">
                             </div>
                         </div>
 

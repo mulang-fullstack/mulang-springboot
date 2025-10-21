@@ -1,11 +1,17 @@
 package yoonsome.mulang.teacher.repo;
 
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 import yoonsome.mulang.teacher.entity.Teacher;
 
 import java.util.Optional;
 
 public interface TeacherRepository extends JpaRepository<Teacher, Long> {
-    Optional<Teacher> findByUserId(Long userId);
 
+    @Query("SELECT t FROM Teacher t " +
+            "JOIN FETCH t.language " +
+            "JOIN FETCH t.user " +
+            "WHERE t.user.id = :userId")
+    Optional<Teacher> findByUserId(@Param("userId") Long userId);
 }
