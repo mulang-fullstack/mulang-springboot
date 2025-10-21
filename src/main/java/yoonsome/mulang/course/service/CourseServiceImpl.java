@@ -141,5 +141,9 @@ public class CourseServiceImpl implements CourseService {
             lectureService.createLectureWithFile(title, savedCourse, video);
         }
     }
+    @Override
+    public List<Course> getCoursesByTeacher(Long teacherId) {
+        return courseRepository.findByTeacherId(teacherId);
+    }
 
 }

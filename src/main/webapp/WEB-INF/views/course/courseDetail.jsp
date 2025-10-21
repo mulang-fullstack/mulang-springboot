@@ -19,26 +19,66 @@
         <div class="leture-detail-contents">
             <%@include file="courseInfo.jsp" %>
             <div class="course-tabs">
-                <div class="tab active" onclick="location.href='courseDetail'">강의소개</div>
-                <div class="tab" onclick="location.href='courseCurriculum'">커리큘럼</div>
-                <div class="tab" onclick="location.href='courseReview'">리뷰</div>
+                <div class="tab" data-target="introduction">강의소개</div>
+                <div class="tab" data-target="curriculum">커리큘럼</div>
+                <div class="tab" data-target="review">리뷰</div>
             </div>
-            <div class="course-content">
-                <h2>왕초보 기초회화</h2>
-                <p>
-                    틀에 박힌 한국식 영어는 이제 그만! 유학파 및 원어민 강사가 알려주는 신비한 뉘앙스의 세계 - 찐 원어민 회화 패키지!<br />
-                    어렵게만 느껴지는 스몰톡! 자신감이 필요하다면?<br />
-                    필수 Expressions & Vocabulary를 자연스럽게 적용한 대화문을 온전히 내 것으로!<br />
-                    현실감 최고인 Role-Play 대화문 속 유용한 Expressions를 반복 연습해보세요.<br /><br />
-                    [강의 구성]<br />
-                    - Warm up Quiz : 가장 중요한 한 문장을 소개하며 유추해보는 워밍업<br />
-                    - Today’s Expression : 주요 패턴과 예시 문장 학습<br />
-                    - Role Play, Conversation 등
-                </p>
-            </div>
+        </div>
+        <div id="introduction">
+            <%@include file="courseIntroduction.jsp" %>
+        </div>
+        <div id="curriculum">
+            <%@include file="courseCurriculum.jsp" %>
+        </div>
+        <div id="review">
+            <%@include file="courseReview.jsp" %>
         </div>
     </div>
 </main>
 <%@include file="../common/footer.jsp" %>
 </body>
 </html>
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const tabs = document.querySelectorAll('.tab');
+        const sections = document.querySelectorAll('#introduction, #curriculum, #review');
+        const header = document.querySelector('header');
+        const stickyDiv = document.querySelector('.leture-detail-contents');
+        const headerHeight = header?.offsetHeight || 0;
+
+        // 탭 클릭 시 스크롤 이동
+        tabs.forEach(tab => {
+            tab.addEventListener('click', () => {
+                const targetId = tab.dataset.target;
+                const target = document.getElementById(targetId);
+                if (!target) return;
+
+                // sticky div가 이미 상단에 붙어있다면 높이만큼 offset 추가
+               // const stickyOffset = (window.scrollY >= stickyDiv.offsetTop) ? stickyDiv.offsetHeight : 0;
+
+                const targetTop = target.offsetTop - headerHeight - stickyDiv.offsetHeight + 20;
+
+                window.scrollTo({ top: targetTop, behavior: 'smooth' });
+            });
+        });
+
+        // 스크롤 시 active 탭 업데이트
+        window.addEventListener('scroll', () => {
+            let current = '';
+            sections.forEach(section => {
+                const sectionTop = section.offsetTop - headerHeight - stickyDiv.offsetHeight - 0; // 여유 마진
+                if (window.scrollY >= sectionTop) {
+                    current = section.getAttribute('id');
+                }
+            });
+
+            tabs.forEach(tab => {
+                tab.classList.remove('active');
+                if (tab.dataset.target === current) {
+                    tab.classList.add('active');
+                }
+            });
+        });
+    });
+
+</script>
