@@ -40,7 +40,7 @@ public class CourseUploadController {
     /** [GET] 새 강좌 업로드 폼 페이지 */
     @GetMapping("/new")
     public String showCourseUploadForm() {
-        return "teacherMypage/classUpload";
+        return "teacher/classUpload";
     }
 
     /** [POST] 새 강좌 등록 처리 */

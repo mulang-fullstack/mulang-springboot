@@ -18,7 +18,7 @@
 <main>
     <div class="contents">
         <section class="dashboard">
-            <%@ include file="../teacherMypage/sidebar.jsp" %>
+            <%@ include file="sidebar.jsp" %>
 
             <section class="content">
                 <div class="class-upload">

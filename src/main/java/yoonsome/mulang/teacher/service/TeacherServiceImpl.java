@@ -9,7 +9,6 @@ import yoonsome.mulang.global.file.entity.File;
 import yoonsome.mulang.global.file.service.FileService;
 import yoonsome.mulang.teacher.entity.Teacher;
 import yoonsome.mulang.teacher.repo.TeacherRepository;
-
 import java.io.IOException;
 import java.util.List;
 
@@ -27,11 +26,13 @@ public class TeacherServiceImpl implements TeacherService {
                 .orElseThrow(() -> new IllegalArgumentException("교사 정보가 존재하지 않습니다."));
         return courseRepository.findByTeacherId(teacher.getId());
     }
+
     @Override
     public Teacher getTeacherProfile(Long userId) {
         return teacherRepository.findByUserId(userId)
                 .orElseThrow(() -> new IllegalArgumentException("교사 정보가 존재하지 않습니다."));
     }
+
     @Override
     public void updateTeacherProfile(Long userId, Teacher updateData, MultipartFile photo) throws IOException {
         Teacher teacher = teacherRepository.findByUserId(userId)
