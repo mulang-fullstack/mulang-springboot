@@ -6,6 +6,8 @@ public interface MypageService {
 
     MypageResponse getUserInfo(Long userid);
     public boolean verifyPassword(String password, String realpassword);
+    void updateUserInfo(Long userid, String email, String nickname);
+    void updatepassword(Long userid,String password);
 
 
 }

@@ -10,7 +10,7 @@
 .player-wrapper {
     display: flex;
     height: 100vh;
-    background-color: var(--bg-secondary);
+    background-color: #f7f9fc;
     font-family: "Noto Sans KR", sans-serif;
     overflow: hidden;
 }
@@ -21,9 +21,9 @@
     display: flex;
     flex-direction: column;
     padding: 40px 50px;
-    background: var(--bg-white);
-    border-right: var(--border-default);
-    box-shadow: var(--shadow-md);
+    background: #ffffff;
+    border-right: 1px solid #d5dbe6;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.08);
     overflow-y: auto; /* 세로 스크롤 활성화 */
     overflow-x: hidden;
 }
@@ -51,8 +51,8 @@
     width: 100%;
     border-radius: 14px;
     overflow: hidden;
-    background: var(--text-black);
-    box-shadow: var(--shadow-lg);
+    background: #000000;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.15);
     min-height: 90vh; /* 화면 높이의 90% */
 }
 
@@ -105,18 +105,18 @@ video:-ms-fullscreen {
 .video-info h3 {
     font-size: 26px;
     font-weight: 700;
-    color: var(--text-point-main);
+    color: #1e3a8a;
     margin-bottom: 12px;
 }
 
 .video-info p {
     font-size: 16px;
-    color: var(--text-secondary);
+    color: #475569;
 }
 
 .video-info #currentTime {
     font-weight: 600;
-    color: var(--text-point-main);
+    color: #1e3a8a;
 }
 
 /* ===== 재생속도 버튼 ===== */
@@ -127,8 +127,8 @@ video:-ms-fullscreen {
 }
 
 .video-controls button {
-    background-color: var(--bg-point-main);
-    color: var(--text-white);
+    background-color: #1e3a8a;
+    color: #ffffff;
     border: none;
     border-radius: 10px;
     padding: 14px 28px;
@@ -140,13 +140,12 @@ video:-ms-fullscreen {
 }
 
 .video-controls button:hover {
-    background: var(--bg-point-hover);
+    background: #274690;
     transform: translateY(-2px);
     box-shadow: 0 5px 12px rgba(30,58,138,0.4);
 }
 
 .video-controls button:active {
-    background: var(--bg-point-active);
     transform: translateY(0);
 }
 
@@ -161,10 +160,10 @@ video:-ms-fullscreen {
 .qna-section h4 {
     font-size: 24px;
     font-weight: 700;
-    color: var(--text-point-main);
+    color: #1e3a8a;
     margin-bottom: 30px;
     padding-left: 12px;
-    border-left: 4px solid var(--bg-point-main);
+    border-left: 4px solid #1e3a8a;
 }
 
 .qna-item {
@@ -178,13 +177,13 @@ video:-ms-fullscreen {
 
 .qna-item:hover {
     background: #e9eef6;
-    border-color: var(--bg-point-main);
+    border-color: #1e3a8a;
     transform: translateX(5px);
     box-shadow: 0 2px 8px rgba(30,58,138,0.1);
 }
 
 .qna-item .question {
-    color: var(--text-primary);
+    color: #1e293b;
     font-weight: 600;
     font-size: 16px;
     margin-bottom: 12px;
@@ -192,7 +191,7 @@ video:-ms-fullscreen {
 }
 
 .qna-item .answer {
-    color: var(--text-secondary);
+    color: #475569;
     font-size: 15px;
     line-height: 1.7;
     padding-left: 20px;
@@ -203,7 +202,7 @@ video:-ms-fullscreen {
     flex: 1.2;
     display: flex;
     flex-direction: column;
-    background: var(--bg-white);
+    background: #ffffff;
     border-left: 2px solid #d5dbe6;
     box-shadow: inset 0 0 10px rgba(0,0,0,0.03);
     padding: 30px 24px;
@@ -226,7 +225,7 @@ video:-ms-fullscreen {
 .lecture-list h4 {
     font-size: 20px;
     font-weight: 700;
-    color: var(--text-point-main);
+    color: #1e3a8a;
     margin-bottom: 24px;
     padding-bottom: 16px;
     border-bottom: 3px solid #e9eef6;
@@ -247,22 +246,22 @@ video:-ms-fullscreen {
     cursor: pointer;
     font-size: 15px;
     font-weight: 500;
-    color: var(--text-primary);
+    color: #1e293b;
     border: 2px solid transparent;
     transition: all 0.25s ease;
 }
 
 .lecture-list li:hover {
     background: #e9eef6;
-    color: var(--text-point-main);
-    border-color: var(--bg-point-main);
+    color: #1e3a8a;
+    border-color: #1e3a8a;
     transform: translateX(5px);
 }
 
 .lecture-list li.active {
-    background: linear-gradient(135deg, var(--bg-point-main), #3b5998);
-    color: var(--text-white);
-    border-color: var(--bg-point-main);
+    background: linear-gradient(135deg, #1e3a8a, #3b5998);
+    color: #ffffff;
+    border-color: #1e3a8a;
     box-shadow: 0 4px 12px rgba(30,58,138,0.3);
 }
 

@@ -1,5 +1,5 @@
 function openPlayer(lectureId) {
-    const url = `/mypage/player?lectureId=${lectureId}`;
+    const url = `/student/player?lectureId=${lectureId}`;
     const options = "width=1200,height=800,top=100,left=200,resizable=yes,scrollbars=no";
     window.open(url, "lecturePlayer", options);
 }

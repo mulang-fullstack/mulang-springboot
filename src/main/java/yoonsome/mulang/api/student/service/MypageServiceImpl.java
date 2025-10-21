@@ -1,8 +1,9 @@
 package yoonsome.mulang.api.student.service;
 
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-import yoonsome.mulang.global.util.BCryptEncoder;
 import yoonsome.mulang.api.student.dto.MypageResponse;
 import yoonsome.mulang.domain.user.entity.User;
 import yoonsome.mulang.domain.user.service.UserService;
@@ -12,7 +13,7 @@ import yoonsome.mulang.domain.user.service.UserService;
 public class MypageServiceImpl implements MypageService {
 
     private final UserService userService;
-    private final BCryptEncoder bCryptEncoder;
+    private final PasswordEncoder passwordEncoder;
 
     @Override
     public MypageResponse getUserInfo(Long userid) {
@@ -29,7 +30,23 @@ public class MypageServiceImpl implements MypageService {
     }
 
     public boolean verifyPassword(String password, String realpassword) {
-        return bCryptEncoder.matches(password, realpassword);
+        return passwordEncoder.matches(password, realpassword);
     }
+    @Transactional
+    public void updateUserInfo(Long userid,  String email, String nickname){
+        User user = userService.findById(userid);
+
+        user.setNickname(nickname);
+        user.setEmail(email);
+
+
+    }
+    @Transactional
+    public void updatepassword(Long userid,String password){
+        User user = userService.findById(userid);
+        user.setPassword(passwordEncoder.encode(password));
+    }
+
+
 
 }
