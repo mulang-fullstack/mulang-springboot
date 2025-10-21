@@ -28,7 +28,7 @@ public class MypageServiceImpl implements MypageService {
 
     public boolean verifypassword(Long userid, String password) {
         User user = userService.findById(userid);
-
+        return true;
     }
 
 }
