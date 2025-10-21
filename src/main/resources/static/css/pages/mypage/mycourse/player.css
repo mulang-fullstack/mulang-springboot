@@ -1,10 +1,10 @@
 @charset "UTF-8";
 
-/* ===== 기본 레이아웃 ===== */
+/* ===== 전체 ===== */
 .player-wrapper {
     display: flex;
     height: 100vh;
-    background-color: var(--bg-secondary);
+    background-color: #f7f9fc;
     font-family: "Noto Sans KR", sans-serif;
 }
 
@@ -13,119 +13,107 @@
     flex: 3;
     display: flex;
     flex-direction: column;
-    padding: 30px 40px;
-    background: var(--bg-white);
-    box-shadow: 2px 0 10px rgba(0,0,0,0.05);
-    border-radius: 0 20px 20px 0;
+    padding: 40px 50px;
+    background: #ffffff;
+    border-right: 1px solid #d5dbe6;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.08);
 }
 
 .video-frame {
     width: 100%;
-    border-radius: 12px;
+    border-radius: 14px;
     overflow: hidden;
-    background: var(--bg-overlay);
-    box-shadow: var(--shadow-primary);
+    background: #e9eef6;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.05);
 }
 
 video {
     width: 100%;
     height: 500px;
     object-fit: cover;
-    border-radius: 12px;
+    border-radius: 14px;
 }
 
+/* ===== 영상 정보 ===== */
 .video-info {
-    margin-top: 20px;
+    margin-top: 24px;
 }
 .video-info h3 {
-    font-size: 20px;
+    font-size: 22px;
     font-weight: 700;
-    color: var(--text-point-main);
+    color: #1e3a8a; /* 남색 포인트 */
 }
 .video-info p {
     font-size: 14px;
-    color: var(--text-muted);
+    color: #475569;
+    margin-top: 4px;
 }
 
 /* ===== 재생속도 버튼 ===== */
 .video-controls {
-    margin-top: 12px;
+    margin-top: 16px;
 }
 .video-controls button {
-    background-color: var(--bg-point-main);
-    color: var(--text-white);
+    background-color: #1e3a8a;
+    color: #ffffff;
     border: none;
     border-radius: 10px;
     padding: 10px 18px;
-    margin-right: 8px;
+    margin-right: 10px;
     font-weight: 500;
     cursor: pointer;
-    box-shadow: 0 2px 5px rgba(143,86,204,0.3);
-    transition: background 0.25s ease, transform 0.15s ease;
+    box-shadow: 0 3px 8px rgba(30,58,138,0.3);
+    transition: all 0.25s ease;
 }
 .video-controls button:hover {
-    background: linear-gradient(90deg, var(--bg-point-main), var(--bg-point-hover));
+    background: #274690;
     transform: translateY(-2px);
 }
 
-/* ===== 오른쪽 탭 영역 ===== */
+/* ===== 오른쪽 강의 영역 ===== */
 .lecture-list {
-    flex: 1;
-    background: var(--bg-white);
+    flex: 1.2;
+    display: flex;
+    flex-direction: column;
+    background: #ffffff;
+    border-left: 2px solid #d5dbe6;
+    box-shadow: inset 0 0 10px rgba(0,0,0,0.03);
     padding: 24px 20px;
-    border-left: 2px solid var(--bg-point-sub);
     border-radius: 20px 0 0 20px;
-    box-shadow: inset 0 0 8px rgba(143,86,204,0.08);
 }
 
-/* 탭 메뉴 */
+/* ===== 탭 메뉴 ===== */
 .tab-menu {
     display: flex;
-    justify-content: space-around;
-    background: var(--bg-point-sub);
+    justify-content: space-between;
+    background: #e9eef6;
     border-radius: 10px;
-    margin-bottom: 20px;
     overflow: hidden;
+    margin-bottom: 20px;
+    border: 1px solid #d5dbe6;
 }
-
 .tab-btn {
     flex: 1;
     text-align: center;
     padding: 12px 0;
     font-weight: 600;
     font-size: 15px;
-    color: var(--text-secondary);
+    color: #475569;
     background: transparent;
     border: none;
     cursor: pointer;
-    position: relative;
-    transition: color 0.25s ease, background 0.3s ease;
+    transition: all 0.25s ease;
 }
-
-/* Hover 효과 */
 .tab-btn:hover {
-    color: var(--text-white);
-    background: var(--bg-point-hover);
+    color: #ffffff;
+    background: #274690;
 }
-
-/* ✅ 활성화된 탭은 밑줄이 아닌 보라색 배경 */
 .tab-btn.active {
-    color: var(--text-white);
-    background: var(--bg-point-main);
-}
-.tab-btn.active::after {
-    content: "";
-    position: absolute;
-    bottom: 0;
-    left: 50%;
-    transform: translateX(-50%);
-    width: 70%;
-    height: 3px;
-    background-color: var(--bg-point-hover);
-    border-radius: 2px;
+    color: #ffffff;
+    background: #1e3a8a;
 }
 
-/* 탭 내용 */
+/* ===== 탭 내용 ===== */
 .tab-content {
     display: none;
     animation: fadeIn 0.3s ease;
@@ -134,7 +122,6 @@ video {
     display: block;
 }
 
-/* fade in */
 @keyframes fadeIn {
     from { opacity: 0; transform: translateY(8px); }
     to { opacity: 1; transform: translateY(0); }
@@ -144,66 +131,68 @@ video {
 .lecture-list ul {
     list-style: none;
     padding: 0;
+    margin: 0;
 }
 
 .lecture-list li {
-    background: var(--bg-secondary);
-    border-radius: 10px;
+    background: #e9eef6;
+    border-radius: 8px;
     padding: 12px 16px;
     margin-bottom: 10px;
     cursor: pointer;
-    color: var(--text-primary);
+    font-size: 15px;
+    font-weight: 500;
+    color: #1e293b;
     border: 1px solid transparent;
     transition: all 0.25s ease;
-    box-shadow: 0 1px 3px rgba(0,0,0,0.05);
 }
 .lecture-list li:hover {
-    background: var(--bg-point-sub);
-    color: var(--text-point-main);
-    border-color: var(--bg-point-main);
+    background: #dce3f3;
+    color: #1e3a8a;
+    border-color: #1e3a8a;
+    transform: translateX(3px);
 }
 .lecture-list li.active {
-    background: linear-gradient(90deg, var(--bg-point-main), var(--bg-point-hover));
-    color: var(--text-white);
+    background: linear-gradient(90deg, #1e3a8a, #274690);
+    color: #ffffff;
 }
 
 /* ===== 타임스탬프 ===== */
 .timestamp-list li {
-    font-size: 15px;
-    color: var(--text-tertiary);
-    border: var(--border-default);
+    font-size: 14px;
     padding: 8px 12px;
     border-radius: 8px;
+    border: 1px solid #d5dbe6;
     margin-bottom: 8px;
-    background-color: var(--bg-white);
+    background-color: #ffffff;
     transition: all 0.25s ease;
 }
 .timestamp-list li:hover {
-    background-color: var(--bg-point-sub);
-    color: var(--text-point-main);
-    border-color: var(--bg-point-main);
+    background-color: #dce3f3;
+    color: #1e3a8a;
+    border-color: #1e3a8a;
     transform: translateX(3px);
 }
 
 /* ===== Q&A ===== */
 .qna-item {
-    background: var(--bg-secondary);
+    background: #e9eef6;
     border-radius: 10px;
     padding: 14px;
     margin-bottom: 12px;
-    border: var(--border-default);
+    border: 1px solid #d5dbe6;
     transition: all 0.25s ease;
 }
 .qna-item:hover {
-    background: var(--bg-point-sub);
+    background: #dce3f3;
 }
 .qna-item .question {
-    color: var(--text-primary);
+    color: #1e293b;
     font-weight: 600;
     margin-bottom: 6px;
 }
 .qna-item .answer {
-    color: var(--text-muted);
+    color: #475569;
     font-size: 14px;
     line-height: 1.6;
 }
