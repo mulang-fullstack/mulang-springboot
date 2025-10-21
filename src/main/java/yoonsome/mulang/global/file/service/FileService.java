@@ -1,10 +1,10 @@
-package yoonsome.mulang.file.service;
+package yoonsome.mulang.global.file.service;
 
 import org.springframework.core.io.Resource;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.multipart.MultipartFile;
 import yoonsome.mulang.lecture.entity.Lecture;
-import yoonsome.mulang.file.entity.File;
+import yoonsome.mulang.global.file.entity.File;
 
 import java.io.IOException;
 import java.util.List;

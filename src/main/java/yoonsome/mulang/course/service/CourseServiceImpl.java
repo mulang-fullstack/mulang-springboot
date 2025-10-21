@@ -11,11 +11,10 @@ import org.springframework.web.multipart.MultipartFile;
 import yoonsome.mulang.course.dto.CourseListResponse;
 import yoonsome.mulang.course.entity.Course;
 import yoonsome.mulang.course.repository.CourseRepository;
-import yoonsome.mulang.courseReview.service.ReviewService;
 import yoonsome.mulang.lecture.service.LectureService;
 import yoonsome.mulang.user.service.UserService;
-import yoonsome.mulang.file.entity.File;
-import yoonsome.mulang.file.service.FileService;
+import yoonsome.mulang.global.file.entity.File;
+import yoonsome.mulang.global.file.service.FileService;
 import java.io.IOException;
 import java.util.*;
 

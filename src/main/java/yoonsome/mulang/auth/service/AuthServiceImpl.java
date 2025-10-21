@@ -6,7 +6,7 @@ import yoonsome.mulang.auth.dto.LoginRequest;
 import yoonsome.mulang.auth.dto.SignupRequest;
 import yoonsome.mulang.user.entity.User;
 import yoonsome.mulang.user.service.UserService;
-import yoonsome.mulang.util.BCryptEncoder;
+import yoonsome.mulang.global.util.BCryptEncoder;
 
 @Service
 @RequiredArgsConstructor

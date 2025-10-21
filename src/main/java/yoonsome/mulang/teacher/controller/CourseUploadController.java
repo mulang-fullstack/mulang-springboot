@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import yoonsome.mulang.course.entity.Course;
 import yoonsome.mulang.course.service.CourseService;
-import yoonsome.mulang.file.service.FileService;
+import yoonsome.mulang.global.file.service.FileService;
 import java.io.IOException;
 import java.util.List;
 

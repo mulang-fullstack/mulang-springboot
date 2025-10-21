@@ -6,7 +6,7 @@ import org.springframework.web.multipart.MultipartFile;
 import yoonsome.mulang.course.entity.Course;
 import yoonsome.mulang.lecture.entity.Lecture;
 import yoonsome.mulang.lecture.repository.LectureRepository;
-import yoonsome.mulang.file.service.FileService;
+import yoonsome.mulang.global.file.service.FileService;
 import java.io.IOException;
 
 @Service
