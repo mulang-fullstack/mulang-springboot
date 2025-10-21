@@ -32,7 +32,7 @@
                 <input type="password" name="password" placeholder="비밀번호 입력" required>
                 <div class="password-modal-buttons">
                     <button type="submit" class="confirm-btn">확인</button>
-                    <button type="button" class="cancel-btn" onclick="closePasswordModal()">취소</button>
+                    <button type="button" class="cancel-btn" onclick="closePasswordModalor()">취소</button>
                 </div>
 
         </form>

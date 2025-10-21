@@ -10,7 +10,7 @@ document.querySelector('.passwordsubmit-btn').addEventListener('click', function
 });
 
 // 모달 닫기 함수
-function closePasswordModal() {
+function closePasswordModalor() {
     document.getElementById('passwordCheckModal').style.display = 'none';
 }
 // 모달 닫기 함수
