@@ -9,10 +9,10 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+import yoonsome.mulang.global.util.BCryptEncoder;
 import yoonsome.mulang.mypage.DTO.MypageResponse;
 import yoonsome.mulang.mypage.service.MypageService;
 import yoonsome.mulang.user.entity.User;
-import yoonsome.mulang.util.BCryptEncoder;
 
 
 @RequestMapping("mypage")
