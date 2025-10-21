@@ -33,7 +33,7 @@
                         <div class="field">
                             <label>이름</label>
                             <div class="field-content">
-                                <span>${user.name}</span>
+                                <span>${user.username}</span>
                             </div>
                         </div>
 
@@ -65,25 +65,6 @@
                             </div>
                         </div>
 
-                        <!-- 전화번호 -->
-                        <div class="field">
-                            <label>전화번호</label>
-                            <div class="input-wrap">
-                                <input type="text" name="phone" value="${user.phone}">
-
-                                <c:if test="${not empty phoneerror}">
-                                    <p class="error">${phoneerror}</p>
-                                </c:if>
-                            </div>
-                        </div>
-
-                        <!-- 생년월일 -->
-                        <div class="field">
-                            <label>생년월일</label>
-                            <div class="input-wrap">
-                                <input type="text" name="birthday" value="${user.createTime}">
-                            </div>
-                        </div>
                         <!-- 이메일 -->
                         <div class="field">
                             <label>이메일</label>
@@ -100,7 +81,7 @@
                         <div class="field">
                             <label>비밀번호</label>
                             <div class="input-wrap">
-                                <input type="text" name="password" value="${user.password}">
+                                <input type="text" name="password" placeholder="새 비밀번호를 입력하세요">
                                 <c:if test="${not empty passworderror}">
                                     <p class="error">${passworderror}</p>
                                 </c:if>

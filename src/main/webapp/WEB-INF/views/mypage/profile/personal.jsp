@@ -34,6 +34,7 @@
                     <button type="submit" class="confirm-btn">확인</button>
                     <button type="button" class="cancel-btn" onclick="closePasswordModal()">취소</button>
                 </div>
+
         </form>
     </div>
 </div>
@@ -51,9 +52,9 @@
                     <section class="profile-section">
                         <!-- 강사명 -->
                         <div class="field">
-                            <label>강사명</label>
+                            <label>이름</label>
                             <div class="field-content">
-                                <span class="text-value">${user.name}</span>
+                                <span class="text-value">${user.username}</span>
                             </div>
                         </div>
 
@@ -75,21 +76,6 @@
                             </div>
                         </div>
 
-                        <!-- 전화번호 -->
-                        <div class="field">
-                            <label>전화번호</label>
-                            <div class="field-content">
-                                <span class="text-value">${user.phone}</span>
-                            </div>
-                        </div>
-
-                        <!-- 강사 소개 -->
-                        <div class="field">
-                            <label>생년월일</label>
-                            <div class="field-content">
-                                <p class="text-area">${user.createTime}</p>
-                            </div>
-                        </div>
 
                         <!-- 이력 -->
                         <div class="field">
