@@ -12,6 +12,7 @@ import java.sql.Timestamp;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
+@Table(name = "course_question")
 public class CourseQuestion {
 
     @Id

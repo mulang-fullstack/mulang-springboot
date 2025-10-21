@@ -4,7 +4,7 @@ import jakarta.persistence.*;
 import lombok.*;
 import yoonsome.mulang.domain.category.entity.Category;
 import yoonsome.mulang.domain.language.entity.Language;
-import yoonsome.mulang.api.teacher.entity.Teacher;
+import yoonsome.mulang.domain.teacher.entity.Teacher;
 import java.time.LocalDate;
 
 @Entity

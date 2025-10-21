@@ -24,80 +24,93 @@
                 <div class="profile-main">
                     <h2>강사 프로필 관리</h2>
 
-                    <section class="profile-section">
+                    <form action="/teacher/mypage/profile/update"
+                          method="post"
+                          enctype="multipart/form-data"
+                          id="editForm">
+
                         <!-- 이름 -->
                         <div class="field">
                             <label>이름</label>
-                            <div class="field-content"><span>${teacher.user.username}</span></div>
+                            <div class="field-content">
+                                <span>${teacher.user.username}</span>
+                            </div>
                         </div>
 
                         <!-- 프로필 이미지 -->
                         <div class="field">
                             <label>프로필 이미지</label>
-                            <div class="field-content profile-img-area">
-
+                            <div class="field-content">
+                                <div class="profile-img-wrap">
+                                    <img id="profileImg"
+                                         src="${teacher.user.file != null ? teacher.user.file.url : ''}">
+                                </div>
                                 <button type="button" class="camera-btn" onclick="document.getElementById('fileInput').click();">
                                     <img src="/img/icon/bx-camera.svg" alt="사진 변경">
                                 </button>
-                                <input type="file" id="fileInput" name="file" accept="image/*" hidden>
+                                <input type="file" id="fileInput" name="photo" accept="image/*" hidden>
+                            </div>
+
+                        </div>
+
+                        <!-- 닉네임 -->
+                        <div class="field">
+                            <label>닉네임</label>
+                            <div class="input-wrap">
+                                <input type="text" name="nickname" value="${teacher.user.nickname}">
                             </div>
                         </div>
 
-                        <form action="/teacher/mypage/profile/update" method="post" id="editForm">
-                            <!-- 닉네임 -->
-                            <div class="field">
-                                <label>닉네임</label>
-                                <div class="input-wrap">
-                                    <input type="text" name="nickname" value="${teacher.user.nickname}">
-                                </div>
+                        <!-- 이메일 -->
+                        <div class="field">
+                            <label>이메일</label>
+                            <div class="input-wrap">
+                                <input type="text" name="email" value="${teacher.user.email}">
                             </div>
+                        </div>
 
-                            <!-- 이메일 -->
-                            <div class="field">
-                                <label>이메일</label>
-                                <div class="input-wrap">
-                                    <input type="text" name="email" value="${teacher.user.email}">
-                                </div>
+                        <!-- 담당 언어 -->
+                        <div class="field">
+                            <label>담당 언어</label>
+                            <div class="input-wrap">
+                                <select name="language.id">
+                                    <c:forEach var="lang" items="${languages}">
+                                        <option value="${lang.id}"
+                                                <c:if test="${teacher.language.id == lang.id}">selected</c:if>>
+                                                ${lang.name}
+                                        </option>
+                                    </c:forEach>
+                                </select>
                             </div>
+                        </div>
 
-                            <!-- 담당 언어 -->
-                            <div class="field">
-                                <label>담당 언어</label>
-                                <div class="input-wrap">
-                                    <input type="text" value="${teacher.language.name}" readonly>
-                                    <input type="hidden" name="language.id" value="${teacher.language.id}">
-                                </div>
+                        <!-- 소개 -->
+                        <div class="field">
+                            <label>소개</label>
+                            <div class="input-wrap">
+                                <textarea name="introduction" rows="4">${teacher.introduction}</textarea>
                             </div>
+                        </div>
 
-
-                            <!-- 소개 -->
-                            <div class="field">
-                                <label>소개</label>
-                                <div class="input-wrap">
-                                    <textarea name="introduction" rows="4">${teacher.introduction}</textarea>
-                                </div>
+                        <!-- 경력 -->
+                        <div class="field">
+                            <label>경력</label>
+                            <div class="input-wrap">
+                                <textarea name="carreer" rows="3">${teacher.carreer}</textarea>
                             </div>
+                        </div>
 
-                            <!-- 경력 -->
-                            <div class="field">
-                                <label>경력</label>
-                                <div class="input-wrap">
-                                    <textarea name="carreer" rows="3">${teacher.carreer}</textarea>
-                                </div>
-                            </div>
-
-                            <div class="submit-wrap">
-                                <button type="submit" class="submit-btn">수정 완료</button>
-                            </div>
-                        </form>
-                    </section>
+                        <div class="submit-wrap">
+                            <button type="submit" class="submit-btn">수정 완료</button>
+                        </div>
+                    </form>
                 </div>
             </section>
         </section>
     </div>
 </main>
 
-<script src="/js/pages/teacher/profileEdit.js"></script>
+<script src="/js/pages/teacher/profileEditImage.js"></script>
 <%@ include file="../common/footer.jsp" %>
 </body>
 </html>

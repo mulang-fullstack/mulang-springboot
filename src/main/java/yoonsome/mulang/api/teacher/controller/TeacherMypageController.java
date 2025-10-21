@@ -1,5 +1,6 @@
 package yoonsome.mulang.api.teacher.controller;
 
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -9,8 +10,10 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import yoonsome.mulang.domain.course.entity.Course;
 import yoonsome.mulang.domain.course.service.CourseService;
+import yoonsome.mulang.domain.language.entity.Language;
+import yoonsome.mulang.domain.language.repository.LanguageRepository;
 import yoonsome.mulang.infra.security.CustomUserDetails;
-import yoonsome.mulang.api.teacher.entity.Teacher;
+import yoonsome.mulang.domain.teacher.entity.Teacher;
 import yoonsome.mulang.api.teacher.service.TeacherService;
 import yoonsome.mulang.domain.user.entity.User;
 import java.io.IOException;
@@ -24,6 +27,7 @@ public class TeacherMypageController {
     private final TeacherService teacherService;
     @Autowired
     private final CourseService courseService;
+    private final LanguageRepository languageRepository;
 
     /** 프로필 보기 */
     @GetMapping("/profile")
@@ -37,13 +41,18 @@ public class TeacherMypageController {
     /** 프로필 수정 폼 */
     @GetMapping("/profile/edit")
     public String profileEdit(@AuthenticationPrincipal CustomUserDetails userDetails, Model model) {
-        User loginUser = userDetails.getUser();
-        Teacher teacher = teacherService.getTeacherProfile(loginUser.getId());
+        Long userId = userDetails.getUser().getId();
+        Teacher teacher = teacherService.getTeacherProfile(userId);
+
+        List<Language> languages = languageRepository.findAll();
+
         model.addAttribute("teacher", teacher);
+        model.addAttribute("languages", languages);
         return "teacher/edit";
     }
 
     /** 프로필 업데이트 */
+    @Transactional
     @PostMapping("/profile/update")
     public String updateProfile(
             @AuthenticationPrincipal CustomUserDetails userDetails,
@@ -51,9 +60,10 @@ public class TeacherMypageController {
             @RequestParam(value = "photo", required = false) MultipartFile photo
     ) throws IOException {
         User loginUser = userDetails.getUser();
-        teacherService.updateTeacherProfile(loginUser.getId(), teacher, photo);
+        teacherService.updateTeacherProfile(userDetails.getUser().getId(), teacher, photo);
         return "redirect:/teacher/mypage/profile";
     }
+
 
     /** 리뷰 관리 */
     @GetMapping("/reviews")

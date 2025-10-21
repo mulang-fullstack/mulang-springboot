@@ -2,8 +2,10 @@ package yoonsome.mulang.domain.user.entity;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import yoonsome.mulang.infra.file.entity.File;
 
 import java.time.LocalDateTime;
 
@@ -17,6 +19,7 @@ import java.time.LocalDateTime;
 )
 @AllArgsConstructor
 @NoArgsConstructor
+@Builder
 @Data
 public class User {
     @Id
@@ -29,9 +32,6 @@ public class User {
 
     @Column(nullable = false, length = 255)
     private String password;
-
-    @Column(name = "file_id", length = 255)
-    private String fileId;
 
     @Enumerated(EnumType.STRING)
     @Column(nullable = false, length = 10)
@@ -66,4 +66,8 @@ public class User {
     public enum Role {
         STUDENT, TEACHER, ADMIN
     }
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "file_id")
+    private File file;
 }

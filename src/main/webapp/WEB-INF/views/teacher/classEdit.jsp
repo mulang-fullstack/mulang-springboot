@@ -44,7 +44,7 @@
                         <c:forEach var="course" items="${courseList}">
                             <div class="table-row">
                                 <div class="thumb">
-                                    <img src="${course.thumbnail}" alt="클래스 썸네일" width="160" height="90">
+                                    <img src="${course.thumbnail.url}" alt="클래스 썸네일" width="160" height="90">
                                 </div>
                                 <div class="title">${course.title}</div>
                                 <div class="type">${course.type}</div>

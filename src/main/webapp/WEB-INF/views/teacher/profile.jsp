@@ -38,7 +38,8 @@
                             <label>프로필 이미지</label>
                             <div class="field-content">
                                 <div class="profile-img-wrap">
-
+                                    <img id="profileImg"
+                                         src="${teacher.user.file != null ? teacher.user.file.url : ''}">
                                 </div>
                             </div>
                         </div>
