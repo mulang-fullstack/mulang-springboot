@@ -1,11 +1,11 @@
-package yoonsome.mulang.mypage.controller;
+package yoonsome.mulang.student.controller;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-@RequestMapping("mypage")
+@RequestMapping("/student")
 @Controller
 public class RealpayController {
     @GetMapping("realpay")

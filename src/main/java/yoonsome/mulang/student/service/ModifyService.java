@@ -1,10 +1,9 @@
-package yoonsome.mulang.mypage.service;
+package yoonsome.mulang.student.service;
 
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-import yoonsome.mulang.mypage.repository.ModifyRepository;
-import yoonsome.mulang.user.entity.User;
+import yoonsome.mulang.student.repository.ModifyRepository;
 
 @Service
 @RequiredArgsConstructor
@@ -14,12 +13,12 @@ public class ModifyService {
 
     @Transactional
     public void updateUser(String nickname, String email, String phone, String password){
-        User user = modify.findById(2l);
+        /*User user = modify.findById(2l);
         user.setEmail(email);
         user.setNickname(nickname);
         user.setPassword(password);
 
-        modify.update(user);
+        modify.update(user);*/
     }
 
 }

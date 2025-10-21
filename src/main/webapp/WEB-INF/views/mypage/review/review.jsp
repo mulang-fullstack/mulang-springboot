@@ -38,7 +38,7 @@
                         <option>최신순</option>
                         <option>오래된순</option>
                     </select>
-                    <button type="button" class="apply-btn" onclick="location.href='/mypage/review/write'">작성하기</button>
+                    <button type="button" class="apply-btn" onclick="location.href='/mypage/reviewwrite'">작성하기</button>
                 </div>
 
                 <!-- Q&A 리스트 -->

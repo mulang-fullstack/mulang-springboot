@@ -1,14 +1,11 @@
-package yoonsome.mulang.mypage.controller;
+package yoonsome.mulang.student.controller;
 
-import jakarta.persistence.EntityManager;
-import jakarta.persistence.PersistenceContext;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import yoonsome.mulang.user.entity.User;
 
-@RequestMapping("mypage")
+@RequestMapping("/student")
 @Controller
 public class SaveController {
     @GetMapping("save")
