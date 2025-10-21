@@ -1,4 +1,4 @@
-package yoonsome.mulang.file.entity;
+package yoonsome.mulang.global.file.entity;
 
 import jakarta.persistence.*;
 import lombok.*;

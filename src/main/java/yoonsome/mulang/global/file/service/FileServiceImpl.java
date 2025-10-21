@@ -1,4 +1,4 @@
-package yoonsome.mulang.file.service;
+package yoonsome.mulang.global.file.service;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
@@ -9,8 +9,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 import yoonsome.mulang.lecture.entity.Lecture;
-import yoonsome.mulang.file.entity.File;
-import yoonsome.mulang.file.repo.FileRepository;
+import yoonsome.mulang.global.file.entity.File;
+import yoonsome.mulang.global.file.repo.FileRepository;
 import java.io.IOException;
 import java.nio.file.*;
 import java.util.List;
