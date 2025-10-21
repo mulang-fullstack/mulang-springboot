@@ -8,6 +8,7 @@ import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
+import yoonsome.mulang.course.dto.CourseListRequest;
 import yoonsome.mulang.course.dto.CourseListResponse;
 import yoonsome.mulang.course.entity.Course;
 import yoonsome.mulang.course.repository.CourseRepository;
@@ -49,7 +50,9 @@ public class CourseServiceImpl implements CourseService {
     }*/
 
     @Override
-    public Page<CourseListResponse> getCourseListByLanguageAndCategory(Long languageId, Long categoryId, Pageable pageable) {
+    public Page<CourseListResponse> getCourseListByLanguageAndCategory(CourseListRequest request, Pageable pageable) {
+        Long languageId = request.getLanguageId();
+        Long categoryId = request.getCategoryId();
         // 1. Course 엔티티 조회
         Page<Course> courses = courseRepository.findByLanguage_IdAndCategory_Id(languageId, categoryId, pageable);
 

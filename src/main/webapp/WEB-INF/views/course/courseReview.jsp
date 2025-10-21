@@ -55,12 +55,4 @@
             </span>
     <button class="next"><img src="/img/icon/page-right.svg" alt="오른쪽 아이콘"></button>
 </section>
-<script>
-    document.querySelectorAll('.review-more').forEach(btn => {
-        btn.addEventListener('click', () => {
-            const content = btn.previousElementSibling;
-            const isExpanded = content.classList.toggle('expanded');
-            btn.textContent = isExpanded ? '접기' : '더보기';
-        });
-    });
-</script>
+<script src="/js/pages/course/courseReviewMore.js"></script>
