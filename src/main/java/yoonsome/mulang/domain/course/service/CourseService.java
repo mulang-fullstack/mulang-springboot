@@ -2,6 +2,7 @@ package yoonsome.mulang.domain.course.service;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 import yoonsome.mulang.api.course.dto.CourseListRequest;
 import yoonsome.mulang.api.course.dto.CourseListResponse;
@@ -10,9 +11,9 @@ import java.io.IOException;
 import java.util.List;
 
 public interface CourseService {
-    Page<Course> getCourseListByLanguage(Long languageId, Pageable pageable);
-    Page<Course> getCourseListByCategory(Long categoryId, Pageable pageable);
-    Page<CourseListResponse> getCourseListByLanguageAndCategory(CourseListRequest request, Pageable pageable);
+    //Page<Course> getCourseListByLanguage(Long languageId, Pageable pageable);
+
+    Page<CourseListResponse> getCourseList(CourseListRequest request, Pageable pageable);
     Course getCourseDetail(long id);
     Course registerCourse(Course course);
     void modifyCourse(Course course);
