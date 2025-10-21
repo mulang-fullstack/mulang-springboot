@@ -14,9 +14,9 @@ public class SecurityConfig {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/admin/**").hasRole("ADMIN")
-                        .requestMatchers("/teacher/**").hasRole("TEACHER")
-                        .requestMatchers("/student/**").hasRole("STUDENT")
+                        //.requestMatchers("/admin/**").hasRole("ADMIN")
+                        //.requestMatchers("/teacher/**").hasRole("TEACHER")
+                        //.requestMatchers("/student/**").hasRole("STUDENT")
                         .anyRequest().permitAll()
                 )
                 .formLogin(login -> login
@@ -27,14 +27,33 @@ public class SecurityConfig {
                         .defaultSuccessUrl("/", true)
                         .permitAll()
                 )
+//                .oauth2Login(oauth -> oauth
+//                        .loginPage("/auth/login")                       // 로그인 페이지 공유
+//                        .userInfoEndpoint(userInfo -> userInfo
+//                                .userService(customOAuth2UserService())      // 사용자 정보 처리
+//                        )
+//                        .defaultSuccessUrl("/", true)
+//                )
                 .logout(logout -> logout
                         .logoutUrl("/logout")
                         .logoutSuccessUrl("/")
+                        .deleteCookies("JSESSIONID")
+                )
+                .exceptionHandling(exception -> exception
+                        .accessDeniedHandler((request,
+                                              response,
+                                              ex) -> response
+                                .sendRedirect("/"))
                 )
                 .csrf(csrf -> csrf.disable()); // 초기 개발단계만
 
         return http.build();
     }
+
+//    @Bean
+//    public CustomOAuth2UserService customOAuth2UserService() {
+//        return new CustomOAuth2UserService();
+//    }
 
     @Bean
     public PasswordEncoder passwordEncoder() {

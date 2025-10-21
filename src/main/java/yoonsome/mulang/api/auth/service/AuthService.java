@@ -6,12 +6,6 @@ import yoonsome.mulang.domain.user.entity.User;
 
 public interface AuthService {
     /**
-     * 로그인 처리
-     * @param request 로그인 요청 DTO
-     * @return response 로그인 정보 DTO
-     */
-    User login(LoginRequest request);
-    /**
      * 회원가입 처리
      * @param request 가입 요청 DTO
      */
@@ -22,4 +16,9 @@ public interface AuthService {
      * @return 존재하면 true, 없으면 false
      */
     boolean isEmailExists(String email);
+    /**
+     * 회원가입 시 인증 메일을 발송
+     * @param email 수신자 이메일 주소
+     */
+    void sendSignupVerification(String email);
 }

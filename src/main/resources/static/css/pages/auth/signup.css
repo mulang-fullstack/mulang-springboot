@@ -103,6 +103,7 @@ body {
     cursor: pointer;
     transition: all 0.3s;
     white-space: nowrap;
+    min-width: 90px;
 }
 
 .btn-verify:hover {
@@ -113,6 +114,24 @@ body {
 .btn-verify:active {
     background: var(--bg-point-active);
     border-color: var(--bg-point-active);
+}
+
+/* 재전송 버튼 스타일 */
+.btn-verify.resend {
+    background: var(--bg-point-main);
+    color: var(--text-white);
+}
+
+.btn-verify.resend:hover {
+    background: var(--bg-point-hover);
+}
+
+/* 인증완료 버튼 스타일 */
+.btn-verify.verified {
+    background: var(--text-success);
+    color: var(--text-white);
+    border-color: var(--text-success);
+    cursor: not-allowed;
 }
 
 /* Password Input with Toggle */
@@ -324,9 +343,15 @@ body {
 .btn-primary:disabled,
 .btn-secondary:disabled,
 .btn-verify:disabled {
-    opacity: 0.5;
+    opacity: 0.7;
     cursor: not-allowed;
-    background: var(--text-disabled);
+}
+
+/* 로딩 중 버튼 스타일 개선 */
+.btn-primary:disabled,
+.btn-verify:disabled:not(.verified) {
+    background: var(--bg-point-main);
+    opacity: 0.8;
 }
 
 /* Focus Visible for Accessibility */
@@ -369,4 +394,16 @@ button,
 
 ::-webkit-scrollbar-thumb:hover {
     background: var(--text-secondary);
+}
+
+/* 슬라이드인 애니메이션 */
+@keyframes slideInRight {
+    from {
+        transform: translateX(100%);
+        opacity: 0;
+    }
+    to {
+        transform: translateX(0);
+        opacity: 1;
+    }
 }

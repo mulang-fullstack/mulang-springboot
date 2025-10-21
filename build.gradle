@@ -25,14 +25,14 @@ repositories {
 }
 
 dependencies {
-    /* 스프링 부트 기본  */
+    /* default  */
 	implementation 'org.springframework.boot:spring-boot-starter-web'
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
     testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
     /* Lombok  */
     compileOnly 'org.projectlombok:lombok'
     annotationProcessor 'org.projectlombok:lombok'
-    /* JSP 관련  */
+    /* JSP  */
     implementation 'org.apache.tomcat.embed:tomcat-embed-jasper'
     implementation 'org.glassfish.web:jakarta.servlet.jsp.jstl'
     implementation 'jakarta.servlet.jsp.jstl:jakarta.servlet.jsp.jstl-api'
@@ -41,12 +41,15 @@ dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-jdbc'
     /* Spring Data JPA */
     implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
-    /* Password 삭제 예정 */
-    implementation 'org.mindrot:jbcrypt:0.4'
     /* security */
+    implementation 'org.mindrot:jbcrypt:0.4'
+
     implementation 'org.springframework.boot:spring-boot-starter-security'
     implementation 'org.springframework.security:spring-security-taglibs'
-
+    /* 소셜 로그인 */
+    implementation 'org.springframework.boot:spring-boot-starter-oauth2-client'
+    /* mail server */
+    implementation 'org.springframework.boot:spring-boot-starter-mail'
 }
 
 tasks.named('test') {

@@ -13,7 +13,7 @@ function setupRealTimeValidation() {
     if (nameInput) {
         nameInput.addEventListener('blur', function() {
             if (this.value && this.value.length < 2) {
-                setFieldStatus(this, 'error', '이름은 2자 이상이어야 합니다.');
+                setFieldStatus(this, 'error', '이름은 2자 이상, 4자 이하이어야 합니다.');
             } else if (this.value) {
                 clearFieldStatus(this);
             }
@@ -25,7 +25,7 @@ function setupRealTimeValidation() {
     if (nicknameInput) {
         nicknameInput.addEventListener('blur', function() {
             if (this.value && this.value.length < 2) {
-                setFieldStatus(this, 'error', '닉네임은 2자 이상이어야 합니다.');
+                setFieldStatus(this, 'error', '닉네임은 2자 이상, 8자 이하이어야 합니다.');
             } else if (this.value) {
                 clearFieldStatus(this);
             }

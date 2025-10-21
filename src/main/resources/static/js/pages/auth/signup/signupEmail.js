@@ -18,77 +18,51 @@ async function verifyEmail() {
         emailInput.focus();
         return;
     }
+
     setButtonLoading(verifyBtn, true);
 
     try {
-        // [2] 실제 서버에 중복 확인 요청
-        const available = await checkEmailDuplicate(email);
-        if (!available) {
-            // 이미 존재하는 이메일이면 중단
-            setButtonLoading(verifyBtn, false);
-            return;
-        }
-        // [3] 인증번호 요청
-        await requestEmailCode(email);
-
-        // [4] 버튼 상태 변경
-        verifyBtn.textContent = '발송완료';
-        verifyBtn.classList.add('verified');
-    } catch (error) {
-        showMessage('서버 오류가 발생했습니다. 다시 시도해주세요.', 'error');
-    } finally {
-        setButtonLoading(verifyBtn, false);
-    }
-}
-
-
-/**
- * 이메일 중복 확인
- */
-async function checkEmailDuplicate(email) {
-    try {
-        const response = await fetch(`/auth/checkEmail?email=${encodeURIComponent(email)}`);
+        const response = await fetch(`/auth/email/send`, {
+            method: 'POST',
+            headers: {'Content-Type': 'application/x-www-form-urlencoded'},
+            body: new URLSearchParams({email})
+        });
         if (!response.ok) throw new Error('서버 오류');
         const result = await response.text();
 
-        if (result === "error") {
-            setFieldStatus(document.getElementById('email'), 'error', '이미 사용 중인 이메일입니다.');
+        if (result === "duplicate") {
+            setFieldStatus(emailInput, 'error', '이미 사용 중인 이메일입니다.');
             showMessage('이미 사용 중인 이메일입니다.', 'error');
-            return false;
-        } else if(result === "success") {
-            setFieldStatus(document.getElementById('email'), 'success', '사용 가능한 이메일입니다.');
-            showMessage('사용 가능한 이메일입니다.', 'success');
-            return true;
+            return;
+        }
+        if (result === "sent") {
+            setFieldStatus(emailInput, 'success', '인증코드가 전송되었습니다.');
+            showMessage('인증코드가 이메일로 발송되었습니다.', 'success');
+
+            // [5] 인증코드 입력창 표시
+            emailCodeGroup.classList.remove('hidden');
+            emailCodeGroup.classList.add('show');
+
+            const codeInput = document.getElementById('emailCode');
+            codeInput.disabled = false;
+            codeInput.parentElement.style.opacity = '1';
+            codeInput.focus();
+
+            // 상태 갱신 - isEmailVerified를 true로 설정 (인증코드 발송됨)
+            signupState.isEmailVerified = true;
+            signupState.isEmailCodeVerified = false; // 아직 코드 인증은 안됨
+            signupState.emailValue = email;
+
+            // [4] 버튼 텍스트를 "재전송"으로 변경
+            setTimeout(() => {
+                verifyBtn.textContent = '재전송';
+                verifyBtn.classList.add('resend');
+            }, 100);
         }
     } catch (error) {
         showMessage('서버 오류가 발생했습니다.', 'error');
         return false;
+    } finally {
+        setButtonLoading(verifyBtn, false);
     }
-}
-
-/**
- * 이메일 인증번호 요청 (임시 테스트용)
- */
-async function requestEmailCode(email) {
-    // 실제 구현 시 서버에 이메일 발송 요청
-    // ex: const response = await fetch('/auth/send-code', { method: 'POST', body: JSON.stringify({ email }) });
-
-    // 임시 테스트
-    const tempCode = Math.floor(100000 + Math.random() * 900000);
-    console.log(`📧 임시 인증코드: ${tempCode}`);
-    showMessage('인증코드가 발송되었습니다. (콘솔을 확인하세요)', 'info');
-
-    // 상태 갱신 및 UI 처리
-    signupState.isEmailVerified = true;
-    signupState.emailValue = email;
-    signupState.verificationCode = tempCode;
-
-    const emailCodeGroup = document.querySelector('.email-code-group');
-    emailCodeGroup.classList.remove('hidden');
-    emailCodeGroup.classList.add('show');
-
-    const codeInput = document.getElementById('emailCode');
-    codeInput.disabled = false;
-    codeInput.parentElement.style.opacity = '1';
-    codeInput.focus();
 }

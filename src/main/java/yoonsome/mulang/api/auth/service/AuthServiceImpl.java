@@ -1,30 +1,22 @@
 package yoonsome.mulang.api.auth.service;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import yoonsome.mulang.api.auth.dto.LoginRequest;
 import yoonsome.mulang.api.auth.dto.SignupRequest;
+import yoonsome.mulang.domain.email.service.EmailCodeService;
 import yoonsome.mulang.domain.user.entity.User;
 import yoonsome.mulang.domain.user.service.UserService;
-import yoonsome.mulang.global.util.BCryptEncoder;
+import yoonsome.mulang.infra.mail.MailService;
 
 @Service
 @RequiredArgsConstructor
 public class AuthServiceImpl implements AuthService {
     private final UserService userService;
-    private final BCryptEncoder passwordEncoder;
-
-    @Override
-    public User login(LoginRequest request) {
-        User user = userService.findByEmail(request.getEmail());
-        if (user == null) {
-            throw new IllegalArgumentException("이메일 또는 비밀번호가 일치하지 않습니다.");
-        }
-        if (!passwordEncoder.matches(request.getPassword(), user.getPassword())) {
-            throw new IllegalArgumentException("이메일 또는 비밀번호가 일치하지 않습니다.");
-        }
-        return user;
-    }
+    private final PasswordEncoder passwordEncoder;
+    private final MailService mailService;
+    private final EmailCodeService emailCodeService;
 
     @Override
     public boolean signup(SignupRequest request) {
@@ -52,5 +44,20 @@ public class AuthServiceImpl implements AuthService {
     @Override
     public boolean isEmailExists(String email) {
         return userService.existsByEmail(email);
+    }
+
+
+    public void sendSignupVerification(String email) {
+        // 6자리 인증코드 생성
+        String code = generateCode();
+        // 인증 메일 전송 (메일 제목·본문은 MailService에서 처리)
+        mailService.sendVerificationEmail(email, code);
+        // 이후 code를 DB에 저장
+        emailCodeService.saveCode(email, code);
+    }
+
+    private String generateCode() {
+        // 100000 ~ 999999 범위의 6자리 난수 생성
+        return String.valueOf((int)(Math.random() * 900000) + 100000);
     }
 }

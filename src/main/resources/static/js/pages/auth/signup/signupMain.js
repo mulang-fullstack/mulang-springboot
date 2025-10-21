@@ -23,7 +23,7 @@ function setupSubmitHandler() {
     if (!signupForm) return;
 
     signupForm.addEventListener('submit', async (e) => {
-        // e.preventDefault(); // 테스트 단계에서만 막을지 결정
+        e.preventDefault();
 
         const formData = {
             username: document.getElementById('username').value.trim(),
@@ -33,7 +33,21 @@ function setupSubmitHandler() {
             passwordConfirm: document.getElementById('passwordConfirm').value,
             accountType: document.querySelector('input[name="accountType"]:checked').value
         };
+        // [1] 이메일 인증 여부 확인
+        if (!signupState.isEmailVerified) {
+            showMessage('이메일 인증을 먼저 진행해주세요.', 'warning');
+            document.getElementById('email').focus();
+            return;
+        }
 
+        // [2] 인증코드 확인 여부
+        if (!signupState.isEmailCodeVerified) {
+            showMessage('이메일 인증코드를 확인해주세요.', 'warning');
+            document.getElementById('emailCode').focus();
+            return;
+        }
+
+        // [3] 기본 폼 유효성 검사
         const validation = validateForm(formData, signupState);
         if (!validation.isValid) {
             showMessage(validation.message, 'error');
@@ -41,13 +55,29 @@ function setupSubmitHandler() {
             return;
         }
 
+        // [4] 버튼 상태 변경
         const submitBtn = document.querySelector('.btn-primary');
         setButtonLoading(submitBtn, true);
         submitBtn.textContent = '처리중...';
 
         try {
-            await simulateAPICall(2000);
-            showMessage('회원가입이 완료되었습니다!', 'success');
+            // 실제 회원가입 API 호출로 대체 예정
+            // await simulateAPICall(2000);
+            // showMessage('회원가입이 완료되었습니다!', 'success');
+            // 실제 서버 요청으로 변경
+            const response = await fetch('/auth/signup', {
+                method: 'POST',
+                headers: {'Content-Type': 'application/x-www-form-urlencoded'},
+                body: new URLSearchParams(formData)
+            });
+
+            if (response.ok) {
+                showMessage('회원가입이 완료되었습니다!', 'success');
+                setTimeout(() => location.href = '/auth/login', 1500);
+            } else {
+                throw new Error('회원가입 실패');
+            }
+
         } catch {
             showMessage('회원가입 중 오류가 발생했습니다.', 'error');
         } finally {
