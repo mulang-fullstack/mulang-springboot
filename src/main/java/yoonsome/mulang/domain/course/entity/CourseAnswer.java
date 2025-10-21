@@ -10,6 +10,7 @@ import java.security.Timestamp;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
+@Table(name = "course_answer")
 public class CourseAnswer {
 
     @Id

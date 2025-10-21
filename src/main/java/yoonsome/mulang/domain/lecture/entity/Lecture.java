@@ -3,11 +3,13 @@ package yoonsome.mulang.domain.lecture.entity;
 import jakarta.persistence.*;
 import lombok.*;
 import yoonsome.mulang.domain.course.entity.Course;
+import yoonsome.mulang.infra.file.entity.File;
 
 @Entity
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
+@Table(name = "lecture")
 public class Lecture {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -26,4 +28,5 @@ public class Lecture {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "course_id", nullable = false)
     private Course course;
+
 }

@@ -3,7 +3,6 @@ package yoonsome.mulang.infra.file.entity;
 import jakarta.persistence.*;
 import lombok.*;
 import yoonsome.mulang.domain.lecture.entity.Lecture;
-
 import java.time.LocalDateTime;
 
 @Entity
@@ -44,8 +43,4 @@ public class File {
     @Column(name = "uploaded_at", nullable = false)
     private LocalDateTime uploadedAt;
 
-    /** 연관 Lecture */
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "lecture_id")
-    private Lecture lecture;
 }
