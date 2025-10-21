@@ -33,7 +33,7 @@
                 <div class="search-box">
                     <!-- 검색박스 내부 요소들 -->
                     <div class="search-input">
-                        <input type="text"><button><img src="/img/icon/search-icon.svg" alt="검색 아이콘"></button>
+                        <input type="text"><button><img src="/img/icon/search.svg" alt="검색 아이콘"></button>
                     </div>
                     <div class="search-icon"></div>
                 </div>
@@ -94,7 +94,7 @@
                     </div>
                     <div class="heart-purchase-wrap">
                         <div class="heart-icon">
-                            <img src="/img/icon/heart.svg" alt="찜 아이콘">
+                            <img src="/img/icon/heart-empty.svg" alt="찜 아이콘">
                         </div>
                         <div class="course-purchase">
                             <span class="price">155,000원</span>
@@ -123,7 +123,7 @@
                     </div>
                     <div class="heart-purchase-wrap">
                         <div class="heart-icon">
-                            <img src="/img/icon/heart.svg" alt="찜 아이콘">
+                            <img src="/img/icon/heart-empty.svg" alt="찜 아이콘">
                         </div>
                         <div class="course-purchase">
                             <span class="price">120,000원</span>
@@ -153,7 +153,7 @@
                     </div>
                     <div class="heart-purchase-wrap">
                         <div class="heart-icon">
-                            <img src="/img/icon/heart.svg" alt="찜 아이콘">
+                            <img src="/img/icon/heart-empty.svg" alt="찜 아이콘">
                         </div>
                         <div class="course-purchase">
                             <span class="price">80,000원</span>
@@ -165,11 +165,11 @@
 
             <!-- 페이지네이션 -->
             <section class="pagination">
-                <button class="prev"><img src="/img/icon/left-page.svg" alt="왼쪽 아이콘"></button>
+                <button class="prev"><img src="/img/icon/page-left.svg" alt="왼쪽 아이콘"></button>
                 <span class="page-numbers">
                     <span class="current">1</span><span>2</span><span>3</span><span>4</span><span>5</span>
                 </span>
-                <button class="next"><img src="/img/icon/right-page.svg" alt="오른쪽 아이콘"></button>
+                <button class="next"><img src="/img/icon/page-right.svg" alt="오른쪽 아이콘"></button>
             </section>
         </div>
     </div>

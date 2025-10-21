@@ -18,4 +18,5 @@ public interface CourseService {
     void deleteCourse(long id);
     void createCourseWithLectures(Course course, List<String> lectureTitles, List<MultipartFile> lectureVideos,MultipartFile thumbnail)
             throws IOException;
+    List<Course> getCoursesByTeacher(Long teacherId);
 }

@@ -1,28 +1,145 @@
 /* ===============================
-   📦 course-detail.css
+   📦 course-Introduction.css
    작성 순서: 레이아웃 → 박스모델 → 테두리 → 배경 → 타이포그래피 → 비주얼 → 기타
 ================================= */
-
-/* 본문 내용 */
-.course-content {
+/*
+body {
     display: flex;
     flex-direction: column;
-    align-items: flex-start;
+    align-items: center;
+    //width: 100%;
     margin: 0;
-    padding: 30px 0;
+    background: var(--bg-white);
+    font-family: 'Inter', 'Noto Sans KR', sans-serif;
+    color: var(--text-secondary);
+}*/
+.leture-detail-contents {
+    position: sticky;
+    top: 30px; /* header 높이만큼 띄움 (헤더 밑에 붙게) */
+    background-color: #fff;
+    z-index: 10;
+    border-bottom: 1px solid #ddd;
+
+}
+/*강의명*/
+.course-name {
+    display: flex;
+    justify-content: flex-start;
+    //width: 100%;
+    padding: 50px 0 20px;
+}
+
+.course-name h1 {
+    font-size: 36px;
+    font-weight: 400;
+}
+
+/* 요약 박스 */
+.course-summary {
+    display: flex;
+    justify-content: space-between;
+    //align-items: flex-start;
+    gap: 40px;
+    height: 300px;
+    border-top: var(--border-primary);
+    border-bottom: var(--border-primary);
+    background: var(--bg-white);
+    overflow: hidden;
+    padding: 25px 0;
+}
+
+/* 강의 이미지 */
+.course-thumb {
+    width: 347px;
+    height: 250px;
+}
+
+/* 강의 정보 */
+.course-info {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    flex: 1;
+}
+
+.course-desc {
+    font-size: 20px;
+}
+
+.course-meta {
+    display: flex;
+    flex-direction: column;
     gap: 12px;
 }
 
-.course-content h2 {
+.course-meta > div {
+    display: flex;
+    align-items: center;
+}
+
+.course-meta .label {
+    width: 90px;
+    font-weight: 700;
+    margin-right: 10px;
+}
+
+/* 가격 및 결제 버튼 */
+.course-purchase {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 20px;
+    align-self: flex-end;
+}
+
+.price {
+    font-size: 20px;
+    color: var(--text-secondary);
+}
+
+.purchase-btn {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 120px;
+    height: 50px;
+    background: var(--bg-point-main);
+    border: var(--bg-point-main);
+    color: var(--text-white);
+    border-radius: 10px;
+    font-size: 20px;
+    cursor: pointer;
+}
+
+/* 탭 메뉴 */
+.course-tabs {
+    display: flex;
+    /*justify-content: center;*/
+    align-items: center;
+    width: 100%;
+    cursor: pointer;
+}
+
+.tab {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex: 1;
+    padding: 10px;
+    font-size: 20px;
+    color: var(--text-primary);
+
+}
+
+.tab.active, .tab:hover {
+    border-bottom: 1px solid var(--bg-point-hover);
+    color: var(--text-point-main);
+}
+
+h2 {
     font-size: 20px;
     font-weight: 700;
     color: var(--text-primary);
 }
-
-.course-content p {
-    font-size: 14px;
-    line-height: 1.6;
-    color: var(--text-tertiary);
-}
-
 
