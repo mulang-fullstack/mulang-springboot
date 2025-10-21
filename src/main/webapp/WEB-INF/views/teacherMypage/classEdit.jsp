@@ -41,81 +41,41 @@
                     </div>
 
                     <div class="table-body">
-                        <div class="table-row">
-                            <div class="thumb">
-                                <img src="https://placehold.co/160x90" alt="클래스 썸네일">
-                            </div>
-                            <div class="title">왕초보 기초회화</div>
-                            <div class="type">VOD</div>
-                            <div class="status"><span class="tag gray">임시 저장</span></div>
-                            <div class="date">
-                                2025-10-02
-                                <div class="menu-wrap">
-                                    <button class="menu-btn">⋯</button>
-                                    <div class="menu-dropdown">
-                                        <button class="menu-item edit-btn" data-id="1">수정</button>
-                                        <button class="menu-item delete-btn" data-id="1">삭제</button>
+                        <c:forEach var="course" items="${courseList}">
+                            <div class="table-row">
+                                <div class="thumb">
+                                    <img src="${course.thumbnail}" alt="클래스 썸네일" width="160" height="90">
+                                </div>
+                                <div class="title">${course.title}</div>
+                                <div class="type">${course.type}</div>
+                                <div class="status">
+                                    <span class="tag gray">
+                                        <c:choose>
+                                            <c:when test="${course.status}">운영중</c:when>
+                                            <c:otherwise>임시 저장</c:otherwise>
+                                        </c:choose>
+                                    </span>
+                                </div>
+                                <div class="date">
+                                        ${course.startedAt}
+                                    <div class="menu-wrap">
+                                        <button class="menu-btn">⋯</button>
+                                        <div class="menu-dropdown">
+                                            <button class="menu-item edit-btn" data-id="${course.id}">수정</button>
+                                            <button class="menu-item delete-btn" data-id="${course.id}">삭제</button>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
-                        </div>
+                        </c:forEach>
 
-                        <div class="table-row">
-                            <div class="thumb">
-                                <img src="https://placehold.co/160x90" alt="클래스 썸네일">
-                            </div>
-                            <div class="title">미남이 될 수 있는 이유가</div>
-                            <div class="type">VOD</div>
-                            <div class="status"><span class="tag gray">임시 저장</span></div>
-                            <div class="date">
-                                2025-10-01
-                                <div class="menu-wrap">
-                                    <button class="menu-btn">⋯</button>
-                                    <div class="menu-dropdown">
-                                        <button class="menu-item edit-btn" data-id="">수정</button>
-                                        <button class="menu-item delete-btn" data-id="">삭제</button>
-                                    </div>
+                        <c:if test="${empty courseList}">
+                            <div class="table-row">
+                                <div class="no-class-message">
+                                    등록된 클래스가 없습니다.
                                 </div>
                             </div>
-                        </div>
-
-                        <div class="table-row">
-                            <div class="thumb">
-                                <img src="https://placehold.co/160x90" alt="클래스 썸네일">
-                            </div>
-                            <div class="title">윤서짱짱맨의 기나긴 여행</div>
-                            <div class="type">VOD</div>
-                            <div class="status"><span class="tag gray">임시 저장</span></div>
-                            <div class="date">
-                                2025-10-01
-                                <div class="menu-wrap">
-                                    <button class="menu-btn">⋯</button>
-                                    <div class="menu-dropdown">
-                                        <button class="menu-item edit-btn" data-id="">수정</button>
-                                        <button class="menu-item delete-btn" data-id="">삭제</button>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="table-row">
-                            <div class="thumb">
-                                <img src="https://placehold.co/160x90" alt="클래스 썸네일">
-                            </div>
-                            <div class="title">윤서의 귀여운척 특강</div>
-                            <div class="type">온/오프라인</div>
-                            <div class="status"><span class="tag gray">임시 저장</span></div>
-                            <div class="date">
-                                2025-10-01
-                                <div class="menu-wrap">
-                                    <button class="menu-btn">⋯</button>
-                                    <div class="menu-dropdown">
-                                        <button class="menu-item edit-btn" data-id="1">수정</button>
-                                        <button class="menu-item delete-btn" data-id="1">삭제</button>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+                        </c:if>
                     </div>
                 </div>
             </section>

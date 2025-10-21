@@ -34,6 +34,13 @@
                         </div>
 
                         <div class="field">
+                            <label>클래스 부제목</label>
+                            <div class="field-content">
+                                <input type="text" name="subtitle" placeholder="부제목을 입력하세요" required>
+                            </div>
+                        </div>
+
+                        <div class="field">
                             <label>언어</label>
                             <div class="field-content">
                                 <select name="language.id" required>
@@ -62,6 +69,15 @@
                             <label>수강비용</label>
                             <div class="field-content">
                                 <input type="number" name="price" min="0" placeholder="금액을 입력하세요" required>
+                            </div>
+                        </div>
+
+                        <div class="field">
+                            <label>신청 가능 기간</label>
+                            <div class="field-content date-range">
+                                <input type="date" name="applyStartedAt" required>
+                                <span>~</span>
+                                <input type="date" name="applyEndedAt" required>
                             </div>
                         </div>
 
@@ -112,9 +128,6 @@
                         <input type="hidden" name="currentStudent" value="0">
                         <input type="hidden" name="lectureCount" value="1">
                         <input type="hidden" name="type" value="VOD">
-
-                        <!-- 로그인된 강사 ID -->
-                        <input type="hidden" name="teacher.id" value="${teacher.id}">
 
                         <div class="submit-wrap">
                             <button type="submit" class="submit-btn">저장하기</button>

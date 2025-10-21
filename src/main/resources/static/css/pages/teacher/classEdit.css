@@ -186,3 +186,11 @@
 .menu-item:hover {
     background: var(--bg-secondary);
 }
+.no-class-message {
+    text-align: center;
+    width: 100%;
+    padding: 40px 0;
+    font-size: 1rem;
+    color: var(--text-secondary);
+    white-space: nowrap;
+}

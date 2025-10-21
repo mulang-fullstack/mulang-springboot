@@ -43,7 +43,7 @@ public class TeacherServiceImpl implements TeacherService {
 
         if (photo != null && !photo.isEmpty()) {
             File savedPhoto = fileService.createFile(photo);
-            teacher.setPhoto(savedPhoto.getPath());
+            teacher.setPhoto(savedPhoto.getUrl());
         }
 
         teacherRepository.save(teacher);

@@ -13,6 +13,7 @@ import yoonsome.mulang.global.file.entity.File;
 import yoonsome.mulang.global.file.repo.FileRepository;
 import java.io.IOException;
 import java.nio.file.*;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
@@ -62,12 +63,14 @@ public class FileServiceImpl implements FileService {
         Path savedPath = Paths.get(savedFilePath);
         Files.copy(multipartFile.getInputStream(), savedPath, StandardCopyOption.REPLACE_EXISTING);
 
+
         File entity = File.builder()
                 .originalName(originalFileName)
-                .savedName(savedFileName)
-                .path(savedFilePath)
+                .storedName(savedFileName)
+                .url(savedFilePath)
                 .size(multipartFile.getSize())
-                .contentType(multipartFile.getContentType())
+                .type(multipartFile.getContentType())
+                .uploadedAt(LocalDateTime.now())
                 .lecture(lecture)
                 .build();
 
@@ -104,14 +107,15 @@ public class FileServiceImpl implements FileService {
     public void deleteFile(File file) {
         if (file == null) return;
 
-        Path targetPath = Paths.get(file.getPath());
+        Path targetPath = Paths.get(file.getUrl());
         try {
             Files.deleteIfExists(targetPath);
         } catch (IOException e) {
-            throw new RuntimeException("파일 삭제 실패: " + file.getPath(), e);
+            throw new RuntimeException("파일 삭제 실패: " + file.getUrl(), e);
         }
         fileRepository.delete(file);
     }
+
 
     /**
      * 파일을 다운로드한다.
@@ -129,12 +133,14 @@ public class FileServiceImpl implements FileService {
         }
 
         File fileEntity = optionalFile.get();
-        Path filePath = Paths.get(fileEntity.getPath());
+        Path filePath = Paths.get(fileEntity.getUrl());
+
         if (!Files.exists(filePath)) {
             return ResponseEntity
                     .notFound()
                     .build();
         }
+
         Resource resource = new FileSystemResource(filePath);
         return ResponseEntity.ok()
                 .header("Content-Disposition", "attachment; filename=\"" + fileEntity.getOriginalName() + "\"")
@@ -165,10 +171,11 @@ public class FileServiceImpl implements FileService {
 
         File entity = File.builder()
                 .originalName(originalFileName)
-                .savedName(savedFileName)
-                .path(savedFilePath)
+                .storedName(savedFileName)
+                .url(savedFilePath)
                 .size(multipartFile.getSize())
-                .contentType(multipartFile.getContentType())
+                .type(multipartFile.getContentType())
+                .uploadedAt(LocalDateTime.now())
                 .lecture(null)
                 .build();
 

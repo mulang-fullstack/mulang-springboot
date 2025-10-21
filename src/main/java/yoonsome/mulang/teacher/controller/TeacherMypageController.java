@@ -13,6 +13,7 @@ import yoonsome.mulang.user.entity.User;
 import java.io.IOException;
 import java.util.List;
 
+
 @Controller
 @RequiredArgsConstructor
 @RequestMapping("/teacher/mypage")
@@ -22,11 +23,11 @@ public class TeacherMypageController {
 
     /** 프로필 보기 */
     @GetMapping("/profile")
-    public String profile(HttpSession session, Model model) {
-        User loginUser = (User) session.getAttribute("loginUser");
+    public String profile(Model model) {
 
-        Teacher teacher = teacherService.getTeacherProfile(loginUser.getId());
-        model.addAttribute("teacher", teacher);
+        // User loginUser = (User) session.getAttribute("loginUser");
+        // Teacher teacher = teacherService.getTeacherProfile(loginUser.getId());
+        // model.addAttribute("teacher", teacher);
         return "teacherMypage/profile";
     }
 
@@ -39,13 +40,12 @@ public class TeacherMypageController {
     /** 프로필 업데이트 */
     @PostMapping("/profile/update")
     public String updateProfile(
-            HttpSession session,
             @ModelAttribute Teacher teacher,
             @RequestParam(value = "photo", required = false) MultipartFile photo
     ) throws IOException {
 
-        User loginUser = (User) session.getAttribute("loginUser");
-        teacherService.updateTeacherProfile(loginUser.getId(), teacher, photo);
+        // User loginUser = (User) session.getAttribute("loginUser");
+        // teacherService.updateTeacherProfile(loginUser.getId(), teacher, photo);
         return "redirect:/teacher/mypage/profile";
     }
 
@@ -70,12 +70,17 @@ public class TeacherMypageController {
     /** 클래스 목록 */
     @GetMapping("/classes/edit")
     public String classEdit(HttpSession session, Model model) {
-        User loginUser = (User) session.getAttribute("loginUser");
+        //User loginUser = (User) session.getAttribute("loginUser");
+        //Teacher teacher = teacherService.getTeacherProfile(loginUser.getId());
+        //Long teacherId = teacher.getId();
 
-        List<Course> courseList = teacherService.getTeacherCourses(loginUser.getId());
-        model.addAttribute("courseList", courseList);
+        Long teacherId = 1L; // 임시 테스트용 ID
+        //List<Course> courseList = courseService.getCoursesByTeacher(teacherId);
+        //model.addAttribute("courseList", courseList);
+
         return "teacherMypage/classEdit";
     }
+
 
     /** Q&A 관리 */
     @GetMapping("/qna")
@@ -83,3 +88,4 @@ public class TeacherMypageController {
         return "teacherMypage/QnA";
     }
 }
+
