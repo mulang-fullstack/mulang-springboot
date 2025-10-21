@@ -1,4 +1,4 @@
-package yoonsome.mulang.auth.controller;
+package yoonsome.mulang.api.auth.controller;
 
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
@@ -6,14 +6,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
-import yoonsome.mulang.auth.dto.LoginRequest;
-import yoonsome.mulang.auth.dto.SignupRequest;
-import yoonsome.mulang.auth.service.AuthService;
-import yoonsome.mulang.user.entity.User;
-import yoonsome.mulang.user.service.UserService;
-
-import java.util.Map;
+import yoonsome.mulang.api.auth.dto.SignupRequest;
+import yoonsome.mulang.api.auth.service.AuthService;
 
 @RequestMapping("/auth")
 @Controller

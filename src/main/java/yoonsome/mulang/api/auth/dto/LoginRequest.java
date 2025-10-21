@@ -1,4 +1,4 @@
-package yoonsome.mulang.auth.dto;
+package yoonsome.mulang.api.auth.dto;
 
 import lombok.Data;
 
