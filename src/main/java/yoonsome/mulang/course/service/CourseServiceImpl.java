@@ -123,7 +123,7 @@ public class CourseServiceImpl implements CourseService {
     ) throws IOException {
         if (thumbnail != null && !thumbnail.isEmpty()) {
             File savedThumbnail = fileService.createFile(thumbnail);
-            course.setThumbnail(savedThumbnail.getPath());
+            course.setThumbnail(savedThumbnail.getUrl());
         }
 
         Course savedCourse = courseRepository.save(course);

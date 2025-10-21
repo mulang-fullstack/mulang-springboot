@@ -2,7 +2,7 @@ package yoonsome.mulang.global.file.entity;
 
 import jakarta.persistence.*;
 import lombok.*;
-import yoonsome.mulang.lecture.entity.Lecture;
+import java.time.LocalDateTime;
 
 @Entity
 @Getter
@@ -18,27 +18,32 @@ public class File {
     @Column(name = "file_id")
     private Long id;
 
-    //사용자가 원래 올린 이름
-    @Column(nullable = false, length = 255)
+    /** 사용자가 업로드한 원본 파일명 */
+    @Column(name = "original_name", nullable = false, length = 255)
     private String originalName;
 
-    //저장된 파일 이름 uuid
-    @Column(nullable = false, length = 255)
-    private String savedName;
+    /** 서버나 스토리지에 저장된 UUID 기반 파일명 */
+    @Column(name = "stored_name", nullable = false, length = 255)
+    private String storedName;
 
-    //저장경로
+    /** 접근 가능한 파일 URL (로컬 또는 클라우드 경로) */
     @Column(nullable = false, length = 500)
-    private String path;
+    private String url;
 
-    //파일크기 byte로?
+    /** 파일 크기 (byte 단위) */
     @Column(nullable = false)
     private Long size;
 
-    //파일 확장자 형식
-    @Column(nullable = false, length = 100)
-    private String contentType;
+    /** 파일 타입 (예: image/png, video/mp4 등) */
+    @Column(name = "type", nullable = false, length = 50)
+    private String type;
 
+    /** 업로드된 시각 */
+    @Column(name = "uploaded_at", nullable = false)
+    private LocalDateTime uploadedAt;
+
+    /** 연관 Lecture */
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "lecture_id")
-    private Lecture lecture;
+    private yoonsome.mulang.lecture.entity.Lecture lecture;
 }
