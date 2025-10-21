@@ -41,8 +41,12 @@ dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-jdbc'
     /* Spring Data JPA */
     implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
-    /* Password */
+    /* Password 삭제 예정 */
     implementation 'org.mindrot:jbcrypt:0.4'
+    /* security */
+    implementation 'org.springframework.boot:spring-boot-starter-security'
+    implementation 'org.springframework.security:spring-security-taglibs'
+
 }
 
 tasks.named('test') {

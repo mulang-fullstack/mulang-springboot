@@ -4,7 +4,7 @@ import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import yoonsome.mulang.user.entity.User;
-import yoonsome.mulang.user.repo.UserRepository;
+import yoonsome.mulang.user.repository.UserRepository;
 
 
 @Service

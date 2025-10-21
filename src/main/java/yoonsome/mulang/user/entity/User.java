@@ -30,8 +30,8 @@ public class User {
     @Column(nullable = false, length = 255)
     private String password;
 
-    @Column(name = "profile_image_url", length = 255)
-    private String profileImageUrl;
+    @Column(name = "file_id", length = 255)
+    private String fileId;
 
     @Enumerated(EnumType.STRING)
     @Column(nullable = false, length = 10)

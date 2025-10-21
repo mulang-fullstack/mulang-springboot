@@ -1,4 +1,4 @@
-package yoonsome.mulang.user.repo;
+package yoonsome.mulang.user.repository;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import yoonsome.mulang.user.entity.User;
