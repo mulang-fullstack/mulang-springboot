@@ -2,7 +2,7 @@ package yoonsome.mulang.api.auth.service;
 
 import yoonsome.mulang.api.auth.dto.LoginRequest;
 import yoonsome.mulang.api.auth.dto.SignupRequest;
-import yoonsome.mulang.user.entity.User;
+import yoonsome.mulang.domain.user.entity.User;
 
 public interface AuthService {
     /**
