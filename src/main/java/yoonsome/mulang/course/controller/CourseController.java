@@ -27,12 +27,13 @@ public class CourseController {
 
     @GetMapping("course")
     public String getCourseList(@ModelAttribute CourseListRequest request, Model model) {
+        System.out.println("@request:"+request);
         Pageable pageable = PageRequest.of(request.getPage(), request.getSize());
         Page<CourseListResponse> courses = courseService.getCourseListByLanguageAndCategory(
-                request.getLanguageId(), request.getCategoryId(), pageable);
+                request, pageable);
         model.addAttribute("courses", courses);
-        System.out.println(courses.getContent());
-        courses.forEach(System.out::println);
+        System.out.println("@course:"+courses.getContent());
+        //courses.forEach(System.out::println);
         /*
         // Page 객체 내용 확인
         System.out.println("총 데이터 수: " + courses.getTotalElements());

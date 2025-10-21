@@ -20,7 +20,7 @@
             <section class="course-category">
                 <h1>영어</h1>
                 <div class="course-tabs">
-                    <div class="tab active">기초</div>
+                    <div class="tab">기초</div>
                     <div class="tab">문법</div>
                     <div class="tab">어휘</div>
                     <div class="tab">독해</div>
