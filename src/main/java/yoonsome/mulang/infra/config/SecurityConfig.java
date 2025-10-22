@@ -8,12 +8,17 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import yoonsome.mulang.domain.user.repository.UserRepository;
+import yoonsome.mulang.infra.security.CustomFailureHandler;
+import yoonsome.mulang.infra.security.CustomLoginSuccessHandler;
+import yoonsome.mulang.infra.security.CustomLogoutSuccessHandler;
 
 @Configuration
 @RequiredArgsConstructor
 public class SecurityConfig {
-
+    private final CustomLoginSuccessHandler customLoginSuccessHandler;
+    private final CustomLogoutSuccessHandler customLogoutSuccessHandler;
     private final CustomOAuth2UserService customOAuth2UserService;
+    private final CustomFailureHandler  customFailureHandler;
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
@@ -29,7 +34,8 @@ public class SecurityConfig {
                         .loginProcessingUrl("/auth/login")     // 로그인 처리 URL (POST)
                         .usernameParameter("email")       // 파라미터 이름 변경
                         .passwordParameter("password")
-                        .defaultSuccessUrl("/", true)
+                        .successHandler(customLoginSuccessHandler)
+                        .failureHandler(customFailureHandler)
                         .permitAll()
                 )
                 .oauth2Login(oauth -> oauth
@@ -41,7 +47,7 @@ public class SecurityConfig {
                 )
                 .logout(logout -> logout
                         .logoutUrl("/logout")
-                        .logoutSuccessUrl("/")
+                        .logoutSuccessHandler(customLogoutSuccessHandler)
                         .deleteCookies("JSESSIONID")
                 )
                 .exceptionHandling(exception -> exception

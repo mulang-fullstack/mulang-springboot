@@ -8,16 +8,16 @@
  */
 function setupRealTimeValidation() {
 
-    // 이름 길이 검사 (2~4자)
+    // 이름 길이 검사 (2~16자)
     const nameInput = document.getElementById('username');
     if (nameInput) {
         nameInput.addEventListener('input', function() {
             const name = this.value.trim();
             if (name.length > 0 && name.length < 2) {
                 setFieldStatus(this, 'error', '이름은 2자 이상이어야 합니다.');
-            } else if (name.length > 4) {
-                setFieldStatus(this, 'error', '이름은 4자 이하이어야 합니다.');
-            } else if (name.length >= 2 && name.length <= 4) {
+            } else if (name.length > 16) {
+                setFieldStatus(this, 'error', '이름은 16자 이하이어야 합니다.');
+            } else if (name.length >= 2 && name.length <= 16) {
                 setFieldStatus(this, 'success', '사용 가능한 이름입니다.');
             } else {
                 clearFieldStatus(this);

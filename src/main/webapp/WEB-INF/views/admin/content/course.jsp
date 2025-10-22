@@ -6,7 +6,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="icon" href="/img/favicon.svg" type="image/png">
     <link rel="stylesheet" href="/css/global.css"/>
-    <link rel="stylesheet" href="/css/pages/admin/contentManage/courseManage.css"/>
+    <link rel="stylesheet" href="/css/pages/admin/admin.css"/>
+    <link rel="stylesheet" href="/css/pages/admin/content/course.css"/>
     <title>관리자 | 강좌 관리</title>
 </head>
 <body>

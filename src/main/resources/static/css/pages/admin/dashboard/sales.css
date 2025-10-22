@@ -1,7 +1,8 @@
 /* ==========================================================
    관리자 회원 관리 페이지 스타일
-   Path: /css/pages/admin/dashboard/visitor.css
+   Path: /css/pages/admin/dashboard/sales.css
    ========================================================== */
+
 /* ==========================================================
    통계 카드
    ========================================================== */
@@ -37,23 +38,27 @@
     justify-content: center;
 }
 
-.stat-icon.login {
+/* 오늘 매출: 상승 차트 그라데이션 */
+.stat-icon.today-sales {
     background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
     color: #fff;
 }
 
-.stat-icon.new-user {
+/* 전체 매출: 지갑/돈 그라데이션 */
+.stat-icon.total-sales {
     background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
     color: #fff;
 }
 
-.stat-icon.active {
+/* 오늘 결제 건수: 카드 결제 그라데이션 */
+.stat-icon.today-payment {
     background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
     color: #fff;
 }
 
-.stat-icon.total {
-    background: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%);
+/* 환불 건수: 환불/반환 그라데이션 */
+.stat-icon.refund {
+    background: linear-gradient(135deg, #fa709a 0%, #fee140 100%);
     color: #fff;
 }
 
@@ -106,7 +111,7 @@
     background: linear-gradient(180deg, #ffffff 0%, #f7f9fc 100%);
     box-shadow: 0 2px 10px rgba(0, 0, 0, 0.06);
     transition: transform 0.2s ease, box-shadow 0.2s ease;
-    height: 500px; /* 부모에 고정 높이 지정 */
+    height: 500px;
 }
 
 .chart-header, .table-header {

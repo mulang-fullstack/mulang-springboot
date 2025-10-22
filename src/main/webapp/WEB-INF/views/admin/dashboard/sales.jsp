@@ -9,20 +9,26 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <link rel="icon" href="/img/favicon.svg" type="image/png">
     <link rel="stylesheet" href="/css/global.css"/>
-    <link rel="stylesheet" href="/css/pages/admin/dashboard/visitor.css"/>
+    <link rel="stylesheet" href="/css/pages/admin/admin.css"/>
+    <link rel="stylesheet" href="/css/pages/admin/dashboard/sales.css"/>
     <script src="/js/common/currentTime.js"></script>
     <title>관리자 | 매출 현황</title>
 </head>
 <body>
-<div class="main-container"> <!-- left-container -->
-    <%@include file="../adminSidebar.jsp" %> <!-- right-container -->
+<div class="main-container">
+    <!-- left-container -->
+    <%@include file="../adminSidebar.jsp" %>
+
+    <!-- right-container -->
     <div class="right-container">
         <header>
             <h1>대시보드</h1>
             <div class="header-info">
                 <div class="info-box"><p>안녕하세요 <span>관리자</span>님</p></div>
-                <a class="logout" href="/auth/logout"> 로그아웃 </a></div>
+                <a class="logout" href="/auth/logout">로그아웃</a>
+            </div>
         </header>
+
         <div class="content-wrap">
             <div class="content-header">
                 <h2>매출 현황</h2>
@@ -31,67 +37,72 @@
 
             <!-- -------------------- 통계 카드 -------------------- -->
             <div class="stats-container">
+                <!-- 월 매출 -->
                 <div class="stat-card">
-                    <div class="stat-icon login">
-                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                             stroke-width="2">
-                            <path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4"/>
-                            <polyline points="10 17 15 12 10 7"/>
-                            <line x1="15" y1="12" x2="3" y2="12"/>
+                    <div class="stat-icon total-sales">
+                        <!-- 월 매출: 상승 차트 -->
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none"
+                             stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/>
+                            <polyline points="17 6 23 6 23 12"/>
+                        </svg>
+                    </div>
+                    <div class="stat-info">
+                        <h3>월 매출</h3>
+                        <p class="stat-number">₩35,280,000</p>
+                        <span class="stat-trend up">↑ 12% 전월 대비</span>
+                    </div>
+                </div>
+
+                <!-- 오늘 매출 -->
+                <div class="stat-card">
+                    <div class="stat-icon today-sales">
+                        <!-- 오늘 매출: 달러 기호 -->
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none"
+                             stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <line x1="12" y1="1" x2="12" y2="23"/>
+                            <path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/>
                         </svg>
                     </div>
                     <div class="stat-info">
                         <h3>오늘 매출</h3>
-                        <p class="stat-number">132</p>
-                        <span class="stat-trend up">↑ 12% 어제 대비</span>
+                        <p class="stat-number">₩1,230,000</p>
+                        <span class="stat-trend up">↑ 8% 어제 대비</span>
                     </div>
                 </div>
 
+                <!-- 오늘 결제 건수 -->
                 <div class="stat-card">
-                    <div class="stat-icon logout">
-                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                             stroke-width="2">
-                            <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/>
-                            <polyline points="16 17 21 12 16 7"/>
-                            <line x1="21" y1="12" x2="9" y2="12"/>
-                        </svg>
-                    </div>
-                    <div class="stat-info">
-                        <h3>전체 매출</h3>
-                        <p class="stat-number">117</p>
-                        <span class="stat-trend">정상 종료</span>
-                    </div>
-                </div>
-
-                <div class="stat-card">
-                    <div class="stat-icon active">
-                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                             stroke-width="2">
-                            <circle cx="12" cy="12" r="10"/>
-                            <circle cx="12" cy="12" r="3" fill="currentColor"/>
+                    <div class="stat-icon today-payment">
+                        <!-- 오늘 결제 건수: 신용카드 -->
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none"
+                             stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <rect x="1" y="4" width="22" height="16" rx="2" ry="2"/>
+                            <line x1="1" y1="10" x2="23" y2="10"/>
                         </svg>
                     </div>
                     <div class="stat-info">
                         <h3>오늘 결제 건수</h3>
-                        <p class="stat-number">54</p>
-                        <span class="stat-trend">실시간</span>
+                        <p class="stat-number">132</p>
+                        <span class="stat-trend up">↑ 6% 어제 대비</span>
                     </div>
                 </div>
 
+                <!-- 환불 건수 -->
                 <div class="stat-card">
-                    <div class="stat-icon total">
-                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                             stroke-width="2">
-                            <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/>
-                            <circle cx="9" cy="7" r="4"/>
-                            <path d="M23 21v-2a4 4 0 0 0-3-3.87"/>
-                            <path d="M16 3.13a4 4 0 0 1 0 7.75"/>
+                    <div class="stat-icon refund">
+                        <!-- 환불 건수: 환불/반환 아이콘 -->
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none"
+                             stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <polyline points="1 4 1 10 7 10"/>
+                            <polyline points="23 20 23 14 17 14"/>
+                            <path d="M20.49 9A9 9 0 0 0 5.64 5.64L1 10m22 4l-4.64 4.36A9 9 0 0 1 3.51 15"/>
                         </svg>
                     </div>
                     <div class="stat-info">
-                        <h3>총 결제 건수</h3>
-                        <p class="stat-number">1,024</p>
-                        <span class="stat-trend">등록된 회원</span>
+                        <h3>환불 건수</h3>
+                        <p class="stat-number">12</p>
+                        <span class="stat-trend down">↓ 3건 전일 대비</span>
                     </div>
                 </div>
             </div>
@@ -99,7 +110,9 @@
             <div class="chart-table">
                 <section class="chart-section">
                     <div class="chart-header"><h3>최근 7일 매출 추이</h3></div>
-                    <div class="chart-body"><canvas id="salesChart"></canvas></div>
+                    <div class="chart-body">
+                        <canvas id="salesChart"></canvas>
+                    </div>
                 </section>
 
                 <section class="table-section">
@@ -107,16 +120,56 @@
                     <div class="table-body">
                         <table>
                             <thead>
-                            <tr><th>날짜</th><th>매출액</th><th>결제 건수</th><th>환불 건수</th></tr>
+                            <tr>
+                                <th>날짜</th>
+                                <th>매출액</th>
+                                <th>결제 건수</th>
+                                <th>환불 건수</th>
+                            </tr>
                             </thead>
                             <tbody>
-                            <tr><td>2025-10-10</td><td>50,000원</td><td>9건</td><td>0건</td></tr>
-                            <tr><td>2025-10-11</td><td>80,000원</td><td>12건</td><td>1건</td></tr>
-                            <tr><td>2025-10-12</td><td>65,000원</td><td>10건</td><td>0건</td></tr>
-                            <tr><td>2025-10-13</td><td>90,000원</td><td>15건</td><td>1건</td></tr>
-                            <tr><td>2025-10-14</td><td>110,000원</td><td>18건</td><td>0건</td></tr>
-                            <tr><td>2025-10-15</td><td>120,000원</td><td>21건</td><td>2건</td></tr>
-                            <tr><td>2025-10-16</td><td>60,000원</td><td>12건</td><td>0건</td></tr>
+                            <tr>
+                                <td>2025-10-10</td>
+                                <td>50,000원</td>
+                                <td>9건</td>
+                                <td>0건</td>
+                            </tr>
+                            <tr>
+                                <td>2025-10-11</td>
+                                <td>80,000원</td>
+                                <td>12건</td>
+                                <td>1건</td>
+                            </tr>
+                            <tr>
+                                <td>2025-10-12</td>
+                                <td>65,000원</td>
+                                <td>10건</td>
+                                <td>0건</td>
+                            </tr>
+                            <tr>
+                                <td>2025-10-13</td>
+                                <td>90,000원</td>
+                                <td>15건</td>
+                                <td>1건</td>
+                            </tr>
+                            <tr>
+                                <td>2025-10-14</td>
+                                <td>110,000원</td>
+                                <td>18건</td>
+                                <td>0건</td>
+                            </tr>
+                            <tr>
+                                <td>2025-10-15</td>
+                                <td>120,000원</td>
+                                <td>21건</td>
+                                <td>2건</td>
+                            </tr>
+                            <tr>
+                                <td>2025-10-16</td>
+                                <td>60,000원</td>
+                                <td>12건</td>
+                                <td>0건</td>
+                            </tr>
                             </tbody>
                         </table>
                     </div>
@@ -124,6 +177,7 @@
             </div>
         </div>
     </div>
+
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script src="/js/pages/admin/dashboard/salesChart.js"></script>
 </body>

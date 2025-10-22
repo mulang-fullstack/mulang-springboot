@@ -17,38 +17,35 @@
                 </ul>
             </li>
 
-            <li class="menu-section" data-menu="userManage">
+            <li class="menu-section" data-menu="user">
                 <div><img src="/img/icon/admin-user.png"> 사용자 관리</div>
                 <ul class="submenu">
-                    <li><a href="/admin/userManage/member" data-submenu="member">회원 관리</a></li>
-                    <li><a href="/admin/userManage/userLog" data-submenu="userLog">사용자 로그</a></li>
+                    <li><a href="/admin/user" data-submenu="user">회원 조회</a></li>
+                    <li><a href="/admin/user/log" data-submenu="userLog">사용자 로그</a></li>
                 </ul>
             </li>
 
-            <li class="menu-section">
-                <div><img src="/img/icon/calendar-edit.png" data-menu="contentManage"> 콘텐츠 관리</div>
+            <li class="menu-section" data-menu="content">
+                <div><img src="/img/icon/calendar-edit.png"> 콘텐츠 관리</div>
                 <ul class="submenu">
-                    <li><a href="/admin/contentManage/courseManage" data-submenu="courseManage">강좌 관리</a></li>
-                    <li><a href="#">리뷰 관리</a></li>
-                    <li><a href="#">Q&A 관리</a></li>
+                    <li><a href="/admin/content/course" data-submenu="course">강좌 관리</a></li>
+                    <li><a href="/admin/content/course" data-submenu="course">강좌 신청</a></li>
                 </ul>
             </li>
 
-            <li class="menu-section">
+            <li class="menu-section" data-menu="payment">
                 <div><img src="/img/icon/admin-card.png"> 결제 관리</div>
                 <ul class="submenu">
-                    <li><a href="#">결제 관리</a></li>
-                    <li><a href="#">환불 관리</a></li>
+                    <li><a href="/admin/payment" data-submenu="payment">결제 내역</a></li>
+                    <li><a href="/admin/payment/refund" data-submenu="refund">환불 신청</a></li>
                 </ul>
             </li>
 
-            <li class="menu-section">
+            <li class="menu-section" data-menu="settings">
                 <div><img src="/img/icon/admin-setting.png"> 시스템 관리</div>
                 <ul class="submenu">
-                    <li><a href="#">공지사항</a></li>
-                    <li><a href="#">1대1 문의</a></li>
-                    <li><a href="#">관리자 리스트</a></li>
-                    <li><a href="#">관리자 로그</a></li>
+                    <li><a href="/admin/settings/notice" data-submenu="notice">공지사항</a></li>
+                    <li><a href="/admin/settings/inquiry" data-submenu="inquiry">1대1 문의</a></li>
                 </ul>
             </li>
         </ul>

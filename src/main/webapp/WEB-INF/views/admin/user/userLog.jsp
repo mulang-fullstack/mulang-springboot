@@ -6,7 +6,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="icon" href="/img/favicon.svg" type="image/png">
     <link rel="stylesheet" href="/css/global.css"/>
-    <link rel="stylesheet" href="/css/pages/admin/userManage/userLog.css"/>
+    <link rel="stylesheet" href="/css/pages/admin/admin.css"/>
+    <link rel="stylesheet" href="/css/pages/admin/user/userLog.css"/>
     <title>관리자 | 사용자 로그</title>
 </head>
 <body>

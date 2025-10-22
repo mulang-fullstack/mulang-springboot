@@ -9,6 +9,7 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <link rel="icon" href="/img/favicon.svg" type="image/png">
     <link rel="stylesheet" href="/css/global.css"/>
+    <link rel="stylesheet" href="/css/pages/admin/admin.css"/>
     <link rel="stylesheet" href="/css/pages/admin/dashboard/visitor.css"/>
     <script src="/js/common/currentTime.js"></script>
     <title>관리자 | 방문자 현황</title>
@@ -63,18 +64,19 @@
                     </div>
 
                     <div class="stat-card">
-                        <div class="stat-icon logout">
+                        <div class="stat-icon new-user">
                             <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                                 stroke-width="2">
-                                <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/>
-                                <polyline points="16 17 21 12 16 7"/>
-                                <line x1="21" y1="12" x2="9" y2="12"/>
+                                 stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <circle cx="9" cy="7" r="4"/>
+                                <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/>
+                                <line x1="19" y1="8" x2="19" y2="14"/>
+                                <line x1="16" y1="11" x2="22" y2="11"/>
                             </svg>
                         </div>
                         <div class="stat-info">
                             <h3>신규 사용자</h3>
                             <p class="stat-number">117</p>
-                            <span class="stat-trend">정상 종료</span>
+                            <span class="stat-trend">회원가입</span>
                         </div>
                     </div>
 
