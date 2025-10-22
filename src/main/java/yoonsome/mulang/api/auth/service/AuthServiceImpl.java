@@ -1,10 +1,11 @@
 package yoonsome.mulang.api.auth.service;
 
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-import yoonsome.mulang.api.auth.dto.LoginRequest;
 import yoonsome.mulang.api.auth.dto.SignupRequest;
+import yoonsome.mulang.api.teacher.service.TeacherService;
 import yoonsome.mulang.domain.email.service.EmailCodeService;
 import yoonsome.mulang.domain.user.entity.User;
 import yoonsome.mulang.domain.user.service.UserService;
@@ -17,8 +18,10 @@ public class AuthServiceImpl implements AuthService {
     private final PasswordEncoder passwordEncoder;
     private final MailService mailService;
     private final EmailCodeService emailCodeService;
+    private final TeacherService teacherService;
 
     @Override
+    @Transactional
     public boolean signup(SignupRequest request) {
         // 비밀번호 암호화
         String encodedPassword = passwordEncoder.encode(request.getPassword());
@@ -34,11 +37,14 @@ public class AuthServiceImpl implements AuthService {
                         ? User.Role.TEACHER
                         : User.Role.STUDENT
         );
-
         // DB 저장 & 저장된 정보 반환
-        User user = userService.saveUser(newUser);
+        User savedUser = userService.saveUser(newUser);
+        // 3. 강사 계정인 경우 teacher 테이블에 튜플 생성
+        if (savedUser.getRole() == User.Role.TEACHER) {
+            teacherService.createTeacher(savedUser);
+        }
         // 저장 성공 여부 반환
-        return user != null && user.getId() != null;
+        return savedUser.getId() != null;
     }
 
     public void sendSignupVerification(String email) {

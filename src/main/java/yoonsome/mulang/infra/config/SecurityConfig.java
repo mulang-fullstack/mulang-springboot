@@ -1,14 +1,19 @@
 package yoonsome.mulang.infra.config;
 
+import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import yoonsome.mulang.domain.user.repository.UserRepository;
 
 @Configuration
+@RequiredArgsConstructor
 public class SecurityConfig {
+
+    private final CustomOAuth2UserService customOAuth2UserService;
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
@@ -27,13 +32,13 @@ public class SecurityConfig {
                         .defaultSuccessUrl("/", true)
                         .permitAll()
                 )
-//                .oauth2Login(oauth -> oauth
-//                        .loginPage("/auth/login")                       // 로그인 페이지 공유
-//                        .userInfoEndpoint(userInfo -> userInfo
-//                                .userService(customOAuth2UserService())      // 사용자 정보 처리
-//                        )
-//                        .defaultSuccessUrl("/", true)
-//                )
+                .oauth2Login(oauth -> oauth
+                        .loginPage("/auth/login")                       // 로그인 페이지 공유
+                        .userInfoEndpoint(userInfo -> userInfo
+                                .userService(customOAuth2UserService)      // 사용자 정보 처리
+                        )
+                        .defaultSuccessUrl("/", true)
+                )
                 .logout(logout -> logout
                         .logoutUrl("/logout")
                         .logoutSuccessUrl("/")
@@ -49,11 +54,6 @@ public class SecurityConfig {
 
         return http.build();
     }
-
-//    @Bean
-//    public CustomOAuth2UserService customOAuth2UserService() {
-//        return new CustomOAuth2UserService();
-//    }
 
     @Bean
     public PasswordEncoder passwordEncoder() {

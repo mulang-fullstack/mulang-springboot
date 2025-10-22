@@ -37,6 +37,8 @@ public class User {
     @Column(nullable = false, length = 10)
     private Role role;
 
+    private String provider;
+
     @Column(nullable = false, length = 50)
     private String username;
 
