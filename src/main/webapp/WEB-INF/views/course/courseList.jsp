@@ -20,10 +20,14 @@
             <section class="course-category">
                 <h1>영어</h1>
                 <div class="course-tabs">
+                    <a href="/course" class="tab ${empty courseListRequest.categoryId ? 'active' : ''}">
+                        전체
+                    </a>
                     <c:forEach var="category" items="${categories}">
-                        <a href="/course?categoryId=${category.id}" class="tab">${category.name}</a>
+                        <a href="/course?categoryId=${category.id}" class="tab ${courseListRequest.categoryId == category.id ? 'active' : ''}">
+                                ${category.name}
+                        </a>
                     </c:forEach>
-
                     <!--
                     <div class="tab">기초</div>
                     <div class="tab">문법</div>
@@ -39,7 +43,13 @@
                 <div class="search-box">
                     <!-- 검색박스 내부 요소들 -->
                     <div class="search-input">
-                        <input type="text"><button><img src="/img/icon/search.svg" alt="검색 아이콘"></button>
+                        <form action="/course" method="get">
+                            <input type="hidden" name="categoryId" value="${courseListRequest.categoryId}">
+                            <input type="text" name="keyword" value="${courseListRequest.keyword}">
+                            <button type="submit">
+                                <img src="/img/icon/search.svg" alt="검색 아이콘">
+                            </button>
+                        </form>
                     </div>
                     <div class="search-icon"></div>
                 </div>
@@ -202,6 +212,29 @@
                 </div>
                 -->
             </section>
+            <!--
+            <form action="/course" method="get">
+                <input type="hidden" name="categoryId" value="${courseListRequest.categoryId}">
+                <input type="text" name="keyword" value="${courseListRequest.keyword}">
+                <button type="submit">
+                    <img src="/img/icon/search.svg" alt="검색 아이콘">
+                </button>
+            </form>
+            -->
+
+            <!-- 페이지네이션
+            <section class="pagination">
+                <form action="/course" method="get">
+                    <input type="hidden" name="categoryId" value="${courseListRequest.categoryId}">
+                    <input type="hidden" name="keyword" value="${courseListRequest.keyword}">
+                    <button type="submit" class="prev"><img src="/img/icon/page-left.svg" alt="왼쪽 아이콘"></button>
+                </form>
+                <span class="page-numbers">
+                    <span class="current">1</span><span>2</span><span>3</span><span>4</span><span>5</span>
+                </span>
+                <button class="next"><img src="/img/icon/page-right.svg" alt="오른쪽 아이콘"></button>
+            </section>
+            -->
 
             <!-- 페이지네이션 -->
             <section class="pagination">
