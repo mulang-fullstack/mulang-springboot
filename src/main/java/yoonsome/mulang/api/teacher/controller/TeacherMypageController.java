@@ -8,6 +8,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+import yoonsome.mulang.api.teacher.dto.TeacherProfileUpdateRequest;
 import yoonsome.mulang.domain.course.entity.Course;
 import yoonsome.mulang.domain.course.service.CourseService;
 import yoonsome.mulang.domain.language.entity.Language;
@@ -51,27 +52,22 @@ public class TeacherMypageController {
     }
 
     /** 프로필 업데이트 */
-    @Transactional
     @PostMapping("/profile/update")
     public String updateProfile(
             @AuthenticationPrincipal CustomUserDetails userDetails,
-            @ModelAttribute Teacher teacher,
-            @RequestParam(value = "photo", required = false) MultipartFile photo
+            @ModelAttribute TeacherProfileUpdateRequest request
     ) throws IOException {
-        User loginUser = userDetails.getUser();
-        teacherService.updateTeacherProfile(userDetails.getUser().getId(), teacher, photo);
+        teacherService.updateTeacherProfile(userDetails.getUser().getId(), request);
         return "redirect:/teacher/mypage/profile";
     }
 
-    /** 리뷰 관리 */
-    @GetMapping("/reviews")
-    public String review() {
-        return "teacher/review";
-    }
 
     /** 정산 관리 */
     @GetMapping("/settlement")
-    public String settlement() {
+    public String settlement(@AuthenticationPrincipal CustomUserDetails userDetails, Model model) {
+        User loginUser = userDetails.getUser();
+        Teacher teacher = teacherService.getTeacherProfile(loginUser.getId());
+        model.addAttribute("teacher", teacher);
         return "teacher/settlement";
     }
 
@@ -89,13 +85,8 @@ public class TeacherMypageController {
         Long teacherId = teacher.getId();
 
         List<Course> courseList = courseService.getCoursesByTeacher(teacherId);
+        model.addAttribute("teacher", teacher);
         model.addAttribute("courseList", courseList);
         return "teacher/classEdit";
-    }
-
-    /** Q&A 관리 */
-    @GetMapping("/qna")
-    public String qna() {
-        return "teacher/QnA";
     }
 }

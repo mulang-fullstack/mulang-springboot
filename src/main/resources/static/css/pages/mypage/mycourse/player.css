@@ -286,3 +286,14 @@ video:-ms-fullscreen {
         height: 300px;
     }
 }
+/* --- 영상 비율 자동 대응용 --- */
+.video-frame video.vertical {
+    object-fit: contain;        /* 세로 영상은 여백 유지 */
+    aspect-ratio: 9 / 16;
+    background-color: #000;
+}
+
+.video-frame video.horizontal {
+    object-fit: cover;          /* 가로 영상은 꽉 채움 */
+    aspect-ratio: 16 / 9;
+}
