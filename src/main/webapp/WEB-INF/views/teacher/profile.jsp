@@ -60,15 +60,6 @@
                             </div>
                         </div>
 
-                        <!-- 담당 언어 -->
-                        <div class="field">
-                            <label>담당 언어</label>
-                            <div class="input-wrap">
-                                <input type="text" value="${teacher.language.name}" readonly>
-                                <input type="hidden" name="language.id" value="${teacher.language.id}">
-                            </div>
-                        </div>
-
                         <!-- 소개 -->
                         <div class="field">
                             <label>소개</label>

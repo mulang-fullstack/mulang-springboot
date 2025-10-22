@@ -34,36 +34,33 @@
                 <div class="class-table">
                     <div class="table-header">
                         <span>썸네일</span>
-                        <span>클래스명</span>
-                        <span>운영방식</span>
-                        <span>운영상태</span>
-                        <span>등록일</span>
+                        <span>클래스명 / 부제목</span>
+                        <span>카테고리 / 강의언어</span>
+                        <span>진행기간</span>
+                        <span></span>
                     </div>
 
                     <div class="table-body">
                         <c:forEach var="course" items="${courseList}">
-                            <div class="table-row">CourseAnswer
+                            <div class="table-row">
                                 <div class="thumb">
                                     <img src="${course.thumbnail}" alt="클래스 썸네일" width="160" height="90">
                                 </div>
-                                <div class="title">${course.title}</div>
-                                <div class="type">${course.type}</div>
-                                <div class="status">
-                                    <span class="tag gray">
-                                        <c:choose>
-                                            <c:when test="${course.status}">운영중</c:when>
-                                            <c:otherwise>임시 저장</c:otherwise>
-                                        </c:choose>
-                                    </span>
+                                <div class="title-wrap">
+                                    <div class="title">${course.title}</div>
+                                    <div class="subtitle">${course.subtitle}</div>
+                                </div>
+                                <div class="category">
+                                        ${course.category.name} / ${course.language.name}
                                 </div>
                                 <div class="date">
-                                        ${course.startedAt}
-                                    <div class="menu-wrap">
-                                        <button class="menu-btn">⋯</button>
-                                        <div class="menu-dropdown">
-                                            <button class="menu-item edit-btn" data-id="${course.id}">수정</button>
-                                            <button class="menu-item delete-btn" data-id="${course.id}">삭제</button>
-                                        </div>
+                                        ${course.startedAt} ~ ${course.endedAt}
+                                </div>
+                                <div class="menu-wrap">
+                                    <button class="menu-btn">⋯</button>
+                                    <div class="menu-dropdown">
+                                        <button class="menu-item edit-btn" data-id="${course.id}">수정</button>
+                                        <button class="menu-item delete-btn" data-id="${course.id}">삭제</button>
                                     </div>
                                 </div>
                             </div>

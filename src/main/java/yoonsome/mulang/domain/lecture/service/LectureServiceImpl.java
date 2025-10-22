@@ -9,6 +9,7 @@ import yoonsome.mulang.domain.lecture.repository.LectureRepository;
 import yoonsome.mulang.infra.file.entity.File;
 import yoonsome.mulang.infra.file.service.FileService;
 import java.io.IOException;
+import java.util.List;
 
 @Service
 @RequiredArgsConstructor
@@ -30,5 +31,14 @@ public class LectureServiceImpl implements LectureService {
         lecture.setTitle(title);
         lecture.setFile(savedFile);
         lectureRepository.save(lecture);
+    }
+    @Override
+    public Lecture getLectureById(Long lectureId){
+        return lectureRepository.findById(lectureId)
+                .orElseThrow(() -> new IllegalArgumentException("강의를 찾을 수 없습니다."));
+    }
+    @Override
+    public List<Lecture> getLecturesByCourseId(Long courseId) {
+        return lectureRepository.findByCourse_Id(courseId);
     }
 }

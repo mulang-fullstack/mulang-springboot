@@ -69,21 +69,6 @@
                             </div>
                         </div>
 
-                        <!-- 담당 언어 -->
-                        <div class="field">
-                            <label>담당 언어</label>
-                            <div class="input-wrap">
-                                <select name="language.id">
-                                    <c:forEach var="lang" items="${languages}">
-                                        <option value="${lang.id}"
-                                                <c:if test="${teacher.language.id == lang.id}">selected</c:if>>
-                                                ${lang.name}
-                                        </option>
-                                    </c:forEach>
-                                </select>
-                            </div>
-                        </div>
-
                         <!-- 소개 -->
                         <div class="field">
                             <label>소개</label>
