@@ -8,8 +8,8 @@
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <link rel="icon" href="img/favicon.svg" type="image/png">
-    <link rel="stylesheet" href="css/global.css"/>
-    <link rel="stylesheet" href="css/pages/course/course-list.css"/>
+    <link rel="stylesheet" href="/css/global.css"/>
+    <link rel="stylesheet" href="/css/pages/course/course-list.css"/>
     <title>Mulang?</title>
 </head>
 <body>
@@ -28,14 +28,6 @@
                                 ${category.name}
                         </a>
                     </c:forEach>
-                    <!--
-                    <div class="tab">기초</div>
-                    <div class="tab">문법</div>
-                    <div class="tab">어휘</div>
-                    <div class="tab">독해</div>
-                    <div class="tab">비즈니스</div>
-                    <div class="tab">CNN</div>
-                    -->
                 </div>
             </section>
 
@@ -54,9 +46,15 @@
                     <div class="search-icon"></div>
                 </div>
                 <div class="sort-options">
-                    <a href="#"><div class="sort-item active">별점순</div></a>
-                    <a href="#"><div class="sort-item">리뷰순</div></a>
-                    <a href="#"><div class="sort-item">최신순</div></a>
+                    <a href="/course?categoryId=${courseListRequest.categoryId}&keyword=${courseListRequest.keyword}&page=${courseListRequest.page}&sort=rating">
+                        <div class="sort-item ${courseListRequest.sort == 'rating'? 'active':''}">별점순</div>
+                    </a>
+                    <a href="/course?categoryId=${courseListRequest.categoryId}&keyword=${courseListRequest.keyword}&page=${courseListRequest.page}&sort=review">
+                        <div class="sort-item ${courseListRequest.sort == 'review'? 'active':''}">리뷰순</div>
+                    </a>
+                    <a href="/course?categoryId=${courseListRequest.categoryId}&keyword=${courseListRequest.keyword}&page=${courseListRequest.page}&sort=latest">
+                        <div class="sort-item ${courseListRequest.sort == 'latest'? 'active':''}">최신순</div>
+                    </a>
                 </div>
             </section>
 
@@ -74,10 +72,10 @@
                             <div class="rating">
                                 <span class="score">${course.averageRating}</span>
                                 <span class="stars">
-                        <c:forEach begin="1" end="5" var="i">
-                            <img src="/img/icon/star-${i <= course.averageRating ? 'full' : (i - 0.5 <= course.averageRating ? 'half' : 'empty')}.svg" alt="별">
-                        </c:forEach>
-                    </span>
+                                    <c:forEach begin="1" end="5" var="i">
+                                        <img src="/img/icon/star-${i <= course.averageRating ? 'full' : (i - 0.5 <= course.averageRating ? 'half' : 'empty')}.svg" alt="별">
+                                    </c:forEach>
+                                </span>
                                 <span class="review-count">(${course.reviewCount})</span>
                             </div>
                         </div>
@@ -87,156 +85,55 @@
                             </div>
                             <div class="course-purchase">
                                 <span class="price">${course.price}원</span>
-                                <button class="purchase-btn">결제하기</button>
+                                <form action="/" method="get">
+                                    <input type="hidden" name="courseId" value="${course.id}">
+                                    <button type="submit" class="purchase-btn">결제하기</button>
+                                </form>
                             </div>
                         </div>
                     </div>
                 </c:forEach>
-
-                <!--
-                <div class="course-card">
-                    <a href="courseDetail">
-                    <img src="https://placehold.co/250x180" alt="course"></a>
-                    <div class="course-list-info">
-                        <h2><a href="courseDetail">왕초보 기초회화</a></h2>
-                        <p class="subtitle">틀에 박힌 한국식 영어는 이제 그만! - 찐 원어민 기초 회화!</p>
-                        <p class="teacher">Sean Pablo</p>
-                        <div class="rating">
-                            <span class="score">4.7</span>
-                            <span class="stars">
-                                <img src="/img/icon/star-full.svg" alt="별">
-                                <img src="/img/icon/star-full.svg" alt="별">
-                                <img src="/img/icon/star-full.svg" alt="별">
-                                <img src="/img/icon/star-full.svg" alt="별">
-                                <img src="/img/icon/star-half.svg" alt="별 반개">
-                            </span>
-                            <span class="review-count">(1000)</span>
-                        </div>
-                    </div>
-                    <div class="heart-purchase-wrap">
-                        <button class="heart-icon"><img src="/img/icon/heart-full.svg" alt="찜 아이콘"></button>
-                        <div class="course-purchase">
-                            <span class="price">155,000원</span>
-                            <button class="purchase-btn">결제하기</button>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="course-card">
-                    <a href="courseDetail">
-                        <img src="https://placehold.co/250x180" alt="course"></a>
-                    <div class="course-list-info">
-                        <h2>하루 딱 10분! 신박한 영문법 토크쇼</h2>
-                        <p class="subtitle">워라벨 시대에 적합한 짧고 굵은 강의!</p>
-                        <p class="teacher">Sean Pablo</p>
-                        <div class="rating">
-                            <span class="score">4.0</span>
-                            <span class="stars">
-                                <img src="/img/icon/star-full.svg" alt="별">
-                                <img src="/img/icon/star-full.svg" alt="별">
-                                <img src="/img/icon/star-full.svg" alt="별">
-                                <img src="/img/icon/star-full.svg" alt="별">
-                                <img src="/img/icon/star-empty.svg" alt="별 반개">
-                            </span>
-                            <span class="review-count">(1000)</span>
-                        </div>
-                    </div>
-                    <div class="heart-purchase-wrap">
-                        <div class="heart-icon">
-                            <img src="/img/icon/heart-empty.svg" alt="찜 아이콘">
-                        </div>
-                        <div class="course-purchase">
-                            <span class="price">155,000원</span>
-                            <button class="purchase-btn">결제하기</button>
-                        </div>
-                    </div>
-                </div>
-                <div class="course-card">
-                    <a href="courseDetail">
-                        <img src="https://placehold.co/250x180" alt="course"></a>
-                    <div class="course-list-info">
-                        <h2>Basic Grammar in Use</h2>
-                        <p class="subtitle">영어의 기본기를 잡아주는 쉬운 문법강의! (이론 강의)</p>
-                        <p class="teacher">Sean Pablo</p>
-                        <div class="rating">
-                            <span class="score">4.8</span>
-                            <span class="stars">
-                                <img src="/img/icon/star-full.svg" alt="별">
-                                <img src="/img/icon/star-full.svg" alt="별">
-                                <img src="/img/icon/star-full.svg" alt="별">
-                                <img src="/img/icon/star-full.svg" alt="별">
-                                <img src="/img/icon/star-full.svg" alt="별">
-                            </span>
-                            <span class="review-count">(1000)</span>
-                        </div>
-                    </div>
-                    <div class="heart-purchase-wrap">
-                        <div class="heart-icon">
-                            <img src="/img/icon/heart-empty.svg" alt="찜 아이콘">
-                        </div>
-                        <div class="course-purchase">
-                            <span class="price">120,000원</span>
-                            <button class="purchase-btn">결제하기</button>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="course-card">
-                    <a href="courseDetail">
-                        <img src="https://placehold.co/250x180" alt="course"></a>
-                    <div class="course-list-info">
-                        <h2>Business Negotiation</h2>
-                        <p class="subtitle">한권으로 끝내는 협상 테이블의 바이블 강의</p>
-                        <p class="teacher">Sean Pablo</p>
-                        <div class="rating">
-                            <span class="score">4.8</span>
-                            <span class="stars">
-                                <img src="/img/icon/star-full.svg" alt="별">
-                                <img src="/img/icon/star-full.svg" alt="별">
-                                <img src="/img/icon/star-full.svg" alt="별">
-                                <img src="/img/icon/star-full.svg" alt="별">
-                                <img src="/img/icon/star-full.svg" alt="별">
-                            </span>
-                            <span class="review-count">(1000)</span>
-                        </div>
-                    </div>
-                    <div class="heart-purchase-wrap">
-                        <div class="heart-icon">
-                            <img src="/img/icon/heart-empty.svg" alt="찜 아이콘">
-                        </div>
-                        <div class="course-purchase">
-                            <span class="price">80,000원</span>
-                            <button class="purchase-btn">결제하기</button>
-                        </div>
-                    </div>
-                </div>
-                -->
             </section>
-            <!--
-            <form action="/course" method="get">
-                <input type="hidden" name="categoryId" value="${courseListRequest.categoryId}">
-                <input type="text" name="keyword" value="${courseListRequest.keyword}">
-                <button type="submit">
-                    <img src="/img/icon/search.svg" alt="검색 아이콘">
-                </button>
-            </form>
-            -->
-
-            <!-- 페이지네이션
-            <section class="pagination">
-                <form action="/course" method="get">
-                    <input type="hidden" name="categoryId" value="${courseListRequest.categoryId}">
-                    <input type="hidden" name="keyword" value="${courseListRequest.keyword}">
-                    <button type="submit" class="prev"><img src="/img/icon/page-left.svg" alt="왼쪽 아이콘"></button>
-                </form>
-                <span class="page-numbers">
-                    <span class="current">1</span><span>2</span><span>3</span><span>4</span><span>5</span>
-                </span>
-                <button class="next"><img src="/img/icon/page-right.svg" alt="오른쪽 아이콘"></button>
-            </section>
-            -->
 
             <!-- 페이지네이션 -->
+            <section class="pagination">
+                <c:if test="${courseListRequest.page > 0}">
+                    <c:url var="prevUrl" value="/course">
+                        <c:param name="categoryId" value="${courseListRequest.categoryId}" />
+                        <c:param name="keyword" value="${courseListRequest.keyword}" />
+                        <c:param name="page" value="${courseListRequest.page - 1}" />
+                    </c:url>
+                    <a href="${prevUrl}">
+                        <button class="prev"><img src="/img/icon/page-left.svg" alt="왼쪽 아이콘"></button>
+                    </a>
+                </c:if>
+                <span class="page-numbers">
+                    <c:if test="${totalPages > 0}">
+                        <c:forEach begin="0" end="${totalPages-1}" var="i">
+                            <c:url var="pageUrl" value="/course">
+                                <c:param name="categoryId" value="${courseListRequest.categoryId}" />
+                                <c:param name="keyword" value="${courseListRequest.keyword}" />
+                                <c:param name="page" value="${i}" />
+                            </c:url>
+                            <a href="${pageUrl}">
+                                <span class="${i == courseListRequest.page ? 'current' : ''}">${i+1}</span>
+                            </a>
+                        </c:forEach>
+                    </c:if>
+                </span>
+                <c:if test="${courseListRequest.page < totalPages-1}">
+                    <c:url var="nextUrl" value="/course">
+                        <c:param name="categoryId" value="${courseListRequest.categoryId}" />
+                        <c:param name="keyword" value="${courseListRequest.keyword}" />
+                        <c:param name="page" value="${courseListRequest.page + 1}" />
+                    </c:url>
+                    <a href="${nextUrl}">
+                        <button class="next"><img src="/img/icon/page-right.svg" alt="오른쪽 아이콘"></button>
+                    </a>
+                </c:if>
+            </section>
+
+            <!-- 페이지네이션
             <section class="pagination">
                 <button class="prev"><img src="/img/icon/page-left.svg" alt="왼쪽 아이콘"></button>
                 <span class="page-numbers">
@@ -244,6 +141,7 @@
                 </span>
                 <button class="next"><img src="/img/icon/page-right.svg" alt="오른쪽 아이콘"></button>
             </section>
+            -->
         </div>
     </div>
 </main>

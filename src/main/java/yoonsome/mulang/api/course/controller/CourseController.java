@@ -9,6 +9,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import yoonsome.mulang.api.course.dto.CourseDetailResponse;
 import yoonsome.mulang.api.course.dto.CourseListRequest;
 import yoonsome.mulang.api.course.dto.CourseListResponse;
 import yoonsome.mulang.domain.category.entity.Category;
@@ -53,6 +54,9 @@ public class CourseController {
         model.addAttribute("courses", courses.getContent());
         System.out.println("@course:"+courses.getContent());
 
+        /*페이지*/
+        model.addAttribute("totalPages", courses.getTotalPages());
+
         return "course/courseList";
     }
     /*
@@ -62,7 +66,16 @@ public class CourseController {
         return courseService.getCourseListByLanguageAndCategory(request.getLanguageId(), request.getCategoryId(), pageable);
     }*/
     @GetMapping("courseDetail")
-    public String getCourseDetail(){
+    public String getCourseDetail(Long id, Model model, HttpSession session) {
+        /*강의 정보*/
+        /*강의 소개*/
+        CourseDetailResponse courseDetailResponse = courseService.getCourseDetail(id);
+        System.out.println("@courseDetail:"+courseDetailResponse);
+        model.addAttribute("detail", courseDetailResponse.getContent());
+
+        /*커리큘럼(강의 리스트)*/
+        /*리뷰*/
+
         return "course/courseDetail";
     }
 }

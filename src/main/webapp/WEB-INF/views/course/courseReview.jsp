@@ -1,5 +1,5 @@
 <%@ page contentType="text/html;charset=utf-8" %>
-<link rel="stylesheet" href="css/pages/course/course-review.css"/>
+<link rel="stylesheet" href="/css/pages/course/course-review.css"/>
 <h2>리뷰</h2>
 <div class="course-riview">
     <div class="review-sort">

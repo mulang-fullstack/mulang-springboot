@@ -12,8 +12,8 @@ import java.util.List;
 
 @Repository
 public interface CourseRepository extends JpaRepository<Course,Long> {
-    Page<Course> findByLanguage_Id(Long languageId, Pageable pageable);
-    Page<Course> findByLanguage_IdAndCategory_Id(Long languageId, Long categoryId, Pageable pageable);
+    //Page<Course> findByLanguage_Id(Long languageId);
+    //Page<Course> findByLanguage_IdAndCategory_Id(Long languageId, Long categoryId, Pageable pageable);
     //Page<Course> findByLanguageIdAndKeyword(Long languageId, String keyword, Pageable pageable);
     @Query("""
         SELECT c
