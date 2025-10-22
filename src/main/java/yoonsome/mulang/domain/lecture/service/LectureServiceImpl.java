@@ -30,6 +30,5 @@ public class LectureServiceImpl implements LectureService {
         lecture.setTitle(title);
         lecture.setFile(savedFile);
         lectureRepository.save(lecture);
-
     }
 }
