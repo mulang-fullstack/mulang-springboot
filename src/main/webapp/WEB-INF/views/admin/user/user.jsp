@@ -8,8 +8,9 @@
     <meta name="csrf-token" content="${_csrf.token}">
     <link rel="icon" href="/img/favicon.svg" type="image/png">
     <link rel="stylesheet" href="/css/global.css"/>
-    <link rel="stylesheet" href="/css/pages/admin/userManage/member.css"/>
-    <title>관리자 | 회원 관리</title>
+    <link rel="stylesheet" href="/css/pages/admin/admin.css"/>
+    <link rel="stylesheet" href="/css/pages/admin/user/user.css"/>
+    <title>관리자 | 회원 조회</title>
 </head>
 <body>
 <div class="main-container">
@@ -29,7 +30,7 @@
         <div class="content-wrap">
             <!-- 페이지 헤더 -->
             <div class="content-header">
-                <h2>회원 관리</h2>
+                <h2>회원 조회</h2>
                 <p class="date-range" id="current-time"></p>
             </div>
 

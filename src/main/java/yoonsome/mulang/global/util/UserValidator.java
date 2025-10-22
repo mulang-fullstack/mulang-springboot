@@ -26,8 +26,8 @@ public class UserValidator {
         if (trimmed.length() < 2) {
             return ValidationResult.error("이름은 2자 이상이어야 합니다.");
         }
-        if (trimmed.length() > 4) {
-            return ValidationResult.error("이름은 4자 이하이어야 합니다.");
+        if (trimmed.length() > 16) {
+            return ValidationResult.error("이름은 16자 이하이어야 합니다.");
         }
 
         return ValidationResult.success();

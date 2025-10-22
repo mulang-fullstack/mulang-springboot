@@ -47,7 +47,11 @@
                     </button>
                 </div>
             </div>
-            <div id="errorMessage" class="error-message"></div>
+            <c:if test="${not empty sessionScope.FLASH_LOGIN_ERROR}">
+                <div class="error-message">${sessionScope.FLASH_LOGIN_ERROR}</div>
+                <c:remove var="FLASH_LOGIN_ERROR" scope="session"/>
+            </c:if>
+
 
             <!-- 로그인 버튼 -->
             <button type="submit" class="btn-primary login-btn">로그인</button>
@@ -74,38 +78,5 @@
         </div>
     </div>
 </div>
-<script>
-    document.querySelector('#loginForm').addEventListener('submit', async (e) => {
-        e.preventDefault();
-        const form = e.target;
-        const formData = new FormData(form);
-        const params = new URLSearchParams(formData);
-
-        try {
-            const res = await fetch(form.action, {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-                body: params,
-                redirect: 'follow' // Security의 redirect 응답을 따라감
-            });
-
-            // Spring Security는 로그인 성공 시 redirect를 보냄
-            if (res.redirected) {
-                location.href = res.url;
-                return;
-            }
-
-            // 실패 시 /auth/login?error 로 redirect되므로 처리
-            const text = await res.text();
-            if (text.includes('error') || text.includes('Invalid')) {
-                document.querySelector('#errorMessage').textContent =
-                    '이메일 또는 비밀번호가 올바르지 않습니다.';
-            }
-        } catch {
-            document.querySelector('#errorMessage').textContent =
-                '서버 오류가 발생했습니다.';
-        }
-    });
-</script>
 </body>
 </html>
