@@ -41,12 +41,6 @@ public class AuthServiceImpl implements AuthService {
         return user != null && user.getId() != null;
     }
 
-    @Override
-    public boolean isEmailExists(String email) {
-        return userService.existsByEmail(email);
-    }
-
-
     public void sendSignupVerification(String email) {
         // 6자리 인증코드 생성
         String code = generateCode();

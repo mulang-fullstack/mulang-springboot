@@ -8,58 +8,112 @@
  */
 function setupRealTimeValidation() {
 
-    // 이름 길이 검사
+    // 이름 길이 검사 (2~4자)
     const nameInput = document.getElementById('username');
     if (nameInput) {
-        nameInput.addEventListener('blur', function() {
-            if (this.value && this.value.length < 2) {
-                setFieldStatus(this, 'error', '이름은 2자 이상, 4자 이하이어야 합니다.');
-            } else if (this.value) {
+        nameInput.addEventListener('input', function() {
+            const name = this.value.trim();
+            if (name.length > 0 && name.length < 2) {
+                setFieldStatus(this, 'error', '이름은 2자 이상이어야 합니다.');
+            } else if (name.length > 4) {
+                setFieldStatus(this, 'error', '이름은 4자 이하이어야 합니다.');
+            } else if (name.length >= 2 && name.length <= 4) {
+                setFieldStatus(this, 'success', '사용 가능한 이름입니다.');
+            } else {
                 clearFieldStatus(this);
             }
         });
     }
 
-    // 닉네임 길이 검사
+    // 닉네임 실시간 중복 확인
     const nicknameInput = document.getElementById('nickname');
     if (nicknameInput) {
-        nicknameInput.addEventListener('blur', function() {
-            if (this.value && this.value.length < 2) {
-                setFieldStatus(this, 'error', '닉네임은 2자 이상, 8자 이하이어야 합니다.');
-            } else if (this.value) {
+        nicknameInput.addEventListener('input', function() {
+            const nickname = this.value.trim();
+
+            // 이전 타이머 취소
+            if (nicknameCheckTimeout) {
+                clearTimeout(nicknameCheckTimeout);
+            }
+
+            // 상태 초기화
+            signupState.isNicknameVerified = false;
+            signupState.nicknameValue = '';
+
+            // 2자 미만이면 에러 표시
+            if (nickname.length > 0 && nickname.length < 2) {
+                setFieldStatus(this, 'error', '닉네임은 2자 이상이어야 합니다.');
+                return;
+            }
+
+            // 8자 초과하면 에러 표시
+            if (nickname.length > 8) {
+                setFieldStatus(this, 'error', '닉네임은 8자 이하이어야 합니다.');
+                return;
+            }
+
+            // 입력이 멈추고 500ms 후에 중복 확인
+            if (nickname.length >= 2) {
+                clearFieldStatus(this);
+                nicknameCheckTimeout = setTimeout(() => {
+                    checkNicknameAsync(nickname);
+                }, 500);
+            } else {
                 clearFieldStatus(this);
             }
         });
     }
 
-    // 이메일 형식 검사
+    // 이메일 형식 및 길이 검사 (최대 50자)
     const emailInput = document.getElementById('email');
     if (emailInput) {
+        emailInput.addEventListener('input', function() {
+            const email = this.value.trim();
+            if (email.length > 50) {
+                setFieldStatus(this, 'error', '이메일은 50자 이하이어야 합니다.');
+            } else {
+                clearFieldStatus(this);
+            }
+        });
+
         emailInput.addEventListener('blur', function() {
-            if (this.value && !validateEmail(this.value)) {
+            const email = this.value.trim();
+            if (email && email.length > 50) {
+                setFieldStatus(this, 'error', '이메일은 50자 이하이어야 합니다.');
+            } else if (email && !validateEmail(email)) {
                 setFieldStatus(this, 'error', '올바른 이메일 형식이 아닙니다.');
-            } else if (this.value) {
+            } else if (email) {
                 clearFieldStatus(this);
             }
         });
     }
 
-    // 비밀번호 검사
+    // 비밀번호 검사 (6~16자)
     const passwordInput = document.getElementById('password');
     if (passwordInput) {
+        passwordInput.addEventListener('input', function() {
+            const password = this.value;
+
+            // 비밀번호 강도 표시
+            validatePasswordStrength(this);
+
+            // 16자 초과 체크
+            if (password.length > 16) {
+                setFieldStatus(this, 'error', '비밀번호는 16자 이하이어야 합니다.');
+            }
+        });
+
         passwordInput.addEventListener('blur', function() {
-            if (this.value && !validatePassword(this.value)) {
-                setFieldStatus(this, 'error', '6자리 이상, 영문자와 숫자를 포함해야 합니다.');
-            } else if (this.value) {
+            const password = this.value;
+            if (password && password.length > 16) {
+                setFieldStatus(this, 'error', '비밀번호는 16자 이하이어야 합니다.');
+            } else if (password && !validatePassword(password)) {
+                setFieldStatus(this, 'error', '6~16자, 영문자와 숫자를 포함해야 합니다.');
+            } else if (password && validatePassword(password)) {
                 setFieldStatus(this, 'success', '사용 가능한 비밀번호입니다.');
             }
         });
     }
-
-    passwordInput.addEventListener('input', function() {
-        validatePasswordStrength(this);
-    });
-
 
     // 비밀번호 확인 일치 검사
     const passwordConfirm = document.getElementById('passwordConfirm');
@@ -84,10 +138,11 @@ function validateEmail(email) {
 }
 
 /**
- * 비밀번호 유효성 검사
+ * 비밀번호 유효성 검사 (6~16자, 영문+숫자)
  */
 function validatePassword(password) {
-    const re = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d!@#$%^&*()_+\-={}\[\]:;"'<>,.?/~`|\\]{6,}$/;
+    if (password.length < 6 || password.length > 16) return false;
+    const re = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d!@#$%^&*()_+\-={}\[\]:;"'<>,.?/~`|\\]{6,16}$/;
     return re.test(password);
 }
 
@@ -155,16 +210,30 @@ function validatePasswordStrength(input) {
     }
 }
 
-
 /**
  * 폼 전체 유효성 검사
  */
 function validateForm(formData, signupState) {
+    // 이름 검증 (2~4자)
     if (!formData.username || formData.username.length < 2)
-        return { isValid: false, message: '이름을 올바르게 입력해주세요.', field: 'username' };
+        return { isValid: false, message: '이름은 2자 이상이어야 합니다.', field: 'username' };
+    if (formData.username.length > 4)
+        return { isValid: false, message: '이름은 4자 이하이어야 합니다.', field: 'username' };
 
+    // 닉네임 검증 (2~8자)
     if (!formData.nickname || formData.nickname.length < 2)
-        return { isValid: false, message: '닉네임을 올바르게 입력해주세요.', field: 'nickname' };
+        return { isValid: false, message: '닉네임은 2자 이상이어야 합니다.', field: 'nickname' };
+    if (formData.nickname.length > 8)
+        return { isValid: false, message: '닉네임은 8자 이하이어야 합니다.', field: 'nickname' };
+
+    if (!signupState.isNicknameVerified)
+        return { isValid: false, message: '사용 가능한 닉네임을 입력해주세요.', field: 'nickname' };
+
+    // 이메일 검증 (최대 50자)
+    if (!formData.email || !validateEmail(formData.email))
+        return { isValid: false, message: '올바른 이메일을 입력해주세요.', field: 'email' };
+    if (formData.email.length > 50)
+        return { isValid: false, message: '이메일은 50자 이하이어야 합니다.', field: 'email' };
 
     if (!signupState.isEmailVerified)
         return { isValid: false, message: '이메일 인증 요청을 진행해주세요.', field: 'email' };
@@ -172,10 +241,12 @@ function validateForm(formData, signupState) {
     if (!signupState.isEmailCodeVerified)
         return { isValid: false, message: '이메일 인증을 완료해주세요.', field: 'emailCode' };
 
+    // 비밀번호 검증 (6~16자)
     if (!validatePassword(formData.password))
-        return { isValid: false, message: '비밀번호 조건을 확인해주세요.', field: 'password' };
+        return { isValid: false, message: '비밀번호는 6~16자, 영문자와 숫자를 포함해야 합니다.', field: 'password' };
 
     if (formData.password !== formData.passwordConfirm)
         return { isValid: false, message: '비밀번호가 일치하지 않습니다.', field: 'passwordConfirm' };
+
     return { isValid: true };
 }

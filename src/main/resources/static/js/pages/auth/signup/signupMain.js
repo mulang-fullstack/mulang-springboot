@@ -9,7 +9,7 @@ const signupState = {
     verificationCode: ''
 };
 
-document.addEventListener('DOMContentLoaded', function() {
+document.addEventListener('DOMContentLoaded', function () {
     setupFormUI();
     setupRealTimeValidation();
     setupSubmitHandler();
@@ -71,11 +71,14 @@ function setupSubmitHandler() {
                 body: new URLSearchParams(formData)
             });
 
-            if (response.ok) {
+            const result = await response.text();
+
+            if (response.ok && result === 'success') {
                 showMessage('회원가입이 완료되었습니다!', 'success');
                 setTimeout(() => location.href = '/auth/login', 1500);
             } else {
-                throw new Error('회원가입 실패');
+                showMessage('회원가입에 실패했습니다. 다시 시도해주세요.', 'error');
+                location.href = '/auth/signup'
             }
 
         } catch {

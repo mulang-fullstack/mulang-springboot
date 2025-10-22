@@ -92,6 +92,7 @@
 <script src="/js/pages/auth/signup/signupUtils.js"></script>
 <script src="/js/pages/auth/signup/signupValidation.js"></script>
 <script src="/js/pages/auth/signup/signupFormUI.js"></script>
+<script src="/js/pages/auth/signup/signupNickname.js"></script>
 <script src="/js/pages/auth/signup/signupEmail.js"></script>
 <script src="/js/pages/auth/signup/signupEmailCode.js"></script>
 <script src="/js/pages/auth/signup/signupMain.js"></script>
