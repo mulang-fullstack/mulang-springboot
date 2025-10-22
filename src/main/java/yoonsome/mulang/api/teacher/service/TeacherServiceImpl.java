@@ -45,7 +45,7 @@ public class TeacherServiceImpl implements TeacherService {
                 .orElseThrow(() -> new IllegalArgumentException("교사 정보가 존재하지 않습니다."));
         teacher.setIntroduction(updateData.getIntroduction());
         teacher.setCarreer(updateData.getCarreer());
-        teacher.setLanguage(updateData.getLanguage());
+        //teacher.setLanguage(updateData.getLanguage());
 
         if (photo != null && !photo.isEmpty()) {
             User user = userRepository.findById(userId)

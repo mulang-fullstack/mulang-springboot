@@ -6,6 +6,7 @@ import org.springframework.web.multipart.MultipartFile;
 import yoonsome.mulang.domain.course.entity.Course;
 import yoonsome.mulang.domain.lecture.entity.Lecture;
 import yoonsome.mulang.domain.lecture.repository.LectureRepository;
+import yoonsome.mulang.infra.file.entity.File;
 import yoonsome.mulang.infra.file.service.FileService;
 import java.io.IOException;
 
@@ -17,14 +18,18 @@ public class LectureServiceImpl implements LectureService {
     private final FileService fileService;
 
     @Override
-    public void createLectureWithFile(String title, Course course, MultipartFile video) throws IOException {
+    public void createLectureWithFile(String title, Course course, MultipartFile video)
+            throws IOException {
+        if (video == null || video.isEmpty()) {
+            throw new IllegalArgumentException("강의 영상은 필수입니다.");
+        }
+        File savedFile = fileService.createFile(video, null);
+
         Lecture lecture = new Lecture();
         lecture.setCourse(course);
         lecture.setTitle(title);
+        lecture.setFile(savedFile);
         lectureRepository.save(lecture);
 
-        if (video != null && !video.isEmpty()) {
-            fileService.createFile(video, lecture);
-        }
     }
 }

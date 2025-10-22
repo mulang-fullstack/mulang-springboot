@@ -58,11 +58,22 @@ document.addEventListener("DOMContentLoaded", () => {
     /** -------------------- 폼 제출 시 파일 검증 -------------------- */
     form.addEventListener("submit", (e) => {
         const fileInputs = videoList.querySelectorAll('input[type="file"][name="lectureVideo[]"]');
-        const hasFile = Array.from(fileInputs).some(input => input.files && input.files.length > 0);
 
-        if (!hasFile) {
+        // ① 비어 있는 파일 input 제거
+        fileInputs.forEach(input => {
+            if (!input.files || input.files.length === 0) {
+                input.remove();
+            }
+        });
+
+        // ② 실제 파일이 하나라도 있는지 검사
+        const validFiles = Array.from(videoList.querySelectorAll('input[type="file"][name="lectureVideo[]"]'))
+            .filter(input => input.files && input.files.length > 0);
+
+        if (validFiles.length === 0) {
             e.preventDefault();
             alert("최소 1개의 강의 영상을 업로드해야 합니다.");
+            return;
         }
     });
 });
