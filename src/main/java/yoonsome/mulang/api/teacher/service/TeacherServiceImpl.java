@@ -54,6 +54,12 @@ public class TeacherServiceImpl implements TeacherService {
             user.setFile(savedPhoto);
         }
     }
+    @Override
+    public Teacher createTeacher(User user) {
+        Teacher teacher = new Teacher();
+        teacher.setUser(user);
+        return teacherRepository.save(teacher);
+    }
 }
 
 

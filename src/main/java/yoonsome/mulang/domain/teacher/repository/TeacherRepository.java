@@ -10,7 +10,6 @@ import java.util.Optional;
 public interface TeacherRepository extends JpaRepository<Teacher, Long> {
 
     @Query("SELECT t FROM Teacher t " +
-            "JOIN FETCH t.language " +
             "JOIN FETCH t.user " +
             "WHERE t.user.id = :userId")
     Optional<Teacher> findByUserId(@Param("userId") Long userId);
