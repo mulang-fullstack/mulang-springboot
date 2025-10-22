@@ -47,8 +47,8 @@ public class CourseUploadController {
     @PostMapping
     public String createCourse(
             @ModelAttribute Course course,
-            @RequestParam(value = "lectureTitle", required = false) List<String> lectureTitles,
-            @RequestParam(value = "lectureVideo", required = false) List<MultipartFile> lectureVideos,
+            @RequestParam(value = "lectureTitle[]", required = false) List<String> lectureTitles,
+            @RequestParam(value = "lectureVideo[]", required = false) List<MultipartFile> lectureVideos,
             @RequestParam(value = "thumbnailFile", required = false) MultipartFile thumbnailFile
     ) throws IOException {
         // 서비스에서 파일 업로드 및 DB 저장 로직 수행

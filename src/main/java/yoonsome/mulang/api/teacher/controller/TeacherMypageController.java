@@ -25,7 +25,6 @@ import java.util.List;
 public class TeacherMypageController {
 
     private final TeacherService teacherService;
-    @Autowired
     private final CourseService courseService;
     private final LanguageRepository languageRepository;
 
@@ -63,7 +62,6 @@ public class TeacherMypageController {
         teacherService.updateTeacherProfile(userDetails.getUser().getId(), teacher, photo);
         return "redirect:/teacher/mypage/profile";
     }
-
 
     /** 리뷰 관리 */
     @GetMapping("/reviews")

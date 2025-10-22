@@ -29,4 +29,7 @@ public class Lecture {
     @JoinColumn(name = "course_id", nullable = false)
     private Course course;
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "file_id", nullable = false)
+    private File file;
 }
