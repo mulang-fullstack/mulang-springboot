@@ -1,5 +1,5 @@
 <%@ page contentType="text/html;charset=utf-8" %>
-<link rel="stylesheet" href="css/pages/course/course-introduction.css"/>
+<link rel="stylesheet" href="/css/pages/course/course-introduction.css"/>
 <div class="course-content">
     <h2>왕초보 기초회화</h2>
     <p>

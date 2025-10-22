@@ -8,12 +8,15 @@ import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
+import yoonsome.mulang.api.course.dto.CourseDetailResponse;
 import yoonsome.mulang.api.course.dto.CourseListRequest;
 import yoonsome.mulang.api.course.dto.CourseListResponse;
 import yoonsome.mulang.domain.course.entity.Course;
 import yoonsome.mulang.domain.course.repository.CourseRepository;
+import yoonsome.mulang.domain.lecture.dto.LectureResponse;
 import yoonsome.mulang.domain.lecture.service.LectureService;
-import yoonsome.mulang.domain.user.service.UserService;
+import yoonsome.mulang.domain.review.dto.ReviewResponse;
+import yoonsome.mulang.domain.review.service.ReviewService;
 import yoonsome.mulang.infra.file.entity.File;
 import yoonsome.mulang.infra.file.service.FileService;
 import java.io.IOException;
@@ -25,8 +28,8 @@ import java.util.*;
 public class CourseServiceImpl implements CourseService {
     @Autowired
     private final CourseRepository courseRepository;
-    //@Autowired
-    //private final ReviewService reviewService;
+    @Autowired
+    private final ReviewService reviewService;
     @Autowired
     private LectureService lectureService;
     @Autowired
@@ -49,6 +52,7 @@ public class CourseServiceImpl implements CourseService {
         Long languageId = request.getLanguageId();
         Long categoryId = request.getCategoryId();
         String keyword = request.getKeyword();
+
         // 1. Course 엔티티 조회
         Page<Course> courses = courseRepository.findByLanguageIdAndCategoryIdAndKeyword(languageId, categoryId, keyword, pageable);
         System.out.println("#courses: " + courses);
@@ -75,7 +79,8 @@ public class CourseServiceImpl implements CourseService {
             int reviewCount = 1000;
 
             //강사 정보 가져오기
-            String teacherName = course.getTeacher().getUser().getUsername();
+            //String teacherName = getTeacherName(course);
+            //String teacherName = course.getTeacher().getUser().getUsername();
             //System.out.println("#teacherName: " + teacherName);
             //String teacherName = "예시 홍길동 선생님";
 
@@ -84,26 +89,53 @@ public class CourseServiceImpl implements CourseService {
                     course.getId(),
                     course.getThumbnail(),
                     course.getTitle(),
-                    course.getContent(),
-                    teacherName,
+                    course.getSubtitle(),
+                    getTeacherName(course),
                     averageRating,
                     reviewCount,
                     course.getPrice()
             );
             dtoList.add(dto);
         }
-
         // 3. PageImpl로 다시 Page 객체 생성
         return new PageImpl<>(dtoList, pageable, courses.getTotalElements());
     }
 
     @Override
-    public Course getCourseDetail(long id) {
+    public CourseDetailResponse getCourseDetail(long id) {
         Optional<Course> optCourse = courseRepository.findById(id);
         if (optCourse.isPresent()) {
             Course course = optCourse.get();
-            return course;
+            CourseDetailResponse dto = CourseDetailResponse.builder()
+                    .id(course.getId())
+                    .title(course.getTitle())
+                    .thumbnail(course.getThumbnail())
+                    .subtitle(course.getSubtitle())
+                    .content(course.getContent())
+                    .teacherName(getTeacherName(course))
+                    .applyStartedAt(course.getApplyStartedAt())
+                    .applyEndedAt(course.getApplyEndedAt())
+                    .startedAt(course.getStartedAt())
+                    .endedAt(course.getEndedAt())
+                    .lectureCount(course.getLectureCount())
+                    .price(course.getPrice())
+                    .lectures(getLectureList(course.getId()))
+                    .build();
+            return dto;
         }else return null;
+    }
+    private String getTeacherName(Course course) {
+        String teacherName = course.getTeacher().getUser().getUsername();
+        return teacherName;
+    }
+    private List<LectureResponse> getLectureList(Long courseId) {
+        //List<LectureResponse> lectures = lectureService.getLecturesByCourseId(courseId);
+        //return lectures;
+        return null;
+    }
+    private Page<ReviewResponse> getReviewList(Long courseId, Pageable pageable) {
+        Page<ReviewResponse> reviews = reviewService.getReviewsByCourseId(courseId, pageable);
+        return null;
     }
 
     @Override

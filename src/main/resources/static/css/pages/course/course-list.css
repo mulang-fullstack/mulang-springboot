@@ -217,6 +217,12 @@
     margin: 30px 0;
 }
 
+.pagination a {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
 .pagination button {
     border-radius: 50%;
     width: 30px;
@@ -231,6 +237,7 @@
     align-items: center;
     gap: 10px;
     font-size: 20px;
+    transform: translateY(-1px);
 }
 
 .page-numbers .current {

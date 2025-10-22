@@ -1,6 +1,6 @@
 <%@ page contentType="text/html;charset=utf-8" %>
 <%@ taglib prefix="c" uri="jakarta.tags.core" %>
-<link rel="stylesheet" href="css/pages/course/course-curriculum.css"/>
+<link rel="stylesheet" href="/css/pages/course/course-curriculum.css"/>
 <h2>커리큘럼</h2>
 <div class="course-curriculum">
     <div class="curriculum-header">

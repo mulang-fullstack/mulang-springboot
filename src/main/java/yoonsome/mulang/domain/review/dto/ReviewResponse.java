@@ -5,8 +5,8 @@ import java.time.LocalDateTime;
 
 @Data
 public class ReviewResponse {
-    private Long reviewId;
-    private String writerName;
+    private Long id;
+    private String studentName;
     private double rating;
     private String content;
     private LocalDateTime createdAt;
