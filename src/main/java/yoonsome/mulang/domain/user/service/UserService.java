@@ -9,6 +9,8 @@ public interface UserService {
     User saveUser(User user);
     //이메일 중복 여부 확인
     boolean existsByEmail(String email);
+    //닉네임 중복 여부 확인
+    boolean existsByNickname(String nickname);
     //회원 삭제
     void deleteUser(Long id);
     //회원 ID로 조회

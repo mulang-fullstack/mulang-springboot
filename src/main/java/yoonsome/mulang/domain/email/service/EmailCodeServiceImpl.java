@@ -16,9 +16,6 @@ public class EmailCodeServiceImpl implements EmailCodeService {
 
     private final EmailCodeRepository repository;
 
-    /**
-     * 인증 코드 저장 (기존 이메일 있으면 갱신)
-     */
     @Override
     @Transactional
     public void saveCode(String email, String code) {
@@ -28,6 +25,7 @@ public class EmailCodeServiceImpl implements EmailCodeService {
             // 기존 레코드 → 인증코드, 만료시간, 생성시간 업데이트
             EmailCode emailCode = existing.get();
             emailCode.setCode(code);
+            emailCode.setVerified(false); // 새 코드 발급 시 인증 상태 초기화
             emailCode.setCreatedAt(LocalDateTime.now());
             emailCode.setExpiresAt(LocalDateTime.now().plusMinutes(5));
             repository.save(emailCode);
@@ -36,6 +34,7 @@ public class EmailCodeServiceImpl implements EmailCodeService {
             EmailCode emailCode = EmailCode.builder()
                     .email(email)
                     .code(code)
+                    .verified(false) // 초기 인증 상태는 false
                     .createdAt(LocalDateTime.now())
                     .expiresAt(LocalDateTime.now().plusMinutes(5))
                     .build();
@@ -43,8 +42,8 @@ public class EmailCodeServiceImpl implements EmailCodeService {
         }
     }
 
-
     @Override
+    @Transactional
     public String verifyCode(String email, String code) {
         Optional<EmailCode> emailCodeOpt = repository.findTopByEmailOrderByCreatedAtDesc(email);
 
@@ -54,14 +53,44 @@ public class EmailCodeServiceImpl implements EmailCodeService {
 
         EmailCode emailCode = emailCodeOpt.get();
 
+        // 1. 만료 여부 확인
         if (emailCode.getExpiresAt().isBefore(LocalDateTime.now())) {
             return "expired";
         }
 
+        // 2. 코드 일치 여부 확인
         if (!emailCode.getCode().equals(code)) {
             return "invalid";
         }
 
+        // 3. 검증 성공 시 verified 플래그를 true로 설정
+        emailCode.setVerified(true);
+        repository.save(emailCode);
+
         return "valid";
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public boolean isVerified(String email) {
+        Optional<EmailCode> emailCodeOpt = repository.findTopByEmailOrderByCreatedAtDesc(email);
+
+        if (emailCodeOpt.isEmpty()) {
+            return false;
+        }
+
+        EmailCode emailCode = emailCodeOpt.get();
+
+        // 인증 완료 여부와 만료되지 않았는지 함께 확인
+        return emailCode.getVerified() && !emailCode.isExpired();
+    }
+
+    @Override
+    @Transactional
+    public void removeVerified(String email) {
+        Optional<EmailCode> emailCodeOpt = repository.findByEmail(email);
+
+        // 해당 이메일의 인증 정보가 있으면 삭제
+        emailCodeOpt.ifPresent(repository::delete);
     }
 }
