@@ -134,14 +134,6 @@ function initPagination() {
     );
 }
 
-/* ==========================================================
-   [7] 페이지 이동
-   ========================================================== */
-function goToPage(page) {
-    const params = new URLSearchParams(window.location.search);
-    params.set("page", page);
-    window.location.search = params.toString();
-}
 
 /* ==========================================================
    [8] 필터 초기화
