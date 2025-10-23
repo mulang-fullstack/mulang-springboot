@@ -12,6 +12,7 @@ import yoonsome.mulang.api.course.dto.CourseDetailResponse;
 import yoonsome.mulang.api.course.dto.CourseListRequest;
 import yoonsome.mulang.api.course.dto.CourseListResponse;
 import yoonsome.mulang.domain.course.entity.Course;
+import yoonsome.mulang.domain.course.entity.StatusType;
 import yoonsome.mulang.domain.course.repository.CourseRepository;
 import yoonsome.mulang.api.lecture.dto.LectureResponse;
 import yoonsome.mulang.domain.lecture.entity.Lecture;
@@ -21,7 +22,10 @@ import yoonsome.mulang.domain.review.service.ReviewService;
 import yoonsome.mulang.infra.file.entity.File;
 import yoonsome.mulang.infra.file.service.FileService;
 import java.io.IOException;
+import java.time.LocalDate;
 import java.util.*;
+
+import static org.springframework.data.jpa.domain.AbstractAuditable_.createdDate;
 
 @Transactional
 @RequiredArgsConstructor
@@ -36,6 +40,18 @@ public class CourseServiceImpl implements CourseService {
     @Autowired
     private final FileService fileService;
 
+    @Override
+    public List<Course> getCourseList(Long languageId, Long categoryId, String keyword, StatusType status, Long teacherId, LocalDate createdDate, LocalDate startedDate, LocalDate endedDate){
+        return courseRepository.findByLanguageIdAndCategoryIdAndKeywordAndStatusAndTeacherIdAndCreatedDate(languageId, categoryId, keyword, status, teacherId, createdDate, startedDate, endedDate);
+    }
+
+    @Override
+    public Course getCourse(long id){
+        Optional<Course> optCourse = courseRepository.findById(id);
+        if (optCourse.isPresent()) {
+           return optCourse.get();
+        }else return null;
+    }
     /*
     @Override
     public Page<CourseListResponse> getCourseList(CourseListRequest request, Pageable pageable) {
@@ -47,86 +63,17 @@ public class CourseServiceImpl implements CourseService {
         Page<Course> courses = courseRepository.findByLanguageIdAndCategoryIdAndKeyword(languageId, categoryId, keyword, pageable);
         System.out.println("#courses: " + courses);
 
-        // 2. DTO 리스트 생성
-        List<CourseListResponse> dtoList = new ArrayList<>();
 
-        for (Course course : courses.getContent()) {
-            // 리뷰 정보 가져오기
-            //double averageRating = reviewService.getAverageRatingByCourseId(course.getId());
-            //int reviewCount = reviewService.countReviewByCourseId(course.getId());
-            double averageRating = 2.5;
-            int reviewCount = 1000;
-
-            //강사 정보 가져오기
-            //String teacherName = getTeacherName(course);
-            //String teacherName = course.getTeacher().getUser().getUsername();
-            //System.out.println("#teacherName: " + teacherName);
-            //String teacherName = "예시 홍길동 선생님";
-
-            // DTO 생성
-            CourseListResponse dto = new CourseListResponse(
-                    course.getId(),
-                    course.getThumbnail(),
-                    course.getTitle(),
-                    course.getSubtitle(),
-                    getTeacherName(course),
-                    averageRating,
-                    reviewCount,
-                    course.getPrice()
-            );
-            dtoList.add(dto);
-        }
-        // 3. PageImpl로 다시 Page 객체 생성
-        return new PageImpl<>(dtoList, pageable, courses.getTotalElements());
     }
 
     @Override
     public CourseDetailResponse getCourseDetail(long id) {
         Optional<Course> optCourse = courseRepository.findById(id);
-        if (optCourse.isPresent()) {
-            Course course = optCourse.get();
-            CourseDetailResponse dto = CourseDetailResponse.builder()
-                    .id(course.getId())
-                    .title(course.getTitle())
-                    .thumbnail(course.getThumbnail())
-                    .subtitle(course.getSubtitle())
-                    .content(course.getContent())
-                    .teacherName(getTeacherName(course))
-                    .applyStartedAt(course.getApplyStartedAt())
-                    .applyEndedAt(course.getApplyEndedAt())
-                    .startedAt(course.getStartedAt())
-                    .endedAt(course.getEndedAt())
-                    .lectureCount(course.getLectureCount())
-                    .price(course.getPrice())
-                    .lectures(getLectureList(course.getId()))
-                    .build();
-            return dto;
-        }else return null;
+
     }
     */
 
-    private String getTeacherName(Course course) {
-        String teacherName = course.getTeacher().getUser().getNickname();
-        return teacherName;
-    }
-    private List<LectureResponse> getLectureList(Long courseId) {
-        List<Lecture> lectureList = lectureService.getLecturesByCourseId(courseId);
-        List<LectureResponse> lectures = new ArrayList<>();
-        for (Lecture lecture : lectureList) {
-            LectureResponse dto = new LectureResponse(
-                    lecture.getId(),
-                    lecture.getTitle(),
-                    lecture.getLength()
-            );
-            lectures.add(dto);
-        }
-        return lectures;
-        //return null;
-    }
-    private Page<ReviewResponse> getReviewList(Long courseId, Pageable pageable) {
-        Page<ReviewResponse> reviews = reviewService.getReviewsByCourseId(courseId, pageable);
-        return null;
-    }
+
 
     @Override
     public Course registerCourse(Course course) {

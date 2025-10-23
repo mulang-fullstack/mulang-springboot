@@ -94,7 +94,7 @@ public class TeacherMypageServiceImpl implements TeacherMypageService {
         course.setCategory(category);
         course.setLanguage(language);
 
-        course.setStatus(request.getStatus() != null ? request.getStatus() : true);
+        //course.setStatus(request.getStatus() != null ? request.getStatus() : true);
         course.setLectureCount(request.getLectureCount() != null ? request.getLectureCount() : 1);
 
         if (request.getThumbnailFile() != null && !request.getThumbnailFile().isEmpty()) {

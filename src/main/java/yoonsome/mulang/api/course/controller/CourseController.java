@@ -31,6 +31,7 @@ public class CourseController {
     private final CourseService courseService;
     private final ReviewService reviewService;
 
+    /*강좌 리스트 목록*/
     @GetMapping("course")
     public String getCourseList(@ModelAttribute CourseListRequest request, HttpSession session, Model model) {
         //languageId 세션 복원/저장
@@ -75,6 +76,8 @@ public class CourseController {
         Pageable pageable = PageRequest.of(request.getPage(), request.getSize());
         return courseService.getCourseListByLanguageAndCategory(request.getLanguageId(), request.getCategoryId(), pageable);
     }*/
+
+    /*강좌 상세 페이지*/
     @GetMapping("courseDetail")
     public String getCourseDetail(Long id, Model model) {
         /*강의 정보*/
@@ -84,13 +87,13 @@ public class CourseController {
         model.addAttribute("detail", courseDetailResponse);
         System.out.println("@courseDetail:"+courseDetailResponse);
 
-        /*리뷰
+        /*리뷰*/
         int page = 0;
         int size = 10;
         Pageable pageable = PageRequest.of(page, size, Sort.by("createdAt").descending());
         Page<ReviewResponse> reviewResponse = reviewService.getReviewsByCourseId(id, pageable);
         model.addAttribute("reviews", reviewResponse.getContent());
-        System.out.println("@review:"+reviewResponse.getContent());*/
+        System.out.println("@review:"+reviewResponse.getContent());
 
         return "course/courseDetail";
     }
@@ -104,5 +107,4 @@ public class CourseController {
         Pageable pageable = PageRequest.of(page, size, Sort.by("createdAt").descending());
         return reviewService.getReviewsByCourseId(id, pageable);
     }
-
 }
