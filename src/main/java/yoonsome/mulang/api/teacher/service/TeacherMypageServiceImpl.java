@@ -2,6 +2,7 @@ package yoonsome.mulang.api.teacher.service;
 
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
+import org.jsoup.Jsoup;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 import yoonsome.mulang.api.teacher.dto.CourseUploadRequest;
@@ -90,11 +91,16 @@ public class TeacherMypageServiceImpl implements TeacherMypageService {
         course.setTitle(request.getTitle());
         course.setSubtitle(request.getSubtitle());
         course.setContent(request.getContent());
+
+        //course.setHtmlContent(request.getContent());
+        course.setContent(Jsoup.parse(request.getContent()).text());
+
         course.setPrice(request.getPrice());
         course.setCategory(category);
         course.setLanguage(language);
 
-        course.setStatus(request.getStatus() != null ? request.getStatus() : true);
+        //course.setStatus(request.getStatus() != null ? request.getStatus() : CourseStatus.PENDING);
+
         course.setLectureCount(request.getLectureCount() != null ? request.getLectureCount() : 1);
 
         if (request.getThumbnailFile() != null && !request.getThumbnailFile().isEmpty()) {

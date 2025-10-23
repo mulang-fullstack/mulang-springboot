@@ -8,12 +8,15 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+import yoonsome.mulang.api.course.dto.CourseDetailResponse;
+import yoonsome.mulang.api.teacher.dto.CourseUploadRequest;
 import yoonsome.mulang.api.teacher.dto.TeacherProfileUpdateRequest;
 import yoonsome.mulang.api.teacher.service.TeacherMypageService;
 import yoonsome.mulang.domain.course.entity.Course;
 import yoonsome.mulang.domain.course.service.CourseService;
 import yoonsome.mulang.domain.language.entity.Language;
 import yoonsome.mulang.domain.language.repository.LanguageRepository;
+import yoonsome.mulang.domain.language.service.LanguageService;
 import yoonsome.mulang.infra.security.CustomUserDetails;
 import yoonsome.mulang.domain.teacher.entity.Teacher;
 import yoonsome.mulang.domain.user.entity.User;
@@ -28,6 +31,7 @@ public class TeacherMypageController {
     private final TeacherMypageService teacherService;
     private final CourseService courseService;
     private final LanguageRepository languageRepository;
+    private final LanguageService languageService;
 
     /** 프로필 보기 */
     @GetMapping("/profile")
@@ -45,6 +49,7 @@ public class TeacherMypageController {
         Teacher teacher = teacherService.getTeacherProfile(userId);
 
         List<Language> languages = languageRepository.findAll();
+        //List<Language> languages1 = languageService.findAll();
 
         model.addAttribute("teacher", teacher);
         model.addAttribute("languages", languages);
@@ -71,11 +76,23 @@ public class TeacherMypageController {
         return "teacher/settlement";
     }
 
-    /** 강좌 수정 */
-    @GetMapping("/classes/update")
-    public String courseUpdatePage() {
+    /** 강좌 수정 폼이동 */
+    @GetMapping("/classes/update/{courseId}")
+    public String courseUpdatePage(@PathVariable Long courseId, Model model) {
+
+        //CourseDetailResponse course = courseService.getCourseDetail(courseId);
+        //model.addAttribute("course", course);
         return "teacher/classUpdate";
     }
+    /** 강좌 수정 */
+    /*
+    @PostMapping("/classes/update")
+    public String updateCourse(@ModelAttribute CourseUploadRequest request)
+            throws IOException {
+        courseService.modifyCourse(request);
+        return "redirect:/teacher/mypage/classes/edit";
+    }
+    */
 
     /** 클래스 목록 */
     @GetMapping("/classes/edit")
