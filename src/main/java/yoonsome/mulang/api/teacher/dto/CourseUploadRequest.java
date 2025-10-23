@@ -21,7 +21,7 @@ public class CourseUploadRequest {
     private List<LectureUploadRequest> lectures;
 
     //임시임시 확장할때
-    //private Boolean status = true;
+    private Boolean status = true;
     private Integer lectureCount = 1;
 
     public Course toEntity(Teacher teacher, Category category, Language language, String thumbnailUrl) {
@@ -33,7 +33,7 @@ public class CourseUploadRequest {
         course.setSubtitle(this.subtitle);
         course.setContent(this.content);
         course.setPrice(this.price);
-        //course.setStatus(this.status);
+        course.setStatus(this.status);
         course.setLectureCount(this.lectureCount);
         course.setThumbnail(thumbnailUrl);
         return course;
