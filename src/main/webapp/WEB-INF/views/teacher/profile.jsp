@@ -32,7 +32,13 @@
                                 <span class="text-value">${teacher.user.username}</span>
                             </div>
                         </div>
-
+                        <!-- 이메일 -->
+                        <div class="field">
+                            <label>이메일</label>
+                            <div class="field-content">
+                                <span class="text-value">${teacher.user.email}</span>
+                            </div>
+                        </div>
                         <!-- 프로필 이미지 -->
                         <div class="field">
                             <label>프로필 이미지</label>
@@ -52,14 +58,6 @@
                             </div>
                         </div>
 
-                        <!-- 이메일 -->
-                        <div class="field">
-                            <label>이메일</label>
-                            <div class="field-content">
-                                <span class="text-value">${teacher.user.email}</span>
-                            </div>
-                        </div>
-
                         <!-- 소개 -->
                         <div class="field">
                             <label>소개</label>
@@ -72,7 +70,7 @@
                         <div class="field">
                             <label>경력</label>
                             <div class="field-content">
-                                <p class="text-area">${teacher.carreer}</p>
+                                <p class="text-area">${teacher.career}</p>
                             </div>
                         </div>
 

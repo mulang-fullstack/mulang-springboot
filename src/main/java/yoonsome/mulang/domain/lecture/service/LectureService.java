@@ -10,7 +10,7 @@ import java.util.List;
 public interface LectureService {
 
 
-    void createLectureWithFile(String title, Course course, MultipartFile video)
+    void createLectureWithFile(String title, String content, Course course, MultipartFile video)
             throws IOException;
 
     Lecture getLectureById(Long lectureId);

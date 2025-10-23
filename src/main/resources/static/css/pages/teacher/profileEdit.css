@@ -217,3 +217,12 @@ select {
 .submit-btn:active {
     transform: scale(0.98);
 }
+
+input[readonly],
+input[disabled] {
+    border: none;
+    background-color: transparent;
+    padding-left: 0;
+    color: var(--text-primary);
+    cursor: default;
+}

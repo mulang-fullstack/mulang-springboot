@@ -1,6 +1,5 @@
 package yoonsome.mulang.api.teacher.service;
 
-import org.springframework.web.multipart.MultipartFile;
 import yoonsome.mulang.api.teacher.dto.CourseUploadRequest;
 import yoonsome.mulang.api.teacher.dto.TeacherProfileUpdateRequest;
 import yoonsome.mulang.domain.course.entity.Course;
@@ -9,19 +8,17 @@ import yoonsome.mulang.domain.user.entity.User;
 import java.io.IOException;
 import java.util.List;
 
-public interface TeacherService {
+public interface TeacherMypageService {
 
-    //userId 가 소속된 교사의 모든 강좌 목록을 조회
+    // 교사 본인의 강좌 목록 조회
     List<Course> getTeacherCourses(Long userId);
 
-    // userId 에 해당하는 교사 프로필 정보를 조회
+    // 교사 프로필 조회
     Teacher getTeacherProfile(Long userId);
 
-    // 교사 프로필 정보 수정
-    void updateTeacherProfile(Long userId, TeacherProfileUpdateRequest request)throws IOException;
+    // 교사 프로필 수정
+    void updateTeacherProfile(Long userId, TeacherProfileUpdateRequest request) throws IOException;
 
-    // 회원가입 완료 후 교사 행을 자동으로 생성할 때 사용
-    Teacher createTeacher(User user);
-
+    // 강좌 생성
     void createCourse(Long userId, CourseUploadRequest request) throws IOException;
 }

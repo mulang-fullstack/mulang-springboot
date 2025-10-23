@@ -6,5 +6,6 @@ import org.springframework.web.multipart.MultipartFile;
 @Data
 public class LectureUploadRequest {
     private String title;
+    private String content;
     private MultipartFile video;
 }

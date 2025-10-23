@@ -73,6 +73,7 @@ textarea {
 }
 
 input[name="title"],
+input[name="subtitle"],
 input[name="price"] {
     width: 200px;
 }
@@ -254,4 +255,21 @@ input[type="file"]::file-selector-button:hover {
 .add-video-btn:active,
 .remove-video-btn:active {
     transform: scale(0.97);
+}
+/* -------------------- 챕터 내용 입력 (챕터 제목과 동일 스타일) -------------------- */
+.chapter-content {
+    flex: 1;
+    max-width: 300px;
+    padding: 10px 12px;
+    border: var(--border-default);
+    border-radius: 8px;
+    background-color: var(--bg-secondary);
+    font-size: 14px;
+    color: var(--text-primary);
+    transition: border-color 0.2s ease;
+}
+
+.chapter-content:focus {
+    border-color: var(--bg-point-main);
+    background-color: var(--bg-white);
 }

@@ -19,7 +19,7 @@ public class LectureServiceImpl implements LectureService {
     private final FileService fileService;
 
     @Override
-    public void createLectureWithFile(String title, Course course, MultipartFile video)
+    public void createLectureWithFile(String title,String content, Course course, MultipartFile video)
             throws IOException {
         if (video == null || video.isEmpty()) {
             throw new IllegalArgumentException("강의 영상은 필수입니다.");
@@ -29,6 +29,7 @@ public class LectureServiceImpl implements LectureService {
         Lecture lecture = new Lecture();
         lecture.setCourse(course);
         lecture.setTitle(title);
+        lecture.setContent(content);
         lecture.setFile(savedFile);
         lectureRepository.save(lecture);
     }
