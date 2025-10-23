@@ -89,6 +89,7 @@
         </form>
     </div>
 </div>
+<script src="/js/common/utils.js"></script>
 <script src="/js/pages/auth/signup/signupUtils.js"></script>
 <script src="/js/pages/auth/signup/signupValidation.js"></script>
 <script src="/js/pages/auth/signup/signupFormUI.js"></script>

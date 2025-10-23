@@ -2,7 +2,7 @@ package yoonsome.mulang.api.admin.user.dto;
 
 import lombok.Data;
 import org.springframework.format.annotation.DateTimeFormat;
-import yoonsome.mulang.domain.user.entity.User.Role;
+import yoonsome.mulang.domain.user.entity.User.*;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -11,7 +11,7 @@ import java.time.LocalDateTime;
 public class UserSearchRequest {
 
     private Role role;                // STUDENT, TEACHER, ADMIN
-    private Boolean status;           // true: 활성, false: 비활성
+    private UserStatus userStatus;
 
     @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
     private LocalDateTime startDate= LocalDate.now()

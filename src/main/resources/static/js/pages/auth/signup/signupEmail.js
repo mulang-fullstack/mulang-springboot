@@ -9,12 +9,10 @@ async function verifyEmail() {
 
     // [1] 유효성 검사
     if (!email) {
-        showMessage('이메일을 입력해주세요.', 'warning');
         emailInput.focus();
         return;
     }
     if (!validateEmail(email)) {
-        showMessage('올바른 이메일 형식이 아닙니다.', 'error');
         emailInput.focus();
         return;
     }
@@ -32,12 +30,10 @@ async function verifyEmail() {
 
         if (result === "duplicate") {
             setFieldStatus(emailInput, 'error', '이미 사용 중인 이메일입니다.');
-            showMessage('이미 사용 중인 이메일입니다.', 'error');
             return;
         }
         if (result === "sent") {
             setFieldStatus(emailInput, 'success', '인증코드가 전송되었습니다.');
-            showMessage('인증코드가 이메일로 발송되었습니다.', 'success');
 
             // [5] 인증코드 입력창 표시
             emailCodeGroup.classList.remove('hidden');

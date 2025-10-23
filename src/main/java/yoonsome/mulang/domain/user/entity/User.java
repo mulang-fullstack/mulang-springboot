@@ -71,7 +71,7 @@ public class User {
     }
 
     public enum UserStatus {
-        ACTIVE, TEACHER, ADMIN
+        ACTIVE, INACTIVE
     }
 
     @ManyToOne(fetch = FetchType.LAZY)

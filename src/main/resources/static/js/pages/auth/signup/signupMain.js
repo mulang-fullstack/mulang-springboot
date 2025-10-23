@@ -35,14 +35,12 @@ function setupSubmitHandler() {
         };
         // [1] 이메일 인증 여부 확인
         if (!signupState.isEmailVerified) {
-            showMessage('이메일 인증을 먼저 진행해주세요.', 'warning');
             document.getElementById('email').focus();
             return;
         }
 
         // [2] 인증코드 확인 여부
         if (!signupState.isEmailCodeVerified) {
-            showMessage('이메일 인증코드를 확인해주세요.', 'warning');
             document.getElementById('emailCode').focus();
             return;
         }
@@ -50,7 +48,6 @@ function setupSubmitHandler() {
         // [3] 기본 폼 유효성 검사
         const validation = validateForm(formData, signupState);
         if (!validation.isValid) {
-            showMessage(validation.message, 'error');
             if (validation.field) document.getElementById(validation.field).focus();
             return;
         }
@@ -63,7 +60,6 @@ function setupSubmitHandler() {
         try {
             // 실제 회원가입 API 호출로 대체 예정
             // await simulateAPICall(2000);
-            // showMessage('회원가입이 완료되었습니다!', 'success');
             // 실제 서버 요청으로 변경
             const response = await fetch('/auth/signup', {
                 method: 'POST',

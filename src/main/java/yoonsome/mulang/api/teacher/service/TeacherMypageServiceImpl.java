@@ -94,7 +94,7 @@ public class TeacherMypageServiceImpl implements TeacherMypageService {
         course.setContent(request.getContent());
 
         course.setHtmlContent(request.getContent());
-        //course.setContent(Jsoup.parse(request.getContent()).text());
+
 
         course.setPrice(request.getPrice());
         course.setCategory(category);
