@@ -2,8 +2,7 @@ package yoonsome.mulang.domain.review.service;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import yoonsome.mulang.domain.review.dto.ReviewResponse;
-import yoonsome.mulang.domain.review.entity.CourseReview;
+import yoonsome.mulang.api.review.ReviewResponse;
 
 public interface ReviewService {
     /*리뷰 리스트 조회*/

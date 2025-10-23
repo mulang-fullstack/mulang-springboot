@@ -8,12 +8,20 @@
         <div class="title header">제목</div>
         <div class="time">영상 길이</div>
     </div>
-
-    <c:forEach var="i" begin="1" end="20">
+    <c:forEach var="lecture" items="${detail.lectures}" varStatus="status">
+        <div class="curriculum-row">
+            <div class="no">${status.index + 1}</div>
+            <div class="title">${lecture.title}</div>
+            <div class="time">${lecture.length}</div>
+        </div>
+    </c:forEach>
+    <!--
+    <c:forEach var="i" begin="1" end="${detail.lectureCount}">
         <div class="curriculum-row">
             <div class="no">${i}</div>
             <div class="title">Dining Out!</div>
             <div class="time">00:12:43</div>
         </div>
     </c:forEach>
+     -->
 </div>

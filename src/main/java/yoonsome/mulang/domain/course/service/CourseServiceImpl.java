@@ -13,9 +13,10 @@ import yoonsome.mulang.api.course.dto.CourseListRequest;
 import yoonsome.mulang.api.course.dto.CourseListResponse;
 import yoonsome.mulang.domain.course.entity.Course;
 import yoonsome.mulang.domain.course.repository.CourseRepository;
-import yoonsome.mulang.domain.lecture.dto.LectureResponse;
+import yoonsome.mulang.api.lecture.dto.LectureResponse;
+import yoonsome.mulang.domain.lecture.entity.Lecture;
 import yoonsome.mulang.domain.lecture.service.LectureService;
-import yoonsome.mulang.domain.review.dto.ReviewResponse;
+import yoonsome.mulang.api.review.ReviewResponse;
 import yoonsome.mulang.domain.review.service.ReviewService;
 import yoonsome.mulang.infra.file.entity.File;
 import yoonsome.mulang.infra.file.service.FileService;
@@ -35,18 +36,6 @@ public class CourseServiceImpl implements CourseService {
     @Autowired
     private final FileService fileService;
 
-    /*
-    @Override
-    public Page<Course> getCourseListByLanguage(Long languageId, Pageable pageable) {
-        return courseRepository.findByLanguage_Id(languageId, pageable);
-    }*/
-
-/*
-    @Override
-    public Page<CourseListResponse> getCourseListByLanguageAndCategory(Long languageId, Long categoryId, Pageable pageable) {
-        return courseRepository.findByLanguage_IdAndCategory_Id(languageId, categoryId, pageable);
-    }*/
-
     @Override
     public Page<CourseListResponse> getCourseList(CourseListRequest request, Pageable pageable) {
         Long languageId = request.getLanguageId();
@@ -56,17 +45,6 @@ public class CourseServiceImpl implements CourseService {
         // 1. Course 엔티티 조회
         Page<Course> courses = courseRepository.findByLanguageIdAndCategoryIdAndKeyword(languageId, categoryId, keyword, pageable);
         System.out.println("#courses: " + courses);
-
-        /*
-        //LanguageId만 있는 경우(헤더 탭 클릭 시)
-        Page<Course> courses1 = courseRepository.findByLanguage_Id(languageId, pageable);
-        //LanguageId+CategoryId
-        Page<Course>  courses2 =courseRepository.findByLanguage_IdAndCategory_Id(languageId, categoryId, pageable);
-        //LanguageId+search
-        //Page<Course> courses3 =courseRepository.findByLanguageIdAndKeyword(languageId, keyword, pageable);
-        //LanguageId+CategoryId+search
-        Page<Course> courses4 =courseRepository.findByLanguageIdAndCategoryIdAndKeyword(languageId, categoryId, keyword, pageable);
-        */
 
         // 2. DTO 리스트 생성
         List<CourseListResponse> dtoList = new ArrayList<>();
@@ -125,13 +103,22 @@ public class CourseServiceImpl implements CourseService {
         }else return null;
     }
     private String getTeacherName(Course course) {
-        String teacherName = course.getTeacher().getUser().getUsername();
+        String teacherName = course.getTeacher().getUser().getNickname();
         return teacherName;
     }
     private List<LectureResponse> getLectureList(Long courseId) {
-        //List<LectureResponse> lectures = lectureService.getLecturesByCourseId(courseId);
-        //return lectures;
-        return null;
+        List<Lecture> lectureList = lectureService.getLecturesByCourseId(courseId);
+        List<LectureResponse> lectures = new ArrayList<>();
+        for (Lecture lecture : lectureList) {
+            LectureResponse dto = new LectureResponse(
+                    lecture.getId(),
+                    lecture.getTitle(),
+                    lecture.getLength()
+            );
+            lectures.add(dto);
+        }
+        return lectures;
+        //return null;
     }
     private Page<ReviewResponse> getReviewList(Long courseId, Pageable pageable) {
         Page<ReviewResponse> reviews = reviewService.getReviewsByCourseId(courseId, pageable);

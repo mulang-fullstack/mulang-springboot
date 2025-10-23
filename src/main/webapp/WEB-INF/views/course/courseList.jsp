@@ -1,5 +1,6 @@
 <%@ page contentType="text/html;charset=utf-8" %>
 <%@ taglib prefix="c" uri="jakarta.tags.core" %>
+<%@ taglib prefix="fmt" uri="jakarta.tags.fmt" %>
 <!doctype html>
 <html lang="en">
 <head>
@@ -18,7 +19,7 @@
     <div class="contents">
         <div class="course-list-contents">
             <section class="course-category">
-                <h1>영어</h1>
+                <h1>${languageName}</h1>
                 <div class="course-tabs">
                     <a href="/course" class="tab ${empty courseListRequest.categoryId ? 'active' : ''}">
                         전체
@@ -84,7 +85,7 @@
                                 <img src="/img/icon/heart-full.svg" alt="찜 아이콘">
                             </div>
                             <div class="course-purchase">
-                                <span class="price">${course.price}원</span>
+                                <span class="price"><fmt:formatNumber value="${course.price}" type="number" groupingUsed="true"/>원</span>
                                 <form action="/" method="get">
                                     <input type="hidden" name="courseId" value="${course.id}">
                                     <button type="submit" class="purchase-btn">결제하기</button>
@@ -132,16 +133,6 @@
                     </a>
                 </c:if>
             </section>
-
-            <!-- 페이지네이션
-            <section class="pagination">
-                <button class="prev"><img src="/img/icon/page-left.svg" alt="왼쪽 아이콘"></button>
-                <span class="page-numbers">
-                    <span class="current">1</span><span>2</span><span>3</span><span>4</span><span>5</span>
-                </span>
-                <button class="next"><img src="/img/icon/page-right.svg" alt="오른쪽 아이콘"></button>
-            </section>
-            -->
         </div>
     </div>
 </main>

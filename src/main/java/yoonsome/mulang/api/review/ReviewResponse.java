@@ -1,8 +1,11 @@
-package yoonsome.mulang.domain.review.dto;
+package yoonsome.mulang.api.review;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
+
 import java.time.LocalDateTime;
 
+@AllArgsConstructor
 @Data
 public class ReviewResponse {
     private Long id;

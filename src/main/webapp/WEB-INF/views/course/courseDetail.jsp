@@ -1,5 +1,4 @@
 <%@ page contentType="text/html;charset=utf-8" %>
-<%@ taglib prefix="c" uri="jakarta.tags.core" %>
 <!doctype html>
 <html lang="en">
 <head>
@@ -18,7 +17,7 @@
 <main>
     <div class="contents">
         <div class="leture-detail-contents">
-            <%@include file="courseInfo.jsp" %>
+             <%@include file="courseInfo.jsp" %>
             <div class="course-tabs">
                 <div class="tab" data-target="introduction">강의소개</div>
                 <div class="tab" data-target="curriculum">커리큘럼</div>

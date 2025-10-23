@@ -1,4 +1,5 @@
 <%@ page contentType="text/html;charset=utf-8" %>
+<%@ taglib prefix="c" uri="jakarta.tags.core" %>
 <link rel="stylesheet" href="/css/pages/course/course-review.css"/>
 <h2>리뷰</h2>
 <div class="course-riview">
@@ -7,22 +8,42 @@
         <a href="#"><div class="sort-item">최신순</div></a>
     </div>
     <div class="review-list">
-        <div class="review-item">
+        <c:forEach var="review" items="${reviews}">
+            <div class="review-item">
             <img src="/img/icon/review-mulang.svg" alt="머랭 캐릭터" class="review-profile-img">
             <div class="review-profile-border"></div>
-            <div class="review-name">양진섭</div>
-            <div class="rating">
+                <div class="review-name">${review.studentName}</div>
+                <div class="rating">
                 <span class="stars">
-                    <img src="/img/icon/star-full.svg" alt="별">
-                    <img src="/img/icon/star-full.svg" alt="별">
-                    <img src="/img/icon/star-full.svg" alt="별">
-                    <img src="/img/icon/star-full.svg" alt="별">
-                    <img src="/img/icon/star-full.svg" alt="별">
+                    <c:forEach begin="1" end="5" var="i">
+                        <img src="/img/icon/star-${i <= review.rating ? 'full' : 'empty'}.svg" alt="별">
+                    </c:forEach>
                 </span>
-                <span class="review-score-text">5.0</span>
+                    <span class="review-score-text">${review.rating}</span>
+                </div>
+                <div class="review-content-wrapper">
+                    <div class="review-content long">${review.content}</div>
+                    <div class="review-more">더보기</div>
+                </div>
             </div>
-            <div class="review-content">정말 최고의 강의!!!</div>
-        </div>
+        </c:forEach>
+            <!--
+            <div class="review-item">
+            <img src="/img/icon/review-mulang.svg" alt="머랭 캐릭터" class="review-profile-img">
+            <div class="review-profile-border"></div>
+                <div class="review-name">양진섭</div>
+                <div class="rating">
+                    <span class="stars">
+                        <img src="/img/icon/star-full.svg" alt="별">
+                        <img src="/img/icon/star-full.svg" alt="별">
+                        <img src="/img/icon/star-full.svg" alt="별">
+                        <img src="/img/icon/star-full.svg" alt="별">
+                        <img src="/img/icon/star-full.svg" alt="별">
+                    </span>
+                    <span class="review-score-text">5.0</span>
+                </div>
+                <div class="review-content">정말 최고의 강의!!!</div>
+            </div>
 
         <div class="review-item">
             <img src="/img/icon/review-mulang.svg" alt="머랭 캐릭터" class="review-profile-img">
@@ -45,6 +66,7 @@
                 <div class="review-more">더보기</div>
             </div>
         </div>
+        -->
     </div>
 </div>
 <!-- 페이지네이션 -->
