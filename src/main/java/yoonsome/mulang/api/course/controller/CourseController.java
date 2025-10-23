@@ -5,24 +5,29 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.*;
 import yoonsome.mulang.api.course.dto.CourseDetailResponse;
 import yoonsome.mulang.api.course.dto.CourseListRequest;
 import yoonsome.mulang.api.course.dto.CourseListResponse;
+import yoonsome.mulang.api.review.ReviewResponse;
 import yoonsome.mulang.domain.category.entity.Category;
 import yoonsome.mulang.domain.category.service.CategoryService;
 import yoonsome.mulang.domain.course.service.CourseService;
+import yoonsome.mulang.domain.language.service.LanguageService;
+import yoonsome.mulang.domain.review.service.ReviewService;
 
 import java.util.List;
 
 @RequiredArgsConstructor
 @Controller
 public class CourseController {
-    private final CourseService courseService;
+    private final LanguageService languageService;
     private final CategoryService categoryService;
+    private final CourseService courseService;
+    private final ReviewService reviewService;
 
     @GetMapping("course")
     public String getCourseList(@ModelAttribute CourseListRequest request, HttpSession session, Model model) {
@@ -41,6 +46,9 @@ public class CourseController {
         } else {
             session.setAttribute("sort", request.getSort());
         }
+        /*언어*/
+        String languageName = languageService.getLanguageNameById(request.getLanguageId());
+        model.addAttribute("languageName", languageName);
 
         /*카테고리*/
         List<Category> categories = categoryService.getCategoryListByLanguageId(request);
@@ -66,16 +74,33 @@ public class CourseController {
         return courseService.getCourseListByLanguageAndCategory(request.getLanguageId(), request.getCategoryId(), pageable);
     }*/
     @GetMapping("courseDetail")
-    public String getCourseDetail(Long id, Model model, HttpSession session) {
+    public String getCourseDetail(Long id, Model model) {
         /*강의 정보*/
         /*강의 소개*/
-        CourseDetailResponse courseDetailResponse = courseService.getCourseDetail(id);
-        System.out.println("@courseDetail:"+courseDetailResponse);
-        model.addAttribute("detail", courseDetailResponse.getContent());
-
         /*커리큘럼(강의 리스트)*/
-        /*리뷰*/
+        CourseDetailResponse courseDetailResponse = courseService.getCourseDetail(id);
+        model.addAttribute("detail", courseDetailResponse);
+        System.out.println("@courseDetail:"+courseDetailResponse);
+
+        /*리뷰
+        int page = 0;
+        int size = 10;
+        Pageable pageable = PageRequest.of(page, size, Sort.by("createdAt").descending());
+        Page<ReviewResponse> reviewResponse = reviewService.getReviewsByCourseId(id, pageable);
+        model.addAttribute("reviews", reviewResponse.getContent());
+        System.out.println("@review:"+reviewResponse.getContent());*/
 
         return "course/courseDetail";
     }
+    /*리뷰*/
+    @GetMapping("/courseDetail/{id}/reviews")
+    @ResponseBody
+    public Page<ReviewResponse> getCourseReviews(
+            @PathVariable Long id,
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "4") int size) {
+        Pageable pageable = PageRequest.of(page, size, Sort.by("createdAt").descending());
+        return reviewService.getReviewsByCourseId(id, pageable);
+    }
+
 }
