@@ -12,7 +12,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import yoonsome.mulang.api.admin.user.dto.UserListResponse;
 import yoonsome.mulang.api.admin.user.dto.UserSearchRequest;
 import yoonsome.mulang.api.admin.user.service.AdminUserService;
-import yoonsome.mulang.api.admin.user.service.AdminUserServiceImpl;
 import yoonsome.mulang.domain.user.entity.User;
 
 import java.util.HashMap;
@@ -55,10 +54,9 @@ public class AdminUserController {
 
         Map<String, Object> response = new HashMap<>();
         response.put("users", userPage.getContent());
-        response.put("currentPage", userPage.getNumber());
-        response.put("totalPages", userPage.getTotalPages());
-        response.put("totalElements", userPage.getTotalElements());
-        response.put("size", userPage.getSize());
+        response.put("page", userPage);
+        response.put("search", request);
+        response.put("role", User.Role.values());
 
         return ResponseEntity.ok(response);
     }
