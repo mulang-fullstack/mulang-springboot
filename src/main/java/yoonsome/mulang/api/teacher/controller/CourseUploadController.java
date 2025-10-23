@@ -1,5 +1,6 @@
 package yoonsome.mulang.api.teacher.controller;
 
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -8,7 +9,8 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import yoonsome.mulang.api.teacher.dto.CourseUploadRequest;
 import yoonsome.mulang.api.teacher.service.TeacherMypageService;
-
+import yoonsome.mulang.domain.course.entity.Course;
+import yoonsome.mulang.domain.course.repository.CourseRepository;
 import yoonsome.mulang.domain.course.service.CourseService;
 import yoonsome.mulang.domain.teacher.entity.Teacher;
 import yoonsome.mulang.domain.user.entity.User;
@@ -44,6 +46,7 @@ public class CourseUploadController {
     private final CourseService courseService;
     private final FileService fileService;
     private final TeacherMypageService teacherMypageService;
+    private final CourseRepository courseRepository;
 
     /** [GET] 새 강좌 업로드 폼 페이지 */
     @GetMapping("/new")
@@ -64,11 +67,13 @@ public class CourseUploadController {
         return "redirect:/teacher/mypage/classes/edit";
     }
 
-    /** [DELETE] 강좌 삭제 처리 */
-    @DeleteMapping("/{courseId}")
-    @ResponseBody
-    public ResponseEntity<Void> deleteCourse(@PathVariable Long courseId) {
-        courseService.deleteCourse(courseId);
-        return ResponseEntity.ok().build();
-    }
+
+    /* [DELETE] 강좌 삭제 처리
+    @Transactional
+    public void deleteCourse(Long courseId) {
+        Course course = courseRepository.findById(courseId)
+                .orElseThrow(() -> new IllegalArgumentException("해당 강좌가 존재하지 않습니다."));
+        course.setStatus(CourseStatus.PRIVATE);
+    }*/
+
 }

@@ -122,8 +122,8 @@
 </main>
 
 <%@ include file="../common/footer.jsp" %>
-<script src="https://cdn.ckeditor.com/ckeditor5/43.0.0/classic/ckeditor.js"></script>
-<script src="/js/pages/teacher/ckeditor5.js"></script>
+<script src="https://cdn.ckeditor.com/ckeditor5/35.3.2/classic/ckeditor.js"></script>
+<script src="/js/pages/teacher/ckeditor5.js?v=20251023"></script>
 <script src="/js/pages/teacher/classVideo.js"></script>
 </body>
 </html>
