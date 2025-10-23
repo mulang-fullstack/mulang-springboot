@@ -79,13 +79,44 @@
 .btn.outline { background:var(--text-white); border:var(--text-white); color:var(--text-black); }
 .btn.outline:hover { background:var(--bg-white-hover); }
 
-/* 페이지네이션 */
+/* 페이지네이션 - 고급 버전 */
 .pagination {
-    display:flex; justify-content:center; gap:6px; padding-top:16px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 6px;
+    margin-top: 40px;
+    padding: 20px 0;
 }
+
 .page-btn {
-    min-width:36px; height:36px; border-radius:8px;
-    border:1px solid var(--border-primary); background:var(--bg-white); font-size:14px; color:var(--text-black); cursor:pointer;
+    min-width: 40px;
+    height: 40px;
+    padding: 0;
+    border: var(--border-default);
+    border-radius: 8px;
+    background-color: var(--bg-white);
+    color: var(--text-tertiary);
+    text-decoration: none;
+    text-align: center;
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
 }
-.page-btn.active { background:var(--bg-point-main); color:var(--text-white); border-color:var(--border-primary); }
-.page-btn:hover { background:var(--bg-white); }
+
+.page-btn:hover:not(.active) {
+    background-color: var(--bg-white);
+    border-color: var(--border-default);
+}
+
+.page-btn.active {
+    background-color: var(--bg-point-main);;
+    color: var(--text-white);
+    border-color: var(--border-primary);
+    font-weight: 600;
+    box-shadow: var(--shadow-default);
+}
