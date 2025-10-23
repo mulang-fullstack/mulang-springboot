@@ -81,14 +81,29 @@
                 </div>
 
                 <!-- 페이지네이션(옵션) -->
-                <div class="pagination">
-                    <button class="page-btn active">1</button>
-                    <button class="page-btn">2</button>
-                    <button class="page-btn">3</button>
+
+                    <!-- 페이지네이션 -->
+                    <c:if test="${totalPages > 1}">
+                        <div class="pagination">
+                            <c:if test="${currentPage > 0}">
+                                <a href="?page=${currentPage - 1}" class="page-btn">이전</a>
+                            </c:if>
+
+                            <c:forEach begin="0" end="${totalPages - 1}" var="i">
+                                <a href="?page=${i}" class="page-btn ${currentPage == i ? 'active' : ''}">
+                                        ${i + 1}
+                                </a>
+                            </c:forEach>
+
+                            <c:if test="${currentPage < totalPages - 1}">
+                                <a href="?page=${currentPage + 1}" class="page-btn">다음</a>
+                            </c:if>
+                        </div>
+                    </c:if>
+
                 </div>
             </section>
         </section>
-    </div>
 </main>
 <%@include file="../../common/footer.jsp" %>
 
