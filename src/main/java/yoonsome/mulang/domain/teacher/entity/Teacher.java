@@ -24,7 +24,7 @@ public class Teacher {
     private String introduction;
 
     @Column(nullable = true, length = 100)
-    private String carreer;
+    private String career;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id", nullable = true)

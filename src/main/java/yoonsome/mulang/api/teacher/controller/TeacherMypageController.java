@@ -9,13 +9,13 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import yoonsome.mulang.api.teacher.dto.TeacherProfileUpdateRequest;
+import yoonsome.mulang.api.teacher.service.TeacherMypageService;
 import yoonsome.mulang.domain.course.entity.Course;
 import yoonsome.mulang.domain.course.service.CourseService;
 import yoonsome.mulang.domain.language.entity.Language;
 import yoonsome.mulang.domain.language.repository.LanguageRepository;
 import yoonsome.mulang.infra.security.CustomUserDetails;
 import yoonsome.mulang.domain.teacher.entity.Teacher;
-import yoonsome.mulang.api.teacher.service.TeacherService;
 import yoonsome.mulang.domain.user.entity.User;
 import java.io.IOException;
 import java.util.List;
@@ -25,7 +25,7 @@ import java.util.List;
 @RequestMapping("/teacher/mypage")
 public class TeacherMypageController {
 
-    private final TeacherService teacherService;
+    private final TeacherMypageService teacherService;
     private final CourseService courseService;
     private final LanguageRepository languageRepository;
 
@@ -73,13 +73,13 @@ public class TeacherMypageController {
 
     /** 강좌 수정 */
     @GetMapping("/classes/update")
-    public String classUpdate() {
+    public String courseUpdatePage() {
         return "teacher/classUpdate";
     }
 
     /** 클래스 목록 */
     @GetMapping("/classes/edit")
-    public String classEdit(@AuthenticationPrincipal CustomUserDetails userDetails, Model model) {
+    public String courseEditPage(@AuthenticationPrincipal CustomUserDetails userDetails, Model model) {
         User loginUser = userDetails.getUser();
         Teacher teacher = teacherService.getTeacherProfile(loginUser.getId());
         Long teacherId = teacher.getId();

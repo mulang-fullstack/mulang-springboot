@@ -166,12 +166,13 @@ public class CourseServiceImpl implements CourseService {
         }
         for (int i = 0; i < lectureTitles.size(); i++) {
             String title = lectureTitles.get(i);
+            String content = lectureTitles.get(i);
 
             MultipartFile video = null;
             if (lectureVideos != null && lectureVideos.size() > i) {
                 video = lectureVideos.get(i);
             }
-            lectureService.createLectureWithFile(title, savedCourse, video);
+            lectureService.createLectureWithFile(title, content, savedCourse, video);
         }
     }
     @Override

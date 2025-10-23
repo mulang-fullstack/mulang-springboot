@@ -43,7 +43,7 @@
                         <div class="field">
                             <label>언어</label>
                             <div class="field-content">
-                                <select name="language.id" required>
+                                <select name="languageId" required>
                                     <option value="">선택해주세요</option>
                                     <option value="1">영어</option>
                                     <option value="2">일본어</option>
@@ -55,7 +55,7 @@
                         <div class="field">
                             <label>카테고리</label>
                             <div class="field-content">
-                                <select name="category.id" required>
+                                <select name="categoryId" required>
                                     <option value="">선택해주세요</option>
                                     <option value="1">회화</option>
                                     <option value="2">문법</option>
@@ -104,9 +104,11 @@
                             <label>챕터 업로드</label>
                             <div class="field-content">
                                 <div class="video-list">
-                                    <div class="video-item">
-                                        <input type="text" name="lectureTitle[]" placeholder="챕터 제목을 입력하세요" class="chapter-input" required>
-                                        <input type="file" name="lectureVideo[]" accept="video/mp4,video/webm,video/mov" class="video-input" required>
+                                    <div class="video-item" data-index="0">
+                                        <input type="text" name="lectures[0].title" placeholder="챕터 제목을 입력하세요" class="chapter-input" required>
+                                        <input type="text" name="lectures[0].content" placeholder="챕터 소개를 입력하세요" class="chapter-input" required>
+                                        <input type="file" name="lectures[0].video" accept="video/mp4,video/webm,video/mov" class="video-input" required>
+
                                         <div class="video-btn-wrap">
                                             <button type="button" class="add-video-btn">＋</button>
                                             <button type="button" class="remove-video-btn">－</button>
@@ -123,7 +125,7 @@
                             </div>
                         </div>
 
-                        <!-- 기본값 설정 -->
+                        <!-- 기본값 설정 일단 더미 나중에 하나씩 붙일거임-->
                         <input type="hidden" name="status" value="true">
                         <input type="hidden" name="currentStudent" value="0">
                         <input type="hidden" name="lectureCount" value="1">

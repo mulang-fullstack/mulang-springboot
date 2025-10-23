@@ -6,10 +6,9 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
 import yoonsome.mulang.api.teacher.dto.CourseUploadRequest;
-import yoonsome.mulang.api.teacher.service.TeacherService;
-import yoonsome.mulang.domain.course.entity.Course;
+import yoonsome.mulang.api.teacher.service.TeacherMypageService;
+
 import yoonsome.mulang.domain.course.service.CourseService;
 import yoonsome.mulang.domain.teacher.entity.Teacher;
 import yoonsome.mulang.domain.user.entity.User;
@@ -44,13 +43,13 @@ public class CourseUploadController {
 
     private final CourseService courseService;
     private final FileService fileService;
-    private final TeacherService teacherService;
+    private final TeacherMypageService teacherMypageService;
 
     /** [GET] 새 강좌 업로드 폼 페이지 */
     @GetMapping("/new")
     public String showCourseUploadForm(@AuthenticationPrincipal CustomUserDetails userDetails, Model model) {
         User loginUser = userDetails.getUser();
-        Teacher teacher = teacherService.getTeacherProfile(loginUser.getId());
+        Teacher teacher = teacherMypageService.getTeacherProfile(loginUser.getId());
         model.addAttribute("teacher", teacher);
         return "teacher/classUpload";
     }
@@ -61,10 +60,9 @@ public class CourseUploadController {
             @ModelAttribute CourseUploadRequest request,
             @AuthenticationPrincipal CustomUserDetails userDetails
     ) throws IOException {
-        teacherService.createCourse(userDetails.getUser().getId(), request);
+        teacherMypageService.createCourse(userDetails.getUser().getId(), request);
         return "redirect:/teacher/mypage/classes/edit";
     }
-
 
     /** [DELETE] 강좌 삭제 처리 */
     @DeleteMapping("/{courseId}")
