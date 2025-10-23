@@ -28,7 +28,7 @@
             <li class="menu-section" data-menu="content">
                 <div><img src="/img/icon/calendar-edit.png"> 콘텐츠 관리</div>
                 <ul class="submenu">
-                    <li><a href="/admin/content/course" data-submenu="course">강좌 관리</a></li>
+                    <li><a href="/admin/content/course" data-submenu="course">강좌 조회</a></li>
                     <li><a href="/admin/content/course" data-submenu="course">강좌 신청</a></li>
                 </ul>
             </li>

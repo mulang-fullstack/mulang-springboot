@@ -1,126 +1,13 @@
 /**
  * 회원 관리 페이지 JavaScript
- * Path: /js/pages/admin/memberManage.js
+ * Path: /js/pages/admin/user/user.js
  */
 
 // ========================================
 // 전역 변수
 // ========================================
-let currentPage = 1;
-let totalPages = 1; // 서버에서 받아온 값으로 초기화
 let editingRow = null;
 let deleteTargetId = null;
-
-// ========================================
-// 페이지네이션 관련 함수
-// ========================================
-
-/**
- * 페이지네이션 UI 생성
- */
-function createPagination() {
-    const container = document.getElementById('pagination');
-    if (!container) return;
-
-    container.innerHTML = '';
-
-    // 맨 처음으로
-    const firstBtn = document.createElement('button');
-    firstBtn.innerHTML = '«';
-    firstBtn.disabled = currentPage === 1;
-    firstBtn.onclick = () => goToPage(1);
-    container.appendChild(firstBtn);
-
-    // 이전 페이지
-    const prevBtn = document.createElement('button');
-    prevBtn.innerHTML = '‹';
-    prevBtn.disabled = currentPage === 1;
-    prevBtn.onclick = () => goToPage(currentPage - 1);
-    container.appendChild(prevBtn);
-
-    // 페이지 번호들
-    const pageNumbers = getPageNumbers();
-    pageNumbers.forEach(num => {
-        if (num === '...') {
-            const ellipsis = document.createElement('span');
-            ellipsis.className = 'ellipsis';
-            ellipsis.textContent = '...';
-            container.appendChild(ellipsis);
-        } else {
-            const pageBtn = document.createElement('button');
-            pageBtn.textContent = num;
-            pageBtn.className = num === currentPage ? 'active' : '';
-            pageBtn.onclick = () => goToPage(num);
-            container.appendChild(pageBtn);
-        }
-    });
-
-    // 다음 페이지
-    const nextBtn = document.createElement('button');
-    nextBtn.innerHTML = '›';
-    nextBtn.disabled = currentPage === totalPages;
-    nextBtn.onclick = () => goToPage(currentPage + 1);
-    container.appendChild(nextBtn);
-
-    // 맨 마지막으로
-    const lastBtn = document.createElement('button');
-    lastBtn.innerHTML = '»';
-    lastBtn.disabled = currentPage === totalPages;
-    lastBtn.onclick = () => goToPage(totalPages);
-    container.appendChild(lastBtn);
-
-    // 페이지 정보
-    const pageInfo = document.createElement('span');
-    pageInfo.className = 'page-info';
-    pageInfo.textContent = `${currentPage} / ${totalPages} 페이지`;
-    container.appendChild(pageInfo);
-}
-
-/**
- * 표시할 페이지 번호 계산
- */
-function getPageNumbers() {
-    const delta = 2; // 현재 페이지 좌우로 보여줄 페이지 수
-    const range = [];
-    const rangeWithDots = [];
-    let l;
-
-    range.push(1);
-
-    if (totalPages <= 1) return range;
-
-    for (let i = currentPage - delta; i <= currentPage + delta; i++) {
-        if (i < totalPages && i > 1) {
-            range.push(i);
-        }
-    }
-    range.push(totalPages);
-
-    for (let i of range) {
-        if (l) {
-            if (i - l === 2) {
-                rangeWithDots.push(l + 1);
-            } else if (i - l !== 1) {
-                rangeWithDots.push('...');
-            }
-        }
-        rangeWithDots.push(i);
-        l = i;
-    }
-
-    return rangeWithDots;
-}
-
-/**
- * 페이지 이동
- */
-function goToPage(page) {
-    if (page < 1 || page > totalPages) return;
-
-    currentPage = page;
-    createPagination();
-    loadPageData(page);
-}
 
 /**
  * 서버에서 페이지 데이터 로드
@@ -152,6 +39,7 @@ function loadPageData(page) {
     // 페이지 이동 (SSR 방식)
     window.location.href = `${window.location.pathname}?${params.toString()}`;
 }
+
 
 // ========================================
 // 회원 상태 관리 함수
@@ -373,7 +261,7 @@ function checkEmptyTable() {
     const rows = tbody.querySelectorAll('tr[data-id]');
 
     if (rows.length === 0) {
-        tbody.innerHTML = '<tr><td colspan="7" class="no-data">등록된 회원이 없습니다.</td></tr>';
+        tbody.innerHTML = '<tr><td colspan="8" class="no-data">등록된 회원이 없습니다.</td></tr>';
     }
 }
 
@@ -406,78 +294,43 @@ function resetFilters() {
         keywordInput.value = '';
     }
 
-    // 필터 적용
-    applyFilters();
+    // 필터 적용 (서버로 요청)
+    applyFiltersToServer();
 }
 
 /**
- * 필터 적용 (클라이언트 사이드)
- * 주의: 실제 운영에서는 서버 사이드 필터링 권장
+ * 필터 적용 (서버 사이드)
  */
-function applyFilters() {
+function applyFiltersToServer() {
+    const params = new URLSearchParams();
+
+    // 역할 필터
     const roleFilters = Array.from(document.querySelectorAll('input[name="role"]:checked'))
         .map(cb => cb.value);
-    const statusFilter = document.querySelector('input[name="status"]:checked')?.value || 'ALL';
-    const sortOrder = document.getElementById('sortSelect')?.value || 'LATEST';
-    const keyword = document.querySelector('input[name="keyword"]')?.value?.toLowerCase() || '';
+    if (roleFilters.length > 0) {
+        params.set('roles', roleFilters.join(','));
+    }
 
-    const tbody = document.querySelector('#memberTable tbody');
-    if (!tbody) return;
-
-    const rows = Array.from(tbody.querySelectorAll('tr[data-id]'));
-
-    // 필터링
-    rows.forEach(row => {
-        const role = row.dataset.role;
-        const status = row.dataset.status;
-        const name = row.cells[1]?.textContent.toLowerCase() || '';
-        const email = row.cells[2]?.textContent.toLowerCase() || '';
-
-        let show = true;
-
-        // 역할 필터
-        if (roleFilters.length > 0 && !roleFilters.includes(role)) {
-            show = false;
-        }
-
-        // 상태 필터
-        if (statusFilter !== 'ALL' && status !== statusFilter) {
-            show = false;
-        }
-
-        // 키워드 검색
-        if (keyword && !name.includes(keyword) && !email.includes(keyword)) {
-            show = false;
-        }
-
-        row.style.display = show ? '' : 'none';
-    });
+    // 상태 필터
+    const statusFilter = document.querySelector('input[name="status"]:checked')?.value;
+    if (statusFilter && statusFilter !== 'ALL') {
+        params.set('status', statusFilter);
+    }
 
     // 정렬
-    const visibleRows = rows.filter(row => row.style.display !== 'none');
-
-    visibleRows.sort((a, b) => {
-        switch(sortOrder) {
-            case 'LATEST':
-                return new Date(b.dataset.date) - new Date(a.dataset.date);
-            case 'OLDEST':
-                return new Date(a.dataset.date) - new Date(b.dataset.date);
-            case 'NAME_ASC':
-                return a.cells[1].textContent.localeCompare(b.cells[1].textContent);
-            case 'NAME_DESC':
-                return b.cells[1].textContent.localeCompare(a.cells[1].textContent);
-            default:
-                return 0;
-        }
-    });
-
-    // 정렬된 순서로 DOM 재배치
-    visibleRows.forEach(row => tbody.appendChild(row));
-
-    // 빈 테이블 체크
-    if (visibleRows.length === 0) {
-        tbody.innerHTML = '<tr><td colspan="7" class="no-data">검색 결과가 없습니다.</td></tr>';
+    const sortOrder = document.getElementById('sortSelect')?.value;
+    if (sortOrder) {
+        params.set('sort', sortOrder);
     }
+
+    // 검색어
+    const keyword = document.querySelector('input[name="keyword"]')?.value;
+    if (keyword) {
+        params.set('keyword', keyword);
+    }
+
+    // 페이지 이동
+    window.location.href = `${window.location.pathname}?${params.toString()}`;
 }
 
 // ========================================
@@ -572,25 +425,14 @@ function setQueryParam(name, value) {
  * 페이지 초기화
  */
 function initializePage() {
-    // 서버에서 받은 페이지 정보로 초기화
-    const pageParam = getQueryParam('page');
-    const totalPagesParam = getQueryParam('totalPages');
+    console.log('🚀 User.js 초기화 시작');
 
-    if (pageParam) {
-        currentPage = parseInt(pageParam) || 1;
+    // 페이지네이션 데이터 확인
+    if (window.paginationData) {
+        console.log('✅ Pagination 데이터 확인:', window.paginationData);
+    } else {
+        console.warn('⚠️ Pagination 데이터 없음');
     }
-    if (totalPagesParam) {
-        totalPages = parseInt(totalPagesParam) || 1;
-    }
-
-    // JSP에서 전달받은 값이 있으면 사용
-    if (typeof window.serverData !== 'undefined') {
-        currentPage = window.serverData.currentPage || currentPage;
-        totalPages = window.serverData.totalPages || totalPages;
-    }
-
-    // 페이지네이션 생성
-    createPagination();
 
     // 필터 이벤트 리스너 등록
     registerFilterListeners();
@@ -603,6 +445,8 @@ function initializePage() {
 
     // 검색 폼 이벤트
     registerSearchFormListener();
+
+    console.log('✅ User.js 초기화 완료');
 }
 
 /**
@@ -611,19 +455,13 @@ function initializePage() {
 function registerFilterListeners() {
     // 체크박스와 라디오 버튼 변경 이벤트
     document.querySelectorAll('input[name="role"], input[name="status"]').forEach(input => {
-        input.addEventListener('change', debounce(applyFilters, 300));
+        input.addEventListener('change', debounce(applyFiltersToServer, 300));
     });
 
     // 정렬 변경 이벤트
     const sortSelect = document.getElementById('sortSelect');
     if (sortSelect) {
-        sortSelect.addEventListener('change', debounce(applyFilters, 300));
-    }
-
-    // 검색어 입력 이벤트 (실시간 검색)
-    const keywordInput = document.querySelector('input[name="keyword"]');
-    if (keywordInput) {
-        keywordInput.addEventListener('input', debounce(applyFilters, 500));
+        sortSelect.addEventListener('change', debounce(applyFiltersToServer, 300));
     }
 }
 
@@ -688,7 +526,7 @@ window.confirmDelete = confirmDelete;
 window.closeDeleteModal = closeDeleteModal;
 window.executeDelete = executeDelete;
 window.resetFilters = resetFilters;
-window.goToPage = goToPage;
+window.loadPageData = loadPageData;
 
 // ========================================
 // DOM 로드 완료시 실행

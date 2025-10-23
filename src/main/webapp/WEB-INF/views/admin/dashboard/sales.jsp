@@ -22,7 +22,7 @@
     <!-- right-container -->
     <div class="right-container">
         <header>
-            <h1>대시보드</h1>
+            <h1>대시보드 - 매출현황</h1>
             <div class="header-info">
                 <div class="info-box"><p>안녕하세요 <span>관리자</span>님</p></div>
                 <a class="logout" href="/auth/logout">로그아웃</a>
@@ -31,7 +31,6 @@
 
         <div class="content-wrap">
             <div class="content-header">
-                <h2>매출 현황</h2>
                 <p class="date-range" id="current-time"></p>
             </div>
 

@@ -12,7 +12,6 @@ public class AdminUserController {
 
     @GetMapping
     public String user(Model model){
-        adminUserService.getAllLogs();
         model.addAttribute("activeMenu","user");
         model.addAttribute("activeSubmenu","user");
         return "admin/user/user";
