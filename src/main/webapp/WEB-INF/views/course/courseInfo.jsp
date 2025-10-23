@@ -11,8 +11,10 @@
             <p class="course-desc">${detail.subtitle}</p>
             <div class="course-meta">
                 <div><span class="label">강사</span> <span>${detail.teacherName}</span><button><img src="/img/icon/user-circle.svg" alt="강사 정보"></button></div>
-                <div><span class="label">신청기간</span> <span>${detail.applyStartedAt}~${detail.applyEndedAt}</span></div>
-                <div><span class="label">수강기간</span> <span>${detail.startedAt}~${detail.endedAt}</span></div>
+                <!--
+                <div><span class="label">신청기간</span> <span></span></div>
+                <div><span class="label">수강기간</span> <span></span></div>
+                -->
                 <div><span class="label">강의 수</span> <span>${detail.lectureCount}강</span></div>
             </div>
             <div class="course-purchase">

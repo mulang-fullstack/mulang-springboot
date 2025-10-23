@@ -27,6 +27,9 @@ public class Course {
     @Column(nullable = false, columnDefinition = "TEXT")
     private String content;
 
+    @Column(name = "html_content", columnDefinition = "TEXT")
+    private String htmlContent;
+
     @Column(nullable = false, updatable = false)
     private LocalDate createdDate;
 
@@ -47,11 +50,16 @@ public class Course {
 
     @Column(name = "ended_at", nullable = false)
     private LocalDate endedAt;
-    */
 
     @Column(nullable = false)
     private boolean status;
+    */
 
+    @Enumerated(EnumType.STRING)
+    @Column(nullable = false, length = 10)
+    private StatusType status; // ENUM('PUBLIC', 'PRIVATE', 'PENDING')
+
+    //공개, 비공개, 심사중
     /*
     @Column(name = "max_student")
     private Integer maxStudent;

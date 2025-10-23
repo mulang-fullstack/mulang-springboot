@@ -45,8 +45,9 @@ public class User {
     @Column(nullable = false, length = 50, unique = true)
     private String nickname;
 
-    @Column(name = "user_status", nullable = false)
-    private boolean userStatus = true; // 기본값: 활성화
+    @Enumerated(EnumType.STRING)
+    @Column(name = "user_status", nullable = false, length = 10)
+    private UserStatus userStatus = UserStatus.ACTIVE; // 기본값: 활성화
 
     @Column(name = "created_at", nullable = false, updatable = false)
     private LocalDateTime createdAt;
@@ -57,7 +58,7 @@ public class User {
     @PrePersist
     protected void onCreate() {
         this.createdAt = LocalDateTime.now();
-        this.userStatus = true;
+        this.userStatus = UserStatus.ACTIVE;
     }
 
     @PreUpdate
@@ -67,6 +68,10 @@ public class User {
 
     public enum Role {
         STUDENT, TEACHER, ADMIN
+    }
+
+    public enum UserStatus {
+        ACTIVE, TEACHER, ADMIN
     }
 
     @ManyToOne(fetch = FetchType.LAZY)

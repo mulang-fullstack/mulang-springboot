@@ -1,13 +1,12 @@
 package yoonsome.mulang.domain.course.repository;
 
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 import yoonsome.mulang.domain.course.entity.Course;
-
+import yoonsome.mulang.domain.course.entity.StatusType;
+import java.time.LocalDate;
 import java.util.List;
 
 @Repository
@@ -25,11 +24,20 @@ public interface CourseRepository extends JpaRepository<Course,Long> {
           AND (:keyword IS NULL OR :keyword = ''
                OR c.title LIKE CONCAT('%', :keyword, '%')
                OR (t IS NOT NULL AND u IS NOT NULL AND u.username LIKE CONCAT('%', :keyword, '%')))
+          AND (:teacherId IS NULL OR c.teacher.id = :teacherId)
+          AND (:status IS NULL OR c.status = :status)
+          AND (:keyword IS NULL OR c.title LIKE %:keyword%)
+          AND (:createdDate IS NULL OR c.createdDate = :createdDate)
     """)
-    List<Course> findByLanguageIdAndCategoryIdAndKeyword(
+    List<Course> findByLanguageIdAndCategoryIdAndKeywordAndStatusAndTeacherIdAndCreatedDate(
             @Param("languageId") Long languageId,
             @Param("categoryId") Long categoryId,
             @Param("keyword") String keyword,
-            Pageable pageable);
+            @Param("status") StatusType status,
+            @Param("teacherId") Long teacherId,
+            @Param("createdDate") LocalDate createdDate,
+            @Param("startedDate") LocalDate startedDate,
+            @Param("endedDate") LocalDate endedDate
+            );
     List<Course> findByTeacherId(Long teacherId);
 }
