@@ -19,116 +19,80 @@
 
 <main>
     <div class="contents">
-    <section class="mypage">
+        <section class="mypage">
 
-        <!-- 사이드바 -->
-        <%@ include file="../sidebar.jsp" %>
+            <!-- 사이드바 -->
+            <%@ include file="../sidebar.jsp" %>
 
-        <!-- 메인 컨텐츠 -->
-        <section class="content">
-            <h2>찜</h2>
+            <!-- 메인 컨텐츠 -->
+            <section class="content">
+                <h2>찜</h2>
 
-            <!-- 툴바(검색/정렬) 필요시 -->
-            <div class="likes-toolbar">
-                <div class="left">
-                    <select class="sel-subject">
-                        <option>전체 과목</option>
-                        <option>영어</option>
-                        <option>일본어</option>
-                        <option>중국어</option>
-                    </select>
+                <!-- 툴바(검색/정렬) 필요시 -->
+                <div class="likes-toolbar">
+                    <div class="left">
+                        <select class="sel-subject">
+                            <option>전체 과목</option>
+                            <option>영어</option>
+                            <option>일본어</option>
+                            <option>중국어</option>
+                        </select>
+                    </div>
+                    <div class="right">
+                        <input type="text" class="search-input" placeholder="강좌명 검색">
+                        <button class="btn search">검색</button>
+                    </div>
                 </div>
-                <div class="right">
-                    <input type="text" class="search-input" placeholder="강좌명 검색">
-                    <button class="btn search">검색</button>
+
+                <!-- 찜 목록 -->
+                <div class="likes-list">
+                    <c:forEach var="favorite" items="${favorites}">
+                        <article class="like-item" data-favorite-id="${favorite.id}">
+                            <div class="thumb">
+                                <img src="${favorite.course.thumbnail}" alt="${favorite.course.title}">
+                            </div>
+
+                            <div class="meta">
+                                <div class="topline">
+                                    <span class="teacher">담당강사: -</span>
+                                    <span class="subject">-</span>
+                                </div>
+                                <h3 class="title">${favorite.course.title}</h3>
+                                <p class="sub">${favorite.course.subtitle}</p>
+                                <div class="period">
+                                    찜한 날짜: ${favorite.createdAt}
+                                </div>
+                            </div>
+
+                            <div class="actions">
+                                <button class="btn outline"
+                                        onclick="removeFavorite(${favorite.course.id}, ${favorite.id})">
+                                    찜 해제
+                                </button>
+                                <button class="btn edit">수강하기</button>
+                            </div>
+                        </article>
+                    </c:forEach>
+
+                    <!-- 찜한 강좌가 없을 때 -->
+                    <c:if test="${empty favorites}">
+                        <p style="text-align: center; padding: 50px;">찜한 강좌가 없습니다.</p>
+                    </c:if>
                 </div>
-            </div>
 
-            <!-- 찜 목록 -->
-            <div class="likes-list">
-                <!-- 아이템 1 -->
-                <article class="like-item">
-                    <div class="thumb">
-                        <img src="${pageContext.request.contextPath}/img/dummy/teacher1.png" alt="강사 썸네일">
-                    </div>
-
-                    <div class="meta">
-                        <div class="topline">
-                            <span class="teacher">담당강사: 박지민</span>
-                            <span class="subject">영어</span>
-                        </div>
-                        <h3 class="title">토익 실전 1000제</h3>
-                        <p class="sub">강의수 40</p>
-                        <div class="period">
-                            수강 가능 기간: 2025-10-02 ~ 2025-12-31
-                        </div>
-                    </div>
-
-                    <div class="actions">
-                        <button class="btn outline">찜 해제</button>
-                        <button class="btn edit">수강하기</button>
-                    </div>
-                </article>
-
-                <!-- 아이템 2 -->
-                <article class="like-item">
-                    <div class="thumb">
-                        <img src="${pageContext.request.contextPath}/img/dummy/teacher2.png" alt="강사 썸네일">
-                    </div>
-
-                    <div class="meta">
-                        <div class="topline">
-                            <span class="teacher">담당강사: 김하늘</span>
-                            <span class="subject">일본어</span>
-                        </div>
-                        <h3 class="title">가장 빠르게 만드는 JLPT</h3>
-                        <p class="sub">강의수 35</p>
-                        <div class="period">
-                            수강 가능 기간: 2025-10-13 ~ 2025-12-31
-                        </div>
-                    </div>
-
-                    <div class="actions">
-                        <button class="btn outline">찜 해제</button>
-                        <button class="btn edit">수강하기</button>
-                    </div>
-                </article>
-
-                <!-- 아이템 3 -->
-                <article class="like-item">
-                    <div class="thumb">
-                        <img src="${pageContext.request.contextPath}/img/dummy/teacher3.png" alt="강사 썸네일">
-                    </div>
-
-                    <div class="meta">
-                        <div class="topline">
-                            <span class="teacher">담당강사: 장미남</span>
-                            <span class="subject">중국어</span>
-                        </div>
-                        <h3 class="title">중국어 회화 스타터</h3>
-                        <p class="sub">강의수 20</p>
-                        <div class="period">
-                            수강 가능 기간: 2025-11-01 ~ 2026-01-15
-                        </div>
-                    </div>
-
-                    <div class="actions">
-                        <button class="btn outline">찜 해제</button>
-                        <button class="btn edit">수강하기</button>
-                    </div>
-                </article>
-            </div>
-
-            <!-- 페이지네이션(옵션) -->
-            <div class="pagination">
-                <button class="page-btn active">1</button>
-                <button class="page-btn">2</button>
-                <button class="page-btn">3</button>
-            </div>
+                <!-- 페이지네이션(옵션) -->
+                <div class="pagination">
+                    <button class="page-btn active">1</button>
+                    <button class="page-btn">2</button>
+                    <button class="page-btn">3</button>
+                </div>
+            </section>
         </section>
-    </section>
     </div>
 </main>
 <%@include file="../../common/footer.jsp" %>
+
+<!-- JS 파일 추가 -->
+<script src="/js/pages/mypage/savecancel.js"></script>
 </body>
 </html>

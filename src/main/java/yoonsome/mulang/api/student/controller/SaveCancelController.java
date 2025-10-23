@@ -4,39 +4,32 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
-import yoonsome.mulang.domain.coursefavorite.entity.CourseFavorite;
+import org.springframework.web.bind.annotation.RestController;
 import yoonsome.mulang.domain.coursefavorite.repository.CourseFavoriteRepository;
 import yoonsome.mulang.infra.security.CustomUserDetails;
 
-import java.util.List;
 
-@Controller
-@RequestMapping("/student")
 @RequiredArgsConstructor
-public class SaveController {
+@RestController
+@RequestMapping("delete")
+public class SaveCancelController {
 
     private final CourseFavoriteRepository courseFavoriteRepository;
 
-    @GetMapping("/save")
-    public String getFavorites(
-            @AuthenticationPrincipal CustomUserDetails userDetails,
-            Model model) {
 
-        // CustomUserDetails에서 바로 User ID 가져오기
+    @DeleteMapping("/{courseId}")// 삭제하는 http 매핑
+    public ResponseEntity<Void> removeFavorite(
+            @AuthenticationPrincipal CustomUserDetails userDetails,
+            @PathVariable Long courseId) {
+
         Long userId = userDetails.getUser().getId();
 
-        // User ID로 찜 목록 조회
-        List<CourseFavorite> favorites =
-                courseFavoriteRepository.findByStudentIdWithCourse(userId);
+        // 찜 삭제
+        courseFavoriteRepository.deleteByStudentIdAndCourseId(userId, courseId);
 
-        model.addAttribute("favorites", favorites);
-
-        return "student/like/save";
+        return ResponseEntity.ok().build();
     }
-
 }
