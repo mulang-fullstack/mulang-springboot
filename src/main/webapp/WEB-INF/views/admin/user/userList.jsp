@@ -103,13 +103,13 @@
                                     전체
                                 </label>
                                 <label>
-                                    <input type="radio" name="status" value="true"
-                                           <c:if test="${param.status == 'true'}">checked</c:if>>
+                                    <input type="radio" name="status" value="ACTIVE"
+                                           <c:if test="${param.status == 'ACTIVE'}">checked</c:if>>
                                     활성
                                 </label>
                                 <label>
-                                    <input type="radio" name="status" value="false"
-                                           <c:if test="${param.status == 'false'}">checked</c:if>>
+                                    <input type="radio" name="status" value="INACTIVE"
+                                           <c:if test="${param.status == 'INACTIVE'}">checked</c:if>>
                                     비활성
                                 </label>
                             </div>
@@ -186,7 +186,7 @@
                         <c:forEach var="user" items="${users}" varStatus="status">
                             <tr data-id="${user.id}"
                                 data-role="${user.role}"
-                                data-status="${user.userStatus ? 'ACTIVE' : 'INACTIVE'}"
+                                data-status="${user.userStatus == "ACTIVE" ? 'active' : 'inactive'}"
                                 data-date="${user.createdAt}">
                                 <td>${page.number * page.size + status.index + 1}</td>
                                 <td>
@@ -210,8 +210,8 @@
                                     </c:choose>
                                 </td>
                                 <td class="status-cell">
-                                    <span class="status-badge ${user.userStatus ? 'active' : 'inactive'}">
-                                            ${user.userStatus ? '활성' : '비활성'}
+                                    <span class="status-badge ${user.userStatus == "ACTIVE" ? 'active' : 'inactive'}">
+                                            ${user.userStatus == "ACTIVE" ? '정상' : '정지'}
                                     </span>
                                 </td>
                                 <td class="actions">

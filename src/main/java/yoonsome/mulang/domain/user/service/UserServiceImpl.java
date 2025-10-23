@@ -70,7 +70,7 @@ public class UserServiceImpl implements UserService {
 
         return userRepository.searchUsers(
                 request.getRole(),
-                request.getStatus(),
+                request.getUserStatus(),
                 request.getStartDate(),
                 request.getEndDate(),
                 request.getKeyword(),

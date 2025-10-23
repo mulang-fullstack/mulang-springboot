@@ -6,7 +6,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import yoonsome.mulang.domain.user.entity.User;
-import yoonsome.mulang.domain.user.entity.User.Role;
+import yoonsome.mulang.domain.user.entity.User.*;
 
 import java.time.LocalDateTime;
 import java.util.Optional;
@@ -37,7 +37,7 @@ public interface UserRepository extends JpaRepository<User, Long> {
         """)
     Page<User> searchUsers(
             @Param("role") Role role,
-            @Param("status") Boolean status,
+            @Param("status") UserStatus userStatus,
             @Param("startDate") LocalDateTime startDate,
             @Param("endDate") LocalDateTime endDate,
             @Param("keyword") String keyword,

@@ -8,12 +8,10 @@ async function verifyEmailCode() {
 
     // [1] 유효성 검사
     if (!code) {
-        showMessage('인증코드를 입력해주세요.', 'warning');
         codeInput.focus();
         return;
     }
     if (!signupState.emailValue) {
-        showMessage('먼저 이메일 인증 요청을 진행해주세요.', 'warning');
         return;
     }
 
@@ -25,7 +23,6 @@ async function verifyEmailCode() {
 
         // [3] 서버 응답 처리
         if (result === 'valid') {
-            showMessage('이메일 인증이 완료되었습니다.', 'success');
             setFieldStatus(codeInput, 'success', '인증이 완료되었습니다.');
             signupState.isEmailCodeVerified = true;
 
@@ -36,12 +33,10 @@ async function verifyEmailCode() {
             verifyBtn.classList.add('verified');
         }
         else if (result === 'expired') {
-            showMessage('인증코드가 만료되었습니다. 재전송해주세요.', 'warning');
             setFieldStatus(codeInput, 'error', '인증코드가 만료되었습니다.');
             signupState.isEmailCodeVerified = false;
         }
         else {
-            showMessage('인증코드가 일치하지 않습니다.', 'error');
             setFieldStatus(codeInput, 'error', '인증코드가 일치하지 않습니다.');
             signupState.isEmailCodeVerified = false;
         }

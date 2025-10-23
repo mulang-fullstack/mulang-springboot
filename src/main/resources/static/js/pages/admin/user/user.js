@@ -52,7 +52,7 @@ function collectSearchParams() {
 
     // status 처리 (ALL이 아닌 경우만)
     if (status && status !== 'ALL') {
-        params.status = status === 'ACTIVE' ? 'ACTIVE' : 'INACTIVE';
+        params.userStatus = status === 'ACTIVE' ? 'ACTIVE' : 'INACTIVE';
     }
 
     // keyword 처리
@@ -103,9 +103,9 @@ function renderUserTable(users, currentPage, pageSize) {
 
     tbody.innerHTML = users.map((user, index) => {
         const rowNumber = currentPage * pageSize + index + 1;
-        const statusClass = user.userStatus ? 'success' : 'inactive';
-        const statusText = user.userStatus ? '활성' : '비활성';
-        const statusValue = user.userStatus ? 'ACTIVE' : 'INACTIVE';
+        const statusClass = user.userStatus === 'ACTIVE' ? 'success' : 'inactive';
+        const statusText = user.userStatus === 'ACTIVE' ? '활성' : '비활성';
+        const statusValue = user.userStatus === 'ACTIVE'? 'ACTIVE' : 'INACTIVE';
 
         let roleBadge = '';
         if (user.role === 'TEACHER') {
@@ -131,7 +131,7 @@ function renderUserTable(users, currentPage, pageSize) {
                 <td>${user.createdAt}</td>
                 <td>${roleBadge}</td>
                 <td class="status-cell">
-                    <span class="status-badge ${user.userStatus ? 'active' : 'inactive'}">
+                    <span class="status-badge ${user.userStatus === 'ACTIVE' ? 'active' : 'inactive'}">
                         ${statusText}
                     </span>
                 </td>
