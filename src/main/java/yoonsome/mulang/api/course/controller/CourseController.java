@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.*;
 import yoonsome.mulang.api.course.dto.CourseDetailResponse;
 import yoonsome.mulang.api.course.dto.CourseListRequest;
 import yoonsome.mulang.api.course.dto.CourseListResponse;
+import yoonsome.mulang.api.course.service.DisplayingCourseService;
 import yoonsome.mulang.api.review.ReviewResponse;
 import yoonsome.mulang.domain.category.entity.Category;
 import yoonsome.mulang.domain.category.service.CategoryService;
@@ -26,6 +27,7 @@ import java.util.List;
 public class CourseController {
     private final LanguageService languageService;
     private final CategoryService categoryService;
+    private final DisplayingCourseService displayingCourseService;
     private final CourseService courseService;
     private final ReviewService reviewService;
 
@@ -58,7 +60,7 @@ public class CourseController {
         /*강좌*/
         System.out.println("@request:"+request);
         Pageable pageable = PageRequest.of(request.getPage(), request.getSize());
-        Page<CourseListResponse> courses = courseService.getCourseList(request, pageable);
+        Page<CourseListResponse> courses = displayingCourseService.getCourseList(request, pageable);
         model.addAttribute("courses", courses.getContent());
         System.out.println("@course:"+courses.getContent());
 
@@ -78,7 +80,7 @@ public class CourseController {
         /*강의 정보*/
         /*강의 소개*/
         /*커리큘럼(강의 리스트)*/
-        CourseDetailResponse courseDetailResponse = courseService.getCourseDetail(id);
+        CourseDetailResponse courseDetailResponse = displayingCourseService.getCourseDetail(id);
         model.addAttribute("detail", courseDetailResponse);
         System.out.println("@courseDetail:"+courseDetailResponse);
 

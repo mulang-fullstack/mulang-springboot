@@ -35,39 +35,39 @@ public class Course {
         this.createdDate = LocalDate.now();
     }
 
-/*
-@Column(name = "apply_started_at", nullable = false)
-private LocalDate applyStartedAt;
+    /*
+    @Column(name = "apply_started_at", nullable = false)
+    private LocalDate applyStartedAt;
 
-@Column(name = "apply_ended_at", nullable = false)
-private LocalDate applyEndedAt;
+    @Column(name = "apply_ended_at", nullable = false)
+    private LocalDate applyEndedAt;
 
-@Column(name = "started_at", nullable = false)
-private LocalDate startedAt;
+    @Column(name = "started_at", nullable = false)
+    private LocalDate startedAt;
 
-@Column(name = "ended_at", nullable = false)
-private LocalDate endedAt;
-*/
+    @Column(name = "ended_at", nullable = false)
+    private LocalDate endedAt;
+    */
 
     @Column(nullable = false)
     private boolean status;
 
-/*
-@Column(name = "max_student")
-private Integer maxStudent;
+    /*
+    @Column(name = "max_student")
+    private Integer maxStudent;
 
-@Column(name = "current_student", nullable = false)
-private Integer currentStudent;
-*/
+    @Column(name = "current_student", nullable = false)
+    private Integer currentStudent;
+    */
 
     @Column
     private Integer price;
 
-/*
-@Enumerated(EnumType.STRING)
-@Column(nullable = false, length = 10)
-private CourseType type; // ENUM('VOD', 'ONLINE', 'OFFLINE')
-*/
+    /*
+    @Enumerated(EnumType.STRING)
+    @Column(nullable = false, length = 10)
+    private CourseType type; // ENUM('VOD', 'ONLINE', 'OFFLINE')
+    */
 
     @Column(name = "lecture_count", nullable = false)
     private Integer lectureCount;
@@ -86,4 +86,6 @@ private CourseType type; // ENUM('VOD', 'ONLINE', 'OFFLINE')
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "teacher_id", nullable = true)
     private Teacher teacher;
+
 }
+
