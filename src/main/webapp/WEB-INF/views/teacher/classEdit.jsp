@@ -7,7 +7,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <link rel="icon" href="/img/favicon.svg" type="image/png">
-
     <link rel="stylesheet" href="/css/global.css"/>
     <link rel="stylesheet" href="/css/pages/teacher/classEdit.css"/>
 
@@ -29,15 +28,12 @@
                         <span class="plus">+</span> 클래스 만들기
                     </a>
                 </div>
-
                 <!-- 클래스 테이블 -->
                 <div class="class-table">
                     <div class="table-header">
                         <span>썸네일</span>
                         <span>클래스명 / 부제목</span>
                         <span>카테고리 / 강의언어</span>
-                        <span>진행기간</span>
-                        <span></span>
                     </div>
 
                     <div class="table-body">
@@ -53,9 +49,7 @@
                                 <div class="category">
                                         ${course.category.name} / ${course.language.name}
                                 </div>
-                                <div class="date">
-                                        ${course.startedAt} ~ ${course.endedAt}
-                                </div>
+
                                 <div class="menu-wrap">
                                     <button class="menu-btn">⋯</button>
                                     <div class="menu-dropdown">

@@ -73,24 +73,6 @@
                         </div>
 
                         <div class="field">
-                            <label>신청 가능 기간</label>
-                            <div class="field-content date-range">
-                                <input type="date" name="applyStartedAt" required>
-                                <span>~</span>
-                                <input type="date" name="applyEndedAt" required>
-                            </div>
-                        </div>
-
-                        <div class="field">
-                            <label>클래스 운영 기간</label>
-                            <div class="field-content date-range">
-                                <input type="date" name="startedAt" required>
-                                <span>~</span>
-                                <input type="date" name="endedAt" required>
-                            </div>
-                        </div>
-
-                        <div class="field">
                             <label>썸네일 이미지</label>
                             <div class="field-content">
                                 <input type="file" name="thumbnailFile"
@@ -127,9 +109,7 @@
 
                         <!-- 기본값 설정 일단 더미 나중에 하나씩 붙일거임-->
                         <input type="hidden" name="status" value="true">
-                        <input type="hidden" name="currentStudent" value="0">
                         <input type="hidden" name="lectureCount" value="1">
-                        <input type="hidden" name="type" value="VOD">
 
                         <div class="submit-wrap">
                             <button type="submit" class="submit-btn">저장하기</button>
