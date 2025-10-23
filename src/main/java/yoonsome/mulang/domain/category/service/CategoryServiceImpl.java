@@ -20,4 +20,9 @@ public class CategoryServiceImpl implements CategoryService {
         Long languageId = request.getLanguageId();
         return categoryRepository.findByLanguage_Id(languageId);
     }
+    @Override
+    public Category getById(Long id) {
+        return categoryRepository.findById(id)
+                .orElseThrow(() -> new IllegalArgumentException("해당 카테고리가 존재하지 않습니다. id=" + id));
+    }
 }

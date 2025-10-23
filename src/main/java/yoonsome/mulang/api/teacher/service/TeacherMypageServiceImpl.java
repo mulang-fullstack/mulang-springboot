@@ -11,9 +11,12 @@ import yoonsome.mulang.domain.category.entity.Category;
 import yoonsome.mulang.domain.category.repository.CategoryRepository;
 import yoonsome.mulang.domain.category.service.CategoryService;
 import yoonsome.mulang.domain.course.entity.Course;
+import yoonsome.mulang.domain.course.entity.StatusType;
 import yoonsome.mulang.domain.course.repository.CourseRepository;
+import yoonsome.mulang.domain.course.service.CourseService;
 import yoonsome.mulang.domain.language.entity.Language;
 import yoonsome.mulang.domain.language.repository.LanguageRepository;
+import yoonsome.mulang.domain.language.service.LanguageService;
 import yoonsome.mulang.domain.lecture.service.LectureService;
 import yoonsome.mulang.domain.teacher.entity.Teacher;
 import yoonsome.mulang.domain.teacher.service.TeacherService;
@@ -33,17 +36,15 @@ public class TeacherMypageServiceImpl implements TeacherMypageService {
     private final FileService fileService;
     private final UserService userService;
     private final LectureService lectureService;
-    private final CourseRepository courseRepository;
-    private final CategoryRepository categoryRepository;
+    private final CourseService courseService;
     private final CategoryService categoryService;
-    private final LanguageRepository languageRepository;
-
+    private final LanguageService  languageService;
 
     // 교사 본인의 강좌 목록 조회
     @Override
     public List<Course> getTeacherCourses(Long userId) {
         Teacher teacher = teacherService.getTeacherByUserId(userId);
-        return courseRepository.findByTeacherId(teacher.getId());
+        return courseService.getCoursesByTeacher(teacher.getId());
     }
 
     // 교사 프로필 조회
@@ -82,8 +83,9 @@ public class TeacherMypageServiceImpl implements TeacherMypageService {
     @Override
     public void createCourse(Long userId, CourseUploadRequest request) throws IOException {
         Teacher teacher = teacherService.getTeacherByUserId(userId);
-        Category category = categoryRepository.getReferenceById(request.getCategoryId());
-        Language language = languageRepository.getReferenceById(request.getLanguageId());
+        Language language= languageService.getById(request.getLanguageId());
+        Category category = categoryService.getById(request.getCategoryId());
+
 
         Course course = new Course();
         course.setTeacher(teacher);
@@ -91,14 +93,13 @@ public class TeacherMypageServiceImpl implements TeacherMypageService {
         course.setSubtitle(request.getSubtitle());
         course.setContent(request.getContent());
 
-        //course.setHtmlContent(request.getContent());
-        //course.setContent(Jsoup.parse(request.getContent()).text());
+        course.setHtmlContent(request.getContent());
+
 
         course.setPrice(request.getPrice());
         course.setCategory(category);
         course.setLanguage(language);
-
-        //course.setStatus(request.getStatus() != null ? request.getStatus() : CourseStatus.PENDING);
+        course.setStatus(request.getStatus() != null ? request.getStatus() : StatusType.PENDING);
 
         course.setLectureCount(request.getLectureCount() != null ? request.getLectureCount() : 1);
 
@@ -107,7 +108,7 @@ public class TeacherMypageServiceImpl implements TeacherMypageService {
             course.setThumbnail(savedThumb.getUrl());
         }
 
-        Course savedCourse = courseRepository.save(course);
+        Course savedCourse = courseService.registerCourse(course);
 
         if (request.getLectures() != null) {
             for (LectureUploadRequest lectureReq : request.getLectures()) {
