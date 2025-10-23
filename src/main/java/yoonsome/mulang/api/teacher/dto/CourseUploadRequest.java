@@ -25,8 +25,4 @@ public class CourseUploadRequest {
 
     /** 하위 챕터(강의) 업로드 요청 리스트 */
     private List<LectureUploadRequest> lectures;
-
-    //임시임시 확장할때
-    //private Boolean status = true;
-    //private Integer lectureCount = 1;
 }
