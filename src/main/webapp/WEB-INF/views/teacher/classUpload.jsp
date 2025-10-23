@@ -108,7 +108,6 @@
                         </div>
 
                         <!-- 기본값 설정 일단 더미 나중에 하나씩 붙일거임-->
-                        <input type="hidden" name="status" value="true">
                         <input type="hidden" name="lectureCount" value="1">
 
                         <div class="submit-wrap">

@@ -2,6 +2,8 @@ package yoonsome.mulang.api.teacher.dto;
 
 import lombok.Data;
 import org.springframework.web.multipart.MultipartFile;
+import yoonsome.mulang.domain.course.entity.StatusType;
+
 import java.util.List;
 
 @Data
@@ -17,7 +19,7 @@ public class CourseUploadRequest {
     private Long languageId;        // 언어 ID
 
     /** 상태 정보 */
-    //private CourseStatus status;    // 공개 여부 (PUBLIC, PRIVATE, PENDING)
+    private StatusType status;    // 공개 여부 (PUBLIC, PRIVATE, PENDING)
     private Integer lectureCount;   // 강의 개수
 
     /** 파일 */
