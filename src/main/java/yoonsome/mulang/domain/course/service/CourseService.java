@@ -8,15 +8,18 @@ import yoonsome.mulang.api.course.dto.CourseDetailResponse;
 import yoonsome.mulang.api.course.dto.CourseListRequest;
 import yoonsome.mulang.api.course.dto.CourseListResponse;
 import yoonsome.mulang.domain.course.entity.Course;
+import yoonsome.mulang.domain.course.entity.StatusType;
+
 import java.io.IOException;
+import java.time.LocalDate;
 import java.util.List;
 
 public interface CourseService {
     //Page<Course> getCourseListByLanguage(Long languageId, Pageable pageable);
-    //List<Course> getCourseList(Long languageId, Long categoryId, String keyword);
     //Page<CourseListResponse> getCourseList(CourseListRequest request, Pageable pageable);
-    //List<Course> getCourseList(Long languageId, Long categoryId, String keyword);
+    List<Course> getCourseList(Long languageId, Long categoryId, String keyword, StatusType status, Long teacherId, LocalDate createdDate, LocalDate startedDate, LocalDate endedDate);
     //CourseDetailResponse getCourseDetail(long id);
+    Course getCourse(long id);
     Course registerCourse(Course course);
     void modifyCourse(Course course);
     void deleteCourse(long id);
