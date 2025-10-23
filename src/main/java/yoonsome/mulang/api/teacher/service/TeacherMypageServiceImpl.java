@@ -9,8 +9,8 @@ import yoonsome.mulang.api.teacher.dto.LectureUploadRequest;
 import yoonsome.mulang.api.teacher.dto.TeacherProfileUpdateRequest;
 import yoonsome.mulang.domain.category.entity.Category;
 import yoonsome.mulang.domain.category.repository.CategoryRepository;
+import yoonsome.mulang.domain.category.service.CategoryService;
 import yoonsome.mulang.domain.course.entity.Course;
-import yoonsome.mulang.domain.course.entity.CourseType;
 import yoonsome.mulang.domain.course.repository.CourseRepository;
 import yoonsome.mulang.domain.language.entity.Language;
 import yoonsome.mulang.domain.language.repository.LanguageRepository;
@@ -18,7 +18,7 @@ import yoonsome.mulang.domain.lecture.service.LectureService;
 import yoonsome.mulang.domain.teacher.entity.Teacher;
 import yoonsome.mulang.domain.teacher.service.TeacherService;
 import yoonsome.mulang.domain.user.entity.User;
-import yoonsome.mulang.domain.user.repository.UserRepository;
+import yoonsome.mulang.domain.user.service.UserService;
 import yoonsome.mulang.infra.file.entity.File;
 import yoonsome.mulang.infra.file.service.FileService;
 import java.io.IOException;
@@ -30,12 +30,14 @@ import java.util.List;
 public class TeacherMypageServiceImpl implements TeacherMypageService {
 
     private final TeacherService teacherService;
-    private final CourseRepository courseRepository;
     private final FileService fileService;
-    private final UserRepository userRepository;
+    private final UserService userService;
     private final LectureService lectureService;
+    private final CourseRepository courseRepository;
     private final CategoryRepository categoryRepository;
+    private final CategoryService categoryService;
     private final LanguageRepository languageRepository;
+
 
     // 교사 본인의 강좌 목록 조회
     @Override
@@ -58,9 +60,10 @@ public class TeacherMypageServiceImpl implements TeacherMypageService {
         teacher.setIntroduction(request.getIntroduction());
         teacher.setCareer(request.getCareer());
 
-        User user = userRepository.findById(userId)
-                .orElseThrow(() -> new IllegalArgumentException("유저 정보가 존재하지 않습니다."));
-
+        User user = userService.findById(userId);
+        if (user == null) {
+            throw new IllegalArgumentException("유저 정보가 존재하지 않습니다.");
+        }
         if (request.getNickname() != null && !request.getNickname().isBlank()) {
             user.setNickname(request.getNickname());
         }
@@ -88,17 +91,11 @@ public class TeacherMypageServiceImpl implements TeacherMypageService {
         course.setSubtitle(request.getSubtitle());
         course.setContent(request.getContent());
         course.setPrice(request.getPrice());
-        course.setApplyStartedAt(request.getApplyStartedAt());
-        course.setApplyEndedAt(request.getApplyEndedAt());
-        course.setStartedAt(request.getStartedAt());
-        course.setEndedAt(request.getEndedAt());
         course.setCategory(category);
         course.setLanguage(language);
 
         course.setStatus(request.getStatus() != null ? request.getStatus() : true);
-        course.setCurrentStudent(request.getCurrentStudent() != null ? request.getCurrentStudent() : 0);
         course.setLectureCount(request.getLectureCount() != null ? request.getLectureCount() : 1);
-        course.setType(CourseType.valueOf(request.getType()));
 
         if (request.getThumbnailFile() != null && !request.getThumbnailFile().isEmpty()) {
             File savedThumb = fileService.createFile(request.getThumbnailFile());
