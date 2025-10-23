@@ -27,6 +27,15 @@ public class Course {
     @Column(nullable = false, columnDefinition = "TEXT")
     private String content;
 
+    @Column(nullable = false, updatable = false)
+    private LocalDate createdDate;
+
+    @PrePersist
+    protected void onCreate() {
+        this.createdDate = LocalDate.now();
+    }
+
+    /*
     @Column(name = "apply_started_at", nullable = false)
     private LocalDate applyStartedAt;
 
@@ -38,22 +47,27 @@ public class Course {
 
     @Column(name = "ended_at", nullable = false)
     private LocalDate endedAt;
+    */
 
     @Column(nullable = false)
     private boolean status;
 
+    /*
     @Column(name = "max_student")
     private Integer maxStudent;
 
     @Column(name = "current_student", nullable = false)
     private Integer currentStudent;
+    */
 
     @Column
     private Integer price;
 
+    /*
     @Enumerated(EnumType.STRING)
     @Column(nullable = false, length = 10)
     private CourseType type; // ENUM('VOD', 'ONLINE', 'OFFLINE')
+    */
 
     @Column(name = "lecture_count", nullable = false)
     private Integer lectureCount;

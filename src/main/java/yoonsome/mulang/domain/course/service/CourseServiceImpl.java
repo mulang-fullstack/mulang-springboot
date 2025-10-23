@@ -36,6 +36,7 @@ public class CourseServiceImpl implements CourseService {
     @Autowired
     private final FileService fileService;
 
+    /*
     @Override
     public Page<CourseListResponse> getCourseList(CourseListRequest request, Pageable pageable) {
         Long languageId = request.getLanguageId();
@@ -102,6 +103,8 @@ public class CourseServiceImpl implements CourseService {
             return dto;
         }else return null;
     }
+    */
+
     private String getTeacherName(Course course) {
         String teacherName = course.getTeacher().getUser().getNickname();
         return teacherName;

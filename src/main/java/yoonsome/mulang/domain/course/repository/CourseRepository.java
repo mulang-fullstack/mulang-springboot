@@ -26,7 +26,7 @@ public interface CourseRepository extends JpaRepository<Course,Long> {
                OR c.title LIKE CONCAT('%', :keyword, '%')
                OR (t IS NOT NULL AND u IS NOT NULL AND u.username LIKE CONCAT('%', :keyword, '%')))
     """)
-    Page<Course> findByLanguageIdAndCategoryIdAndKeyword(
+    List<Course> findByLanguageIdAndCategoryIdAndKeyword(
             @Param("languageId") Long languageId,
             @Param("categoryId") Long categoryId,
             @Param("keyword") String keyword,
