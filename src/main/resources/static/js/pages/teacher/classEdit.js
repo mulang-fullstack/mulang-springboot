@@ -16,28 +16,27 @@ document.addEventListener('DOMContentLoaded', () => {
     // 수정 버튼 → classUpdate.jsp 이동
     document.querySelectorAll('.edit-btn').forEach(btn => {
         btn.addEventListener('click', () => {
-            const lectureId = btn.dataset.id;
-            if (!lectureId) return alert('강좌 ID를 찾을 수 없습니다.');
-            // ✅ RESTful 경로에 맞춰 수정
-            location.href = `/teacher/mypage/classes/update/${lectureId}`;
+            const courseId = btn.dataset.id;
+            if (!courseId) return alert('강좌 ID를 찾을 수 없습니다.');
+            location.href = `/teacher/mypage/classes/update/${courseId}`;
         });
     });
 
-    // 삭제 버튼
+    // 삭제 버튼 → 상태를 PRIVATE 으로 변경 (POST 방식)
     document.querySelectorAll('.delete-btn').forEach(btn => {
         btn.addEventListener('click', async () => {
-            const lectureId = btn.dataset.id;
-            if (!lectureId) return alert('강좌 ID를 찾을 수 없습니다.');
+            const courseId = btn.dataset.id;
+            if (!courseId) return alert('강좌 ID를 찾을 수 없습니다.');
 
-            if (confirm('정말 이 클래스를 삭제하시겠습니까?')) {
+            if (confirm('이 클래스를 삭제 처리하시겠습니까?')) {
                 try {
-                    const res = await fetch(`/teacher/mypage/classes/${lectureId}`, {
-                        method: 'DELETE',
+                    const res = await fetch(`/teacher/mypage/delete/${courseId}`, {
+                        method: 'POST',
                         headers: { 'Content-Type': 'application/json' }
                     });
 
                     if (res.ok) {
-                        alert('삭제되었습니다.');
+                        alert('클래스가 삭제되었습니다.');
                         location.reload();
                     } else {
                         alert('삭제 실패');
@@ -50,3 +49,15 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 });
+document.addEventListener('DOMContentLoaded', () => {
+    document.querySelectorAll('.status[data-status]').forEach(el => {
+        const status = el.dataset.status;
+        el.classList.add(status.toLowerCase()); // public / private / pending
+        el.textContent =
+            status === 'PUBLIC' ? '공개'
+                : status === 'PRIVATE' ? '비공개'
+                    : status === 'PENDING' ? '승인대기'
+                        : '-';
+    });
+});
+

@@ -1,25 +1,19 @@
 package yoonsome.mulang.api.teacher.controller;
 
-import jakarta.transaction.Transactional;
+
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
-import yoonsome.mulang.api.course.dto.CourseDetailResponse;
-import yoonsome.mulang.api.teacher.dto.CourseUploadRequest;
+import yoonsome.mulang.api.teacher.dto.CourseUpdateRequest;
+import yoonsome.mulang.api.teacher.dto.TeacherCourseResponse;
+import yoonsome.mulang.api.teacher.dto.TeacherProfileResponse;
 import yoonsome.mulang.api.teacher.dto.TeacherProfileUpdateRequest;
 import yoonsome.mulang.api.teacher.service.TeacherMypageService;
-import yoonsome.mulang.domain.course.entity.Course;
-import yoonsome.mulang.domain.course.service.CourseService;
 import yoonsome.mulang.domain.language.entity.Language;
-import yoonsome.mulang.domain.language.repository.LanguageRepository;
 import yoonsome.mulang.domain.language.service.LanguageService;
 import yoonsome.mulang.infra.security.CustomUserDetails;
-import yoonsome.mulang.domain.teacher.entity.Teacher;
-import yoonsome.mulang.domain.user.entity.User;
 import java.io.IOException;
 import java.util.List;
 
@@ -28,17 +22,16 @@ import java.util.List;
 @RequestMapping("/teacher/mypage")
 public class TeacherMypageController {
 
-    private final TeacherMypageService teacherService;
-    private final CourseService courseService;
-    private final LanguageRepository languageRepository;
+
     private final LanguageService languageService;
+    private final TeacherMypageService teacherMypageService;
 
     /** 프로필 보기 */
     @GetMapping("/profile")
     public String profile(@AuthenticationPrincipal CustomUserDetails userDetails, Model model) {
-        User loginUser = userDetails.getUser();
-        Teacher teacher = teacherService.getTeacherProfile(loginUser.getId());
-        model.addAttribute("teacher", teacher);
+        Long userId = userDetails.getUser().getId();
+        TeacherProfileResponse teacherProfileResponse = teacherMypageService.getTeacherProfileResponse(userId);
+        model.addAttribute("teacher", teacherProfileResponse);
         return "teacher/profile";
     }
 
@@ -46,64 +39,80 @@ public class TeacherMypageController {
     @GetMapping("/profile/edit")
     public String profileEdit(@AuthenticationPrincipal CustomUserDetails userDetails, Model model) {
         Long userId = userDetails.getUser().getId();
-        Teacher teacher = teacherService.getTeacherProfile(userId);
+        TeacherProfileResponse teacherProfileResponse = teacherMypageService.getTeacherProfileResponse(userId);
 
-        List<Language> languages = languageRepository.findAll();
-        //List<Language> languages = languageService.findAll();
+        List<Language> languages = languageService.getAllLanguages();
 
-        model.addAttribute("teacher", teacher);
+        model.addAttribute("teacher", teacherProfileResponse);
         model.addAttribute("languages", languages);
         return "teacher/edit";
     }
 
-    /** 프로필 업데이트 */
+    // 프로필 업데이트
     @PostMapping("/profile/update")
     public String updateProfile(
             @AuthenticationPrincipal CustomUserDetails userDetails,
             @ModelAttribute TeacherProfileUpdateRequest request
     ) throws IOException {
-        teacherService.updateTeacherProfile(userDetails.getUser().getId(), request);
+        teacherMypageService.updateTeacherProfile(userDetails.getUser().getId(), request);
         return "redirect:/teacher/mypage/profile";
-    }
-
-
-    /** 정산 관리 */
-    @GetMapping("/settlement")
-    public String settlement(@AuthenticationPrincipal CustomUserDetails userDetails, Model model) {
-        User loginUser = userDetails.getUser();
-        Teacher teacher = teacherService.getTeacherProfile(loginUser.getId());
-        model.addAttribute("teacher", teacher);
-        return "teacher/settlement";
     }
 
     /** 강좌 수정 폼이동 */
     @GetMapping("/classes/update/{courseId}")
-    public String courseUpdatePage(@PathVariable Long courseId, Model model) {
+    public String courseUpdatePage(
+            @AuthenticationPrincipal CustomUserDetails userDetails,
+            @PathVariable Long courseId,
+            Model model) {
+        Long userId = userDetails.getUser().getId();
+        TeacherCourseResponse course = teacherMypageService.getCourseDetail(userId, courseId);
+        TeacherProfileResponse teacherProfileResponse = teacherMypageService.getTeacherProfileResponse(userId);
 
-        //CourseDetailResponse course = courseService.getCourseDetail(courseId);
-        //model.addAttribute("course", course);
+        model.addAttribute("teacher", teacherProfileResponse);
+        model.addAttribute("course", course);
         return "teacher/classUpdate";
     }
+
     /** 강좌 수정 */
-    /*
-    @PostMapping("/classes/update")
-    public String updateCourse(@ModelAttribute CourseUploadRequest request)
-            throws IOException {
-        courseService.modifyCourse(request);
+    @PostMapping("/classes/update/{courseId}")
+    public String updateCourse(
+            @AuthenticationPrincipal CustomUserDetails userDetails,
+            @PathVariable Long courseId,
+            @ModelAttribute CourseUpdateRequest request
+    )throws IOException {
+        Long userId = userDetails.getUser().getId();
+        teacherMypageService.updateCourse(userId, courseId, request);
         return "redirect:/teacher/mypage/classes/edit";
     }
-    */
 
     /** 클래스 목록 */
     @GetMapping("/classes/edit")
     public String courseEditPage(@AuthenticationPrincipal CustomUserDetails userDetails, Model model) {
-        User loginUser = userDetails.getUser();
-        Teacher teacher = teacherService.getTeacherProfile(loginUser.getId());
-        Long teacherId = teacher.getId();
+        Long userId = userDetails.getUser().getId();
+        List<TeacherCourseResponse> courseList = teacherMypageService.getTeacherCourse(userId);
+        TeacherProfileResponse teacherProfileResponse = teacherMypageService.getTeacherProfileResponse(userId);
 
-        List<Course> courseList = courseService.getCoursesByTeacher(teacherId);
-        model.addAttribute("teacher", teacher);
+        model.addAttribute("teacher", teacherProfileResponse);
         model.addAttribute("courseList", courseList);
         return "teacher/classEdit";
+    }
+
+    /** 클래스 삭제  */
+    @PostMapping("/delete/{courseId}")
+    public String deleteCourse(
+            @AuthenticationPrincipal CustomUserDetails userDetails,
+            @PathVariable Long courseId){
+        Long userId = userDetails.getUser().getId();
+        teacherMypageService.deleteCourse(userId, courseId);
+        return "redirect:/teacher/mypage/classes/edit";
+    }
+
+    // 정산 관리
+    @GetMapping("/settlement")
+    public String settlement(@AuthenticationPrincipal CustomUserDetails userDetails, Model model) {
+        Long userId = userDetails.getUser().getId();
+        TeacherProfileResponse teacherProfileResponse = teacherMypageService.getTeacherProfileResponse(userId);
+        model.addAttribute("teacher", teacherProfileResponse);
+        return "teacher/settlement";
     }
 }

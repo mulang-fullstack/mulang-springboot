@@ -42,4 +42,9 @@ public class LectureServiceImpl implements LectureService {
     public List<Lecture> getLecturesByCourseId(Long courseId) {
         return lectureRepository.findByCourse_Id(courseId);
     }
+
+    @Override
+    public int countByCourse(Course course) {
+        return lectureRepository.countByCourse(course);
+    }
 }

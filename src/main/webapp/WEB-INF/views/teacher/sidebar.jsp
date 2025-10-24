@@ -10,11 +10,11 @@
 <aside class="sidebar">
     <div class="profile">
         <div class="profile-img-wrap">
-            <img src="${teacher.user.file != null ? teacher.user.file.url : '/img/dummy/default-profile.png'}"
+            <img src="${teacher.photoUrl != null ? teacher.photoUrl : '/img/dummy/default-profile.png'}"
                  alt="프로필 이미지">
         </div>
         <div class="profile-info">
-            <span class="nickname">${teacher.user.nickname}</span>
+            <span class="nickname">${teacher.nickname}</span>
         </div>
     </div>
 
