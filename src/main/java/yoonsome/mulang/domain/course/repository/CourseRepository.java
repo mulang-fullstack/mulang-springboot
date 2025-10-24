@@ -8,6 +8,8 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 import yoonsome.mulang.domain.course.entity.Course;
 import yoonsome.mulang.domain.course.entity.StatusType;
+import yoonsome.mulang.domain.teacher.entity.Teacher;
+
 import java.time.LocalDate;
 import java.util.List;
 
@@ -41,4 +43,10 @@ public interface CourseRepository extends JpaRepository<Course,Long> {
             Pageable pageable
     );
     List<Course> findByTeacherId(Long teacherId);
+
+    @Query("SELECT c FROM Course c WHERE c.teacher = :teacher AND c.status IN :statuses")
+    Page<Course> findByTeacherAndStatusIn(
+            @Param("teacher") Teacher teacher,
+            @Param("statuses") List<StatusType> statuses,
+            Pageable pageable);
 }

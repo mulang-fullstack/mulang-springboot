@@ -2,6 +2,9 @@ package yoonsome.mulang.api.teacher.controller;
 
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -14,6 +17,7 @@ import yoonsome.mulang.api.teacher.service.TeacherMypageService;
 import yoonsome.mulang.domain.language.entity.Language;
 import yoonsome.mulang.domain.language.service.LanguageService;
 import yoonsome.mulang.infra.security.CustomUserDetails;
+
 import java.io.IOException;
 import java.util.List;
 
@@ -85,17 +89,24 @@ public class TeacherMypageController {
         return "redirect:/teacher/mypage/classes/edit";
     }
 
-    /** 클래스 목록 */
+    /** 클래스 목록  */
     @GetMapping("/classes/edit")
-    public String courseEditPage(@AuthenticationPrincipal CustomUserDetails userDetails, Model model) {
-        Long userId = userDetails.getUser().getId();
-        List<TeacherCourseResponse> courseList = teacherMypageService.getTeacherCourse(userId);
-        TeacherProfileResponse teacherProfileResponse = teacherMypageService.getTeacherProfileResponse(userId);
+    public String courseEditPage(
+            @AuthenticationPrincipal CustomUserDetails userDetails,
+            @PageableDefault(size = 5) Pageable pageable,
+            Model model) {
 
-        model.addAttribute("teacher", teacherProfileResponse);
-        model.addAttribute("courseList", courseList);
+        Long userId = userDetails.getUser().getId();
+        TeacherProfileResponse teacher = teacherMypageService.getTeacherProfileResponse(userId);
+        Page<TeacherCourseResponse> coursePage = teacherMypageService.getTeacherCoursePage(userId, pageable);
+
+        model.addAttribute("teacher", teacher);
+        model.addAttribute("coursePage", coursePage);
+        model.addAttribute("courses", coursePage.getContent());
+
         return "teacher/classEdit";
     }
+
 
     /** 클래스 삭제  */
     @PostMapping("/delete/{courseId}")
@@ -115,4 +126,7 @@ public class TeacherMypageController {
         model.addAttribute("teacher", teacherProfileResponse);
         return "teacher/settlement";
     }
+
+
+
 }
