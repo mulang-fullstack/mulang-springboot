@@ -1,6 +1,6 @@
-package yoonsome.mulang.domain.enrollment.entity;
+package yoonsome.mulang.domain.payment.entity;
 
-public enum EnrollmentStatus {
+public enum PaymentStatus {
     APPLIED("신청"),
     CANCELLED("취소"),
     PAID("결제완료"),
@@ -8,7 +8,7 @@ public enum EnrollmentStatus {
 
     private final String description;
 
-    EnrollmentStatus(String description) {
+    PaymentStatus(String description) {
         this.description = description;
     }
 

@@ -19,6 +19,7 @@
     margin-bottom: 40px;
     color: var(--text-black);
 }
+
 /* -------------------- 클래스 테이블 -------------------- */
 .class-table {
     width: 100%;
@@ -31,7 +32,7 @@
 /* -------------------- 테이블 헤더 -------------------- */
 .table-header {
     display: grid;
-    grid-template-columns: 180px 1fr 120px 120px 120px;
+    grid-template-columns: 180px 1fr 120px 200px;
     padding: 15px 20px;
 
     font-size: 15px;
@@ -50,7 +51,7 @@
 
 .table-row {
     display: grid;
-    grid-template-columns: 180px 1fr 120px 120px 120px;
+    grid-template-columns: 180px 1fr 120px 200px;
     align-items: center;
     padding: 18px 20px;
 
@@ -84,18 +85,28 @@
 
 /* 버튼을 div처럼 보이게 + 왼쪽 정렬 강제 */
 button.title {
-    display: block;        /* 인라인 → 블록 */
-    width: 100%;           /* 셀 가로폭 꽉 채움 */
+    display: block;
+    width: 100%;
     text-align: left !important;
     background: none;
     border: 0;
     padding: 0;
     margin: 0;
-    font: inherit;         /* 폰트 동일 */
+    font: inherit;
     color: inherit;
     cursor: pointer;
+    transition: color 0.2s;
 }
 
+button.title:hover {
+    color: var(--text-point-main);
+}
+
+/* -------------------- 수강 상태 -------------------- */
+.status {
+    display: flex;
+    justify-content: center;
+}
 
 /* -------------------- 태그 -------------------- */
 .tag {
@@ -109,4 +120,134 @@ button.title {
 .tag.gray {
     background-color: var(--bg-secondary);
     color: var(--text-subtle);
+}
+
+.tag.blue {
+    background-color: var(--bg-white);
+    color: var(--text-info);
+}
+
+.tag.green {
+    background-color: var(--bg-white);
+    color: var(--text-point-main);
+}
+
+.tag.red {
+    background-color: var(--bg-white);
+    color: var(--text-error);
+}
+
+/* -------------------- 진척도 -------------------- */
+.progress-wrapper {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 0 10px;
+}
+
+.progress-bar {
+    flex: 1;
+    height: 8px;
+    background-color: var(--bg-secondary);
+    border-radius: 4px;
+    overflow: hidden;
+}
+
+.progress-fill {
+    height: 100%;
+    background: var(--bg-point-main);
+    border-radius: 4px;
+    transition: width 0.3s ease;
+}
+
+.progress-text {
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--text-primary);
+    min-width: 45px;
+    text-align: right;
+}
+/* 수강 정보 없음 */
+.no-progress {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--text-subtle);
+    padding: 8px 16px;
+    background-color: var(--bg-secondary);
+    border-radius: 4px;
+    border: 1px dashed var(--border-default);
+}
+
+/* -------------------- 빈 상태 -------------------- */
+.empty-state {
+    padding: 60px 20px;
+    text-align: center;
+    color: var(--text-secondary);
+}
+
+.empty-state p {
+    font-size: 16px;
+    margin: 0;
+}
+
+/* -------------------- 반응형 -------------------- */
+@media (max-width: 1024px) {
+    .table-header,
+    .table-row {
+        grid-template-columns: 140px 1fr 100px 180px;
+        gap: 12px;
+    }
+
+    .thumb img {
+        width: 140px;
+        height: 79px;
+    }
+}
+
+@media (max-width: 768px) {
+    .content {
+        padding: 30px 20px;
+    }
+
+    .content h2 {
+        font-size: 24px;
+        margin-bottom: 30px;
+    }
+
+    .table-header {
+        display: none;
+    }
+
+    .table-row {
+        grid-template-columns: 1fr;
+        gap: 12px;
+        padding: 16px;
+    }
+
+    .thumb {
+        width: 100%;
+    }
+
+    .thumb img {
+        width: 100%;
+        height: auto;
+        aspect-ratio: 16/9;
+    }
+
+    .title {
+        font-size: 15px;
+    }
+
+    .status {
+        justify-content: flex-start;
+    }
+
+    .progress-wrapper {
+        width: 100%;
+        padding: 0;
+    }
 }

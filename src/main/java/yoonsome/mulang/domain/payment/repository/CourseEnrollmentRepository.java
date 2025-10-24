@@ -1,10 +1,10 @@
-package yoonsome.mulang.domain.enrollment.repository;
+package yoonsome.mulang.domain.payment.repository;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
-import yoonsome.mulang.domain.enrollment.entity.CourseEnrollment;
+import yoonsome.mulang.domain.payment.entity.CourseEnrollment;
 
 import java.util.List;
 
@@ -19,7 +19,7 @@ public interface CourseEnrollmentRepository extends JpaRepository<CourseEnrollme
         LEFT JOIN FETCH c.teacher t
         LEFT JOIN FETCH t.user
         WHERE ce.student.id = :studentId
-        AND ce.enrollmentStatus IN ('PAID', 'COMPLETED')
+        AND ce.paymentStatus IN ('PAID', 'COMPLETED')
         ORDER BY ce.appliedAt DESC
     """)
     List<CourseEnrollment> findMyCoursesWithDetails(@Param("studentId") Long studentId);
