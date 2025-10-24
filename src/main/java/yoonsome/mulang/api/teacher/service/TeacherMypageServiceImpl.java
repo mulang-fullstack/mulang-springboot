@@ -2,6 +2,9 @@ package yoonsome.mulang.api.teacher.service;
 
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 import yoonsome.mulang.api.teacher.dto.*;
@@ -19,8 +22,10 @@ import yoonsome.mulang.domain.user.entity.User;
 import yoonsome.mulang.domain.user.service.UserService;
 import yoonsome.mulang.infra.file.entity.File;
 import yoonsome.mulang.infra.file.service.FileService;
+
 import java.io.IOException;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -36,23 +41,30 @@ public class TeacherMypageServiceImpl implements TeacherMypageService {
 
     // 교사 본인의 강좌 목록 조회
     @Override
-    public List<TeacherCourseResponse> getTeacherCourse(Long userId) {
+    public Page<TeacherCourseResponse> getTeacherCoursePage(Long userId, Pageable pageable) {
         Teacher teacher = teacherService.getTeacherByUserId(userId);
-        List<Course> courses = courseService.getCoursesByTeacher(teacher.getId());
+        List<StatusType> statuses = List.of(StatusType.PUBLIC, StatusType.PENDING);
 
-        return courses.stream()
+        Page<Course> coursePage = courseService.getTeacherCoursePage(teacher, statuses, pageable);
+
+        List<TeacherCourseResponse> responseList = coursePage.getContent().stream()
                 .map(course -> TeacherCourseResponse.builder()
                         .id(course.getId())
                         .title(course.getTitle())
                         .subtitle(course.getSubtitle())
                         .status(course.getStatus().name())
                         .price(course.getPrice())
-                        .thumbnail(course.getThumbnail())
                         .language(course.getLanguage().getName())
                         .category(course.getCategory().getName())
+                        .thumbnail(course.getThumbnail())
+                        .lectureCount(course.getLectureCount())
+                        .createdDate(course.getCreatedDate())
                         .build())
-                .toList();
+                .collect(Collectors.toList());
+
+        return new PageImpl<>(responseList, pageable, coursePage.getTotalElements());
     }
+
 
     // 교사 프로필 조회
     @Override
