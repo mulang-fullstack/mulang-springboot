@@ -11,7 +11,7 @@ import yoonsome.mulang.domain.category.entity.Category;
 import yoonsome.mulang.domain.category.service.CategoryService;
 import yoonsome.mulang.domain.course.dto.CourseListRequest;
 import yoonsome.mulang.api.course.dto.CourseListResponse;
-import yoonsome.mulang.api.lecture.dto.LectureResponse;
+import yoonsome.mulang.api.course.dto.CourseLectureResponse;
 import yoonsome.mulang.domain.course.entity.Course;
 import yoonsome.mulang.domain.course.entity.StatusType;
 import yoonsome.mulang.domain.course.service.CourseService;
@@ -81,6 +81,7 @@ public class DisplayingCourseServiceImpl implements DisplayingCourseService {
             int reviewCount = reviewService.countReviewByCourseId(course.getId());
             //double averageRating = 2.5;
             //int reviewCount = 1000;
+            System.out.println("#courseId: "+course.getId());
 
             // DTO 생성
             CourseListResponse dto = CourseListResponse.builder()
@@ -98,7 +99,6 @@ public class DisplayingCourseServiceImpl implements DisplayingCourseService {
         }
 
         //** 정렬 수행 **//
-
         switch (request.getSort()) {
             case "rating":
                 dtoList.sort(Comparator.comparingDouble(CourseListResponse::getAverageRating).reversed());
@@ -175,11 +175,11 @@ public class DisplayingCourseServiceImpl implements DisplayingCourseService {
     }
 
     //해당 강좌의 강의 리스트 정보
-    private List<LectureResponse> getLectureList(Long courseId) {
+    private List<CourseLectureResponse> getLectureList(Long courseId) {
         List<Lecture> lectureList = lectureService.getLecturesByCourseId(courseId);
-        List<LectureResponse> lectures = new ArrayList<>();
+        List<CourseLectureResponse> lectures = new ArrayList<>();
         for (Lecture lecture : lectureList) {
-            LectureResponse dto = new LectureResponse(
+            CourseLectureResponse dto = new CourseLectureResponse(
                     lecture.getId(),
                     lecture.getTitle(),
                     lecture.getLength()

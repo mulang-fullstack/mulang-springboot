@@ -52,25 +52,29 @@ public class CourseController {
         model.addAttribute("detail", courseDetailResponse);
         System.out.println("@courseDetail:"+courseDetailResponse);
 
-        /*리뷰*/
+        /*리뷰
         int page = 0;
         int size = 10;
         Pageable pageable = PageRequest.of(page, size, Sort.by("createdAt").descending());
         Page<ReviewResponse> reviewResponse = displayingCourseService.getReviewPageByCourseId(id, pageable);
-        model.addAttribute("reviews", reviewResponse.getContent());
-        System.out.println("@review:"+reviewResponse.getContent());
+        model.addAttribute("review", reviewResponse.getContent());
+        System.out.println("@review:"+reviewResponse.getContent());*/
         return "course/courseDetail";
     }
-    /*리뷰*/
-    @GetMapping("/courseDetail/{id}/reviews")
+    // ✅ 리뷰 비동기 요청용 엔드포인트
+    @GetMapping("/courseDetail/reviews")
     @ResponseBody
-    public Page<ReviewResponse> getCourseReviews(
-            @PathVariable Long id,
+    public Page<ReviewResponse> getReviews(
+            @RequestParam Long courseId,
             @RequestParam(defaultValue = "0") int page,
-            @RequestParam(defaultValue = "4") int size,
-            @RequestParam(defaultValue = "rating") String sort
-            ) {
-        Pageable pageable = PageRequest.of(page, size, Sort.by(sort).descending());
-        return displayingCourseService.getReviewPageByCourseId(id, pageable);
+            @RequestParam(defaultValue = "2") int size,
+            @RequestParam(defaultValue = "rating") String sort // 정렬 파라미터
+    ) {
+        Sort sortOption = "latest".equals(sort)
+                ? Sort.by("createdAt").descending()
+                : Sort.by("rating").descending(); // 기본: rating
+
+        Pageable pageable = PageRequest.of(page, size, sortOption);
+        return displayingCourseService.getReviewPageByCourseId(courseId, pageable);
     }
 }

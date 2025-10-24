@@ -2,9 +2,7 @@ package yoonsome.mulang.api.course.dto;
 
 import lombok.Builder;
 import lombok.Data;
-import yoonsome.mulang.api.lecture.dto.LectureResponse;
 
-import java.time.LocalDate;
 import java.util.List;
 
 @Builder
@@ -22,5 +20,5 @@ public class CourseDetailResponse {
     //private LocalDate endedAt;                  //  강좌 종료일
     private Integer lectureCount;               //  강의 수
     private Integer price;                      //  수강비
-    private List<LectureResponse> lectures;     //  커리큘럼
+    private List<CourseLectureResponse> lectures;     //  커리큘럼
 }

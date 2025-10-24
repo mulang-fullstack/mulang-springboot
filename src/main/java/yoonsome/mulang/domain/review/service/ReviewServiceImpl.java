@@ -18,24 +18,7 @@ import java.util.List;
 public class ReviewServiceImpl implements ReviewService {
     @Autowired
     private final ReviewRepository reviewRepository;
-/*
-    @Override
-    public Page<ReviewResponse> getReviewsByCourseId(Long courseId, Pageable pageable) {
-        Page<CourseReview> reviews = reviewRepository.findByCourseId(courseId, pageable);
-        List<ReviewResponse> reviewResponses = new ArrayList<>();
-        for (CourseReview courseReview : reviews.getContent()) {
-            ReviewResponse reviewResponse = new ReviewResponse(
-                    courseReview.getId(),
-                    courseReview.getStudent().getNickname(),
-                    courseReview.getRating(),
-                    courseReview.getContent(),
-                    courseReview.getCreatedAt(),
-                    courseReview.getUpdatedAt()
-            );
-            reviewResponses.add(reviewResponse);
-        }
-        return new PageImpl<>(reviewResponses, pageable, reviews.getTotalElements());
-    }*/
+
     @Override
     public Page<CourseReview> getReviewsByCourseId(Long courseId, Pageable pageable) {
         return reviewRepository.findByCourseId(courseId, pageable);
@@ -43,11 +26,15 @@ public class ReviewServiceImpl implements ReviewService {
 
     @Override
     public double getAverageRatingByCourseId(Long courseId) {
-        return 0;
+        Double avg = reviewRepository.findRoundedAverageRatingByCourseId(courseId);
+        double averageRating = (avg != null) ? avg : 0.0;
+        return averageRating;
     }
 
     @Override
     public int countReviewByCourseId(Long courseId) {
-        return 0;
+        Integer count = reviewRepository.countReviewByCourseId(courseId);
+        int reviewCount = (count != null) ? count : 0;
+        return reviewCount;
     }
 }
