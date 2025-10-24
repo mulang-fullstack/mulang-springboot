@@ -9,6 +9,7 @@ import yoonsome.mulang.domain.user.entity.User;
 import yoonsome.mulang.domain.user.entity.User.*;
 
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Optional;
 
 public interface UserRepository extends JpaRepository<User, Long> {
@@ -43,4 +44,38 @@ public interface UserRepository extends JpaRepository<User, Long> {
             @Param("keyword") String keyword,
             Pageable pageable
     );
+
+    /**
+     * 오늘 신규 가입자 수
+     */
+    @Query("""
+        SELECT COUNT(u)
+        FROM User u
+        WHERE DATE(u.createdAt) = CURRENT_DATE
+    """)
+    long countTodayNewUsers();
+
+    /**
+     * 전체 사용자 수 (관리자 제외)
+     */
+    @Query("""
+        SELECT COUNT(u)
+        FROM User u
+        WHERE u.role <> 'ADMIN'
+    """)
+    long countTotalUsers();
+
+    /**
+     * 최근 7일 일자별 신규 가입자 수
+     * (대시보드 그래프용)
+     */
+    @Query("""
+        SELECT DATE(u.createdAt), COUNT(u)
+        FROM User u
+        WHERE u.createdAt >= :startDate
+        GROUP BY DATE(u.createdAt)
+        ORDER BY DATE(u.createdAt)
+    """)
+    List<Object[]> countDailyNewUsers(@Param("startDate") LocalDateTime startDate);
+
 }

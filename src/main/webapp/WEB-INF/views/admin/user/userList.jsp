@@ -40,7 +40,7 @@
                         <div class="filter-group">
                             <span class="filter-label">기간</span>
                             <div class="date-filter">
-                                <input type="date" id="startDate" value="${search.startDate != null ? search.startDate.toLocalDate() : ''}">
+                                <input type="date" id="startDate" value="2025-06-18">
                                 <span class="date-separator">~</span>
                                 <input type="date" id="endDate" value="${search.endDate != null ? search.endDate.toLocalDate() : ''}">
                             </div>
@@ -188,7 +188,7 @@
                                 data-role="${user.role}"
                                 data-status="${user.userStatus == "ACTIVE" ? 'active' : 'inactive'}"
                                 data-date="${user.createdAt}">
-                                <td>${page.number * page.size + status.index + 1}</td>
+                                <td>${currentPage * size + status.index + 1}</td>
                                 <td>
                                     <span class="status-dot ${user.userStatus ? 'success' : 'inactive'}"></span>
                                 </td>
@@ -262,8 +262,8 @@
 <script>
     // 기본값 처리로 undefined 방지
     window.paginationData = {
-        currentPage: ${page.number},       // Page.number는 0-based → 1-based로 보정
-        totalPages: ${page.totalPages},        // Page.totalPages로 전체 페이지 수
+        currentPage: ${currentPage},       // Page.number는 0-based → 1-based로 보정
+        totalPages: ${totalPages},        // Page.totalPages로 전체 페이지 수
         baseUrl: '/admin/user'
     };
 

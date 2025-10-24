@@ -39,9 +39,9 @@
                         <div class="filter-group">
                             <span class="filter-label">기간</span>
                             <div class="date-filter">
-                                <input type="date" value="2025-10-13">
+                                <input type="date" id="startDate" value="${search.startDate != null ? search.startDate.toLocalDate() : ''}">
                                 <span class="date-separator">~</span>
-                                <input type="date" value="2025-10-19">
+                                <input type="date" id="endDate" value="${search.endDate != null ? search.endDate.toLocalDate() : ''}">
                             </div>
                         </div>
                         <!-- 언어 -->

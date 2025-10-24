@@ -11,6 +11,9 @@ import yoonsome.mulang.api.admin.user.dto.UserSearchRequest;
 import yoonsome.mulang.domain.user.entity.User;
 import yoonsome.mulang.domain.user.repository.UserRepository;
 
+import java.time.LocalDateTime;
+import java.util.List;
+
 
 @Service
 @RequiredArgsConstructor
@@ -47,6 +50,21 @@ public class UserServiceImpl implements UserService {
     @Override
     public User findById(Long id) {
         return userRepository.findById(id).orElse(null);
+    }
+
+    @Override
+    public long countTotalUsers() {
+        return userRepository.countTotalUsers();
+    }
+
+    @Override
+    public long countTodayNewUsers() {
+        return userRepository.countTodayNewUsers();
+    }
+
+    @Override
+    public List<Object[]> countDailyNewUsers(LocalDateTime startDate) {
+        return userRepository.countDailyNewUsers(startDate);
     }
 
     /**

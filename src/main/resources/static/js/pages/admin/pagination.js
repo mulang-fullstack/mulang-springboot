@@ -19,10 +19,23 @@
     function initPagination() {
         const container = document.getElementById('pagination');
         if (!container) return;
-        if (typeof window.paginationData === 'undefined') return;
+
+        // paginationData가 없거나 totalPages가 1 이하면 숨김
+        if (typeof window.paginationData === 'undefined') {
+            container.style.display = 'none';
+            return;
+        }
 
         const { currentPage = 0, totalPages = 1 } = window.paginationData;
 
+        // 페이지가 1개 이하면 숨김
+        if (totalPages <= 1) {
+            container.style.display = 'none';
+            return;
+        }
+
+        // 페이지네이션 표시
+        container.style.display = '';
         container.innerHTML = '';
 
         // 처음
@@ -63,7 +76,6 @@
         btn.addEventListener('click', () => {
             if (typeof window.changePage === 'function') {
                 window.changePage(page);
-            } else {
             }
         });
         return btn;
