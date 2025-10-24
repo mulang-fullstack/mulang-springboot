@@ -33,14 +33,21 @@
                         <div class="field">
                             <label>이름</label>
                             <div class="field-content">
-                                <span>${teacher.user.username}</span>
+                                <span>${teacher.name}</span>
                             </div>
                         </div>
                         <!-- 이메일 -->
                         <div class="field">
                             <label>이메일</label>
                             <div class="field-content">
-                                <input type="text" name="email" value="${teacher.user.email}" readonly>
+                                <input type="text" name="email" value="${teacher.email}" readonly>
+                            </div>
+                        </div>
+                        <!-- 닉네임 -->
+                        <div class="field">
+                            <label>닉네임</label>
+                            <div class="field-content">
+                                <span>${teacher.nickname}</span>
                             </div>
                         </div>
                         <!-- 프로필 이미지 -->
@@ -49,7 +56,7 @@
                             <div class="field-content">
                                 <div class="profile-img-wrap">
                                     <img id="profileImg"
-                                         src="${teacher.user.file != null ? teacher.user.file.url : '/img/dummy/default-profile.png'}">
+                                         src="${teacher.photoUrl != null ? teacher.photoUrl : '/img/dummy/default-profile.png'}">
                                 </div>
                                 <button type="button" class="camera-btn" onclick="document.getElementById('fileInput').click();">
                                     <img src="/img/icon/bx-camera.svg" alt="사진 변경">
@@ -57,14 +64,6 @@
                                 <input type="file" id="fileInput" name="photo" accept="image/*" hidden>
                             </div>
 
-                        </div>
-
-                        <!-- 닉네임 -->
-                        <div class="field">
-                            <label>닉네임</label>
-                            <div class="input-wrap">
-                                <input type="text" name="nickname" value="${teacher.user.nickname}">
-                            </div>
                         </div>
 
                         <!-- 소개 -->

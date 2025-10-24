@@ -9,6 +9,6 @@ public interface LanguageService {
     String getLanguageNameById(Long id);
     //언어 ID로 Language 엔티티 조회
     Language getById(Long id);
-    //모든 언어
+    //전체 언어목록
     List<Language> getAllLanguages();
 }

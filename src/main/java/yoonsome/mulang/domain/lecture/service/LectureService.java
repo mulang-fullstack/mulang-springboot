@@ -16,4 +16,6 @@ public interface LectureService {
     Lecture getLectureById(Long lectureId);
 
     List<Lecture> getLecturesByCourseId(Long courseId);
+    // lecture 개수세기
+    int countByCourse(Course course);
 }

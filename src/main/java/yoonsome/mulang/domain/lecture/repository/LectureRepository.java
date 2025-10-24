@@ -14,4 +14,8 @@ public interface LectureRepository extends JpaRepository<Lecture, Long> {
 
     // 특정 코스 내 특정 강의 조회
     Optional<Lecture> findByCourse_IdAndId(Long courseId, Long lectureId);
+
+    // lecture 개수 세기
+    int countByCourse(Course course);
+
 }

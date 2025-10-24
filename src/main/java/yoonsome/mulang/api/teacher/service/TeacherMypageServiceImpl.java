@@ -4,18 +4,13 @@ import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
-import yoonsome.mulang.api.teacher.dto.CourseUploadRequest;
-import yoonsome.mulang.api.teacher.dto.LectureUploadRequest;
-import yoonsome.mulang.api.teacher.dto.TeacherProfileUpdateRequest;
+import yoonsome.mulang.api.teacher.dto.*;
 import yoonsome.mulang.domain.category.entity.Category;
-import yoonsome.mulang.domain.category.repository.CategoryRepository;
 import yoonsome.mulang.domain.category.service.CategoryService;
 import yoonsome.mulang.domain.course.entity.Course;
 import yoonsome.mulang.domain.course.entity.StatusType;
-import yoonsome.mulang.domain.course.repository.CourseRepository;
 import yoonsome.mulang.domain.course.service.CourseService;
 import yoonsome.mulang.domain.language.entity.Language;
-import yoonsome.mulang.domain.language.repository.LanguageRepository;
 import yoonsome.mulang.domain.language.service.LanguageService;
 import yoonsome.mulang.domain.lecture.service.LectureService;
 import yoonsome.mulang.domain.teacher.entity.Teacher;
@@ -29,7 +24,6 @@ import java.util.List;
 
 @Service
 @RequiredArgsConstructor
-@Transactional
 public class TeacherMypageServiceImpl implements TeacherMypageService {
 
     private final TeacherService teacherService;
@@ -42,15 +36,38 @@ public class TeacherMypageServiceImpl implements TeacherMypageService {
 
     // 교사 본인의 강좌 목록 조회
     @Override
-    public List<Course> getTeacherCourses(Long userId) {
+    public List<TeacherCourseResponse> getTeacherCourse(Long userId) {
         Teacher teacher = teacherService.getTeacherByUserId(userId);
-        return courseService.getCoursesByTeacher(teacher.getId());
+        List<Course> courses = courseService.getCoursesByTeacher(teacher.getId());
+
+        return courses.stream()
+                .map(course -> TeacherCourseResponse.builder()
+                        .id(course.getId())
+                        .title(course.getTitle())
+                        .subtitle(course.getSubtitle())
+                        .status(course.getStatus().name())
+                        .price(course.getPrice())
+                        .thumbnail(course.getThumbnail())
+                        .language(course.getLanguage().getName())
+                        .category(course.getCategory().getName())
+                        .build())
+                .toList();
     }
 
     // 교사 프로필 조회
     @Override
-    public Teacher getTeacherProfile(Long userId) {
-        return teacherService.getTeacherByUserId(userId);
+    public TeacherProfileResponse getTeacherProfileResponse(Long userId) {
+        Teacher teacher = teacherService.getTeacherByUserId(userId);
+        User user = userService.findById(userId);
+
+        return new TeacherProfileResponse(
+                user.getUsername(),
+                user.getNickname(),
+                user.getEmail(),
+                teacher.getIntroduction(),
+                teacher.getCareer(),
+                user.getFile() != null? user.getFile().getUrl() : null
+        );
     }
 
     // 교사 프로필 수정
@@ -86,21 +103,16 @@ public class TeacherMypageServiceImpl implements TeacherMypageService {
         Language language= languageService.getById(request.getLanguageId());
         Category category = categoryService.getById(request.getCategoryId());
 
-
         Course course = new Course();
         course.setTeacher(teacher);
         course.setTitle(request.getTitle());
         course.setSubtitle(request.getSubtitle());
         course.setContent(request.getContent());
-
         course.setHtmlContent(request.getContent());
-
-
         course.setPrice(request.getPrice());
         course.setCategory(category);
         course.setLanguage(language);
         course.setStatus(request.getStatus() != null ? request.getStatus() : StatusType.PENDING);
-
         course.setLectureCount(request.getLectureCount() != null ? request.getLectureCount() : 1);
 
         if (request.getThumbnailFile() != null && !request.getThumbnailFile().isEmpty()) {
@@ -120,5 +132,80 @@ public class TeacherMypageServiceImpl implements TeacherMypageService {
                 );
             }
         }
+    }
+
+    @Override
+    public TeacherCourseResponse getCourseDetail(Long userId, Long courseId) {
+        Teacher teacher = teacherService.getTeacherByUserId(userId);
+        Course course = courseService.getCourse(courseId);
+
+        if (!course.getTeacher().getId().equals(teacher.getId())) {
+            throw new IllegalArgumentException("본인의 강좌만 조회할 수 있습니다.");
+        }
+
+        return TeacherCourseResponse.builder()
+                .id(course.getId())
+                .title(course.getTitle())
+                .subtitle(course.getSubtitle())
+                .status(course.getStatus().name())
+                .price(course.getPrice())
+                .language(course.getLanguage().getName())
+                .category(course.getCategory().getName())
+                .thumbnail(course.getThumbnail())
+                .content(course.getContent())
+                .htmlContent(course.getHtmlContent())
+                .createdDate(course.getCreatedDate())
+                .lectureCount(course.getLectureCount())
+                .build();
+    }
+
+    @Override
+    @Transactional
+    public void updateCourse(Long userId, Long courseId, CourseUpdateRequest request) throws IOException {
+        Teacher teacher = teacherService.getTeacherByUserId(userId);
+        Course course = courseService.getCourse(courseId);
+
+        if (!course.getTeacher().getId().equals(teacher.getId())) {
+            throw new IllegalArgumentException("본인의 강좌만 수정할 수 있습니다.");
+        }
+        if (request.getTitle() != null) course.setTitle(request.getTitle());
+        if (request.getSubtitle() != null) course.setSubtitle(request.getSubtitle());
+        if (request.getContent() != null) {
+            course.setContent(request.getContent());
+            course.setHtmlContent(request.getContent());
+        }
+        if (request.getPrice() != null) course.setPrice(request.getPrice());
+        if (request.getStatus() != null) course.setStatus(request.getStatus());
+
+        MultipartFile thumbnail = request.getThumbnailFile();
+        if (thumbnail != null && !thumbnail.isEmpty()) {
+            File savedThumb = fileService.createFile(thumbnail);
+            course.setThumbnail(savedThumb.getUrl());
+        }
+
+        if (request.getCategoryId() != null) {
+            Category category = categoryService.getById(request.getCategoryId());
+            course.setCategory(category);
+        }
+        if (request.getLanguageId() != null) {
+            Language language = languageService.getById(request.getLanguageId());
+            course.setLanguage(language);
+        }
+
+        int lectureCount = lectureService.countByCourse(course);
+        course.setLectureCount(lectureCount);
+        courseService.registerCourse(course);
+    }
+
+    @Override
+    @Transactional
+    public void deleteCourse(Long userId, Long courseId) {
+        Teacher teacher = teacherService.getTeacherByUserId(userId);
+        Course course = courseService.getCourse(courseId);
+
+        if (!course.getTeacher().getId().equals(teacher.getId())) {
+            throw new IllegalArgumentException("본인의 강좌만 수정할 수 있습니다.");
+        }
+        course.setStatus(StatusType.PRIVATE);
     }
 }
