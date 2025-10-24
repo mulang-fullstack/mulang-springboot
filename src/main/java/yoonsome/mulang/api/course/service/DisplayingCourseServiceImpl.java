@@ -1,76 +1,126 @@
 package yoonsome.mulang.api.course.service;
 
+import jakarta.servlet.http.HttpSession;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageImpl;
-import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.*;
 import org.springframework.stereotype.Service;
 import yoonsome.mulang.api.course.dto.CourseDetailResponse;
-import yoonsome.mulang.api.course.dto.CourseListRequest;
+import yoonsome.mulang.api.review.ReviewResponse;
+import yoonsome.mulang.domain.category.entity.Category;
+import yoonsome.mulang.domain.category.service.CategoryService;
+import yoonsome.mulang.domain.course.dto.CourseListRequest;
 import yoonsome.mulang.api.course.dto.CourseListResponse;
 import yoonsome.mulang.api.lecture.dto.LectureResponse;
-import yoonsome.mulang.api.review.ReviewResponse;
 import yoonsome.mulang.domain.course.entity.Course;
 import yoonsome.mulang.domain.course.entity.StatusType;
 import yoonsome.mulang.domain.course.service.CourseService;
+import yoonsome.mulang.domain.language.service.LanguageService;
 import yoonsome.mulang.domain.lecture.entity.Lecture;
 import yoonsome.mulang.domain.lecture.service.LectureService;
+import yoonsome.mulang.domain.review.entity.CourseReview;
 import yoonsome.mulang.domain.review.service.ReviewService;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 
 @Transactional
 @RequiredArgsConstructor
 @Service
 public class DisplayingCourseServiceImpl implements DisplayingCourseService {
+    private final LanguageService languageService;
+    private final CategoryService categoryService;
     private final CourseService courseService;
     private final LectureService lectureService;
+    private final ReviewService reviewService;
 
+    //언어 이름
+    //LanguageId null일 경우에 세션에서 마지막 사용한 값으로 설정, 세션값 null일 경우에 초기값 1로 설정
     @Override
-    public Page<CourseListResponse> getCourseList(CourseListRequest request, Pageable pageable) {
-        Long languageId = request.getLanguageId();
-        Long categoryId = request.getCategoryId();
-        String keyword = request.getKeyword();
-        StatusType status = request.getStatus();
-
-        List<Course> courseList = courseService.getCourseList(languageId, categoryId, keyword, status, null, null, null, null);
-
-        // 2. DTO 리스트 생성
-        List<CourseListResponse> dtoList = new ArrayList<>();
-
-        for (Course course : courseList) {
-            // 리뷰 정보 가져오기
-            //double averageRating = reviewService.getAverageRatingByCourseId(course.getId());
-            //int reviewCount = reviewService.countReviewByCourseId(course.getId());
-            double averageRating = 2.5;
-            int reviewCount = 1000;
-
-            //강사 정보 가져오기
-            //String teacherName = getTeacherName(course);
-            //String teacherName = course.getTeacher().getUser().getUsername();
-            //System.out.println("#teacherName: " + teacherName);
-            //String teacherName = "예시 홍길동 선생님";
-
-            // DTO 생성
-            CourseListResponse dto = new CourseListResponse(
-                    course.getId(),
-                    course.getThumbnail(),
-                    course.getTitle(),
-                    course.getSubtitle(),
-                    getTeacherName(course),
-                    averageRating,
-                    reviewCount,
-                    course.getPrice()
-            );
-            dtoList.add(dto);
-        }
-        // 3. PageImpl로 다시 Page 객체 생성
-        return new PageImpl<>(dtoList, pageable, courseList.size());
-        //return null;
+    public String getLanguageName(CourseListRequest request, HttpSession session){
+        resolveLanguageId(request, session);
+        return languageService.getLanguageNameById(request.getLanguageId());
     }
 
+    //카테고리 리스트
+    @Override
+    public List<Category> getCategoryList(CourseListRequest request){
+        return categoryService.getCategoryListByLanguageId(request.getLanguageId());
+    }
+
+    //강좌 리스트 정보 페이지 객체
+    @Override
+    public Page<CourseListResponse> getCoursePage(CourseListRequest request, HttpSession session) {
+        //** request dto에 변수값 담아서 강좌 페이지 객체 가져오기 **//
+        //languageId 세션 복원/저장
+        resolveLanguageId(request, session);
+
+        //sort 세션 복원/저장
+        if (request.getSort() == null) {
+            String sessionSort = (String) session.getAttribute("sort");
+            request.setSort(sessionSort != null ? sessionSort : "rating");
+        } else {
+            session.setAttribute("sort", request.getSort());
+        }
+
+        //status: 공개
+        request.setStatus(StatusType.PUBLIC);
+        //한 페이지에 가져올 강좌 수 4개
+        request.setSize(4);
+        System.out.println("#displaying request: "+ request);
+        Page<Course> coursePage = courseService.getCourseList(request);
+
+        //**CourseListResponse DTO 리스트 생성**//
+        List<CourseListResponse> dtoList = new ArrayList<>();
+
+        for (Course course : coursePage) {
+            //System.out.println("#course.getId(): "+ course.getId());
+            // 리뷰 정보 가져오기
+            double averageRating = reviewService.getAverageRatingByCourseId(course.getId());
+            int reviewCount = reviewService.countReviewByCourseId(course.getId());
+            //double averageRating = 2.5;
+            //int reviewCount = 1000;
+
+            // DTO 생성
+            CourseListResponse dto = CourseListResponse.builder()
+                    .id(course.getId())
+                    .thumbnail(course.getThumbnail())
+                    .title(course.getTitle())
+                    .subtitle(course.getSubtitle())
+                    .teacherName(getTeacherName(course))
+                    .averageRating(averageRating)
+                    .reviewCount(reviewCount)
+                    .price(course.getPrice())
+                    .createdDate(course.getCreatedDate())
+                    .build();
+            dtoList.add(dto);
+        }
+
+        //** 정렬 수행 **//
+
+        switch (request.getSort()) {
+            case "rating":
+                dtoList.sort(Comparator.comparingDouble(CourseListResponse::getAverageRating).reversed());
+                break;
+            case "review":
+                dtoList.sort(Comparator.comparingInt(CourseListResponse::getReviewCount).reversed());
+                break;
+            case "latest":
+                dtoList.sort(Comparator.comparing(CourseListResponse::getCreatedDate).reversed());
+                break;
+            default:
+                break;
+        }
+
+        //** Pageable 생성 **//
+        Pageable pageable = PageRequest.of(request.getPage(), request.getSize());
+
+        //** PageImpl로 다시 Page 객체 생성 **//
+        return new PageImpl<>(dtoList, pageable, coursePage.getTotalElements());
+    }
+
+    //강좌 상세페이지 정보(강의소개, 커리큘럼)
     @Override
     public CourseDetailResponse getCourseDetail(long id) {
         Course course = courseService.getCourse(id);
@@ -87,6 +137,44 @@ public class DisplayingCourseServiceImpl implements DisplayingCourseService {
                 .build();
         return dto;
     }
+
+    //강좌 상세페이지 리뷰 정보(리뷰)
+    @Override
+    public Page<ReviewResponse> getReviewPageByCourseId(Long courseId, Pageable pageable){
+        Page<CourseReview> reviews = reviewService.getReviewsByCourseId(courseId, pageable);
+        List<ReviewResponse> reviewResponses = new ArrayList<>();
+        for (CourseReview courseReview : reviews.getContent()) {
+            ReviewResponse reviewResponse = new ReviewResponse(
+                    courseReview.getId(),
+                    courseReview.getStudent().getNickname(),
+                    courseReview.getRating(),
+                    courseReview.getContent(),
+                    courseReview.getCreatedAt(),
+                    courseReview.getUpdatedAt()
+            );
+            reviewResponses.add(reviewResponse);
+        }
+        return new PageImpl<>(reviewResponses, pageable, reviews.getTotalElements());
+    }
+
+    //LanguageId null일 경우에 세션에서 마지막 사용한 값으로 설정, 세션값 null일 경우에 초기값 1로 설정
+    private void resolveLanguageId(CourseListRequest request, HttpSession session){
+        //languageId 세션 복원/저장
+        if (request.getLanguageId() == null) {
+            Long sessionLanguageId = (Long) session.getAttribute("languageId");
+            request.setLanguageId(sessionLanguageId != null ? sessionLanguageId : 1L);
+        } else {
+            session.setAttribute("languageId", request.getLanguageId());
+        }
+    }
+
+    //해당 강좌의 강사 이름
+    private String getTeacherName(Course course) {
+        String teacherName = course.getTeacher().getUser().getNickname();
+        return teacherName;
+    }
+
+    //해당 강좌의 강의 리스트 정보
     private List<LectureResponse> getLectureList(Long courseId) {
         List<Lecture> lectureList = lectureService.getLecturesByCourseId(courseId);
         List<LectureResponse> lectures = new ArrayList<>();
@@ -99,10 +187,5 @@ public class DisplayingCourseServiceImpl implements DisplayingCourseService {
             lectures.add(dto);
         }
         return lectures;
-    }
-
-    private String getTeacherName(Course course) {
-        String teacherName = course.getTeacher().getUser().getNickname();
-        return teacherName;
     }
 }

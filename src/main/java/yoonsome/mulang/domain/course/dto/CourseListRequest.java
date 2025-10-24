@@ -1,15 +1,18 @@
-package yoonsome.mulang.api.course.dto;
+package yoonsome.mulang.domain.course.dto;
 
 import lombok.Data;
 import yoonsome.mulang.domain.course.entity.StatusType;
+import java.time.LocalDate;
 
 @Data
 public class CourseListRequest {
     private Long languageId;
     private Long categoryId;
     private String keyword;
+    private StatusType status;
+    private LocalDate startDate;
+    private LocalDate endDate;
     private String sort;
-    private StatusType status = StatusType.PUBLIC;
-    private int page = 0;
-    private int size = 4;
+    private int page;
+    private int size;
 }

@@ -18,7 +18,7 @@ import java.util.List;
 public class ReviewServiceImpl implements ReviewService {
     @Autowired
     private final ReviewRepository reviewRepository;
-
+/*
     @Override
     public Page<ReviewResponse> getReviewsByCourseId(Long courseId, Pageable pageable) {
         Page<CourseReview> reviews = reviewRepository.findByCourseId(courseId, pageable);
@@ -35,6 +35,10 @@ public class ReviewServiceImpl implements ReviewService {
             reviewResponses.add(reviewResponse);
         }
         return new PageImpl<>(reviewResponses, pageable, reviews.getTotalElements());
+    }*/
+    @Override
+    public Page<CourseReview> getReviewsByCourseId(Long courseId, Pageable pageable) {
+        return reviewRepository.findByCourseId(courseId, pageable);
     }
 
     @Override

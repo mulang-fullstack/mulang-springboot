@@ -40,7 +40,7 @@ body {
     justify-content: space-between;
     //align-items: flex-start;
     gap: 40px;
-    height: 300px;
+    height: 250px;
     border-top: var(--border-primary);
     border-bottom: var(--border-primary);
     background: var(--bg-white);
@@ -51,14 +51,14 @@ body {
 /* 강의 이미지 */
 .course-thumb {
     width: 347px;
-    height: 250px;
+    height: 200px;
 }
 
 /* 강의 정보 */
 .course-info {
     display: flex;
     flex-direction: column;
-    gap: 20px;
+    gap: 30px;
     flex: 1;
 }
 
