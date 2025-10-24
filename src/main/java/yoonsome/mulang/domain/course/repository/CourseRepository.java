@@ -1,5 +1,7 @@
 package yoonsome.mulang.domain.course.repository;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -23,21 +25,20 @@ public interface CourseRepository extends JpaRepository<Course,Long> {
           AND (:categoryId IS NULL OR c.category.id = :categoryId)
           AND (:keyword IS NULL OR :keyword = ''
                OR c.title LIKE CONCAT('%', :keyword, '%')
-               OR (t IS NOT NULL AND u IS NOT NULL AND u.username LIKE CONCAT('%', :keyword, '%')))
-          AND (:teacherId IS NULL OR c.teacher.id = :teacherId)
-          AND (:status IS NULL OR c.status = :status)
+               OR (t IS NOT NULL AND u IS NOT NULL AND u.nickname LIKE CONCAT('%', :keyword, '%')))
           AND (:keyword IS NULL OR c.title LIKE %:keyword%)
-          AND (:createdDate IS NULL OR c.createdDate = :createdDate)
+          AND (:status IS NULL OR c.status = :status)
+          AND (:startDate IS NULL OR c.createdDate >= :startDate)
+          AND (:endDate IS NULL OR c.createdDate <= :endDate)
     """)
-    List<Course> findByLanguageIdAndCategoryIdAndKeywordAndStatusAndTeacherIdAndCreatedDate(
+    Page<Course> findByLanguageIdAndCategoryIdAndKeywordAndStatusAndCreatedDate(
             @Param("languageId") Long languageId,
             @Param("categoryId") Long categoryId,
             @Param("keyword") String keyword,
             @Param("status") StatusType status,
-            @Param("teacherId") Long teacherId,
-            @Param("createdDate") LocalDate createdDate,
-            @Param("startedDate") LocalDate startedDate,
-            @Param("endedDate") LocalDate endedDate
-            );
+            @Param("startDate") LocalDate startDate,
+            @Param("endDate") LocalDate endDate,
+            Pageable pageable
+    );
     List<Course> findByTeacherId(Long teacherId);
 }
