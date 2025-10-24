@@ -1,5 +1,6 @@
 <%@ page contentType="text/html;charset=utf-8" %>
 <%@ taglib prefix="c" uri="jakarta.tags.core" %>
+<%@ taglib prefix="fmt" uri="jakarta.tags.fmt" %>
 <!DOCTYPE html>
 <html lang="ko">
 <head>
@@ -28,74 +29,57 @@
                     <div class="table-header">
                         <span>썸네일</span>
                         <span>제목</span>
-                        <span>강좌 유형</span>
-                        <span>수강 상태</span>
-                        <span>수강기간</span>
+                        <span>강사명</span>
+                        <span>진척도</span>
                     </div>
 
                     <div class="table-body">
-                        <c:forEach var="enrollment" items="${enrollment}">
+                        <c:forEach var="course" items="${mycourseDTO}">
                             <div class="table-row">
                                 <!-- 썸네일 -->
                                 <div class="thumb">
-                                    <img src="https://placehold.co/160x90" alt="썸네일">
+                                    <img src="${course.courseThumbnail}" alt="썸네일">
                                 </div>
 
                                 <!-- 강좌 제목 -->
-                                <button type="button" class="title" onclick="openPlayer(${enrollment.course.id})">
-                                        ${enrollment.course.title}
+                                <button type="button" class="title" onclick="openPlayer(${course.courseId})">
+                                        ${course.courseTitle}
                                 </button>
 
-                                <!-- 강좌 타입 -->
-                                <div class="type">
+                                <!-- 강사명 -->
+                                <div class="teacher-name">
                                     <c:choose>
-                                        <c:when test="${enrollment.course.type.name() == 'ONLINE'}">온라인</c:when>
-                                        <c:when test="${enrollment.course.type.name() == 'OFFLINE'}">오프라인</c:when>
-                                        <c:when test="${enrollment.course.type.name() == 'HYBRID'}">온/오프라인</c:when>
-                                        <c:otherwise>${enrollment.course.type}</c:otherwise>
-                                    </c:choose>
-                                </div>
-
-                                <!-- 수강 상태 -->
-                                <div class="status">
-                                    <c:choose>
-                                        <c:when test="${enrollment.enrollmentStatus.name() == 'APPLIED'}">
-                                            <span class="tag gray">신청</span>
-                                        </c:when>
-                                        <c:when test="${enrollment.enrollmentStatus.name() == 'PAID'}">
-                                            <span class="tag blue">수강중</span>
-                                        </c:when>
-                                        <c:when test="${enrollment.enrollmentStatus.name() == 'COMPLETED'}">
-                                            <span class="tag green">수강완료</span>
-                                        </c:when>
-                                        <c:when test="${enrollment.enrollmentStatus.name() == 'CANCELLED'}">
-                                            <span class="tag red">취소</span>
+                                        <c:when test="${not empty course.teacherName}">
+                                            ${course.teacherName}
                                         </c:when>
                                         <c:otherwise>
-                                            <span class="tag gray">${enrollment.enrollmentStatus}</span>
+                                            <span class="no-teacher">-</span>
                                         </c:otherwise>
                                     </c:choose>
                                 </div>
 
-                                <!-- 강좌 기간 -->
-                                <div class="date">
-                                    <c:if test="${not empty enrollment.course.startedAt and not empty enrollment.course.endedAt}">
-                                        ${enrollment.course.startedAt} ~ ${enrollment.course.endedAt}
-                                    </c:if>
-                                    <c:if test="${empty enrollment.course.startedAt or empty enrollment.course.endedAt}">
-                                        <c:if test="${not empty enrollment.appliedAt}">
-                                            ${enrollment.appliedAt}
-                                        </c:if>
-                                        <c:if test="${empty enrollment.appliedAt}">
-                                            -
-                                        </c:if>
-                                    </c:if>
+                                <!-- 진척도 -->
+                                <div class="progress-wrapper">
+                                    <c:choose>
+                                        <c:when test="${course.progressPercentage == 0 or course.progressPercentage == null}">
+                                            <span class="no-progress">수강 정보 없음</span>
+                                        </c:when>
+                                        <c:otherwise>
+                                            <div class="progress-bar">
+                                                <div class="progress-fill" style="width: ${course.progressPercentage}%"></div>
+                                            </div>
+                                            <span class="progress-text">
+                                                ${course.viewedLectures} / ${course.totalLectures}
+                                                (<fmt:formatNumber value="${course.progressPercentage}" maxFractionDigits="1" />%)
+                                            </span>
+                                        </c:otherwise>
+                                    </c:choose>
                                 </div>
                             </div>
                         </c:forEach>
 
                         <!-- 데이터가 없을 때 -->
-                        <c:if test="${empty enrollment}">
+                        <c:if test="${empty mycourseDTO}">
                             <div class="empty-state">
                                 <p>수강 중인 강좌가 없습니다.</p>
                             </div>

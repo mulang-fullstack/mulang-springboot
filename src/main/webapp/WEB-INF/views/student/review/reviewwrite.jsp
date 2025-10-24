@@ -28,14 +28,13 @@
                 <form action="/mypage/review/submit" method="post" class="review-form">
                     <div class="form-field">
                         <label for="title">강좌선택</label>
-                        <select id="title" name="title" required>
+                        <select id="title" name="courseId" required>
                             <option value="">강좌를 선택하세요</option>
-                            <option value="5">수학</option>
-                            <option value="4">영어</option>
-                            <option value="3">과학</option>
-                            <option value="2">미술</option>
-                            <option value="1">영어과학</option>
+                            <c:forEach var="course" items="${mycourseDTO}">
+                                <option value="${course.courseId}">${course.courseTitle}</option>
+                            </c:forEach>
                         </select>
+
                     </div>
 
                     <div class="form-field">
