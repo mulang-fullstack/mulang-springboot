@@ -95,7 +95,6 @@ async function fetchUserList(params) {
 // 테이블 렌더링
 function renderUserTable(users, currentPage, pageSize) {
     const tbody = document.querySelector('#memberTable tbody');
-
     if (!users || users.length === 0) {
         tbody.innerHTML = '<tr><td colspan="9" class="no-data">등록된 회원이 없습니다.</td></tr>';
         return;
@@ -149,14 +148,15 @@ function updatePagination(currentPage, totalPages) {
     window.paginationData = {
         currentPage: currentPage,
         totalPages: totalPages,
-        baseUrl: '/admin/user'
+        baseUrl: '/admin/user',
+        asyncMode: true
     };
 
-    // pagination.js의 함수 호출
     if (typeof renderPagination === 'function') {
         renderPagination();
     }
 }
+
 
 // 검색 실행
 async function performSearch() {
@@ -164,8 +164,8 @@ async function performSearch() {
     const data = await fetchUserList(params);
 
     if (data) {
-        renderUserTable(data.users, data.currentPage, data.size);
-        updatePagination(data.currentPage, data.totalPages);
+        renderUserTable(data.users, data.page.number, data.page.size);
+        updatePagination(data.page.number, data.page.totalPages);
     }
 }
 
@@ -177,8 +177,8 @@ window.changePage = async function(page) {
     const data = await fetchUserList(params);
 
     if (data) {
-        renderUserTable(data.users, data.currentPage, data.size);
-        updatePagination(data.currentPage, data.totalPages);
+        renderUserTable(data.users, data.page.number, data.page.size);
+        updatePagination(data.page.number, data.page.totalPages);
     }
 };
 
