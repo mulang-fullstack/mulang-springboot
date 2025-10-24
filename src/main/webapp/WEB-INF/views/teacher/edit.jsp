@@ -43,6 +43,13 @@
                                 <input type="text" name="email" value="${teacher.email}" readonly>
                             </div>
                         </div>
+                        <!-- 닉네임 -->
+                        <div class="field">
+                            <label>닉네임</label>
+                            <div class="field-content">
+                                <span>${teacher.nickname}</span>
+                            </div>
+                        </div>
                         <!-- 프로필 이미지 -->
                         <div class="field">
                             <label>프로필 이미지</label>
@@ -57,14 +64,6 @@
                                 <input type="file" id="fileInput" name="photo" accept="image/*" hidden>
                             </div>
 
-                        </div>
-
-                        <!-- 닉네임 -->
-                        <div class="field">
-                            <label>닉네임</label>
-                            <div class="input-wrap">
-                                <input type="text" name="nickname" value="${teacher.nickname}">
-                            </div>
                         </div>
 
                         <!-- 소개 -->

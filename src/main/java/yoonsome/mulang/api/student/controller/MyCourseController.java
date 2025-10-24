@@ -43,8 +43,8 @@ public class MyCourseController {
     // 임시 더미더미
     @GetMapping("/player")
     public String player(Model model) {
-        Long testCourseId = 13L;
-        Long testLectureId = 12L;
+        Long testCourseId = 20L;
+        Long testLectureId = 16L;
 
         Lecture lecture = mycourseService.getLecture(testLectureId);
         List<Lecture> lectureList = mycourseService.getLectureListByCourseId(testCourseId);
