@@ -1,9 +1,15 @@
 package yoonsome.mulang.api.course.dto;
 
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
+import yoonsome.mulang.domain.category.entity.Category;
+
+import java.time.LocalDate;
+import java.util.List;
 
 @AllArgsConstructor
+@Builder
 @Data
 public class CourseListResponse {
     private Long id;               //courseId 상세페이지 이동용
@@ -14,4 +20,5 @@ public class CourseListResponse {
     private double averageRating;  // 별점
     private int reviewCount;       // 리뷰 수
     private Integer price;         // 수강료
+    private LocalDate createdDate; // 강의 등록일
 }

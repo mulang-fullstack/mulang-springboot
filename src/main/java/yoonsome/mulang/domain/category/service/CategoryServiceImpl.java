@@ -3,7 +3,7 @@ package yoonsome.mulang.domain.category.service;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import yoonsome.mulang.api.course.dto.CourseListRequest;
+import yoonsome.mulang.domain.course.dto.CourseListRequest;
 import yoonsome.mulang.domain.category.entity.Category;
 import yoonsome.mulang.domain.category.repository.CategoryRepository;
 
@@ -16,8 +16,7 @@ public class CategoryServiceImpl implements CategoryService {
     private final CategoryRepository categoryRepository;
 
     @Override
-    public List<Category> getCategoryListByLanguageId(CourseListRequest request) {
-        Long languageId = request.getLanguageId();
+    public List<Category> getCategoryListByLanguageId(Long languageId) {
         return categoryRepository.findByLanguage_Id(languageId);
     }
     @Override
