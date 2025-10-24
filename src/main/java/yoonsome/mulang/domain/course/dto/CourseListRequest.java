@@ -10,8 +10,8 @@ public class CourseListRequest {
     private Long categoryId;
     private String keyword;
     private StatusType status;
-    private LocalDate startDate;
-    private LocalDate endDate;
+    private LocalDate startedDate;
+    private LocalDate endedDate;
     private String sort;
     private int page;
     private int size;

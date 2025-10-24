@@ -45,18 +45,16 @@ public class CourseServiceImpl implements CourseService {
                 request.getCategoryId(),
                 request.getKeyword(),
                 request.getStatus(),
-                request.getStartDate(),
-                request.getEndDate(),
+                request.getStartedDate(),
+                request.getEndedDate(),
                 pageable
         );
     }
-
     /* teacher 강사별 강좌 리스트 가져오기 */
     @Override
     public List<Course> getCoursesByTeacher(Long teacherId) {
         return courseRepository.findByTeacherId(teacherId);
     }
-
     /*강좌 상세페이지 강좌 상세 정보 가져오기*/
     @Override
     public Course getCourse(long id){
@@ -65,13 +63,11 @@ public class CourseServiceImpl implements CourseService {
            return optCourse.get();
         }else return null;
     }
-
     /*강좌 등록하기*/
     @Override
     public Course registerCourse(Course course) {
         return courseRepository.save(course);
     }
-
     /*강좌 수정하기*/
     @Override
     public void modifyCourse(Course course) {
@@ -81,7 +77,6 @@ public class CourseServiceImpl implements CourseService {
             originCourse.setPrice(course.getPrice());//수정 항목 나중에 양진석가모니 완성하면 추가할거임
         }
     }
-
     /*강좌 삭제하기*/
     @Override
     public void deleteCourse(long id) {
@@ -90,7 +85,6 @@ public class CourseServiceImpl implements CourseService {
     /**
      * 강좌를 저장하고, 전달받은 리스트를 이용해 여러 개의 강의를 생성
      */
-
     @Override
     public void createCourseWithLectures(
             Course course,
