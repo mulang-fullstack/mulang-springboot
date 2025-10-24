@@ -37,17 +37,17 @@
                         <div class="filter-group">
                             <span class="filter-label">기간</span>
                             <div class="date-filter">
-                                <input type="date" value="2025-10-13">
+                                <input type="date" id="startDate" value="${search.startDate != null ? search.startDate.toLocalDate() : ''}">
                                 <span class="date-separator">~</span>
-                                <input type="date" value="2025-10-19">
+                                <input type="date" id="endDate" value="${search.endDate != null ? search.endDate.toLocalDate() : ''}">
                             </div>
                         </div>
                         <div class="filter-group">
                             <span class="filter-label">로그 타입</span>
                             <div class="radio-group">
-                                <label><input type="radio" name="logType" checked> 전체</label>
-                                <label><input type="radio" name="logType"> 로그인</label>
-                                <label><input type="radio" name="logType"> 로그아웃</label>
+                                <label><input type="radio" name="logType" value="ALL" checked> 전체</label>
+                                <label><input type="radio" name="logType" value="LOGIN"> 로그인</label>
+                                <label><input type="radio" name="logType" value="LOGOUT"> 로그아웃</label>
                             </div>
                         </div>
                     </div>
@@ -117,47 +117,28 @@
                         </tr>
                         </thead>
                         <tbody>
-                        <tr>
-                            <td>10</td>
-                            <td>김보카</td>
-                            <td>boka@mulang.com</td>
-                            <td>192.168.0.21</td>
-                            <td>Chrome</td>
-                            <td>2025-10-19 16:25:13</td>
-                            <td><span class="log-badge login">로그인</span></td>
-                        </tr>
-                        <tr>
-                            <td>9</td>
-                            <td>이현주</td>
-                            <td>hjlee@mulang.com</td>
-                            <td>192.168.0.22</td>
-                            <td>Edge</td>
-                            <td>2025-10-19 15:50:42</td>
-                            <td><span class="log-badge logout">로그아웃</span></td>
-                        </tr>
-                        <tr>
-                            <td>8</td>
-                            <td>박성민</td>
-                            <td>smpark@mulang.com</td>
-                            <td>192.168.0.32</td>
-                            <td>Safari</td>
-                            <td>2025-10-19 14:11:03</td>
-                            <td><span class="log-badge login">로그인</span></td>
-                        </tr>
-                        <%--
-                        <c:forEach var="userLogs" items="${userLog}">
+                        <c:forEach var="log" items="${logs}" varStatus="status">
                             <tr>
-
+                                <td>${page.number * page.size + status.index + 1}</td>
+                                <td>${log.username}</td>
+                                <td>${log.email}</td>
+                                <td>${log.ip}</td>
+                                <td>${log.userAgent}</td>
+                                <td>${log.createdAt}</td>
+                                <td>
+                                    <span class="log-badge ${log.action == 'LOGIN' ? 'login' : 'logout'}">
+                                            ${log.action == 'LOGIN' ? '로그인' : '로그아웃'}
+                                    </span>
+                                </td>
                             </tr>
                         </c:forEach>
-
-                        <c:if test="${empty userLog}">
+                        <c:if test="${empty logs}">
                             <tr>
-                                <td colspan="9" class="no-data">발생한 로그가 없습니다.</td>
+                                <td colspan="7" class="no-data">발생한 로그가 없습니다.</td>
                             </tr>
                         </c:if>
-                        --%>
                         </tbody>
+
                     </table>
                 </div>
 
@@ -172,19 +153,19 @@
 
 <!-- 서버 데이터 전달 -->
 <script>
-    // 🔧 수정: 기본값 설정으로 undefined 오류 방지
+    // 기본값 처리로 undefined 방지
     window.paginationData = {
-        currentPage: ${not empty currentPage ? currentPage : 1},
-        totalPages: ${not empty totalPages ? totalPages : 1},
+        currentPage: ${currentPage},       // Page.number는 0-based → 1-based로 보정
+        totalPages: ${totalPages},        // Page.totalPages로 전체 페이지 수
         baseUrl: '/admin/user/log'
     };
 
-    console.log('Pagination Data:', window.paginationData); // 디버깅용
+    console.log('Pagination Data:', window.paginationData);
 </script>
 
 <!-- JS -->
 <script src="/js/common/currentTime.js"></script>
 <script src="/js/pages/admin/pagination.js"></script>
-<script src="/js/pages/admin/userLog.js"></script>
+<script src="/js/pages/admin/user/userLog.js"></script>
 </body>
 </html>

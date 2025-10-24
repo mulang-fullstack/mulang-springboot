@@ -6,16 +6,18 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 import org.springframework.stereotype.Component;
-import yoonsome.mulang.domain.authlog.entity.LoginLog;
-import yoonsome.mulang.domain.authlog.repository.LoginLogRepository;
+import yoonsome.mulang.domain.log.entity.UserLog;
+import yoonsome.mulang.domain.log.repository.UserLogRepository;
 
 import java.io.IOException;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 @Component
 @RequiredArgsConstructor
 public class CustomLoginSuccessHandler implements AuthenticationSuccessHandler {
 
-    private final LoginLogRepository loginLogRepository;
+    private final UserLogRepository loginLogRepository;
 
     @Override
     public void onAuthenticationSuccess(HttpServletRequest request,
@@ -24,17 +26,17 @@ public class CustomLoginSuccessHandler implements AuthenticationSuccessHandler {
             throws IOException {
 
         String ip = getClientIp(request);
-        String userAgent = request.getHeader("User-Agent");
+        String userAgent = parseUserAgent(request.getHeader("User-Agent"));
 
         // CustomUserDetails로 캐스팅해 User 엔티티 접근
         CustomUserDetails userDetails = (CustomUserDetails) authentication.getPrincipal();
         String email = userDetails.getUser().getEmail();
         String username = userDetails.getUser().getUsername();
 
-        LoginLog log = LoginLog.builder()
+        UserLog log = UserLog.builder()
                 .email(email)
                 .username(username)
-                .action("LOGIN")
+                .action(UserLog.ActionType.LOGIN)
                 .ip(ip)
                 .userAgent(userAgent)
                 .build();
@@ -51,6 +53,96 @@ public class CustomLoginSuccessHandler implements AuthenticationSuccessHandler {
         if (ip != null && ip.contains(",")) {
             ip = ip.split(",")[0].trim();
         }
+
+        // IPv6 로컬 주소를 IPv4로 변환
+        if (ip != null && (ip.equals("0:0:0:0:0:0:0:1") || ip.equals("::1"))) {
+            ip = "127.0.0.1";
+        }
+
         return ip;
+    }
+
+    private String parseUserAgent(String userAgent) {
+        if (userAgent == null || userAgent.isBlank()) {
+            return "Unknown";
+        }
+
+        String os = extractOS(userAgent);
+        String browser = extractBrowser(userAgent);
+
+        return os + "/" + browser;
+    }
+
+    private String extractOS(String userAgent) {
+        if (userAgent.contains("Windows NT 10.0")) {
+            return "Windows 10";
+        } else if (userAgent.contains("Windows NT 11.0")) {
+            return "Windows 11";
+        } else if (userAgent.contains("Windows NT 6.3")) {
+            return "Windows 8.1";
+        } else if (userAgent.contains("Windows NT 6.2")) {
+            return "Windows 8";
+        } else if (userAgent.contains("Windows NT 6.1")) {
+            return "Windows 7";
+        } else if (userAgent.contains("Mac OS X")) {
+            Pattern pattern = Pattern.compile("Mac OS X ([0-9_]+)");
+            Matcher matcher = pattern.matcher(userAgent);
+            if (matcher.find()) {
+                return "macOS " + matcher.group(1).replace("_", ".");
+            }
+            return "macOS";
+        } else if (userAgent.contains("Android")) {
+            Pattern pattern = Pattern.compile("Android ([0-9.]+)");
+            Matcher matcher = pattern.matcher(userAgent);
+            if (matcher.find()) {
+                return "Android " + matcher.group(1);
+            }
+            return "Android";
+        } else if (userAgent.contains("iPhone") || userAgent.contains("iPad")) {
+            return "iOS";
+        } else if (userAgent.contains("Linux")) {
+            return "Linux";
+        }
+        return "Unknown OS";
+    }
+
+    private String extractBrowser(String userAgent) {
+        // Edge 확인 (Chrome보다 먼저 확인해야 함)
+        if (userAgent.contains("Edg/")) {
+            Pattern pattern = Pattern.compile("Edg/([0-9]+)");
+            Matcher matcher = pattern.matcher(userAgent);
+            if (matcher.find()) {
+                return "Edge " + matcher.group(1);
+            }
+            return "Edge";
+        }
+        // Chrome 확인
+        if (userAgent.contains("Chrome/")) {
+            Pattern pattern = Pattern.compile("Chrome/([0-9]+)");
+            Matcher matcher = pattern.matcher(userAgent);
+            if (matcher.find()) {
+                return "Chrome " + matcher.group(1);
+            }
+            return "Chrome";
+        }
+        // Safari 확인 (Chrome이 아닌 경우)
+        if (userAgent.contains("Safari/") && !userAgent.contains("Chrome")) {
+            Pattern pattern = Pattern.compile("Version/([0-9]+)");
+            Matcher matcher = pattern.matcher(userAgent);
+            if (matcher.find()) {
+                return "Safari " + matcher.group(1);
+            }
+            return "Safari";
+        }
+        // Firefox 확인
+        if (userAgent.contains("Firefox/")) {
+            Pattern pattern = Pattern.compile("Firefox/([0-9]+)");
+            Matcher matcher = pattern.matcher(userAgent);
+            if (matcher.find()) {
+                return "Firefox " + matcher.group(1);
+            }
+            return "Firefox";
+        }
+        return "Unknown Browser";
     }
 }

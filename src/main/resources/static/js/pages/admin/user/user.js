@@ -164,8 +164,8 @@ async function performSearch() {
     const data = await fetchUserList(params);
 
     if (data) {
-        renderUserTable(data.users, data.page.number, data.page.size);
-        updatePagination(data.page.number, data.page.totalPages);
+        renderUserTable(data.users, data.currentPage, data.size);
+        updatePagination(data.currentPage, data.totalPages);
     }
 }
 
@@ -177,8 +177,8 @@ window.changePage = async function(page) {
     const data = await fetchUserList(params);
 
     if (data) {
-        renderUserTable(data.users, data.page.number, data.page.size);
-        updatePagination(data.page.number, data.page.totalPages);
+        renderUserTable(data.users, data.currentPage, data.size);
+        updatePagination(data.currentPage, data.totalPages);
     }
 };
 

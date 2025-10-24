@@ -11,7 +11,6 @@
     <link rel="stylesheet" href="/css/global.css"/>
     <link rel="stylesheet" href="/css/pages/admin/admin.css"/>
     <link rel="stylesheet" href="/css/pages/admin/dashboard/visitor.css"/>
-    <script src="/js/common/currentTime.js"></script>
     <title>관리자 | 방문자 현황</title>
 </head>
 <body>
@@ -42,8 +41,10 @@
                         </div>
                         <div class="stat-info">
                             <h3>오늘 로그인</h3>
-                            <p class="stat-number">132</p>
-                            <span class="stat-trend up">↑ 12% 어제 대비</span>
+                            <p class="stat-number">${todayLogins}</p>
+                            <span class="stat-trend ${loginChangeRate >= 0 ? 'up' : 'down'}">
+                                ${loginChangeRate >= 0 ? '↑' : '↓'} ${loginChangeRate}% 어제 대비
+                            </span>
                         </div>
                     </div>
 
@@ -57,7 +58,7 @@
                         </div>
                         <div class="stat-info">
                             <h3>현재 활성 사용자</h3>
-                            <p class="stat-number">54</p>
+                            <p class="stat-number">${activeSessions}</p>
                             <span class="stat-trend">실시간</span>
                         </div>
                     </div>
@@ -74,8 +75,9 @@
                         </div>
                         <div class="stat-info">
                             <h3>신규 사용자</h3>
-                            <p class="stat-number">117</p>
-                            <span class="stat-trend">회원가입</span>
+                            <p class="stat-number">${todayNewUsers}</p>
+                            <span class="stat-trend">${signupChangeRate >= 0 ? '↑' : '↓'} ${signupChangeRate}% 어제 대비</span>
+
                         </div>
                     </div>
 
@@ -91,7 +93,7 @@
                         </div>
                         <div class="stat-info">
                             <h3>전체 사용자</h3>
-                            <p class="stat-number">1,024</p>
+                            <p class="stat-number">${totalUsers}</p>
                             <span class="stat-trend">등록된 회원</span>
                         </div>
                     </div>
@@ -122,48 +124,22 @@
                                 </tr>
                                 </thead>
                                 <tbody>
-                                <tr>
-                                    <td>2025-10-10</td>
-                                    <td>120</td>
-                                    <td>45</td>
-                                    <td>5</td>
-                                </tr>
-                                <tr>
-                                    <td>2025-10-11</td>
-                                    <td>180</td>
-                                    <td>70</td>
-                                    <td>8</td>
-                                </tr>
-                                <tr>
-                                    <td>2025-10-12</td>
-                                    <td>240</td>
-                                    <td>92</td>
-                                    <td>11</td>
-                                </tr>
-                                <tr>
-                                    <td>2025-10-13</td>
-                                    <td>200</td>
-                                    <td>80</td>
-                                    <td>10</td>
-                                </tr>
-                                <tr>
-                                    <td>2025-10-14</td>
-                                    <td>260</td>
-                                    <td>110</td>
-                                    <td>15</td>
-                                </tr>
-                                <tr>
-                                    <td>2025-10-15</td>
-                                    <td>300</td>
-                                    <td>120</td>
-                                    <td>17</td>
-                                </tr>
-                                <tr>
-                                    <td>2025-10-16</td>
-                                    <td>250</td>
-                                    <td>98</td>
-                                    <td>13</td>
-                                </tr>
+                                <c:forEach var="login" items="${weeklyLogins}" varStatus="i">
+                                    <tr>
+                                        <td>${login.date}</td>
+                                        <td>
+                                            <c:set var="signup" value="${weeklyNewUsers[i.index]}"/>
+                                                ${login.count + signup.count}
+                                        </td>
+                                        <td>${login.count}</td>
+                                        <td>${weeklyNewUsers[i.index].count}</td>
+                                    </tr>
+                                </c:forEach>
+                                <c:if test="${empty weeklyLogins}">
+                                    <tr>
+                                        <td colspan="4" class="no-data">최근 7일간 데이터가 없습니다.</td>
+                                    </tr>
+                                </c:if>
                                 </tbody>
                             </table>
                         </div>
@@ -173,6 +149,7 @@
         </div>
     </div>
 </div>
+<script src="/js/common/currentTime.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <script src="/js/pages/admin/dashboard/visitorChart.js"></script>
 </body>
