@@ -49,7 +49,7 @@ public class TeacherMypageController {
         Teacher teacher = teacherService.getTeacherProfile(userId);
 
         List<Language> languages = languageRepository.findAll();
-        //List<Language> languages1 = languageService.findAll();
+        //List<Language> languages = languageService.findAll();
 
         model.addAttribute("teacher", teacher);
         model.addAttribute("languages", languages);

@@ -30,7 +30,7 @@ public class Course {
     @Column(name = "html_content", columnDefinition = "TEXT")
     private String htmlContent;
 
-    @Column(nullable = false, updatable = false)
+    @Column(name = "created_date", nullable = false, updatable = false)
     private LocalDate createdDate;
 
     @PrePersist
