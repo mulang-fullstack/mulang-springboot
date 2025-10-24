@@ -6,6 +6,8 @@ import org.springframework.stereotype.Service;
 import yoonsome.mulang.domain.language.entity.Language;
 import yoonsome.mulang.domain.language.repository.LanguageRepository;
 
+import java.util.List;
+
 @RequiredArgsConstructor
 @Service
 public class LanguageServiceImpl implements LanguageService {
@@ -22,5 +24,10 @@ public class LanguageServiceImpl implements LanguageService {
         return languageRepository.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("해당 언어가 존재하지 않습니다. id=" + id));
     }
+    @Override
+    public List<Language> getAllLanguages() {
+        return languageRepository.findAll();
+    }
+
 
 }
