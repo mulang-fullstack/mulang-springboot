@@ -13,15 +13,12 @@ public class CourseListRequest {
     private String keyword;
     private StatusType status;
     @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
-    private LocalDateTime startDate= LocalDate.now()
-            .withDayOfMonth(1)
-            .atStartOfDay();;  // 가입 범위(시작)
+    private LocalDateTime startDate;
 
     @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
-    private LocalDateTime endDate = LocalDate.now()
-            .atTime(23, 59, 59);
-    private String sort;
-    private int page;
+    private LocalDateTime endDate;
+    private int page = 0;
     private int size;
-
+    private String sortBy;
+    private String sortDirection = "DESC";
 }

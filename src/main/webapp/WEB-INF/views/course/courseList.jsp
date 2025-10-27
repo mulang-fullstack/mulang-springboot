@@ -47,14 +47,14 @@
                     <div class="search-icon"></div>
                 </div>
                 <div class="sort-options">
-                    <a href="/course?categoryId=${courseListRequest.categoryId}&keyword=${courseListRequest.keyword}&page=${courseListRequest.page}&sort=rating">
-                        <div class="sort-item ${courseListRequest.sort == 'rating'? 'active':''}">별점순</div>
+                    <a href="/course?categoryId=${courseListRequest.categoryId}&keyword=${courseListRequest.keyword}&page=${courseListRequest.sortBy != 'averageRating' ? 0 : courseListRequest.page}&sortBy=averageRating">
+                        <div class="sort-item ${courseListRequest.sortBy == 'averageRating'? 'active':''}">별점순</div>
                     </a>
-                    <a href="/course?categoryId=${courseListRequest.categoryId}&keyword=${courseListRequest.keyword}&page=${courseListRequest.page}&sort=review">
-                        <div class="sort-item ${courseListRequest.sort == 'review'? 'active':''}">리뷰순</div>
+                    <a href="/course?categoryId=${courseListRequest.categoryId}&keyword=${courseListRequest.keyword}&page=${courseListRequest.sortBy != 'reviewCount' ? 0 : courseListRequest.page}&sortBy=reviewCount">
+                        <div class="sort-item ${courseListRequest.sortBy == 'reviewCount'? 'active':''}">리뷰순</div>
                     </a>
-                    <a href="/course?categoryId=${courseListRequest.categoryId}&keyword=${courseListRequest.keyword}&page=${courseListRequest.page}&sort=latest">
-                        <div class="sort-item ${courseListRequest.sort == 'latest'? 'active':''}">최신순</div>
+                    <a href="/course?categoryId=${courseListRequest.categoryId}&keyword=${courseListRequest.keyword}&page=${courseListRequest.sortBy != 'createdAt' ? 0 : courseListRequest.page}&sortBy=createdAt">
+                        <div class="sort-item ${courseListRequest.sortBy == 'createdAt'? 'active':''}">최신순</div>
                     </a>
                 </div>
             </section>

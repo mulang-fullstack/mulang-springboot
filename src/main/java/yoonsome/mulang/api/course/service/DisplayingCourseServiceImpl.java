@@ -40,7 +40,7 @@ public class DisplayingCourseServiceImpl implements DisplayingCourseService {
     @Override
     public String getLanguageName(CourseListRequest request, HttpSession session){
         resolveLanguageId(request, session);
-        return languageService.getLanguageNameById(request.getLanguageId());
+        return languageService.getNameById(request.getLanguageId());
     }
 
     //카테고리 리스트
@@ -57,17 +57,19 @@ public class DisplayingCourseServiceImpl implements DisplayingCourseService {
         resolveLanguageId(request, session);
 
         //sort 세션 복원/저장
-        if (request.getSort() == null) {
-            String sessionSort = (String) session.getAttribute("sort");
-            request.setSort(sessionSort != null ? sessionSort : "rating");
+        if (request.getSortBy() == null) {
+            String sessionSortby = (String) session.getAttribute("sortBy");
+            request.setSortBy(sessionSortby != null ? sessionSortby : "averageRating");
         } else {
-            session.setAttribute("sort", request.getSort());
+            session.setAttribute("sortBy", request.getSortBy());
         }
 
         //status: 공개
         request.setStatus(StatusType.PUBLIC);
         //한 페이지에 가져올 강좌 수 4개
         request.setSize(4);
+        //정렬
+        //request.setSortBy("averageRating");
         System.out.println("#displaying request: "+ request);
         Page<Course> coursePage = courseService.getCourseList(request);
 
@@ -79,10 +81,13 @@ public class DisplayingCourseServiceImpl implements DisplayingCourseService {
             // 리뷰 정보 가져오기
             double averageRating = reviewService.getAverageRatingByCourseId(course.getId());
             int reviewCount = reviewService.countReviewByCourseId(course.getId());
+            course.setAverageRating(averageRating);
+            course.setReviewCount(reviewCount);
             //double averageRating = 2.5;
             //int reviewCount = 1000;
-            System.out.println("#courseId: "+course.getId());
-
+            //System.out.println("#courseId: "+course.getId());
+            //System.out.println("#averageRating: "+averageRating);
+            //System.out.println("#reviewCount: "+reviewCount);
             // DTO 생성
             CourseListResponse dto = CourseListResponse.builder()
                     .id(course.getId())
@@ -90,15 +95,15 @@ public class DisplayingCourseServiceImpl implements DisplayingCourseService {
                     .title(course.getTitle())
                     .subtitle(course.getSubtitle())
                     .teacherName(getTeacherName(course))
-                    .averageRating(averageRating)
-                    .reviewCount(reviewCount)
+                    .averageRating(course.getAverageRating())
+                    .reviewCount(course.getReviewCount())
                     .price(course.getPrice())
-                    .createdDate(course.getCreatedDate())
+                    .createdAt(course.getCreatedAt())
                     .build();
             dtoList.add(dto);
         }
 
-        //** 정렬 수행 **//
+        /* 정렬 수행
         switch (request.getSort()) {
             case "rating":
                 dtoList.sort(Comparator.comparingDouble(CourseListResponse::getAverageRating).reversed());
@@ -107,11 +112,12 @@ public class DisplayingCourseServiceImpl implements DisplayingCourseService {
                 dtoList.sort(Comparator.comparingInt(CourseListResponse::getReviewCount).reversed());
                 break;
             case "latest":
-                dtoList.sort(Comparator.comparing(CourseListResponse::getCreatedDate).reversed());
+                dtoList.sort(Comparator.comparing(CourseListResponse::getCreatedAt).reversed());
                 break;
             default:
                 break;
         }
+        */
 
         //** Pageable 생성 **//
         Pageable pageable = PageRequest.of(request.getPage(), request.getSize());

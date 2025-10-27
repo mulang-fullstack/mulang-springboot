@@ -31,51 +31,19 @@ public class Course {
     private String htmlContent;
 
     @Column(name = "created_date", nullable = false, updatable = false)
-    private LocalDateTime  createdDate;
+    private LocalDateTime  createdAt;
 
     @PrePersist
     protected void onCreate() {
-        this.createdDate = LocalDateTime.now();
+        this.createdAt = LocalDateTime.now();
     }
-
-    /*
-    @Column(name = "apply_started_at", nullable = false)
-    private LocalDate applyStartedAt;
-
-    @Column(name = "apply_ended_at", nullable = false)
-    private LocalDate applyEndedAt;
-
-    @Column(name = "started_at", nullable = false)
-    private LocalDate startedAt;
-
-    @Column(name = "ended_at", nullable = false)
-    private LocalDate endedAt;
-
-    @Column(nullable = false)
-    private boolean status;
-    */
 
     @Enumerated(EnumType.STRING)
     @Column(nullable = false, length = 10)
     private StatusType status; // ENUM('PUBLIC', 'PRIVATE', 'PENDING')
 
-    //공개, 비공개, 심사중
-    /*
-    @Column(name = "max_student")
-    private Integer maxStudent;
-
-    @Column(name = "current_student", nullable = false)
-    private Integer currentStudent;
-    */
-
     @Column
     private Integer price;
-
-    /*
-    @Enumerated(EnumType.STRING)
-    @Column(nullable = false, length = 10)
-    private CourseType type; // ENUM('VOD', 'ONLINE', 'OFFLINE')
-    */
 
     @Column(name = "lecture_count", nullable = false)
     private Integer lectureCount;
@@ -95,5 +63,9 @@ public class Course {
     @JoinColumn(name = "teacher_id", nullable = true)
     private Teacher teacher;
 
+    @Column(name = "average_rating")
+    private Double averageRating;
+    @Column(name = "review_count")
+    private Integer reviewCount;
 }
 

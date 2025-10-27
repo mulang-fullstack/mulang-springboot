@@ -9,6 +9,10 @@ public interface ReviewService {
     /*리뷰 리스트 조회*/
     //Page<ReviewResponse> getReviewsByCourseId(Long courseId, Pageable pageable);
     Page<CourseReview> getReviewsByCourseId(Long courseId, Pageable pageable);
+    /*리뷰 등록*/
+    void saveReview(CourseReview review);
+    /*리뷰 삭제*/
+    void deleteReview(Long reviewId);
     /*평균 별점*/
     double getAverageRatingByCourseId(Long courseId);
     /*리뷰 수*/

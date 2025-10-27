@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 import yoonsome.mulang.domain.course.dto.CourseListRequest;
@@ -39,8 +40,11 @@ public class CourseServiceImpl implements CourseService {
     */
     @Override
     public Page<Course> getCourseList(CourseListRequest request){
-        Pageable pageable = PageRequest.of(request.getPage(), request.getSize());
-        return courseRepository.findByLanguageIdAndCategoryIdAndKeywordAndStatusAndCreatedDate(
+        Pageable pageable = PageRequest.of(request.getPage(), request.getSize(), Sort.by(
+                Sort.Direction.fromString(request.getSortDirection()),
+                request.getSortBy()
+        ));
+        return courseRepository.findByLanguageIdAndCategoryIdAndKeywordAndStatusAndCreatedAt(
                 request.getLanguageId(),
                 request.getCategoryId(),
                 request.getKeyword(),
@@ -50,11 +54,7 @@ public class CourseServiceImpl implements CourseService {
                 pageable
         );
     }
-    /* teacher 강사별 강좌 리스트 가져오기 */
-    @Override
-    public List<Course> getCoursesByTeacher(Long teacherId) {
-        return courseRepository.findByTeacherId(teacherId);
-    }
+
     /*강좌 상세페이지 강좌 상세 정보 가져오기*/
     @Override
     public Course getCourse(long id){
@@ -67,20 +67,6 @@ public class CourseServiceImpl implements CourseService {
     @Override
     public Course registerCourse(Course course) {
         return courseRepository.save(course);
-    }
-    /*강좌 수정하기*/
-    @Override
-    public void modifyCourse(Course course) {
-        Optional<Course> optCourse = courseRepository.findById(course.getId());
-        if (optCourse.isPresent()) {
-            Course originCourse = optCourse.get();
-            originCourse.setPrice(course.getPrice());//수정 항목 나중에 양진석가모니 완성하면 추가할거임
-        }
-    }
-    /*강좌 삭제하기*/
-    @Override
-    public void deleteCourse(long id) {
-        courseRepository.deleteById(id);
     }
 
     @Override

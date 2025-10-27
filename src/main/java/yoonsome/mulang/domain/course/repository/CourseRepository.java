@@ -30,10 +30,10 @@ public interface CourseRepository extends JpaRepository<Course,Long> {
                OR (t IS NOT NULL AND u IS NOT NULL AND u.nickname LIKE CONCAT('%', :keyword, '%')))
           AND (:keyword IS NULL OR c.title LIKE %:keyword%)
           AND (:status IS NULL OR c.status = :status)
-          AND (:startDate IS NULL OR c.createdDate >= :startDate)
-          AND (:endDate IS NULL OR c.createdDate <= :endDate)
+          AND (:startDate IS NULL OR c.createdAt >= :startDate)
+          AND (:endDate IS NULL OR c.createdAt <= :endDate)
     """)
-    Page<Course> findByLanguageIdAndCategoryIdAndKeywordAndStatusAndCreatedDate(
+    Page<Course> findByLanguageIdAndCategoryIdAndKeywordAndStatusAndCreatedAt(
             @Param("languageId") Long languageId,
             @Param("categoryId") Long categoryId,
             @Param("keyword") String keyword,
@@ -42,12 +42,11 @@ public interface CourseRepository extends JpaRepository<Course,Long> {
             @Param("endDate") LocalDateTime  endDate,
             Pageable pageable
     );
-    List<Course> findByTeacherId(Long teacherId);
 
     @Query("SELECT c FROM Course c " +
             "WHERE c.teacher = :teacher " +
             "AND c.status IN :statuses " +
-            "ORDER BY c.createdDate DESC")
+            "ORDER BY c.createdAt DESC")
     Page<Course> findByTeacherAndStatusIn(
             @Param("teacher") Teacher teacher,
             @Param("statuses") List<StatusType> statuses,
