@@ -11,6 +11,8 @@ import yoonsome.mulang.domain.review.repository.ReviewRepository;
 import yoonsome.mulang.domain.user.entity.User;
 import yoonsome.mulang.infra.security.CustomUserDetails;
 
+import java.util.Optional;
+
 @Service
 @RequiredArgsConstructor
 @Transactional
@@ -20,7 +22,14 @@ public class CourseReviewService {
     private final CourseRepository courseRepository;
 
     public CourseReview createReview(User user, Long courseId, Integer rating, String content) {
+        Optional<CourseReview> existingReview = reviewRepository
+                .findByStudentIdAndCourseId(user.getId(), courseId);
+        if(existingReview.isPresent()){
 
+            CourseReview review = existingReview.get();
+           // review.updateReview(rating, content);
+            return review;
+        }
 
 
         //강좌조회
