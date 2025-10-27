@@ -1,0 +1,124 @@
+@charset "UTF-8";
+
+/* ===== Q&A 섹션 전체 ===== */
+.qna-section {
+    margin-top: 60px;
+    padding: 32px 40px;
+    background-color: var(--bg-secondary);     /* player 카드 배경 (#F9F9FB) */
+    border-radius: 10px;
+    box-shadow: var(--shadow-default);
+    font-family: 'Noto Sans KR', sans-serif;
+}
+
+/* ===== 제목 ===== */
+.qna-section .qna-header h4 {
+    font-size: 22px;
+    font-weight: 700;
+    color: var(--text-point-main);              /* player 제목 동일 */
+    margin-bottom: 20px;
+}
+
+/* ===== 질문 작성 영역 ===== */
+.qna-write-box {
+    display: flex;
+    align-items: flex-end;
+    gap: 10px;
+    margin-bottom: 30px;
+}
+
+.qna-write-box textarea {
+    flex: 1;
+    background-color: var(--bg-white);          /* 카드 안 흰 입력창 */
+    color: var(--text-primary);
+    border: none;
+    border-radius: 8px;
+    padding: 16px 20px;
+    font-size: 15px;
+    box-shadow: var(--shadow-sm);
+    transition: box-shadow 0.2s ease, background-color 0.2s ease;
+}
+
+.qna-write-box textarea:focus {
+    background-color: var(--bg-white-hover);
+    box-shadow: var(--shadow-md);
+}
+
+/* ===== 등록 버튼 ===== */
+.qna-write-box button {
+    background-color: var(--bg-point-sub);      /* 기본 연파랑 */
+    color: var(--text-point-main);              /* 파란 글자 */
+    border: none;
+    border-radius: 8px;
+    padding: 12px 24px;
+    font-size: 15px;
+    font-weight: 600;
+    cursor: pointer;
+    box-shadow: var(--shadow-sm);
+    transition: all 0.25s ease;
+}
+
+.qna-write-box button:hover {
+    background-color: var(--bg-point-main);     /* hover → 진파랑 */
+    color: var(--text-white);
+    box-shadow: var(--shadow-md);
+    transform: translateY(-2px);
+}
+
+/* ===== 질문 카드 ===== */
+.qna-item {
+    background-color: var(--bg-white);
+    border-radius: 10px;
+    padding: 20px 24px;
+    box-shadow: var(--shadow-sm);
+    margin-bottom: 16px;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.qna-item:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-md);
+}
+
+.qna-item .question {
+    font-weight: 600;
+    color: var(--text-primary);
+    margin-bottom: 10px;
+}
+
+.qna-item .content {
+    color: var(--text-secondary);
+    font-size: 15px;
+    line-height: 1.6;
+}
+
+.qna-item .answer {
+    margin-top: 12px;
+    padding: 10px 16px;
+    background-color: var(--bg-point-sub);
+    border-left: 3px solid var(--text-point-main);
+    border-radius: 6px;
+    color: var(--text-secondary);
+}
+
+/* ===== 페이징 ===== */
+.pagination {
+    display: flex;
+    justify-content: center;
+    gap: 6px;
+    margin-top: 24px;
+}
+
+.pagination a {
+    padding: 8px 14px;
+    border-radius: 6px;
+    background-color: var(--bg-point-sub);
+    color: var(--text-point-main);
+    font-weight: 500;
+    transition: all 0.25s ease;
+}
+
+.pagination a:hover,
+.pagination a.active {
+    background-color: var(--bg-point-main);
+    color: var(--text-white);
+}
