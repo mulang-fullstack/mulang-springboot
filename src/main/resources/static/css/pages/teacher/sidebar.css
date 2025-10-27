@@ -95,8 +95,8 @@
 }
 
 .menu a:hover {
-    background-color: var(--bg-point-hover);
-    color: var(--text-white);
+    background-color: var(--bg-point-sub);
+    color: var(--text-primary);
 }
 
 .menu .active a {

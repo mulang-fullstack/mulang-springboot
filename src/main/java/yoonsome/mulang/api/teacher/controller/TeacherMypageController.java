@@ -100,14 +100,13 @@ public class TeacherMypageController {
     }
 
     /** 강좌 수정 */
-    @PostMapping("/classes/update/{courseId}")
+    @PostMapping("/classes/update")
     public String updateCourse(
             @AuthenticationPrincipal CustomUserDetails userDetails,
-            @PathVariable Long courseId,
             @ModelAttribute CourseUpdateRequest request
-    )throws IOException {
+    ) throws IOException {
         Long userId = userDetails.getUser().getId();
-        teacherCourseService.updateCourse(userId, courseId, request);
+        teacherCourseService.updateCourse(userId, request.getCourseId(), request);
         return "redirect:/teacher/mypage/classes/edit";
     }
 

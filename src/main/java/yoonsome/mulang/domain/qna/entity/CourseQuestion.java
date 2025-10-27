@@ -1,10 +1,13 @@
-package yoonsome.mulang.domain.question.entity;
+package yoonsome.mulang.domain.qna.entity;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import yoonsome.mulang.domain.course.entity.Course;
+import yoonsome.mulang.domain.user.entity.User;
+
 import java.sql.Timestamp;
 
 @Entity
@@ -32,9 +35,13 @@ public class CourseQuestion {
     @Column(name = "updated_at")
     private Timestamp updatedAt;
 
-    /*
+
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "course_id", nullable = false)
     private Course course;
-    */
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "user_id", nullable = false)
+    private User user;
+
 }

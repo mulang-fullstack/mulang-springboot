@@ -47,10 +47,10 @@
                             <div class="field-content">
                                 <select name="categoryId" required>
                                     <option value="">선택해주세요</option>
-                                    <option value="1">회화</option>
+                                    <option value="1">기초</option>
                                     <option value="2">문법</option>
-                                    <option value="3">시험 대비</option>
-                                    <option value="4">비즈니스</option>
+                                    <option value="3">어휘</option>
+                                    <option value="4">회화</option>
                                 </select>
                             </div>
                         </div>
@@ -61,8 +61,8 @@
                                 <select name="languageId" required>
                                     <option value="">선택해주세요</option>
                                     <option value="1">영어</option>
-                                    <option value="2">일본어</option>
-                                    <option value="3">중국어</option>
+                                    <option value="2">중국어</option>
+                                    <option value="3">일본어</option>
                                 </select>
                             </div>
                         </div>

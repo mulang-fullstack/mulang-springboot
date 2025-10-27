@@ -20,6 +20,9 @@ public class CourseUpdateRequest {
     private Long categoryId;         // 카테고리 ID
     private Long languageId;         // 언어 ID
     private MultipartFile thumbnailFile;  // 썸네일 이미지
+    private List<Long> deletedLectureIds; // 사용자가 삭제 요청한 강의 ID 목록
+
+
 
     private List<LectureUploadRequest> lectures;
 }
