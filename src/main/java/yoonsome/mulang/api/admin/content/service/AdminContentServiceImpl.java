@@ -18,6 +18,7 @@ public class AdminContentServiceImpl implements AdminContentService {
 
     @Override
     public Page<AdminCourseResponse> getCourseList(CourseListRequest request) {
+        System.out.println(request.toString());
         Page<Course> coursePage = courseService.getCourseList(request);
         return coursePage.map(AdminCourseResponse::from);
     }

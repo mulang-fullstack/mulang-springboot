@@ -40,48 +40,17 @@
                         <div class="filter-group">
                             <span class="filter-label">기간</span>
                             <div class="date-filter">
-                                <input type="date" id="startDate" value="2025-06-18">
+                                <input type="date" id="startDate">
                                 <span class="date-separator">~</span>
-                                <input type="date" id="endDate" value="${search.endDate != null ? search.endDate.toLocalDate() : ''}">
+                                <input type="date" id="endDate">
                             </div>
                         </div>
-                        <!-- JSP 하단에 초기 날짜 설정 스크립트 추가 -->
-                        <script>
-                            // 날짜 초기값 설정
-                            document.addEventListener('DOMContentLoaded', function() {
-                                const startDateInput = document.getElementById('startDate');
-                                const endDateInput = document.getElementById('endDate');
-
-                                // 서버에서 값이 없으면 기본값 설정
-                                if (!startDateInput.value) {
-                                    const today = new Date();
-                                    const firstDay = new Date(today.getFullYear(), today.getMonth(), 1);
-                                    startDateInput.value = formatDate(firstDay);
-                                }
-
-                                if (!endDateInput.value) {
-                                    endDateInput.value = formatDate(new Date());
-                                }
-                            });
-
-                            function formatDate(date) {
-                                const year = date.getFullYear();
-                                const month = String(date.getMonth() + 1).padStart(2, '0');
-                                const day = String(date.getDate()).padStart(2, '0');
-                                return `${year}-${month}-${day}`;
-                            }
-                        </script>
                         <!-- 회원 구분 -->
                         <div class="filter-group">
                             <span class="filter-label">회원 구분</span>
                             <div class="radio-group">
                                 <label>
-                                    <input type="radio" name="role" value="ALL"
-                                           <c:if test="${empty param.status || param.status == 'ALL'}">checked</c:if>>
-                                    전체
-                                </label>
-                                <label>
-                                    <input type="radio" name="role" value="STUDENT"
+                                    <input type="radio" name="role" value="STUDENT" checked
                                            <c:if test="${param.role == 'STUDENT'}">checked</c:if>>
                                     학생
                                 </label>

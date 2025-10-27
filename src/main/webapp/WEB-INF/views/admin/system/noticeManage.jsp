@@ -63,7 +63,7 @@
                             </div>
                         </div>
 
-                        <button class="btn-create" onclick="location.href='/admin/content/notice/create'">
+                        <button class="btn-create"  onclick="openNoticeModal()">
                             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24"
                                  fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                                 <path d="M5 12h14"></path>
@@ -135,7 +135,7 @@
                         <tbody>
                         <!-- JavaScript로 동적 생성 -->
                         <tr>
-                            <td colspan="9" class="no-data">데이터를 불러오는 중...</td>
+                            <td colspan="9" class="no-data">공지사항이 없습니다</td>
                         </tr>
                         </tbody>
                     </table>
@@ -149,7 +149,7 @@
         </div>
     </div>
 </div>
-
+<%@ include file="noticeModal.jsp" %>
 <script>
     // 초기 페이지네이션 데이터
     window.paginationData = {

@@ -3,57 +3,6 @@
    Path: /css/pages/admin/user/user.css
    ========================================================== */
 
-/* ==========================================================
-   테이블
-   ========================================================== */
-.table-wrap {
-    background: #fff;
-    border-radius: 12px;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.08);
-    overflow: hidden;
-}
-
-.table-wrap table {
-    width: 100%;
-    border-collapse: collapse;
-}
-
-.table-wrap thead {
-    background: linear-gradient(to bottom, #f8f9fa, #f3f4f6);
-}
-
-.table-wrap th,
-.table-wrap td {
-    padding: 10px 12px;
-    text-align: center;
-    font-size: 13px;
-    border-bottom: 1px solid #e5e8eb;
-}
-
-.table-wrap th {
-    font-weight: 600;
-    color: #444;
-    font-size: 12px;
-    text-transform: uppercase;
-    letter-spacing: 0.5px;
-}
-
-.table-wrap td {
-    color: #555;
-}
-
-.table-wrap tbody tr {
-    transition: background-color 0.2s;
-}
-
-.table-wrap tbody tr:hover {
-    background-color: #f8f9ff;
-}
-
-.table-wrap tbody tr.editing {
-    background-color: #fff9e6;
-}
-
 /* 상태 배지 */
 .status-badge {
     display: inline-block;

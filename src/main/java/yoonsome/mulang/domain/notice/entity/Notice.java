@@ -1,0 +1,75 @@
+package yoonsome.mulang.domain.notice.entity;
+
+import jakarta.persistence.*;
+import lombok.*;
+import yoonsome.mulang.domain.user.entity.User;
+
+import java.time.LocalDateTime;
+
+/**
+ * 공지사항 엔티티
+ * 관리자 작성, 모든 사용자 열람 가능
+ */
+@Entity
+@Table(name = "notice")
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
+public class Notice {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "notice_id")
+    private Long id;
+
+    @Column(nullable = false, length = 200)
+    private String title; // 제목
+
+    @Column(nullable = false, columnDefinition = "TEXT")
+    private String content; // 본문 내용
+
+    @Enumerated(EnumType.STRING)
+    @Column(nullable = false, length = 10)
+    private NoticeStatus status = NoticeStatus.PUBLIC; // 기본값: 공개
+
+    @Enumerated(EnumType.STRING)
+    @Column(nullable = false, length = 10)
+    private NoticeType type = NoticeType.GENERAL; // 기본값: 일반 공지
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "user_id", nullable = false)
+    private User user; // 작성자 (User 엔티티 연관)
+
+    @Column(name = "created_at", nullable = false, updatable = false)
+    private LocalDateTime createdAt;
+
+    @Column(name = "updated_at")
+    private LocalDateTime updatedAt;
+
+    /** 엔티티 생성 시각 자동 설정 */
+    @PrePersist
+    protected void onCreate() {
+        this.createdAt = LocalDateTime.now();
+    }
+
+    /** 엔티티 수정 시각 자동 업데이트 */
+    @PreUpdate
+    protected void onUpdate() {
+        this.updatedAt = LocalDateTime.now();
+    }
+
+    /** 공개 상태 */
+    public enum NoticeStatus {
+        PUBLIC, PRIVATE
+    }
+
+    /** 공지 유형 */
+    public enum NoticeType {
+        GENERAL,  // 일반 공지
+        EVENT,    // 이벤트/프로모션
+        SYSTEM,   // 시스템 점검/장애
+        UPDATE    // 서비스 업데이트 공지
+    }
+}

@@ -1,19 +1,40 @@
-// ==================== 필터 및 검색 관련 ====================
+// ==================== API 요청 ====================
 
-// 날짜 포맷팅 함수
-function formatDate(date) {
-    const y = date.getFullYear();
-    const m = String(date.getMonth() + 1).padStart(2, '0');
-    const d = String(date.getDate()).padStart(2, '0');
-    return `${y}-${m}-${d}`;
+// 비동기 요청 보내기
+async function fetchUserLogList(params) {
+    try {
+        const queryString = new URLSearchParams(params).toString();
+        const url = `/admin/user/log/api?${queryString}`;
+
+        const response = await fetch(url, {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]')?.content || ''
+            }
+        });
+
+        if (!response.ok) {
+            throw new Error(`HTTP ${response.status}: 데이터를 불러오는데 실패했습니다.`);
+        }
+
+        const data = await response.json();
+        return data;
+    } catch (error) {
+        console.error('❌ Error fetching user logs:', error);
+        alert('데이터를 불러오는데 실패했습니다.\n' + error.message);
+        return null;
+    }
 }
+
+// ==================== 파라미터 수집 ====================
 
 // 검색 파라미터 수집
 function collectSearchParams() {
     let startDate = document.querySelector('.date-filter input[type="date"]:first-child')?.value;
     let endDate = document.querySelector('.date-filter input[type="date"]:last-child')?.value;
 
-    // 🔧 날짜가 비어있으면 기본값 설정 (이번 달 1일 ~ 오늘)
+    // 날짜가 비어있으면 기본값 설정 (이번 달 1일 ~ 오늘)
     if (!startDate) {
         const firstDay = new Date();
         firstDay.setDate(1);
@@ -78,45 +99,10 @@ function collectSearchParams() {
     params.sortBy = sortBy;
     params.sortDirection = sortDirection;
 
-    // 🔍 디버깅: 수집된 파라미터 출력
-    console.log('📋 Collected Search Params:', params);
-
     return params;
 }
 
-// 비동기 요청 보내기
-async function fetchUserLogList(params) {
-    try {
-        const queryString = new URLSearchParams(params).toString();
-        const url = `/admin/user/log/api?${queryString}`;
-
-        // 🔍 디버깅: 요청 URL 출력
-        console.log('🌐 Request URL:', url);
-
-        const response = await fetch(url, {
-            method: 'GET',
-            headers: {
-                'Content-Type': 'application/json',
-                'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]')?.content || ''
-            }
-        });
-
-        if (!response.ok) {
-            throw new Error(`HTTP ${response.status}: 데이터를 불러오는데 실패했습니다.`);
-        }
-
-        const data = await response.json();
-
-        // 🔍 디버깅: 응답 데이터 출력
-        console.log('📦 Response Data:', data);
-
-        return data;
-    } catch (error) {
-        console.error('❌ Error fetching user logs:', error);
-        alert('데이터를 불러오는데 실패했습니다.\n' + error.message);
-        return null;
-    }
-}
+// ==================== 렌더링 ====================
 
 // 테이블 렌더링
 function renderUserLogTable(logs, currentPage, pageSize) {
@@ -129,12 +115,8 @@ function renderUserLogTable(logs, currentPage, pageSize) {
 
     if (!logs || logs.length === 0) {
         tbody.innerHTML = '<tr><td colspan="7" class="no-data">발생한 로그가 없습니다.</td></tr>';
-        console.log('ℹ️ No logs to display');
         return;
     }
-
-    // 🔍 디버깅: 렌더링할 로그 개수 출력
-    console.log(`✅ Rendering ${logs.length} logs (Page ${currentPage + 1})`);
 
     tbody.innerHTML = logs.map((log, index) => {
         const rowNumber = currentPage * pageSize + index + 1;
@@ -164,36 +146,26 @@ function updatePagination(currentPage, totalPages) {
         asyncMode: true
     };
 
-    // 🔍 디버깅: 페이지네이션 정보 출력
-    console.log('📄 Pagination Updated:', window.paginationData);
-
     if (typeof renderPagination === 'function') {
         renderPagination();
-    } else {
-        console.warn('⚠️ renderPagination function not found');
     }
 }
 
+// ==================== 검색 및 필터 ====================
+
 // 검색 실행
 async function performSearch() {
-    console.log('🔍 === 검색 시작 ===');
-
     const params = collectSearchParams();
     const data = await fetchUserLogList(params);
 
     if (data) {
         renderUserLogTable(data.logs, data.currentPage, data.size);
         updatePagination(data.currentPage, data.totalPages);
-        console.log('✅ === 검색 완료 ===');
-    } else {
-        console.error('❌ === 검색 실패 ===');
     }
 }
 
 // 페이지 변경 (pagination.js에서 호출될 함수)
 window.changePage = async function (page) {
-    console.log(`📄 페이지 변경: ${page + 1}페이지로 이동`);
-
     const params = collectSearchParams();
     params.page = page;
 
@@ -207,8 +179,6 @@ window.changePage = async function (page) {
 
 // 필터 초기화
 function resetFilters() {
-    console.log('🔄 필터 초기화');
-
     const today = new Date();
     const firstDay = new Date(today.getFullYear(), today.getMonth(), 1);
 
@@ -234,43 +204,45 @@ function resetFilters() {
     performSearch();
 }
 
-// 초기 날짜 설정
+// ==================== 유틸리티 ====================
+
+// 날짜 포맷팅 함수
+function formatDate(date) {
+    const y = date.getFullYear();
+    const m = String(date.getMonth() + 1).padStart(2, '0');
+    const d = String(date.getDate()).padStart(2, '0');
+    return `${y}-${m}-${d}`;
+}
+
+// 날짜 초기값 설정
 function initializeDateFilters() {
     const today = new Date();
     const firstDay = new Date(today.getFullYear(), today.getMonth(), 1);
 
     const dateInputs = document.querySelectorAll('.date-filter input[type="date"]');
     if (dateInputs.length >= 2) {
-        // 이미 값이 설정되어 있지 않으면 기본값 설정
         if (!dateInputs[0].value) {
             dateInputs[0].value = formatDate(firstDay);
         }
         if (!dateInputs[1].value) {
             dateInputs[1].value = formatDate(today);
         }
-
-        console.log('📅 날짜 필터 초기화:', {
-            startDate: dateInputs[0].value,
-            endDate: dateInputs[1].value
-        });
     }
 }
 
 // ==================== 이벤트 리스너 ====================
 
 document.addEventListener('DOMContentLoaded', function () {
-    console.log('🚀 UserLog.js 초기화 시작');
-
-    // 🔧 날짜 필터 초기화
+    // 날짜 초기값 설정
     initializeDateFilters();
+
+    // 페이지 로드 시 초기 데이터 요청
+    performSearch();
 
     // 검색 버튼
     const searchBtn = document.querySelector('.search-btn');
     if (searchBtn) {
         searchBtn.addEventListener('click', performSearch);
-        console.log('✅ 검색 버튼 이벤트 등록');
-    } else {
-        console.warn('⚠️ 검색 버튼을 찾을 수 없습니다');
     }
 
     // 엔터 검색
@@ -282,7 +254,6 @@ document.addEventListener('DOMContentLoaded', function () {
                 performSearch();
             }
         });
-        console.log('✅ 검색어 입력 이벤트 등록');
     }
 
     // 날짜 변경
@@ -290,31 +261,18 @@ document.addEventListener('DOMContentLoaded', function () {
     dateInputs.forEach(input => {
         input.addEventListener('change', performSearch);
     });
-    if (dateInputs.length > 0) {
-        console.log('✅ 날짜 필터 이벤트 등록');
-    }
 
     // 로그 타입 라디오
     const logTypeRadios = document.querySelectorAll('input[name="logType"]');
     logTypeRadios.forEach(radio => {
         radio.addEventListener('change', performSearch);
     });
-    if (logTypeRadios.length > 0) {
-        console.log('✅ 로그 타입 필터 이벤트 등록');
-    }
 
     // 정렬 변경
     const sortSelect = document.getElementById('sortSelect');
     if (sortSelect) {
         sortSelect.addEventListener('change', performSearch);
-        console.log('✅ 정렬 셀렉트 이벤트 등록');
     }
 
-    // 초기화 버튼 (전역 함수로 이미 정의됨)
-    console.log('ℹ️ 초기화 버튼은 onclick으로 연결됨');
-
-    console.log('🎉 UserLog.js 초기화 완료');
-
-    // 🔧 초기 데이터 로드
-    performSearch();
+    // 초기화 버튼은 이미 onclick으로 연결되어 있음
 });
