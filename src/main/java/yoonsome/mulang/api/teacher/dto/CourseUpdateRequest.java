@@ -4,6 +4,8 @@ import lombok.Data;
 import org.springframework.web.multipart.MultipartFile;
 import yoonsome.mulang.domain.course.entity.StatusType;
 
+import java.util.List;
+
 
 @Data
 public class CourseUpdateRequest {
@@ -18,4 +20,6 @@ public class CourseUpdateRequest {
     private Long categoryId;         // 카테고리 ID
     private Long languageId;         // 언어 ID
     private MultipartFile thumbnailFile;  // 썸네일 이미지
+
+    private List<LectureUploadRequest> lectures;
 }

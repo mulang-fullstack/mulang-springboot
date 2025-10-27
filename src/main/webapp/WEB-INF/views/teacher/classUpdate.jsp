@@ -9,7 +9,8 @@
     <link rel="icon" href="/img/favicon.svg" type="image/png">
 
     <link rel="stylesheet" href="/css/global.css"/>
-    <link rel="stylesheet" href="/css/pages/teacher/class/classUpload.css"/>
+    <link rel="stylesheet" href="/css/pages/teacher/class/classUpdate.css"/>
+    <link href="https://cdn.jsdelivr.net/npm/summernote@0.8.20/dist/summernote-lite.min.css" rel="stylesheet">
     <title>클래스 수정 | Mulang?</title>
 </head>
 <body>
@@ -46,6 +47,20 @@
                             </div>
                         </div>
 
+                        <!-- 카테고리 선택 -->
+                        <div class="field">
+                            <label>카테고리</label>
+                            <div class="field-content">
+                                <select name="categoryId" required>
+                                    <option value="">선택해주세요</option>
+                                    <option value="1" ${course.category eq '기초' ? 'selected' : ''}>기초</option>
+                                    <option value="2" ${course.category eq '문법' ? 'selected' : ''}>문법</option>
+                                    <option value="3" ${course.category eq '어휘' ? 'selected' : ''}>어휘</option>
+                                    <option value="4" ${course.category eq '회화' ? 'selected' : ''}>회화</option>
+                                </select>
+                            </div>
+                        </div>
+
                         <!-- 언어 선택 -->
                         <div class="field">
                             <label>언어</label>
@@ -53,22 +68,8 @@
                                 <select name="languageId" required>
                                     <option value="">선택해주세요</option>
                                     <option value="1" ${course.language eq '영어' ? 'selected' : ''}>영어</option>
-                                    <option value="2" ${course.language eq '일본어' ? 'selected' : ''}>일본어</option>
-                                    <option value="3" ${course.language eq '중국어' ? 'selected' : ''}>중국어</option>
-                                </select>
-                            </div>
-                        </div>
-
-                        <!-- 카테고리 선택 -->
-                        <div class="field">
-                            <label>카테고리</label>
-                            <div class="field-content">
-                                <select name="categoryId" required>
-                                    <option value="">선택해주세요</option>
-                                    <option value="1" ${course.category eq '회화' ? 'selected' : ''}>회화</option>
-                                    <option value="2" ${course.category eq '문법' ? 'selected' : ''}>문법</option>
-                                    <option value="3" ${course.category eq '시험 대비' ? 'selected' : ''}>시험 대비</option>
-                                    <option value="4" ${course.category eq '비즈니스' ? 'selected' : ''}>비즈니스</option>
+                                    <option value="2" ${course.language eq '중국어' ? 'selected' : ''}>중국어</option>
+                                    <option value="3" ${course.language eq '일본어' ? 'selected' : ''}>일본어</option>
                                 </select>
                             </div>
                         </div>
@@ -95,31 +96,56 @@
                             </div>
                         </div>
 
-                        <!-- VOD 챕터 수정 (동적 추가 버튼 포함) -->
-                        <div class="field vod-section">
-                            <label>챕터 업로드</label>
-                            <div class="field-content">
-                                <div class="video-list">
-                                    <c:forEach var="i" begin="0" end="${course.lectureCount - 1}">
-                                        <div class="video-item" data-index="${i}">
-                                            <input type="text" name="lectures[${i}].title" value="" placeholder="챕터 제목" class="chapter-input" required>
-                                            <input type="text" name="lectures[${i}].content" value="" placeholder="챕터 소개" class="chapter-input" required>
-                                            <input type="file" name="lectures[${i}].video" accept="video/mp4,video/webm,video/mov" class="video-input">
-                                            <div class="video-btn-wrap">
-                                                <button type="button" class="add-video-btn">＋</button>
-                                                <button type="button" class="remove-video-btn">－</button>
-                                            </div>
-                                        </div>
-                                    </c:forEach>
+                        <!-- VOD 챕터 수정 -->
+                        <div class="video-list">
+                            <c:forEach var="lecture" items="${course.lectures}" varStatus="status">
+                                <div class="video-item" data-index="${status.index}">
+
+                                    <!--  챕터 제목 -->
+                                    <input type="text"
+                                           name="lectures[${status.index}].title"
+                                           value="${lecture.title}"
+                                           placeholder="챕터 제목"
+                                           required
+                                           class="chapter-input">
+
+                                    <!--  챕터 소개 -->
+                                    <input type="text"
+                                           name="lectures[${status.index}].content"
+                                           value="${lecture.content}"
+                                           placeholder="챕터 소개"
+                                           required
+                                           class="chapter-input">
+
+                                    <!--  파일 업로드 -->
+                                    <div class="custom-file">
+                                        <label for="video_${status.index}" class="file-label">
+                                            <span class="file-button">파일 선택</span>
+                                            <span class="file-name">
+                                    <c:out value="${lecture.originalName}" default="선택된 파일 없음"/>
+                                </span>
+                                        </label>
+                                        <input type="file"
+                                               id="video_${status.index}"
+                                               name="lectures[${status.index}].video"
+                                               accept="video/mp4,video/webm,video/mov"
+                                               class="video-input">
+                                    </div>
+
+                                    <!--  버튼 -->
+                                    <div class="video-btn-wrap">
+                                        <button type="button" class="add-video-btn">＋</button>
+                                        <button type="button" class="remove-video-btn">－</button>
+                                    </div>
                                 </div>
-                            </div>
+                            </c:forEach>
                         </div>
 
-                        <!-- 강의 소개 (CKEditor 동일 적용) -->
+                        <!-- 강의 소개  -->
                         <div class="field">
                             <label>강의 소개</label>
                             <div class="field-content">
-                                <textarea id="editor" name="content">${course.content}</textarea>
+                                <textarea id="summernote" name="content">${course.content}</textarea>
                             </div>
                         </div>
 
@@ -136,8 +162,10 @@
 </main>
 
 <%@ include file="../common/footer.jsp" %>
-<script src="https://cdn.ckeditor.com/ckeditor5/35.3.2/classic/ckeditor.js"></script>
-<script src="/js/pages/teacher/ckeditor5.js?v=20251023"></script>
-<script src="/js/pages/teacher/classVideo.js"></script>
+<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/summernote@0.8.20/dist/summernote-lite.min.js"></script>
+<script src="/js/pages/teacher/common/summernote-init.js?v=20251023"></script>
+
+<script src="/js/pages/teacher/class/classVideoUpdate.js"></script>
 </body>
 </html>

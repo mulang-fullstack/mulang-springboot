@@ -13,7 +13,10 @@ import yoonsome.mulang.api.teacher.dto.CourseUpdateRequest;
 import yoonsome.mulang.api.teacher.dto.TeacherCourseResponse;
 import yoonsome.mulang.api.teacher.dto.TeacherProfileResponse;
 import yoonsome.mulang.api.teacher.dto.TeacherProfileUpdateRequest;
+import yoonsome.mulang.api.teacher.service.TeacherCourseService;
 import yoonsome.mulang.api.teacher.service.TeacherMypageService;
+import yoonsome.mulang.domain.category.entity.Category;
+import yoonsome.mulang.domain.category.service.CategoryService;
 import yoonsome.mulang.domain.language.entity.Language;
 import yoonsome.mulang.domain.language.service.LanguageService;
 import yoonsome.mulang.infra.security.CustomUserDetails;
@@ -29,6 +32,8 @@ public class TeacherMypageController {
 
     private final LanguageService languageService;
     private final TeacherMypageService teacherMypageService;
+    private final TeacherCourseService teacherCourseService;
+    private final CategoryService categoryService;
 
     /** 프로필 보기 */
     @GetMapping("/profile")
@@ -56,10 +61,21 @@ public class TeacherMypageController {
     @PostMapping("/profile/update")
     public String updateProfile(
             @AuthenticationPrincipal CustomUserDetails userDetails,
-            @ModelAttribute TeacherProfileUpdateRequest request
-    ) throws IOException {
-        teacherMypageService.updateTeacherProfile(userDetails.getUser().getId(), request);
-        return "redirect:/teacher/mypage/profile";
+            @ModelAttribute TeacherProfileUpdateRequest request,
+            Model model
+    ) {
+        try {
+            teacherMypageService.updateTeacherProfile(userDetails.getUser().getId(), request);
+            return "redirect:/teacher/mypage/profile";
+        } catch (IllegalArgumentException e) {
+            model.addAttribute("errorMessage", e.getMessage());
+            TeacherProfileResponse teacher = teacherMypageService.getTeacherProfileResponse(userDetails.getUser().getId());
+            model.addAttribute("teacher", teacher);
+            return "teacher/edit";
+        } catch (IOException e) {
+            model.addAttribute("errorMessage", "파일 업로드 중 오류가 발생했습니다.");
+            return "teacher/edit";
+        }
     }
 
     /** 강좌 수정 폼이동 */
@@ -69,11 +85,17 @@ public class TeacherMypageController {
             @PathVariable Long courseId,
             Model model) {
         Long userId = userDetails.getUser().getId();
-        TeacherCourseResponse course = teacherMypageService.getCourseDetail(userId, courseId);
+        TeacherCourseResponse course = teacherCourseService.getCourseDetail(userId, courseId);
         TeacherProfileResponse teacherProfileResponse = teacherMypageService.getTeacherProfileResponse(userId);
+
+        List<Language> languages = languageService.getAllLanguages();
+        List<Category> categories = categoryService.getAllCategory();
 
         model.addAttribute("teacher", teacherProfileResponse);
         model.addAttribute("course", course);
+        model.addAttribute("lectures", course.getLectures());
+        model.addAttribute("languages", languages);
+        model.addAttribute("categories", categories);
         return "teacher/classUpdate";
     }
 
@@ -85,7 +107,7 @@ public class TeacherMypageController {
             @ModelAttribute CourseUpdateRequest request
     )throws IOException {
         Long userId = userDetails.getUser().getId();
-        teacherMypageService.updateCourse(userId, courseId, request);
+        teacherCourseService.updateCourse(userId, courseId, request);
         return "redirect:/teacher/mypage/classes/edit";
     }
 
@@ -98,15 +120,16 @@ public class TeacherMypageController {
 
         Long userId = userDetails.getUser().getId();
         TeacherProfileResponse teacher = teacherMypageService.getTeacherProfileResponse(userId);
-        Page<TeacherCourseResponse> coursePage = teacherMypageService.getTeacherCoursePage(userId, pageable);
+        Page<TeacherCourseResponse> coursePage = teacherCourseService.getTeacherCoursePage(userId, pageable);
 
         model.addAttribute("teacher", teacher);
         model.addAttribute("coursePage", coursePage);
         model.addAttribute("courses", coursePage.getContent());
+        model.addAttribute("currentPage", coursePage.getNumber());
+        model.addAttribute("totalPages", coursePage.getTotalPages());
 
         return "teacher/classEdit";
     }
-
 
     /** 클래스 삭제  */
     @PostMapping("/delete/{courseId}")
@@ -114,7 +137,7 @@ public class TeacherMypageController {
             @AuthenticationPrincipal CustomUserDetails userDetails,
             @PathVariable Long courseId){
         Long userId = userDetails.getUser().getId();
-        teacherMypageService.deleteCourse(userId, courseId);
+        teacherCourseService.deleteCourse(userId, courseId);
         return "redirect:/teacher/mypage/classes/edit";
     }
 
@@ -127,6 +150,14 @@ public class TeacherMypageController {
         return "teacher/settlement";
     }
 
+    // 비동기 페이징
+    @GetMapping("/classes/page")
+    @ResponseBody
+    public Page<TeacherCourseResponse> getTeacherCoursePageAjax(
+            @AuthenticationPrincipal CustomUserDetails userDetails,
+            @PageableDefault(size = 5) Pageable pageable) {
 
-
+        Long userId = userDetails.getUser().getId();
+        return teacherCourseService.getTeacherCoursePage(userId, pageable);
+    }
 }

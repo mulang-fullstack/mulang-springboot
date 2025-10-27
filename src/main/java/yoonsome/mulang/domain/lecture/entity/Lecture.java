@@ -25,6 +25,9 @@ public class Lecture {
     @Column(nullable = true, length = 10)
     private String length;
 
+    @Column(name = "lecture_order", nullable = false)
+    private int orderIndex;
+
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "course_id", nullable = false)
     private Course course;

@@ -18,4 +18,6 @@ public interface LectureRepository extends JpaRepository<Lecture, Long> {
     // lecture 개수 세기
     int countByCourse(Course course);
 
+    //lecture 순서
+    List<Lecture> findByCourseOrderByOrderIndexAsc(Course course);
 }

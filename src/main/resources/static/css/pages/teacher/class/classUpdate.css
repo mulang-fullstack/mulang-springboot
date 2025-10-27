@@ -253,7 +253,7 @@ input[type="file"]::file-selector-button:hover {
 
 .file-name {
     font-size: 14px;
-    color: var(--text-tertiary);
+    color: var(--text-secondary);
     white-space: nowrap;
 }
 

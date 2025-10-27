@@ -83,7 +83,8 @@
         </section>
     </div>
 </main>
-<script src="/js/pages/teacher/profile.js"></script>
+
+<script src="/js/pages/teacher/profile/profileEditRedirect.js"></script>
 <%@ include file="../common/footer.jsp" %>
 </body>
 </html>
