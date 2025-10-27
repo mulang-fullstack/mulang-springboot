@@ -32,4 +32,7 @@ public interface EnrollmentRepository extends JpaRepository<EnrollmentEntity, Lo
 
 
     List<MycourseDTO> findCourseProgressByStudentId(@Param("studentId") Long studentId);
+
+    void deleteByLectureId(Long lectureId);
+
 }

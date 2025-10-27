@@ -2,6 +2,7 @@ package yoonsome.mulang.api.teacher.service;
 
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
+import org.jsoup.Jsoup;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
@@ -13,18 +14,20 @@ import yoonsome.mulang.domain.category.service.CategoryService;
 import yoonsome.mulang.domain.course.entity.Course;
 import yoonsome.mulang.domain.course.entity.StatusType;
 import yoonsome.mulang.domain.course.service.CourseService;
+import yoonsome.mulang.domain.enrollment.repository.EnrollmentRepository;
 import yoonsome.mulang.domain.language.entity.Language;
 import yoonsome.mulang.domain.language.service.LanguageService;
 import yoonsome.mulang.domain.lecture.entity.Lecture;
 import yoonsome.mulang.domain.lecture.service.LectureService;
 import yoonsome.mulang.domain.teacher.entity.Teacher;
 import yoonsome.mulang.domain.teacher.service.TeacherService;
-import yoonsome.mulang.domain.user.service.UserService;
 import yoonsome.mulang.infra.file.entity.File;
 import yoonsome.mulang.infra.file.service.FileService;
 
 import java.io.IOException;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 
@@ -38,6 +41,7 @@ public class TeacherCourseServiceImpl implements TeacherCourseService {
     private final CourseService courseService;
     private final CategoryService categoryService;
     private final LanguageService languageService;
+    private final EnrollmentRepository enrollmentRepository;
 
 
     // 교사 본인의 강좌 목록 조회
@@ -69,15 +73,16 @@ public class TeacherCourseServiceImpl implements TeacherCourseService {
     @Override
     public void createCourse(Long userId, CourseUploadRequest request) throws IOException {
         Teacher teacher = teacherService.getTeacherByUserId(userId);
-        Language language= languageService.getById(request.getLanguageId());
+        Language language = languageService.getById(request.getLanguageId());
         Category category = categoryService.getById(request.getCategoryId());
 
+        // [1] 강좌 생성
         Course course = new Course();
         course.setTeacher(teacher);
         course.setTitle(request.getTitle());
         course.setSubtitle(request.getSubtitle());
-        course.setContent(request.getContent());
         course.setHtmlContent(request.getContent());
+        course.setContent(Jsoup.parse(request.getContent()).text());
         course.setPrice(request.getPrice());
         course.setCategory(category);
         course.setLanguage(language);
@@ -91,17 +96,28 @@ public class TeacherCourseServiceImpl implements TeacherCourseService {
 
         Course savedCourse = courseService.registerCourse(course);
 
-        if (request.getLectures() != null) {
+        // [2] 강의 업로드
+        if (request.getLectures() != null && !request.getLectures().isEmpty()) {
             for (LectureUploadRequest lectureReq : request.getLectures()) {
-                lectureService.createLectureWithFile(
-                        lectureReq.getTitle(),
-                        lectureReq.getContent(),
-                        savedCourse,
-                        lectureReq.getVideo()
-                );
+                MultipartFile video = lectureReq.getVideo();
+                if (video == null || video.isEmpty()) continue; // 영상 없으면 skip
+
+                // 파일 업로드 (FileService)
+                File videoFile = fileService.createFile(video);
+
+                // Lecture 엔티티 조립
+                Lecture lecture = new Lecture();
+                lecture.setCourse(savedCourse);
+                lecture.setTitle(lectureReq.getTitle());
+                lecture.setContent(lectureReq.getContent());
+                lecture.setFile(videoFile);
+
+                // 도메인 서비스는 단순 저장만 담당
+                lectureService.save(lecture);
             }
         }
     }
+
     @Override
     public TeacherCourseResponse getCourseDetail(Long userId, Long courseId) {
         Teacher teacher = teacherService.getTeacherByUserId(userId);
@@ -153,8 +169,8 @@ public class TeacherCourseServiceImpl implements TeacherCourseService {
         if (request.getTitle() != null) course.setTitle(request.getTitle());
         if (request.getSubtitle() != null) course.setSubtitle(request.getSubtitle());
         if (request.getContent() != null) {
-            course.setContent(request.getContent());
             course.setHtmlContent(request.getContent());
+            course.setContent(Jsoup.parse(request.getContent()).text());
         }
         if (request.getPrice() != null) course.setPrice(request.getPrice());
         if (request.getStatus() != null) course.setStatus(request.getStatus());
@@ -177,12 +193,20 @@ public class TeacherCourseServiceImpl implements TeacherCourseService {
         // ---------- Lecture 처리 ----------
         List<Lecture> existingLectures = lectureService.getLecturesByCourseId(courseId);
 
+        // [1] 명시적 삭제 요청만 처리
+        if (request.getDeletedLectureIds() != null && !request.getDeletedLectureIds().isEmpty()) {
+            for (Long lectureId : request.getDeletedLectureIds()) {
+                deleteLecture(lectureId);
+                System.out.println("[DELETE] 강의 삭제됨: ID=" + lectureId);
+            }
+        }
+
+        // [2] 신규 및 수정 처리
         if (request.getLectures() != null && !request.getLectures().isEmpty()) {
             for (int i = 0; i < request.getLectures().size(); i++) {
                 LectureUploadRequest lectureReq = request.getLectures().get(i);
 
                 if (lectureReq.getId() == null) {
-                    // 신규 강의 — 영상 없으면 무시 (강제 예외 대신 skip)
                     MultipartFile video = lectureReq.getVideo();
                     if (video == null || video.isEmpty()) {
                         System.out.println("[SKIP] 영상 파일이 없는 신규 강의 건너뜀: " + lectureReq.getTitle());
@@ -199,7 +223,6 @@ public class TeacherCourseServiceImpl implements TeacherCourseService {
 
                     lectureService.save(newLecture);
                 } else {
-                    // 기존 강의 수정
                     Lecture existing = existingLectures.stream()
                             .filter(l -> l.getId().equals(lectureReq.getId()))
                             .findFirst()
@@ -219,6 +242,7 @@ public class TeacherCourseServiceImpl implements TeacherCourseService {
                 }
             }
         }
+
         // ---------- Lecture 개수 및 순서 재정렬 ----------
         List<Lecture> updatedLectures = lectureService.getLecturesByCourseId(courseId);
         for (int i = 0; i < updatedLectures.size(); i++) {
@@ -227,6 +251,8 @@ public class TeacherCourseServiceImpl implements TeacherCourseService {
         course.setLectureCount(updatedLectures.size());
         courseService.registerCourse(course);
     }
+
+    //course 삭제 상태변경 private로
     @Override
     @Transactional
     public void deleteCourse(Long userId, Long courseId) {
@@ -237,6 +263,19 @@ public class TeacherCourseServiceImpl implements TeacherCourseService {
             throw new IllegalArgumentException("본인의 강좌만 수정할 수 있습니다.");
         }
         course.setStatus(StatusType.PRIVATE);
+    }
+    
+    //lecture 삭제 업데이트 폼에서 -누르면
+    @Transactional
+    public void deleteLecture(Long lectureId) {
+        Lecture lecture = lectureService.getLectureById(lectureId);
+        if (lecture.getFile() != null) {
+            File file = lecture.getFile();
+            lecture.setFile(null);
+            lectureService.save(lecture);
+            fileService.deleteFile(file);
+        }
+        lectureService.delete(lectureId);
     }
 
     //기존 HTML 본문은 유지하고, 지정된 이미지 URL만 새 파일로 교체

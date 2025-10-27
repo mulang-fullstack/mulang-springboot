@@ -25,11 +25,13 @@
                 <div class="class-upload">
                     <h2>CLASS 수정</h2>
 
-                    <form action="/teacher/mypage/classes/update/${course.id}"
+                    <!-- ✅ action 수정 -->
+                    <form action="/teacher/mypage/classes/update"
                           method="post"
                           enctype="multipart/form-data">
 
-                        <input type="hidden" name="id" value="${course.id}"/>
+                        <!-- ✅ courseId 전달 -->
+                        <input type="hidden" name="courseId" value="${course.id}"/>
 
                         <!-- 클래스 이름 -->
                         <div class="field">
@@ -96,12 +98,14 @@
                             </div>
                         </div>
 
-                        <!-- VOD 챕터 수정 -->
+                        <!-- ✅ VOD 챕터 수정 -->
                         <div class="video-list">
                             <c:forEach var="lecture" items="${course.lectures}" varStatus="status">
                                 <div class="video-item" data-index="${status.index}">
+                                    <!-- ✅ 기존 강의 식별용 -->
+                                    <input type="hidden" name="lectures[${status.index}].id" value="${lecture.id}">
 
-                                    <!--  챕터 제목 -->
+                                    <!-- 챕터 제목 -->
                                     <input type="text"
                                            name="lectures[${status.index}].title"
                                            value="${lecture.title}"
@@ -109,7 +113,7 @@
                                            required
                                            class="chapter-input">
 
-                                    <!--  챕터 소개 -->
+                                    <!-- 챕터 소개 -->
                                     <input type="text"
                                            name="lectures[${status.index}].content"
                                            value="${lecture.content}"
@@ -117,13 +121,13 @@
                                            required
                                            class="chapter-input">
 
-                                    <!--  파일 업로드 -->
+                                    <!-- 파일 업로드 -->
                                     <div class="custom-file">
                                         <label for="video_${status.index}" class="file-label">
                                             <span class="file-button">파일 선택</span>
                                             <span class="file-name">
-                                    <c:out value="${lecture.originalName}" default="선택된 파일 없음"/>
-                                </span>
+                                                <c:out value="${lecture.originalName}" default="선택된 파일 없음"/>
+                                            </span>
                                         </label>
                                         <input type="file"
                                                id="video_${status.index}"
@@ -132,7 +136,7 @@
                                                class="video-input">
                                     </div>
 
-                                    <!--  버튼 -->
+                                    <!-- 버튼 -->
                                     <div class="video-btn-wrap">
                                         <button type="button" class="add-video-btn">＋</button>
                                         <button type="button" class="remove-video-btn">－</button>
@@ -141,7 +145,10 @@
                             </c:forEach>
                         </div>
 
-                        <!-- 강의 소개  -->
+                        <!-- ✅ 삭제 ID 전송용 hidden -->
+                        <div id="deletedLectureContainer"></div>
+
+                        <!-- 강의 소개 -->
                         <div class="field">
                             <label>강의 소개</label>
                             <div class="field-content">
@@ -165,7 +172,6 @@
 <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.20/dist/summernote-lite.min.js"></script>
 <script src="/js/pages/teacher/common/summernote-init.js?v=20251023"></script>
-
 <script src="/js/pages/teacher/class/classVideoUpdate.js"></script>
 </body>
 </html>

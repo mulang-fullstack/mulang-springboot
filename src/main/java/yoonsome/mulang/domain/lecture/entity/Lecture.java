@@ -33,6 +33,6 @@ public class Lecture {
     private Course course;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "file_id", nullable = false)
+    @JoinColumn(name = "file_id", nullable = true)
     private File file;
 }

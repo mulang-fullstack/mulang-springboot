@@ -11,7 +11,7 @@
 
 <div class="player-wrapper">
 
-    <!-- 🎥 왼쪽 영상 영역 -->
+    <!--  왼쪽 영상 영역 -->
     <section class="video-section">
         <div class="video-frame">
             <video controls autoplay id="lectureVideo" controlsList="nodownload">
@@ -32,12 +32,12 @@
         </div>
     </section>
 
-    <!-- 📚 오른쪽: 강의목차 -->
+    <!--  오른쪽: 강의목차 -->
     <aside class="lecture-list">
         <h4>강의 목록</h4>
         <ul>
             <c:forEach var="lec" items="${lectureList}">
-                <li onclick="location.href='/student/${lec.course.id}/lecture/${lec.id}'"
+                <li onclick="location.href='/student/course/${lec.course.id}/lecture/${lec.id}'"
                     class="${lec.id == lecture.id ? 'active' : ''}">
                         ${lec.title}
                 </li>

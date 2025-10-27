@@ -4,12 +4,23 @@ document.addEventListener("DOMContentLoaded", () => {
     const form = document.querySelector("form");
     if (!videoList) return;
 
+    // -------------------- 삭제 ID 기록용 --------------------
+    function markLectureDeleted(lectureId) {
+        if (!lectureId) return;
+        const hidden = document.createElement("input");
+        hidden.type = "hidden";
+        hidden.name = "deletedLectureIds";
+        hidden.value = lectureId;
+        form.appendChild(hidden);
+    }
+
     // -------------------- 새로운 비디오 항목 생성 --------------------
     function createVideoItem(index) {
         const newItem = document.createElement("div");
         newItem.classList.add("video-item");
         newItem.dataset.index = index;
         newItem.innerHTML = `
+            <input type="hidden" name="lectures[${index}].id" value="">
             <input type="text" name="lectures[${index}].title" placeholder="챕터 제목" required class="chapter-input">
             <input type="text" name="lectures[${index}].content" placeholder="챕터 소개" required class="chapter-input">
 
@@ -50,7 +61,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
             const currentItem = target.closest(".video-item");
             const newItem = createVideoItem(items.length);
-            currentItem.after(newItem); // 바로 아래 삽입
+            currentItem.after(newItem);
             reindexVideoItems();
         }
 
@@ -58,7 +69,15 @@ document.addEventListener("DOMContentLoaded", () => {
         if (target.classList.contains("remove-video-btn")) {
             const items = videoList.querySelectorAll(".video-item");
             if (items.length <= 1) return alert("최소 1개의 강의는 필요합니다.");
-            target.closest(".video-item").remove();
+
+            const item = target.closest(".video-item");
+            const idInput = item.querySelector('input[name$=".id"]');
+            const lectureId = idInput ? idInput.value : null;
+
+            // 삭제 ID 기록
+            markLectureDeleted(lectureId);
+
+            item.remove();
             reindexVideoItems();
         }
     });
@@ -95,7 +114,6 @@ document.addEventListener("DOMContentLoaded", () => {
             const v = items[i].querySelector('input[type="file"]');
             const existingFileName = items[i].querySelector(".file-name")?.textContent.trim();
 
-            // 제목·소개 비어 있거나, 파일 미선택(기존 파일도 없음)
             if (!t.value.trim() || !c.value.trim() ||
                 (!v.files.length && (!existingFileName || existingFileName === "선택된 파일 없음"))) {
                 e.preventDefault();
@@ -105,19 +123,18 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     });
 });
+
+// -------------------- 이미지 교체 --------------------
 document.addEventListener("DOMContentLoaded", () => {
     const replaceBtn = document.querySelector("#replaceImageBtn");
     const replaceInput = document.querySelector("#replaceImageInput");
 
-    // 버튼 클릭 → 파일 선택창 열기
     replaceBtn?.addEventListener("click", () => replaceInput.click());
 
-    // 파일 선택 후 자동 업로드
     replaceInput?.addEventListener("change", async (e) => {
         const file = e.target.files[0];
         if (!file) return;
 
-        // 교체할 이미지 URL (선택된 이미지 클릭 시 또는 미리 입력받을 수 있음)
         const oldUrl = prompt("교체할 기존 이미지의 URL을 입력하세요:");
         if (!oldUrl) return;
 
@@ -140,14 +157,13 @@ document.addEventListener("DOMContentLoaded", () => {
 
             const msg = await res.text();
             if (res.ok) {
-                alert(" 이미지 교체 완료");
-                // 에디터가 있다면, HTML 다시 로드하거나 src 갱신
+                alert("이미지 교체 완료");
                 location.reload();
             } else {
-                alert(" 실패: " + msg);
+                alert("실패: " + msg);
             }
         } catch (err) {
-            console.error(" 업로드 오류:", err);
+            console.error("업로드 오류:", err);
             alert("업로드 중 오류가 발생했습니다.");
         }
     });
