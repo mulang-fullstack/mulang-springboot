@@ -5,14 +5,19 @@
 <head>
     <meta charset="UTF-8">
     <title>${lecture.title} | Mulang</title>
+
+    <link rel="stylesheet" href="/css/global.css"/>
     <link rel="stylesheet" href="/css/pages/mypage/mycourse/player.css">
+    <link rel="stylesheet" href="/css/pages/mypage/mycourse/qna.css">
+
 </head>
 <body>
 
 <div class="player-wrapper">
 
-    <!--  왼쪽 영상 영역 -->
+    <!-- 왼쪽 영상 영역 -->
     <section class="video-section">
+        <!-- 영상 -->
         <div class="video-frame">
             <video controls autoplay id="lectureVideo" controlsList="nodownload">
                 <source src="${lecture.file.url}" type="video/mp4">
@@ -20,19 +25,42 @@
             </video>
         </div>
 
+        <!-- 영상 정보 -->
         <div class="video-info">
             <h3>${lecture.title}</h3>
             <p>현재 강의 시간: <span id="currentTime">00:00</span></p>
         </div>
 
+        <!-- 재생 속도 -->
         <div class="video-controls">
             <button onclick="setPlaybackRate(1)">1.0x</button>
             <button onclick="setPlaybackRate(1.5)">1.5x</button>
             <button onclick="setPlaybackRate(2)">2.0x</button>
         </div>
+
+        <!-- Q&A 섹션 -->
+        <section class="qna-section" data-course-id="${lecture.course.id}">
+            <div class="qna-header">
+                <h4>Q&A 게시판</h4>
+            </div>
+
+            <!-- 질문 작성 -->
+            <div class="qna-write-box">
+                <textarea id="qna-content" placeholder="강좌에 대한 질문을 입력하세요."></textarea>
+                <button id="qna-submit">등록</button>
+            </div>
+
+            <!-- 질문 목록 -->
+            <div id="qna-list" class="qna-list">
+                <!-- JS에서 동적으로 채워짐 -->
+            </div>
+
+            <!-- 페이징 -->
+            <div class="pagination"></div>
+        </section>
     </section>
 
-    <!--  오른쪽: 강의목차 -->
+    <!-- 오른쪽: 강의 목록 -->
     <aside class="lecture-list">
         <h4>강의 목록</h4>
         <ul>
@@ -46,6 +74,9 @@
     </aside>
 </div>
 
+<!-- 스크립트 -->
 <script src="/js/pages/mypage/player.js"></script>
+<script src="/js/pages/mypage/qnaPagination.js"></script>
+
 </body>
 </html>
