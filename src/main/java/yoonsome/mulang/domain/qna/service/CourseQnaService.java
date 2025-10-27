@@ -5,6 +5,8 @@ import org.springframework.data.domain.Pageable;
 import yoonsome.mulang.domain.qna.entity.CourseAnswer;
 import yoonsome.mulang.domain.qna.entity.CourseQuestion;
 
+import java.util.List;
+
 public interface CourseQnaService {
 
     /** 질문 등록 */
@@ -19,8 +21,11 @@ public interface CourseQnaService {
     /** 질문별 답변 페이징 조회 */
     Page<CourseAnswer> getAnswerPageByQuestion(Long questionId, Pageable pageable);
 
-    /** 특정 사용자 질문 페이징 조회 */
-    Page<CourseQuestion> getQuestionPageByUser(Long userId, Pageable pageable);
+    /** 특정 사용자 질문 페이징 조회  최신순*/
+    List<CourseQuestion> getQuestionPageByUserDesc(Long userId);
+
+    /** 특정 사용자 질문 페이징 조회  오래된순*/
+    List<CourseQuestion> getQuestionPageByUserAsc(Long userId);
 
     /** 특정 교사 답변 페이징 조회 */
     Page<CourseAnswer> getAnswerPageByTeacher(Long teacherId, Pageable pageable);

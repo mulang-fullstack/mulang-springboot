@@ -9,6 +9,7 @@ import yoonsome.mulang.domain.course.entity.Course;
 import yoonsome.mulang.domain.user.entity.User;
 
 import java.sql.Timestamp;
+import java.time.LocalDateTime;
 
 @Entity
 @Data
@@ -29,6 +30,7 @@ public class CourseQuestion {
     @Column(name = "content", nullable = false, columnDefinition = "TEXT", length = 10000)
     private String content;
 
+
     @Column(name = "created_at", nullable = false)
     private Timestamp createdAt;
 
@@ -43,5 +45,15 @@ public class CourseQuestion {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id", nullable = false)
     private User user;
+    // @PrePersist는 메서드에 붙입니다!
+    @PrePersist
+    protected void onCreate() {
+        createdAt = Timestamp.valueOf(LocalDateTime.now());
+    }
 
+    // @PreUpdate는 수정 시 자동 호출
+    @PreUpdate
+    protected void onUpdate() {
+        updatedAt = Timestamp.valueOf(LocalDateTime.now());
+    }
 }
