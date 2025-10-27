@@ -37,7 +37,7 @@
                     </div>
 
                     <div class="table-body">
-                        <c:forEach var="course" items="${courseList}">
+                        <c:forEach var="course" items="${courses}">
                             <div class="table-row">
                                 <div class="thumb">
                                     <img src="<c:url value='${course.thumbnail}'/>" alt="클래스 썸네일" width="160" height="90">
@@ -60,7 +60,7 @@
                             </div>
                         </c:forEach>
 
-                        <c:if test="${empty courseList}">
+                        <c:if test="${empty courses}">
                             <div class="table-row">
                                 <div class="no-class-message">
                                     등록된 클래스가 없습니다.
@@ -69,6 +69,7 @@
                         </c:if>
                     </div>
                 </div>
+
             </section>
         </section>
     </div>

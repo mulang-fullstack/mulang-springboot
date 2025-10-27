@@ -10,9 +10,11 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 import yoonsome.mulang.domain.course.dto.CourseListRequest;
 import yoonsome.mulang.domain.course.entity.Course;
+import yoonsome.mulang.domain.course.entity.StatusType;
 import yoonsome.mulang.domain.course.repository.CourseRepository;
 import yoonsome.mulang.domain.lecture.service.LectureService;
 import yoonsome.mulang.domain.review.service.ReviewService;
+import yoonsome.mulang.domain.teacher.entity.Teacher;
 import yoonsome.mulang.infra.file.entity.File;
 import yoonsome.mulang.infra.file.service.FileService;
 import java.io.IOException;
@@ -111,6 +113,9 @@ public class CourseServiceImpl implements CourseService {
             lectureService.createLectureWithFile(title, content, savedCourse, video);
         }
     }
-
+    @Override
+    public Page<Course> getTeacherCoursePage(Teacher teacher, List<StatusType> statuses, Pageable pageable) {
+        return courseRepository.findByTeacherAndStatusIn(teacher, statuses, pageable);
+    }
 
 }
