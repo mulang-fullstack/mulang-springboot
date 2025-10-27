@@ -15,7 +15,7 @@ public class LanguageServiceImpl implements LanguageService {
     private final LanguageRepository languageRepository;
 
     @Override
-    public String getLanguageNameById(Long id){
+    public String getNameById(Long id){
         String languageName = languageRepository.findById(id).get().getName();
         return languageName;
     }

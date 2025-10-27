@@ -17,5 +17,5 @@ public class CourseListResponse {
     private double averageRating;  // 별점
     private int reviewCount;       // 리뷰 수
     private Integer price;         // 수강료
-    private LocalDateTime createdDate; // 강의 등록일
+    private LocalDateTime createdAt; // 강의 등록일
 }

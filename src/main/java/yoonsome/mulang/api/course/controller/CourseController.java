@@ -27,7 +27,7 @@ public class CourseController {
     @GetMapping("course")
     public String getCourseList(@ModelAttribute CourseListRequest request, HttpSession session, Model model) {
         //언어이름
-        String languagename = displayingCourseService.getLanguageName(request, session);
+        String languageName = displayingCourseService.getLanguageName(request, session);
         //특정 언어에 해당하는 카테고리들
         List<Category> categories = displayingCourseService.getCategoryList(request);
         //request 값에 해당하는 강좌 리스트 정보 페이지 객체
@@ -35,7 +35,7 @@ public class CourseController {
 
         System.out.println("@request: "+request);
 
-        model.addAttribute("languagename", languagename);
+        model.addAttribute("languageName", languageName);
         model.addAttribute("categories", categories);
         model.addAttribute("courses", courseListResponses.getContent());
         model.addAttribute("totalPages", courseListResponses.getTotalPages());
@@ -44,7 +44,7 @@ public class CourseController {
 
     /*강좌 상세 페이지*/
     @GetMapping("courseDetail")
-    public String getCourseDetail(Long id, Model model) {
+    public String getCourseDetail(Long id, @RequestParam(defaultValue = "0") int page, @RequestParam(defaultValue = "rating") String sortBy, Model model) {
         /*강의 정보*/
         /*강의 소개*/
         /*커리큘럼(강의 리스트)*/
@@ -52,13 +52,19 @@ public class CourseController {
         model.addAttribute("detail", courseDetailResponse);
         System.out.println("@courseDetail:"+courseDetailResponse);
 
-        /*리뷰
-        int page = 0;
-        int size = 10;
-        Pageable pageable = PageRequest.of(page, size, Sort.by("createdAt").descending());
+        /*리뷰 동기 페이징 정렬*/
+        //int page = 0;
+        int size = 2;
+        Pageable pageable = PageRequest.of(page, size, Sort.by(Sort.Direction.DESC, sortBy));
         Page<ReviewResponse> reviewResponse = displayingCourseService.getReviewPageByCourseId(id, pageable);
+        model.addAttribute("sortBy",  sortBy);
+        model.addAttribute("courseId", id);
         model.addAttribute("review", reviewResponse.getContent());
-        System.out.println("@review:"+reviewResponse.getContent());*/
+        model.addAttribute("currentPage", reviewResponse.getNumber());
+        model.addAttribute("totalPages", reviewResponse.getTotalPages());
+        System.out.println("@review:"+reviewResponse.getContent());
+        System.out.println("@page:"+page);
+        System.out.println("@totalPages:"+ reviewResponse.getTotalPages());
         return "course/courseDetail";
     }
     // ✅ 리뷰 비동기 요청용 엔드포인트
@@ -74,7 +80,7 @@ public class CourseController {
                 ? Sort.by("createdAt").descending()
                 : Sort.by("rating").descending(); // 기본: rating
 
-        Pageable pageable = PageRequest.of(page, size, sortOption);
+        Pageable pageable = PageRequest.of(page, size);
         return displayingCourseService.getReviewPageByCourseId(courseId, pageable);
     }
 }

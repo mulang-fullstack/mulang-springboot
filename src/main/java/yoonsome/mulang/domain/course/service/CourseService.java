@@ -14,7 +14,7 @@ import java.util.List;
 public interface CourseService {
     /*
     admin, course 강좌 정보 페이지 객체 가져오기
-    request dto: languageId, categoryId, keyword, status, startedDate, endedDate, sort, page, size
+    request dto: languageId, categoryId, keyword, status, startDate, endDate, sort, page, size
     */
     Page<Course> getCourseList(CourseListRequest request);
 
@@ -24,16 +24,6 @@ public interface CourseService {
     /*강좌 등록하기*/
     Course registerCourse(Course course);
 
-    /*강좌 수정하기*/
-    void modifyCourse(Course course);
-
-    /*강좌 삭제하기*/
-    void deleteCourse(long id);
-
-
     /* teacher 강사별 강좌 리스트 가져오기 */
-    List<Course> getCoursesByTeacher(Long teacherId);
-
-
     Page<Course> getTeacherCoursePage(Teacher teacher, List<StatusType> statuses, Pageable pageable);
 }
