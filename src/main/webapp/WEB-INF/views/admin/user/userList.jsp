@@ -172,12 +172,11 @@
                         <thead>
                         <tr>
                             <th>번호</th>
-                            <th>상태</th>
+                            <th>구분</th>
                             <th>이름</th>
                             <th>닉네임</th>
                             <th>이메일</th>
                             <th>가입일</th>
-                            <th>구분</th>
                             <th>계정상태</th>
                             <th>관리</th>
                         </tr>
@@ -189,13 +188,6 @@
                                 data-status="${user.userStatus == "ACTIVE" ? 'active' : 'inactive'}"
                                 data-date="${user.createdAt}">
                                 <td>${currentPage * size + status.index + 1}</td>
-                                <td>
-                                    <span class="status-dot ${user.userStatus ? 'success' : 'inactive'}"></span>
-                                </td>
-                                <td>${user.username}</td>
-                                <td>${user.nickname}</td>
-                                <td>${user.email}</td>
-                                <td>${user.createdAt}</td>
                                 <td>
                                     <c:choose>
                                         <c:when test="${user.role == 'TEACHER'}">
@@ -209,6 +201,10 @@
                                         </c:otherwise>
                                     </c:choose>
                                 </td>
+                                <td>${user.username}</td>
+                                <td>${user.nickname}</td>
+                                <td>${user.email}</td>
+                                <td>${user.createdAt}</td>
                                 <td class="status-cell">
                                     <span class="status-badge ${user.userStatus == "ACTIVE" ? 'active' : 'inactive'}">
                                             ${user.userStatus == "ACTIVE" ? '정상' : '정지'}
@@ -225,7 +221,7 @@
 
                         <c:if test="${empty users}">
                             <tr>
-                                <td colspan="9" class="no-data">등록된 회원이 없습니다.</td>
+                                <td colspan="8" class="no-data">등록된 회원이 없습니다.</td>
                             </tr>
                         </c:if>
                         </tbody>

@@ -12,13 +12,13 @@ public class AdminPaymentController {
     public String payment(Model model){
         model.addAttribute("activeMenu","payment");
         model.addAttribute("activeSubmenu","payment");
-        return "admin/user/user";
+        return "admin/payment/payment";
     }
 
     @GetMapping("/refund")
     public String refund(Model model){
         model.addAttribute("activeMenu","payment");
         model.addAttribute("activeSubmenu","refund");
-        return "admin/user/userLog";
+        return "admin/payment/refund";
     }
 }

@@ -29,7 +29,7 @@
                 <div><img src="/img/icon/calendar-edit.png"> 콘텐츠 관리</div>
                 <ul class="submenu">
                     <li><a href="/admin/content/course" data-submenu="course">강좌 조회</a></li>
-                    <li><a href="/admin/content/course" data-submenu="course">강좌 신청</a></li>
+                    <li><a href="/admin/content/pendingCourse" data-submenu="pendingCourse">강좌 신청</a></li>
                 </ul>
             </li>
 
@@ -41,11 +41,11 @@
                 </ul>
             </li>
 
-            <li class="menu-section" data-menu="settings">
+            <li class="menu-section" data-menu="system">
                 <div><img src="/img/icon/admin-setting.png"> 시스템 관리</div>
                 <ul class="submenu">
-                    <li><a href="/admin/settings/notice" data-submenu="notice">공지사항</a></li>
-                    <li><a href="/admin/settings/inquiry" data-submenu="inquiry">1대1 문의</a></li>
+                    <li><a href="/admin/system/notice" data-submenu="notice">공지사항</a></li>
+                    <li><a href="/admin/system/inquiry" data-submenu="inquiry">1대1 문의</a></li>
                 </ul>
             </li>
         </ul>

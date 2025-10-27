@@ -8,18 +8,18 @@
     <link rel="icon" href="/img/favicon.svg" type="image/png">
     <link rel="stylesheet" href="/css/global.css"/>
     <link rel="stylesheet" href="/css/pages/admin/admin.css"/>
-    <link rel="stylesheet" href="/css/pages/admin/content/course.css"/>
-    <title>관리자 | 강좌 관리</title>
+    <link rel="stylesheet" href="/css/pages/admin/payment/payment.css"/>
+    <title>관리자 | 결제 내역 관리</title>
 </head>
 <body>
 <div class="main-container">
     <%@ include file="../adminSidebar.jsp" %>
     <div class="right-container">
         <header>
-            <h1>콘텐츠 관리 - 강좌 조회</h1>
+            <h1>결제 관리 - 결제 내역 조회</h1>
             <div class="header-info">
                 <div class="info-box"><p>안녕하세요 <span>관리자</span>님</p></div>
-                <a class="logout" href="#">로그아웃</a>
+                <a class="logout" href="/logout">로그아웃</a>
             </div>
         </header>
 
@@ -28,7 +28,7 @@
                 <p class="date-range" id="current-time">2025.10.19 18:03:24</p>
             </div>
 
-            <section class="course-section">
+            <section class="payment-section">
                 <div class="filter-bar">
                     <div class="filter-container">
                         <!-- 기간 -->
@@ -41,25 +41,27 @@
                             </div>
                         </div>
 
-                        <!-- 언어 -->
+                        <!-- 결제 수단 -->
                         <div class="filter-group">
-                            <span class="filter-label">언어</span>
+                            <span class="filter-label">결제 수단</span>
                             <div class="radio-group">
-                                <label><input type="radio" name="language" value="ALL" checked> 전체</label>
-                                <label><input type="radio" name="language" value="1"> 영어</label>
-                                <label><input type="radio" name="language" value="2"> 중국어</label>
-                                <label><input type="radio" name="language" value="3"> 일본어</label>
+                                <label><input type="radio" name="paymentMethod" value="ALL" checked> 전체</label>
+                                <label><input type="radio" name="paymentMethod" value="CARD"> 카드</label>
+                                <label><input type="radio" name="paymentMethod" value="BANK"> 계좌이체</label>
+                                <label><input type="radio" name="paymentMethod" value="KAKAO"> 카카오페이</label>
+                                <label><input type="radio" name="paymentMethod" value="NAVER"> 네이버페이</label>
                             </div>
                         </div>
 
-                        <!-- 강좌 상태 -->
+                        <!-- 결제 상태 -->
                         <div class="filter-group">
-                            <span class="filter-label">강좌 상태</span>
+                            <span class="filter-label">결제 상태</span>
                             <div class="radio-group">
                                 <label><input type="radio" name="status" value="ALL" checked> 전체</label>
-                                <label><input type="radio" name="status" value="PUBLIC"> 공개</label>
-                                <label><input type="radio" name="status" value="PRIVATE"> 비공개</label>
-                                <label><input type="radio" name="status" value="REVIEW"> 심사중</label>
+                                <label><input type="radio" name="status" value="SUCCESS"> 완료</label>
+                                <label><input type="radio" name="status" value="PENDING"> 대기</label>
+                                <label><input type="radio" name="status" value="FAILED"> 실패</label>
+                                <label><input type="radio" name="status" value="REFUND"> 환불</label>
                             </div>
                         </div>
                     </div>
@@ -73,7 +75,7 @@
                                 <circle cx="11" cy="11" r="8"></circle>
                                 <path d="m21 21-4.35-4.35"></path>
                             </svg>
-                            <input type="text" id="searchKeyword" placeholder="강사 또는 강좌명 검색">
+                            <input type="text" id="searchKeyword" placeholder="주문번호, 구매자, 강좌명 검색">
                         </div>
                         <button class="search-btn" type="button">검색</button>
 
@@ -90,10 +92,9 @@
                             <select id="sortSelect">
                                 <option value="LATEST">최신순</option>
                                 <option value="OLDEST">오래된순</option>
-                                <option value="COURSE_NAME_ASC">강좌명순</option>
-                                <option value="COURSE_NAME_DESC">강좌명순(역순)</option>
-                                <option value="TEACHER_NAME_ASC">강사이름순</option>
-                                <option value="TEACHER_NAME_DESC">강사이름순(역순)</option>
+                                <option value="AMOUNT_DESC">금액 높은순</option>
+                                <option value="AMOUNT_ASC">금액 낮은순</option>
+                                <option value="BUYER_ASC">구매자순</option>
                             </select>
                         </div>
 
@@ -111,25 +112,25 @@
                     </div>
                 </div>
 
-                <!-- 강좌 테이블 -->
+                <!-- 결제 내역 테이블 -->
                 <div class="table-wrap">
                     <table>
                         <thead>
                         <tr>
-                            <th>번호</th>
-                            <th>강좌명</th>
-                            <th>언어</th>
-                            <th>강사</th>
-                            <th>닉네임</th>
-                            <th>등록일</th>
-                            <th>상태</th>
-                            <th>관리</th>
+                            <th style="width: 80px;">번호</th>
+                            <th style="width: auto;">강좌명</th>
+                            <th style="width: 100px;">구매자</th>
+                            <th style="width: 110px;">결제금액</th>
+                            <th style="width: 100px;">결제수단</th>
+                            <th style="width: 120px;">결제일시</th>
+                            <th style="width: 100px;">상태</th>
+                            <th style="width: 120px;">관리</th>
                         </tr>
                         </thead>
                         <tbody>
                         <!-- JavaScript로 동적 생성 -->
                         <tr>
-                            <td colspan="8" class="no-data">데이터를 불러오는 중...</td>
+                            <td colspan="9" class="no-data">데이터를 불러오는 중...</td>
                         </tr>
                         </tbody>
                     </table>
@@ -145,16 +146,16 @@
 </div>
 
 <script>
-    // 초기 페이지네이션 데이터 (JavaScript가 업데이트함)
+    // 초기 페이지네이션 데이터
     window.paginationData = {
         currentPage: 0,
         totalPages: 1,
-        baseUrl: '/admin/content/course'
+        baseUrl: '/admin/payment'
     };
 </script>
 
 <script src="/js/common/currentTime.js"></script>
 <script src="/js/pages/admin/pagination.js"></script>
-<script src="/js/pages/admin/content/course.js"></script>
+<script src="/js/pages/admin/payment/payment.js"></script>
 </body>
 </html>

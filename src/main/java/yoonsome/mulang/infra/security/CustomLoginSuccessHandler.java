@@ -75,7 +75,7 @@ public class CustomLoginSuccessHandler implements AuthenticationSuccessHandler {
 
     private String extractOS(String userAgent) {
         if (userAgent.contains("Windows NT 10.0")) {
-            return "Windows 10";
+            return "Windows 11";
         } else if (userAgent.contains("Windows NT 11.0")) {
             return "Windows 11";
         } else if (userAgent.contains("Windows NT 6.3")) {
