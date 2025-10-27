@@ -11,9 +11,13 @@ import yoonsome.mulang.api.student.dto.MycourseDTO;
 import yoonsome.mulang.api.student.service.MycourseService;
 import yoonsome.mulang.domain.enrollment.repository.EnrollmentRepository;
 import yoonsome.mulang.domain.lecture.entity.Lecture;
+import yoonsome.mulang.domain.lecture.repository.LectureRepository;
+import yoonsome.mulang.domain.payment.entity.CourseEnrollment;
+import yoonsome.mulang.domain.payment.repository.CourseEnrollmentRepository;
 import yoonsome.mulang.infra.security.CustomUserDetails;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Controller
 @RequestMapping("/student")
@@ -22,6 +26,8 @@ public class MyCourseController {
 
     private final MycourseService mycourseService;
     private final EnrollmentRepository enrollmentRepository;
+    private final CourseEnrollmentRepository courseEnrollmentRepository;
+    private final LectureRepository lectureRepository;
 
     @GetMapping("/course")
     public String course(@AuthenticationPrincipal CustomUserDetails userDetails,Model model) {
@@ -29,8 +35,16 @@ public class MyCourseController {
         Long userid = userDetails.getUser().getId();
 
 
-        List<MycourseDTO> mycourseDTO = enrollmentRepository
-                .findCourseProgressByStudentId(userid);
+        //List<MycourseDTO> mycourseDTO = enrollmentRepository
+                //.findCourseProgressByStudentId(userid);
+        List<CourseEnrollment> enrollments = courseEnrollmentRepository.
+                findMyCoursesWithDetails(userid);
+
+        List<MycourseDTO> mycourseDTO = enrollments.stream()
+                .map(e -> MycourseDTO.from(e, userid, lectureRepository, enrollmentRepository))
+                .collect(Collectors.toList());
+
+
 
         System.out.println(mycourseDTO);
         model.addAttribute("mycourseDTO", mycourseDTO);

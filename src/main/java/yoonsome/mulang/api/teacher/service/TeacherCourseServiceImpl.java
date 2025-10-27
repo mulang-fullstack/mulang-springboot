@@ -63,7 +63,7 @@ public class TeacherCourseServiceImpl implements TeacherCourseService {
                         .category(course.getCategory().getName())
                         .thumbnail(course.getThumbnail())
                         .lectureCount(course.getLectureCount())
-                        .createdDate(course.getCreatedDate())
+                        //.createdDate(course.getCreatedDate())
                         .build())
                 .collect(Collectors.toList());
 
@@ -149,7 +149,7 @@ public class TeacherCourseServiceImpl implements TeacherCourseService {
                 .thumbnail(course.getThumbnail())
                 .content(course.getContent())
                 .htmlContent(course.getHtmlContent())
-                .createdDate(course.getCreatedDate())
+                //.createdDate(course.getCreatedDate())
                 .lectureCount(course.getLectureCount())
                 .lectures(lectureList)
                 .build();

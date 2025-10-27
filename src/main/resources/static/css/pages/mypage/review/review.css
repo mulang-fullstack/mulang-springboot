@@ -109,7 +109,7 @@
     border-top: 2px solid var(--text-point-main);
     background-color: var(--bg-white);
     min-height: 300px;
-    padding: 40px 0;
+    padding: 20px 0;
     text-align: center;
 }
 
@@ -147,4 +147,145 @@
 .filter-bar,
 .pagination {
     box-sizing: border-box;
+}
+
+/* -------------------- 리뷰 아이템 -------------------- */
+.review-item {
+    border-bottom: 1px solid var(--border-default);
+    padding: 20px 0;
+    transition: all 0.2s ease;
+}
+
+.review-item:first-child {
+    padding-top: 0;
+}
+
+.review-item:last-child {
+    border-bottom: none;
+}
+
+.review-item:hover {
+    background-color: var(--bg-secondary);
+    padding-left: 16px;
+    padding-right: 16px;
+    margin-left: -16px;
+    margin-right: -16px;
+    border-radius: 8px;
+}
+
+/* 리뷰 헤더 (강좌명 + 날짜) */
+.review-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 12px;
+}
+
+.course-title {
+    margin: 0;
+    font-size: 16px;
+    font-weight: 600;
+    color: var(--text-black);
+}
+
+.review-date {
+    color: var(--text-subtle);
+    font-size: 12px;
+    font-weight: 400;
+}
+
+/* 리뷰 본문 (별점 + 내용 가로 배치) */
+.review-body {
+    display: flex;
+    gap: 16px;
+    align-items: flex-start;
+}
+
+/* 별점 영역 (가로 배치) */
+.review-rating {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 6px;
+    padding: 10px 14px;
+    background-color: var(--bg-white);
+    border: var(--border-default);
+    border-radius: 6px;
+    white-space: nowrap;
+}
+
+.star {
+    color: var(--text-white);
+    font-size: 16px;
+    margin: 0;
+}
+
+.star.filled {
+    color: var(--text-star);
+}
+
+.rating-text {
+    color: var(--text-primary);
+    font-size: 13px;
+    font-weight: 600;
+    margin-left: 4px;
+}
+
+/* 리뷰 내용 */
+.review-content {
+    flex: 1;
+    padding: 12px 16px;
+    background-color: var(--bg-secondary);
+    border-radius: 6px;
+    border-left: 3px solid var(--text-point-main);
+}
+
+.review-content p {
+    margin: 0;
+    line-height: 1.6;
+    color: var(--text-primary);
+    font-size: 14px;
+    white-space: pre-wrap;
+    word-break: break-word;
+}
+
+/* 성공/에러 메시지 */
+.success-message {
+    padding: 10px 16px;
+    background-color: var(--bg-white);
+    color: var(--text-success);
+    border: var(--border-default);
+    border-radius: 6px;
+    margin-bottom: 16px;
+    font-size: 13px;
+}
+
+.error-message {
+    padding: 10px 16px;
+    background-color: var(--bg-white);
+    color: var(--text-error);
+    border: var(--border-default);
+    border-radius: 6px;
+    margin-bottom: 16px;
+    font-size: 13px;
+}
+
+/* 빈 상태 스타일 개선 */
+.qna-list .empty {
+    padding: 60px 20px;
+    color: var(--text-muted);
+    font-size: 15px;
+}
+
+/* 반응형 */
+@media (max-width: 768px) {
+    .review-body {
+        flex-direction: column;
+        gap: 12px;
+    }
+
+    .review-rating {
+        width: 100%;
+        justify-content: center;
+    }
 }

@@ -8,9 +8,14 @@ import org.springframework.web.bind.annotation.*;
 import yoonsome.mulang.api.student.dto.MycourseDTO;
 import yoonsome.mulang.api.student.service.CourseReviewService;  // ← 이거 추가!
 import yoonsome.mulang.domain.enrollment.repository.EnrollmentRepository;
+import yoonsome.mulang.domain.lecture.repository.LectureRepository;
+import yoonsome.mulang.domain.payment.entity.CourseEnrollment;
+import yoonsome.mulang.domain.payment.repository.CourseEnrollmentRepository;
+import yoonsome.mulang.domain.review.entity.CourseReview;
 import yoonsome.mulang.infra.security.CustomUserDetails;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @RequestMapping("/student")
 @Controller
@@ -18,10 +23,24 @@ import java.util.List;
 public class ReviewController {
 
     private final EnrollmentRepository enrollmentRepository;
-    private final CourseReviewService reviewService;  // ← ReviewService → CourseReviewService
+    private final CourseReviewService reviewService;// ← ReviewService → CourseReviewService
+    private final CourseReviewService courseReviewService;
+    private final CourseEnrollmentRepository courseEnrollmentRepository;
+    private final LectureRepository lectureRepository;
 
     @GetMapping("review")
-    public String review() {
+    public String review(
+            @AuthenticationPrincipal CustomUserDetails userDetails,
+            @RequestParam(defaultValue = "최신순") String sort,
+            Model model) {
+
+        List<CourseReview> myReviews = courseReviewService.MyReview(userDetails.getUser(), sort);
+
+        model.addAttribute("myReviews", myReviews);
+        model.addAttribute("currentSort", sort);
+
+
+
         return "student/review/review";
     }
 
@@ -29,9 +48,16 @@ public class ReviewController {
     public String reviewWrite(@AuthenticationPrincipal CustomUserDetails userDetails, Model model) {
         Long userid = userDetails.getUser().getId();
 
-        List<MycourseDTO> mycourseDTO = enrollmentRepository
-                .findCourseProgressByStudentId(userid);
+        //List<MycourseDTO> mycourseDTO = enrollmentRepository
+                //.findCourseProgressByStudentId(userid);
 
+        List<CourseEnrollment> enrollments = courseEnrollmentRepository
+                .findMyCoursesWithDetails(userid);
+
+
+        List<MycourseDTO> mycourseDTO = enrollments.stream()
+                .map(e -> MycourseDTO.from(e, userid, lectureRepository, enrollmentRepository))
+                .collect(Collectors.toList());
         model.addAttribute("mycourseDTO", mycourseDTO);
         return "student/review/reviewwrite";
     }
@@ -42,17 +68,31 @@ public class ReviewController {
             @RequestParam Long courseId,
             @RequestParam Integer rating,
             @RequestParam String content) {
-
-        try {
-            reviewService.createReview(
+        boolean existReview = reviewService.existReview(userDetails.getUser(), courseId);
+        if (existReview) {
+            reviewService.updateReview(
                     userDetails.getUser(),
                     courseId,
                     rating,
                     content
             );
-            return "redirect:/student/review?success=true";
-        } catch (Exception e) {
-            return "redirect:/student/reviewwrite?error=" + e.getMessage();
+
+        } else {
+            try {
+                reviewService.createReview(
+                        userDetails.getUser(),
+                        courseId,
+                        rating,
+                        content
+                );
+                return "redirect:/student/review?success=true";
+            } catch (Exception e) {
+                return "redirect:/student/reviewwrite?error=" + e.getMessage();
+            }
         }
+
+
+        return "redirect:/student/review?success=true";
+
     }
 }
