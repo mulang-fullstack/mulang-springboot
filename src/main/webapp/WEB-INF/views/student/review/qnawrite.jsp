@@ -57,7 +57,7 @@
 
 <%@include file="../../common/footer.jsp" %>
 
-<script src="/js/pages/mypage/reviewwrite.js"></script>
+<script src="/js/pages/mypage/qnawrite.js"></script>
 
 </body>
 </html>
