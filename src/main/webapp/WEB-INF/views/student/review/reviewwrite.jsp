@@ -25,7 +25,7 @@
             <section class="content">
                 <h2>리뷰 작성</h2>
 
-                <form action="/student/reviewwrite" method="post" class="review-form">
+                <form action="/student/reviewwrite" method="post" class="review-form" id="reviewForm" novalidate>
 
                     <!-- 강좌 선택 -->
                     <div class="form-field">
@@ -40,6 +40,7 @@
 
                     <!-- 별점 -->
                     <div class="form-field">
+                        <label>별점</label>
                         <div class="rating">
                             <input type="radio" id="star-5" name="rating" value="5" required>
                             <label for="star-5">
@@ -82,5 +83,8 @@
 </main>
 
 <%@include file="../../common/footer.jsp" %>
+
+<script src="/js/pages/mypage/reviewwrite.js"></script>
+
 </body>
 </html>
