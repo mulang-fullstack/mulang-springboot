@@ -4,6 +4,7 @@ import jakarta.mail.MessagingException;
 import jakarta.mail.internet.MimeMessage;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Service;
@@ -17,6 +18,9 @@ public class MailService {
 
     private final JavaMailSender mailSender;
 
+    @Value("${spring.mail.username}")
+    private String fromEmail;
+
     /**
      * 회원가입 인증 메일 발송 (HTML 템플릿 버전)
      */
@@ -25,6 +29,8 @@ public class MailService {
             MimeMessage message = mailSender.createMimeMessage();
             MimeMessageHelper helper = new MimeMessageHelper(message, true, "UTF-8");
 
+            // 발신자 주소 추가 (중요!)
+            helper.setFrom(fromEmail);  // 또는 직접 "mulangfs12@gmail.com"
             helper.setTo(toEmail);
             helper.setSubject("[Mulang] 회원가입 이메일 인증 안내");
 
