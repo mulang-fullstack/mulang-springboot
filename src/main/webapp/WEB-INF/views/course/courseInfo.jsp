@@ -10,7 +10,12 @@
         <div class="course-info">
             <p class="course-desc">${detail.subtitle}</p>
             <div class="course-meta">
-                <div><span class="label">강사</span> <span>${detail.teacherName}</span><button><img src="/img/icon/user-circle.svg" alt="강사 정보"></button></div>
+                <div><span class="label">강사</span> <span>${detail.teacherName}</span>
+                    <!--<button><img src="/img/icon/user-circle.svg" alt="강사 정보"></button>-->
+                <a href="/courseDetail/teacherProfile?id=${detail.id}" target="_blank">
+                    <img src="/img/icon/user-circle.svg" alt="강사 정보">
+                </a>
+                </div>
                 <!--
                 <div><span class="label">신청기간</span> <span></span></div>
                 <div><span class="label">수강기간</span> <span></span></div>

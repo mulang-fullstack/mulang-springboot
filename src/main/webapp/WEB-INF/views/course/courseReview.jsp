@@ -1,6 +1,5 @@
 <%@ page contentType="text/html;charset=utf-8" %>
 <%@ taglib prefix="c" uri="jakarta.tags.core" %>
-<link rel="stylesheet" href="/css/pages/course/course-review.css"/>
 <div class="course-riview">
     <div class="review-sort">
         <a href="/courseDetail?id=${courseId}&sortBy=rating&page=${param.sortBy != 'rating' ? 0 : currentPage}">
@@ -35,7 +34,7 @@
 <!-- 페이지네이션 -->
 <section class="pagination">
     <c:if test="${currentPage > 0}">
-        <a href="/courseDetail?id=${courseId}&page=${currentPage-1}&sortBy=${sortBy}">
+        <a href="/courseDetail?id=${courseId}&page=${V-1}&sortBy=${sortBy}">
             <button class="prev"><img src="/img/icon/page-left.svg" alt="왼쪽 아이콘"></button>
         </a>
     </c:if>
@@ -54,4 +53,3 @@
         </a>
     </c:if>
 </section>
-<script src="/js/pages/course/courseReviewMore.js"></script>

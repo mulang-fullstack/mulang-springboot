@@ -9,12 +9,12 @@
     <link rel="icon" href="img/favicon.svg" type="image/png">
     <link rel="stylesheet" href="/css/global.css"/>
     <link rel="stylesheet" href="/css/pages/course/course-detail.css"/>
-    <script src="/js/pages/course/courseDetailTab.js"></script>
+    <link rel="stylesheet" href="/css/pages/course/course-review.css"/>
     <title>Mulang?</title>
 </head>
 <body>
 <%@include file="../common/header.jsp" %>
-<main>
+<main data-course-id="${detail.id}">
     <div class="contents">
         <div class="leture-detail-contents">
              <%@include file="courseInfo.jsp" %>
@@ -41,7 +41,6 @@
 
             <!-- 리뷰 컨테이너 -->
             <div id="review-container">
-                <%@include file="courseReview.jsp" %>
             </div>
 
             <!-- 페이지네이션
@@ -54,5 +53,10 @@
     </div>
 </main>
 <%@include file="../common/footer.jsp" %>
+<script src="/js/pages/course/courseDetailTab.js"></script>
+<script src="/js/pages/course/courseReview.js"></script>
+<!-- <script src="/js/pages/course/courseReviewMore.js"></script>-->
 </body>
 </html>
+
+

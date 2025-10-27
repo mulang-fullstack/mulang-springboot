@@ -7,6 +7,8 @@ import org.springframework.data.domain.*;
 import org.springframework.stereotype.Service;
 import yoonsome.mulang.api.course.dto.CourseDetailResponse;
 import yoonsome.mulang.api.review.ReviewResponse;
+import yoonsome.mulang.api.teacher.dto.TeacherProfileResponse;
+import yoonsome.mulang.api.teacher.service.TeacherMypageService;
 import yoonsome.mulang.domain.category.entity.Category;
 import yoonsome.mulang.domain.category.service.CategoryService;
 import yoonsome.mulang.domain.course.dto.CourseListRequest;
@@ -20,6 +22,7 @@ import yoonsome.mulang.domain.lecture.entity.Lecture;
 import yoonsome.mulang.domain.lecture.service.LectureService;
 import yoonsome.mulang.domain.review.entity.CourseReview;
 import yoonsome.mulang.domain.review.service.ReviewService;
+import yoonsome.mulang.domain.teacher.service.TeacherService;
 
 import java.util.ArrayList;
 import java.util.Comparator;
@@ -34,6 +37,7 @@ public class DisplayingCourseServiceImpl implements DisplayingCourseService {
     private final CourseService courseService;
     private final LectureService lectureService;
     private final ReviewService reviewService;
+    private final TeacherMypageService teacherMypageService;
 
     //언어 이름
     //LanguageId null일 경우에 세션에서 마지막 사용한 값으로 설정, 세션값 null일 경우에 초기값 1로 설정
@@ -161,6 +165,14 @@ public class DisplayingCourseServiceImpl implements DisplayingCourseService {
             reviewResponses.add(reviewResponse);
         }
         return new PageImpl<>(reviewResponses, pageable, reviews.getTotalElements());
+    }
+
+    //강사 프로필 정보
+    @Override
+    public TeacherProfileResponse getTeacherProfileResponse(long id){
+        Course course = courseService.getCourse(id);
+        Long userId = course.getTeacher().getUser().getId();
+        return teacherMypageService.getTeacherProfileResponse(userId);
     }
 
     //LanguageId null일 경우에 세션에서 마지막 사용한 값으로 설정, 세션값 null일 경우에 초기값 1로 설정
