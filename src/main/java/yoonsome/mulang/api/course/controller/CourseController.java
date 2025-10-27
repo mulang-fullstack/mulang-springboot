@@ -10,12 +10,16 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import yoonsome.mulang.api.course.dto.CourseDetailResponse;
+import yoonsome.mulang.api.teacher.dto.TeacherProfileResponse;
 import yoonsome.mulang.domain.course.dto.CourseListRequest;
 import yoonsome.mulang.api.course.dto.CourseListResponse;
 import yoonsome.mulang.api.course.service.DisplayingCourseService;
 import yoonsome.mulang.api.review.ReviewResponse;
 import yoonsome.mulang.domain.category.entity.Category;
+
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @RequiredArgsConstructor
 @Controller
@@ -51,36 +55,48 @@ public class CourseController {
         CourseDetailResponse courseDetailResponse = displayingCourseService.getCourseDetail(id);
         model.addAttribute("detail", courseDetailResponse);
         System.out.println("@courseDetail:"+courseDetailResponse);
+        model.addAttribute("courseId", id);
+        //getReviews(id, page, sortBy, model);
 
-        /*리뷰 동기 페이징 정렬*/
-        //int page = 0;
+        return "course/courseDetail";
+    }
+    /*리뷰 동기 페이징 정렬*/
+    private void getReviews(Long id, int page, String sortBy, Model model){
         int size = 2;
         Pageable pageable = PageRequest.of(page, size, Sort.by(Sort.Direction.DESC, sortBy));
         Page<ReviewResponse> reviewResponse = displayingCourseService.getReviewPageByCourseId(id, pageable);
-        model.addAttribute("sortBy",  sortBy);
-        model.addAttribute("courseId", id);
         model.addAttribute("review", reviewResponse.getContent());
         model.addAttribute("currentPage", reviewResponse.getNumber());
         model.addAttribute("totalPages", reviewResponse.getTotalPages());
+        model.addAttribute("sortBy",  sortBy);
         System.out.println("@review:"+reviewResponse.getContent());
         System.out.println("@page:"+page);
         System.out.println("@totalPages:"+ reviewResponse.getTotalPages());
-        return "course/courseDetail";
     }
-    // ✅ 리뷰 비동기 요청용 엔드포인트
+    /* 리뷰 비동기 페이징 정렬 */
     @GetMapping("/courseDetail/reviews")
     @ResponseBody
-    public Page<ReviewResponse> getReviews(
+    public Map<String, Object> getReviews(
             @RequestParam Long courseId,
             @RequestParam(defaultValue = "0") int page,
-            @RequestParam(defaultValue = "2") int size,
-            @RequestParam(defaultValue = "rating") String sort // 정렬 파라미터
+            @RequestParam(defaultValue = "rating") String sortBy
     ) {
-        Sort sortOption = "latest".equals(sort)
-                ? Sort.by("createdAt").descending()
-                : Sort.by("rating").descending(); // 기본: rating
+        int size = 3;
+        Pageable pageable = PageRequest.of(page, size, Sort.by(Sort.Direction.DESC, sortBy));
+        Page<ReviewResponse> reviewPage = displayingCourseService.getReviewPageByCourseId(courseId, pageable);
+        Map<String, Object> response = new HashMap<>();
+        response.put("reviews", reviewPage.getContent());
+        response.put("currentPage", reviewPage.getNumber());
+        response.put("totalPages", reviewPage.getTotalPages());
+        response.put("sortBy", sortBy);
 
-        Pageable pageable = PageRequest.of(page, size);
-        return displayingCourseService.getReviewPageByCourseId(courseId, pageable);
+        return response;
+    }
+    /*강사 프로필 보기*/
+    @GetMapping("/courseDetail/teacherProfile")
+    public String getTeacherProfile(Long id, Model model) {
+        TeacherProfileResponse teacherProfileResponse= displayingCourseService.getTeacherProfileResponse(id);
+        model.addAttribute("teacher", teacherProfileResponse);
+        return "course/teacherProfile";
     }
 }

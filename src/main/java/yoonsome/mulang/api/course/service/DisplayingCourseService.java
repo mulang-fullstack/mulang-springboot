@@ -5,6 +5,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import yoonsome.mulang.api.course.dto.CourseDetailResponse;
 import yoonsome.mulang.api.review.ReviewResponse;
+import yoonsome.mulang.api.teacher.dto.TeacherProfileResponse;
 import yoonsome.mulang.domain.category.entity.Category;
 import yoonsome.mulang.domain.course.dto.CourseListRequest;
 import yoonsome.mulang.api.course.dto.CourseListResponse;
@@ -21,4 +22,6 @@ public interface DisplayingCourseService {
     CourseDetailResponse getCourseDetail(long id);
     //강좌 상세페이지 리뷰
     Page<ReviewResponse> getReviewPageByCourseId(Long courseId, Pageable pageable);
+    //강사 프로필 조회
+    TeacherProfileResponse getTeacherProfileResponse(long id);
 }
