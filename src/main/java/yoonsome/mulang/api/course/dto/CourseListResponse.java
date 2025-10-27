@@ -3,10 +3,7 @@ package yoonsome.mulang.api.course.dto;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
-import yoonsome.mulang.domain.category.entity.Category;
-
-import java.time.LocalDate;
-import java.util.List;
+import java.time.LocalDateTime;
 
 @AllArgsConstructor
 @Builder
@@ -20,5 +17,5 @@ public class CourseListResponse {
     private double averageRating;  // 별점
     private int reviewCount;       // 리뷰 수
     private Integer price;         // 수강료
-    private LocalDate createdDate; // 강의 등록일
+    private LocalDateTime createdDate; // 강의 등록일
 }

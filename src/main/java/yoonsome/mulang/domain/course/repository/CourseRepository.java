@@ -8,7 +8,7 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 import yoonsome.mulang.domain.course.entity.Course;
 import yoonsome.mulang.domain.course.entity.StatusType;
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Repository
@@ -21,7 +21,7 @@ public interface CourseRepository extends JpaRepository<Course,Long> {
         FROM Course c
         LEFT JOIN c.teacher t
         LEFT JOIN t.user u
-        WHERE c.language.id = :languageId
+        WHERE (:languageId IS NULL OR c.language.id = :languageId)
           AND (:categoryId IS NULL OR c.category.id = :categoryId)
           AND (:keyword IS NULL OR :keyword = ''
                OR c.title LIKE CONCAT('%', :keyword, '%')
@@ -36,8 +36,8 @@ public interface CourseRepository extends JpaRepository<Course,Long> {
             @Param("categoryId") Long categoryId,
             @Param("keyword") String keyword,
             @Param("status") StatusType status,
-            @Param("startDate") LocalDate startDate,
-            @Param("endDate") LocalDate endDate,
+            @Param("startDate") LocalDateTime startDate,
+            @Param("endDate") LocalDateTime  endDate,
             Pageable pageable
     );
     List<Course> findByTeacherId(Long teacherId);

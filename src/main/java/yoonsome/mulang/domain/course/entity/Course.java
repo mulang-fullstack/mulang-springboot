@@ -5,7 +5,7 @@ import lombok.*;
 import yoonsome.mulang.domain.category.entity.Category;
 import yoonsome.mulang.domain.language.entity.Language;
 import yoonsome.mulang.domain.teacher.entity.Teacher;
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 @Entity
 @AllArgsConstructor
@@ -31,11 +31,11 @@ public class Course {
     private String htmlContent;
 
     @Column(name = "created_date", nullable = false, updatable = false)
-    private LocalDate createdDate;
+    private LocalDateTime  createdDate;
 
     @PrePersist
     protected void onCreate() {
-        this.createdDate = LocalDate.now();
+        this.createdDate = LocalDateTime.now();
     }
 
     /*

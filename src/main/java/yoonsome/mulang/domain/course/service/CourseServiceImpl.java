@@ -43,8 +43,8 @@ public class CourseServiceImpl implements CourseService {
                 request.getCategoryId(),
                 request.getKeyword(),
                 request.getStatus(),
-                request.getStartedDate(),
-                request.getEndedDate(),
+                request.getStartDate(),
+                request.getEndDate(),
                 pageable
         );
     }
