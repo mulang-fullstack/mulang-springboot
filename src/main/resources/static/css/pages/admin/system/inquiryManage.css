@@ -1,0 +1,244 @@
+/* ==========================================================
+   관리자 공지사항 관리 페이지 스타일
+   Path: /css/pages/admin/content/notice.css
+   ========================================================== */
+
+/* 테이블 */
+.table-wrap {
+    background: #fff;
+    border-radius: 12px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+    overflow: hidden;
+}
+
+.table-wrap table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.table-wrap th, .table-wrap td {
+    padding: 12px 14px;
+    border-bottom: 1px solid #e5e8eb;
+    font-size: 13px;
+    color: #555;
+    text-align: center;
+}
+
+.table-wrap thead {
+    background: linear-gradient(to bottom, #f8f9fa, #f3f4f6);
+}
+
+.table-wrap th {
+    font-weight: 600;
+    font-size: 12px;
+    color: #444;
+    text-transform: uppercase;
+}
+
+.table-wrap tbody tr {
+    transition: background 0.2s;
+}
+
+.table-wrap tbody tr:hover {
+    background: #f8f9ff;
+}
+
+/* 제목 - 왼쪽 정렬 */
+.table-wrap td:nth-child(3) {
+    text-align: left;
+    padding-left: 20px;
+}
+
+/* 공지 유형 뱃지 */
+.notice-type-badge {
+    display: inline-block;
+    padding: 4px 10px;
+    border-radius: 12px;
+    font-size: 11px;
+    font-weight: 600;
+    color: #fff;
+    text-transform: uppercase;
+}
+
+.notice-type-badge.general {
+    background: linear-gradient(135deg, #6b7280 0%, #4b5563 100%);
+}
+
+.notice-type-badge.event {
+    background: linear-gradient(135deg, #ec4899 0%, #db2777 100%);
+}
+
+.notice-type-badge.update {
+    background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+}
+
+.notice-type-badge.urgent {
+    background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
+    animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.8; }
+}
+
+/* 제목 스타일 */
+.notice-title {
+    font-weight: 500;
+    color: #333;
+    cursor: pointer;
+    transition: color 0.2s;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.notice-title:hover {
+    color: #4b7bec;
+}
+
+.notice-title .pin-icon {
+    color: #ef4444;
+    font-size: 16px;
+    flex-shrink: 0;
+}
+
+/* 고정 토글 스위치 */
+.pin-toggle {
+    position: relative;
+    display: inline-block;
+    width: 44px;
+    height: 24px;
+}
+
+.pin-toggle input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+
+.pin-slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #cbd5e1;
+    transition: 0.3s;
+    border-radius: 24px;
+}
+
+.pin-slider:before {
+    position: absolute;
+    content: "";
+    height: 18px;
+    width: 18px;
+    left: 3px;
+    bottom: 3px;
+    background-color: white;
+    transition: 0.3s;
+    border-radius: 50%;
+}
+
+.pin-toggle input:checked + .pin-slider {
+    background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
+}
+
+.pin-toggle input:checked + .pin-slider:before {
+    transform: translateX(20px);
+}
+
+/* 상태 뱃지 */
+.status-badge {
+    display: inline-block;
+    padding: 4px 10px;
+    border-radius: 12px;
+    font-size: 11px;
+    font-weight: 500;
+    color: #fff;
+}
+
+.status-badge.active {
+    background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+}
+
+.status-badge.inactive {
+    background: linear-gradient(135deg, #9ca3af 0%, #6b7280 100%);
+}
+
+/* 관리 버튼 */
+.action-buttons {
+    display: flex;
+    gap: 6px;
+    justify-content: center;
+}
+
+.btn-view, .btn-edit, .btn-delete {
+    padding: 6px 12px;
+    border-radius: 6px;
+    font-size: 12px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s;
+    border: none;
+    color: #fff;
+}
+
+.btn-view {
+    background: linear-gradient(135deg, #8b5cf6 0%, #7c3aed 100%);
+}
+
+.btn-view:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 2px 8px rgba(139, 92, 246, 0.4);
+}
+
+.btn-edit {
+    background: linear-gradient(135deg, #4b7bec 0%, #3867d6 100%);
+}
+
+.btn-edit:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 2px 8px rgba(75, 123, 236, 0.4);
+}
+
+.btn-delete {
+    background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
+}
+
+.btn-delete:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 2px 8px rgba(239, 68, 68, 0.4);
+}
+
+/* 데이터 없음 */
+.no-data {
+    padding: 40px !important;
+    text-align: center;
+    color: #9ca3af;
+    font-size: 14px;
+}
+
+/* 조회수 */
+.views-count {
+    color: #6b7280;
+    font-weight: 500;
+}
+
+/* 작성자 */
+.author-name {
+    color: #4b5563;
+    font-weight: 500;
+}
+
+/* 반응형 */
+@media (max-width: 1200px) {
+    .table-wrap table {
+        font-size: 12px;
+    }
+
+    .table-wrap th, .table-wrap td {
+        padding: 10px 8px;
+    }
+}

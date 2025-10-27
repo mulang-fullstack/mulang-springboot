@@ -40,17 +40,21 @@ public class SecurityConfig {
                         .failureHandler(customFailureHandler)
                         .permitAll()
                 )
-                .oauth2Login(oauth -> oauth
-                        .loginPage("/auth/login")                       // 로그인 페이지 공유
-                        .userInfoEndpoint(userInfo -> userInfo
-                                .userService(customOAuth2UserService)      // 사용자 정보 처리
-                        )
-                        .defaultSuccessUrl("/", true)
-                )
+//                .oauth2Login(oauth -> oauth
+//                        .loginPage("/auth/login")                       // 로그인 페이지 공유
+//                        .userInfoEndpoint(userInfo -> userInfo
+//                                .userService(customOAuth2UserService)      // 사용자 정보 처리
+//                        )
+//                        .defaultSuccessUrl("/", true)
+//                )
                 .logout(logout -> logout
                         .logoutUrl("/logout")
                         .logoutSuccessHandler(customLogoutSuccessHandler)
                         .deleteCookies("JSESSIONID")
+                )
+                .sessionManagement(session -> session
+                        .maximumSessions(10)                 // 동시 로그인 최대 수
+                        .sessionRegistry(sessionRegistry())  // SessionRegistry 연결
                 )
                 .exceptionHandling(exception -> exception
                         .accessDeniedHandler((request,

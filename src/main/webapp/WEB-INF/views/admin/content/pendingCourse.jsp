@@ -9,14 +9,14 @@
     <link rel="stylesheet" href="/css/global.css"/>
     <link rel="stylesheet" href="/css/pages/admin/admin.css"/>
     <link rel="stylesheet" href="/css/pages/admin/content/course.css"/>
-    <title>관리자 | 강좌 관리</title>
+    <title>관리자 | 강의 신청 관리</title>
 </head>
 <body>
 <div class="main-container">
     <%@ include file="../adminSidebar.jsp" %>
     <div class="right-container">
         <header>
-            <h1>콘텐츠 관리 - 강좌 조회</h1>
+            <h1>콘텐츠 관리 - 강의 신청 관리</h1>
             <div class="header-info">
                 <div class="info-box"><p>안녕하세요 <span>관리자</span>님</p></div>
                 <a class="logout" href="#">로그아웃</a>
@@ -31,16 +31,6 @@
             <section class="course-section">
                 <div class="filter-bar">
                     <div class="filter-container">
-                        <!-- 기간 -->
-                        <div class="filter-group">
-                            <span class="filter-label">기간</span>
-                            <div class="date-filter">
-                                <input type="date" id="startDate">
-                                <span class="date-separator">~</span>
-                                <input type="date" id="endDate">
-                            </div>
-                        </div>
-
                         <!-- 언어 -->
                         <div class="filter-group">
                             <span class="filter-label">언어</span>
@@ -52,13 +42,12 @@
                             </div>
                         </div>
 
-                        <!-- 강좌 상태 -->
+                        <!-- 신청 상태 -->
                         <div class="filter-group">
-                            <span class="filter-label">강좌 상태</span>
+                            <span class="filter-label">신청 상태</span>
                             <div class="radio-group">
                                 <label><input type="radio" name="status" value="ALL" checked> 전체</label>
-                                <label><input type="radio" name="status" value="PUBLIC"> 공개</label>
-                                <label><input type="radio" name="status" value="PRIVATE"> 비공개</label>
+                                <label><input type="radio" name="status" value="PENDING"> 심사대기</label>
                                 <label><input type="radio" name="status" value="REVIEW"> 심사중</label>
                             </div>
                         </div>
@@ -111,7 +100,7 @@
                     </div>
                 </div>
 
-                <!-- 강좌 테이블 -->
+                <!-- 강의 신청 테이블 -->
                 <div class="table-wrap">
                     <table>
                         <thead>
@@ -121,7 +110,7 @@
                             <th>언어</th>
                             <th>강사</th>
                             <th>닉네임</th>
-                            <th>등록일</th>
+                            <th>신청일</th>
                             <th>상태</th>
                             <th>관리</th>
                         </tr>
@@ -149,12 +138,12 @@
     window.paginationData = {
         currentPage: 0,
         totalPages: 1,
-        baseUrl: '/admin/content/course'
+        baseUrl: '/admin/content/request'
     };
 </script>
 
 <script src="/js/common/currentTime.js"></script>
 <script src="/js/pages/admin/pagination.js"></script>
-<script src="/js/pages/admin/content/course.js"></script>
+<script src="/js/pages/admin/content/pendingCourse.js"></script>
 </body>
 </html>

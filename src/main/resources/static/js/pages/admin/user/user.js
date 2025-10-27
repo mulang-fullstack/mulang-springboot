@@ -121,14 +121,11 @@ function renderUserTable(users, currentPage, pageSize) {
                 data-status="${statusValue}"
                 data-date="${user.createdAt}">
                 <td>${rowNumber}</td>
-                <td>
-                    <span class="status-dot ${statusClass}"></span>
-                </td>
+                <td>${roleBadge}</td>
                 <td>${user.username}</td>
                 <td>${user.nickname}</td>
                 <td>${user.email}</td>
                 <td>${user.createdAt}</td>
-                <td>${roleBadge}</td>
                 <td class="status-cell">
                     <span class="status-badge ${user.userStatus === 'ACTIVE' ? 'active' : 'inactive'}">
                         ${statusText}

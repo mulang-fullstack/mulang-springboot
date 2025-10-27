@@ -16,11 +16,11 @@ public class UserSearchRequest {
     @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
     private LocalDateTime startDate= LocalDate.now()
             .withDayOfMonth(1)
-            .atStartOfDay();;  // 가입 시작일
+            .atStartOfDay();;  // 가입 범위(시작)
 
     @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
     private LocalDateTime endDate = LocalDate.now()
-            .atTime(23, 59, 59);    // 가입 종료일
+            .atTime(23, 59, 59);    // 가입 범위(종료)
 
     private String keyword;           // 검색어 (이름/이메일/닉네임)
     private String sortBy = "createdAt";
