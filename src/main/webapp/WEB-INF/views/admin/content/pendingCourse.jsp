@@ -46,8 +46,7 @@
                         <div class="filter-group">
                             <span class="filter-label">신청 상태</span>
                             <div class="radio-group">
-                                <label><input type="radio" name="status" value="ALL" checked> 전체</label>
-                                <label><input type="radio" name="status" value="PENDING"> 심사대기</label>
+                                <label><input type="radio" name="status" value="PENDING" checked> 심사대기</label>
                                 <label><input type="radio" name="status" value="REVIEW"> 심사중</label>
                             </div>
                         </div>

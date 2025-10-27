@@ -1,5 +1,6 @@
 <%@ page contentType="text/html;charset=utf-8" %>
 <%@ taglib prefix="c" uri="jakarta.tags.core" %>
+<%@ taglib uri="http://www.springframework.org/security/tags" prefix="sec" %>
 <!doctype html>
 <html lang="ko">
 <head>
@@ -18,7 +19,7 @@
         <header>
             <h1>콘텐츠 관리 - 강좌 조회</h1>
             <div class="header-info">
-                <div class="info-box"><p>안녕하세요 <span>관리자</span>님</p></div>
+                <div class="info-box"><p>안녕하세요 <span></span>님</p></div>
                 <a class="logout" href="#">로그아웃</a>
             </div>
         </header>
@@ -41,6 +42,7 @@
                             </div>
                         </div>
 
+
                         <!-- 언어 -->
                         <div class="filter-group">
                             <span class="filter-label">언어</span>
@@ -56,10 +58,8 @@
                         <div class="filter-group">
                             <span class="filter-label">강좌 상태</span>
                             <div class="radio-group">
-                                <label><input type="radio" name="status" value="ALL" checked> 전체</label>
-                                <label><input type="radio" name="status" value="PUBLIC"> 공개</label>
+                                <label><input type="radio" name="status" value="PUBLIC" checked> 공개</label>
                                 <label><input type="radio" name="status" value="PRIVATE"> 비공개</label>
-                                <label><input type="radio" name="status" value="REVIEW"> 심사중</label>
                             </div>
                         </div>
                     </div>
@@ -147,8 +147,8 @@
 <script>
     // 초기 페이지네이션 데이터 (JavaScript가 업데이트함)
     window.paginationData = {
-        currentPage: 0,
-        totalPages: 1,
+        currentPage: ${currentPage},
+        totalPages: ${totalPages},
         baseUrl: '/admin/content/course'
     };
 </script>

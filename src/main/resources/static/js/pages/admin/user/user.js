@@ -1,19 +1,60 @@
-// ==================== 필터 및 검색 관련 ====================
+// ==================== 전역 변수 ====================
+let isSearching = false; // 중복 요청 방지
 
-// 검색 파라미터 수집
+// ==================== API 요청 ====================
+async function fetchUserList(params) {
+    if (isSearching) return null;
+
+    try {
+        isSearching = true;
+        const queryString = new URLSearchParams(params).toString();
+        console.log('📤 API 요청:', queryString);
+
+        const response = await fetch(`/admin/user/api?${queryString}`, {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]')?.content
+            }
+        });
+
+        if (!response.ok) {
+            throw new Error('데이터를 불러오는데 실패했습니다.');
+        }
+
+        const data = await response.json();
+        console.log('📥 API 응답:', data);
+        return data;
+    } catch (error) {
+        console.error('❌ Error fetching user list:', error);
+        alert('데이터를 불러오는데 실패했습니다.');
+        return null;
+    } finally {
+        isSearching = false;
+    }
+}
+
+// ==================== 파라미터 수집 ====================
 function collectSearchParams() {
-    const startDate = document.querySelector('.date-filter input[type="date"]:first-child').value;
-    const endDate = document.querySelector('.date-filter input[type="date"]:last-child').value;
-    const role = document.querySelector('input[name="role"]:checked')?.value;
-    const status = document.querySelector('input[name="status"]:checked')?.value;
-    const keyword = document.getElementById('searchKeyword').value.trim();
-    const sortValue = document.getElementById('sortSelect').value;
+    const startDateInput = document.querySelector('.date-filter input[type="date"]:first-child');
+    const endDateInput = document.querySelector('.date-filter input[type="date"]:last-child');
+    const roleRadio = document.querySelector('input[name="role"]:checked');
+    const statusRadio = document.querySelector('input[name="status"]:checked');
+    const keywordInput = document.getElementById('searchKeyword');
+    const sortSelect = document.getElementById('sortSelect');
+
+    const startDate = startDateInput?.value || '';
+    const endDate = endDateInput?.value || '';
+    const role = roleRadio?.value || 'STUDENT';
+    const status = statusRadio?.value || 'ALL';
+    const keyword = keywordInput?.value.trim() || '';
+    const sortValue = sortSelect?.value || 'LATEST';
 
     // 정렬 파라미터 변환
     let sortBy = 'createdAt';
     let sortDirection = 'DESC';
 
-    switch(sortValue) {
+    switch (sortValue) {
         case 'LATEST':
             sortBy = 'createdAt';
             sortDirection = 'DESC';
@@ -33,11 +74,13 @@ function collectSearchParams() {
     }
 
     const params = {
-        page: 0, // 검색 시 첫 페이지로
-        size: 10
+        page: 0,
+        size: 10,
+        sortBy: sortBy,
+        sortDirection: sortDirection
     };
 
-    // startDate와 endDate 처리
+    // 날짜 필터 - 값이 있을 때만 추가
     if (startDate) {
         params.startDate = startDate + 'T00:00:00';
     }
@@ -45,81 +88,52 @@ function collectSearchParams() {
         params.endDate = endDate + 'T23:59:59';
     }
 
-    // role 처리 (ALL이 아닌 경우만)
+    // 회원 구분 - ALL이 아닐 때만 추가
     if (role && role !== 'ALL') {
         params.role = role;
     }
 
-    // status 처리 (ALL이 아닌 경우만)
+    // 상태 - ALL이 아닐 때만 추가
     if (status && status !== 'ALL') {
-        params.userStatus = status === 'ACTIVE' ? 'ACTIVE' : 'INACTIVE';
+        params.userStatus = status;
     }
 
-    // keyword 처리
+    // 검색어 - 값이 있을 때만 추가
     if (keyword) {
         params.keyword = keyword;
     }
 
-    // 정렬
-    params.sortBy = sortBy;
-    params.sortDirection = sortDirection;
-
+    console.log('📋 최종 파라미터:', params);
     return params;
 }
 
-// 비동기 요청 보내기
-async function fetchUserList(params) {
-    try {
-        const queryString = new URLSearchParams(params).toString();
-        const response = await fetch(`/admin/user/api?${queryString}`, {
-            method: 'GET',
-            headers: {
-                'Content-Type': 'application/json',
-                'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]')?.content
-            }
-        });
-
-        if (!response.ok) {
-            throw new Error('데이터를 불러오는데 실패했습니다.');
-        }
-
-        const data = await response.json();
-        return data;
-    } catch (error) {
-        console.error('Error fetching user list:', error);
-        alert('데이터를 불러오는데 실패했습니다.');
-        return null;
-    }
-}
-
-// 테이블 렌더링
+// ==================== 렌더링 ====================
 function renderUserTable(users, currentPage, pageSize) {
     const tbody = document.querySelector('#memberTable tbody');
+
+    if (!tbody) {
+        console.error('❌ 테이블 tbody를 찾을 수 없습니다.');
+        return;
+    }
+
     if (!users || users.length === 0) {
-        tbody.innerHTML = '<tr><td colspan="9" class="no-data">등록된 회원이 없습니다.</td></tr>';
+        tbody.innerHTML = '<tr><td colspan="8" class="no-data">등록된 회원이 없습니다.</td></tr>';
         return;
     }
 
     tbody.innerHTML = users.map((user, index) => {
         const rowNumber = currentPage * pageSize + index + 1;
-        const statusClass = user.userStatus === 'ACTIVE' ? 'success' : 'inactive';
         const statusText = user.userStatus === 'ACTIVE' ? '활성' : '비활성';
-        const statusValue = user.userStatus === 'ACTIVE'? 'ACTIVE' : 'INACTIVE';
 
         let roleBadge = '';
         if (user.role === 'TEACHER') {
             roleBadge = '<span class="role-badge tutor">강사</span>';
-        } else if (user.role === 'STUDENT') {
-            roleBadge = '<span class="role-badge student">학생</span>';
         } else {
-            roleBadge = '<span class="role-badge admin">관리자</span>';
+            roleBadge = '<span class="role-badge student">학생</span>';
         }
 
         return `
-            <tr data-id="${user.id}"
-                data-role="${user.role}"
-                data-status="${statusValue}"
-                data-date="${user.createdAt}">
+            <tr data-id="${user.id}">
                 <td>${rowNumber}</td>
                 <td>${roleBadge}</td>
                 <td>${user.username}</td>
@@ -140,22 +154,18 @@ function renderUserTable(users, currentPage, pageSize) {
     }).join('');
 }
 
-// 페이지네이션 업데이트
 function updatePagination(currentPage, totalPages) {
     window.paginationData = {
         currentPage: currentPage,
-        totalPages: totalPages,
-        baseUrl: '/admin/user',
-        asyncMode: true
+        totalPages: totalPages
     };
 
-    if (typeof renderPagination === 'function') {
-        renderPagination();
+    if (typeof window.renderPagination === 'function') {
+        window.renderPagination();
     }
 }
 
-
-// 검색 실행
+// ==================== 검색 및 필터 ====================
 async function performSearch() {
     const params = collectSearchParams();
     const data = await fetchUserList(params);
@@ -166,8 +176,8 @@ async function performSearch() {
     }
 }
 
-// 페이지 변경 (pagination.js에서 호출될 함수)
-window.changePage = async function(page) {
+// 페이지 변경
+window.changePage = async function (page) {
     const params = collectSearchParams();
     params.page = page;
 
@@ -181,119 +191,90 @@ window.changePage = async function(page) {
 
 // 필터 초기화
 function resetFilters() {
-    // 날짜 초기화 (현재 월의 1일 ~ 오늘)
-    const today = new Date();
-    const firstDay = new Date(today.getFullYear(), today.getMonth(), 1);
+    // 날짜 초기화 (값 비우기)
+    const startDateInput = document.querySelector('.date-filter input[type="date"]:first-child');
+    const endDateInput = document.querySelector('.date-filter input[type="date"]:last-child');
 
-    const dateInputs = document.querySelectorAll('.date-filter input[type="date"]');
-    dateInputs[0].value = formatDate(firstDay);
-    dateInputs[1].value = formatDate(today);
+    if (startDateInput) startDateInput.value = '';
+    if (endDateInput) endDateInput.value = '';
 
     // 라디오 버튼 초기화
-    document.querySelector('input[name="role"][value="ALL"]').checked = true;
-    document.querySelector('input[name="status"][value="ALL"]').checked = true;
+    const studentRadio = document.querySelector('input[name="role"][value="STUDENT"]');
+    const allStatusRadio = document.querySelector('input[name="status"][value="ALL"]');
+
+    if (studentRadio) studentRadio.checked = true;
+    if (allStatusRadio) allStatusRadio.checked = true;
 
     // 검색어 초기화
-    document.getElementById('searchKeyword').value = '';
+    const keywordInput = document.getElementById('searchKeyword');
+    if (keywordInput) keywordInput.value = '';
 
     // 정렬 초기화
-    document.getElementById('sortSelect').value = 'LATEST';
+    const sortSelect = document.getElementById('sortSelect');
+    if (sortSelect) sortSelect.value = 'LATEST';
 
     // 검색 실행
     performSearch();
 }
 
-// 날짜 포맷팅 함수
-function formatDate(date) {
-    const year = date.getFullYear();
-    const month = String(date.getMonth() + 1).padStart(2, '0');
-    const day = String(date.getDate()).padStart(2, '0');
-    return `${year}-${month}-${day}`;
+// ==================== 유틸리티 ====================
+function initializeDateFilters() {
+    // 날짜 필터를 빈 상태로 초기화 (null로 전송되도록)
+    const startDateInput = document.querySelector('.date-filter input[type="date"]:first-child');
+    const endDateInput = document.querySelector('.date-filter input[type="date"]:last-child');
+
+    if (startDateInput) startDateInput.value = '';
+    if (endDateInput) endDateInput.value = '';
 }
 
 // ==================== 이벤트 리스너 ====================
+document.addEventListener('DOMContentLoaded', function () {
+    console.log('🚀 페이지 초기화');
 
-document.addEventListener('DOMContentLoaded', function() {
-    // 검색 버튼 클릭
-    document.querySelector('.search-btn').addEventListener('click', performSearch);
+    // 날짜 필터 빈 상태로 초기화
+    initializeDateFilters();
 
-    // 검색어 입력 시 엔터키
-    document.getElementById('searchKeyword').addEventListener('keypress', function(e) {
-        if (e.key === 'Enter') {
+    // 검색 버튼
+    const searchBtn = document.querySelector('.search-btn');
+    if (searchBtn) {
+        searchBtn.addEventListener('click', function(e) {
             e.preventDefault();
             performSearch();
-        }
-    });
+        });
+    }
 
-    // 날짜 필터 변경
+    // 검색어 엔터키
+    const searchKeyword = document.getElementById('searchKeyword');
+    if (searchKeyword) {
+        searchKeyword.addEventListener('keypress', function (e) {
+            if (e.key === 'Enter') {
+                e.preventDefault();
+                performSearch();
+            }
+        });
+    }
+
+    // 정렬 선택
+    const sortSelect = document.getElementById('sortSelect');
+    if (sortSelect) {
+        sortSelect.addEventListener('change', performSearch);
+    }
+
+    // 날짜 필터
     document.querySelectorAll('.date-filter input[type="date"]').forEach(input => {
         input.addEventListener('change', performSearch);
     });
 
-    // 회원 구분 라디오 버튼
+    // 회원 구분 라디오
     document.querySelectorAll('input[name="role"]').forEach(radio => {
         radio.addEventListener('change', performSearch);
     });
 
-    // 상태 라디오 버튼
+    // 상태 라디오
     document.querySelectorAll('input[name="status"]').forEach(radio => {
         radio.addEventListener('change', performSearch);
     });
 
-    // 정렬 선택
-    document.getElementById('sortSelect').addEventListener('change', performSearch);
-
-    // 초기화 버튼은 이미 onclick으로 연결되어 있음
+    // 초기 데이터 로드
+    performSearch();
 });
-
-// ==================== 기존 함수들 (모달 등) ====================
-
-let userToDelete = null;
-
-function confirmDelete(userId, nickname) {
-    userToDelete = userId;
-    document.getElementById('deleteMemberName').textContent = nickname;
-    document.getElementById('deleteModal').style.display = 'flex';
-}
-
-function closeDeleteModal() {
-    document.getElementById('deleteModal').style.display = 'none';
-    userToDelete = null;
-}
-
-async function executeDelete() {
-    if (!userToDelete) return;
-
-    try {
-        const response = await fetch(`/admin/user/${userToDelete}`, {
-            method: 'DELETE',
-            headers: {
-                'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]')?.content
-            }
-        });
-
-        if (response.ok) {
-            alert('회원이 삭제되었습니다.');
-            closeDeleteModal();
-            performSearch(); // 목록 새로고침
-        } else {
-            alert('삭제에 실패했습니다.');
-        }
-    } catch (error) {
-        console.error('Delete error:', error);
-        alert('삭제 중 오류가 발생했습니다.');
-    }
-}
-
-function editStatus(userId) {
-    // 수정 페이지로 이동 또는 모달 표시
-    window.location.href = `/admin/user/edit/${userId}`;
-}
-
-// 모달 외부 클릭 시 닫기
-window.onclick = function(event) {
-    const modal = document.getElementById('deleteModal');
-    if (event.target === modal) {
-        closeDeleteModal();
-    }
-};

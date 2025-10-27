@@ -7,24 +7,23 @@ import yoonsome.mulang.domain.user.entity.User.*;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 
+import static yoonsome.mulang.domain.user.entity.User.Role.STUDENT;
+
 @Data
 public class UserSearchRequest {
 
-    private Role role;                // STUDENT, TEACHER, ADMIN
+    private Role role = STUDENT;                // STUDENT, TEACHER
     private UserStatus userStatus;
 
-    @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
-    private LocalDateTime startDate= LocalDate.now()
-            .withDayOfMonth(1)
-            .atStartOfDay();;  // 가입 범위(시작)
+    @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
+    private LocalDateTime startDate;
 
-    @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
-    private LocalDateTime endDate = LocalDate.now()
-            .atTime(23, 59, 59);    // 가입 범위(종료)
+    @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
+    private LocalDateTime endDate;
 
     private String keyword;           // 검색어 (이름/이메일/닉네임)
-    private String sortBy = "createdAt";
-    private String sortDirection = "DESC";
+    private String sortBy;
+    private String sortDirection;
     private int page = 0;
     private int size = 10;
 }
