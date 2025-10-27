@@ -43,13 +43,7 @@
                                 <input type="text" name="email" value="${teacher.email}" readonly>
                             </div>
                         </div>
-                        <!-- 닉네임 -->
-                        <div class="field">
-                            <label>닉네임</label>
-                            <div class="field-content">
-                                <span>${teacher.nickname}</span>
-                            </div>
-                        </div>
+
                         <!-- 프로필 이미지 -->
                         <div class="field">
                             <label>프로필 이미지</label>
@@ -63,7 +57,17 @@
                                 </button>
                                 <input type="file" id="fileInput" name="photo" accept="image/*" hidden>
                             </div>
+                        </div>
 
+                        <!-- 닉네임 -->
+                        <div class="field">
+                            <label>닉네임</label>
+                            <div class="field-content">
+                                <textarea name="nickname" rows="1">${teacher.nickname}</textarea>
+                            </div>
+                            <c:if test="${not empty errorMessage}">
+                                <div class="error-box">${errorMessage}</div>
+                            </c:if>
                         </div>
 
                         <!-- 소개 -->
@@ -92,7 +96,9 @@
     </div>
 </main>
 
-<script src="/js/pages/teacher/profileEditImage.js"></script>
+<script src="/js/pages/teacher/profile/profileImageHandler.js"></script>
+<script src="/js/pages/teacher/profile/profileImagePreview.js"></script>
+<script src="/js/pages/teacher/profile/profileValidator.js"></script>
 <%@ include file="../common/footer.jsp" %>
 </body>
 </html>

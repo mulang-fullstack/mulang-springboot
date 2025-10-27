@@ -44,7 +44,10 @@ public interface CourseRepository extends JpaRepository<Course,Long> {
     );
     List<Course> findByTeacherId(Long teacherId);
 
-    @Query("SELECT c FROM Course c WHERE c.teacher = :teacher AND c.status IN :statuses")
+    @Query("SELECT c FROM Course c " +
+            "WHERE c.teacher = :teacher " +
+            "AND c.status IN :statuses " +
+            "ORDER BY c.createdDate DESC")
     Page<Course> findByTeacherAndStatusIn(
             @Param("teacher") Teacher teacher,
             @Param("statuses") List<StatusType> statuses,

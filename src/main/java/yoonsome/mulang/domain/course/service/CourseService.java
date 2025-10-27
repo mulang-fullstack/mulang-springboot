@@ -29,11 +29,10 @@ public interface CourseService {
 
     /*강좌 삭제하기*/
     void deleteCourse(long id);
-    void createCourseWithLectures(Course course, List<String> lectureTitles, List<MultipartFile> lectureVideos,MultipartFile thumbnail)
-            throws IOException;
+
+
     /* teacher 강사별 강좌 리스트 가져오기 */
     List<Course> getCoursesByTeacher(Long teacherId);
-
 
 
     Page<Course> getTeacherCoursePage(Teacher teacher, List<StatusType> statuses, Pageable pageable);

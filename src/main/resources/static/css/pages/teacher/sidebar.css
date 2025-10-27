@@ -7,7 +7,6 @@
     justify-content: flex-start;
     align-items: center;
     width: 220px;
-    height: 600px;
     min-height: 600px;
     flex-shrink: 0;
     margin: 0;
@@ -15,7 +14,13 @@
     border: var(--border-default);
     border-radius: 12px;
     background-color: var(--bg-white);
+
+    /* 추가: 스크롤 고정 */
+    position: sticky;
+    top: 100px; /* 헤더 높이에 맞게 조정 */
+    align-self: flex-start;
 }
+
 
 /* -------------------- 프로필 -------------------- */
 .profile {

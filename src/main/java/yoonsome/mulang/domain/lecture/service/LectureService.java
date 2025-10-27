@@ -18,4 +18,9 @@ public interface LectureService {
     List<Lecture> getLecturesByCourseId(Long courseId);
     // lecture 개수세기
     int countByCourse(Course course);
+
+    //정렬
+    List<Lecture> findByCourseOrdered(Course course);
+
+    Lecture save(Lecture lecture);
 }

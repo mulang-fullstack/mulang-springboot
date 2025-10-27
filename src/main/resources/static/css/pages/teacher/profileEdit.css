@@ -226,3 +226,13 @@ input[disabled] {
     color: var(--text-primary);
     cursor: default;
 }
+/* ===== 에러 메시지 박스 ===== */
+.error-box {
+    display: inline;
+    margin-left: 8px;
+    color: var(--text-error);
+    font-size: 13px;
+    vertical-align: middle;
+}
+
+

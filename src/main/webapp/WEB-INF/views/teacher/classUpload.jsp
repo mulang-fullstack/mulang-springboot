@@ -10,6 +10,7 @@
 
     <link rel="stylesheet" href="/css/global.css"/>
     <link rel="stylesheet" href="/css/pages/teacher/class/classUpload.css"/>
+    <link href="https://cdn.jsdelivr.net/npm/summernote@0.8.20/dist/summernote-lite.min.css" rel="stylesheet">
     <title>VOD 클래스 업로드 | Mulang?</title>
 </head>
 <body>
@@ -40,17 +41,6 @@
                             </div>
                         </div>
 
-                        <div class="field">
-                            <label>언어</label>
-                            <div class="field-content">
-                                <select name="languageId" required>
-                                    <option value="">선택해주세요</option>
-                                    <option value="1">영어</option>
-                                    <option value="2">일본어</option>
-                                    <option value="3">중국어</option>
-                                </select>
-                            </div>
-                        </div>
 
                         <div class="field">
                             <label>카테고리</label>
@@ -61,6 +51,18 @@
                                     <option value="2">문법</option>
                                     <option value="3">시험 대비</option>
                                     <option value="4">비즈니스</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="field">
+                            <label>언어</label>
+                            <div class="field-content">
+                                <select name="languageId" required>
+                                    <option value="">선택해주세요</option>
+                                    <option value="1">영어</option>
+                                    <option value="2">일본어</option>
+                                    <option value="3">중국어</option>
                                 </select>
                             </div>
                         </div>
@@ -82,20 +84,27 @@
                             </div>
                         </div>
 
-                        <div class="field vod-section">
-                            <label>챕터 업로드</label>
-                            <div class="field-content">
-                                <div class="video-list">
-                                    <div class="video-item" data-index="0">
-                                        <input type="text" name="lectures[0].title" placeholder="챕터 제목을 입력하세요" class="chapter-input" required>
-                                        <input type="text" name="lectures[0].content" placeholder="챕터 소개를 입력하세요" class="chapter-input" required>
-                                        <input type="file" name="lectures[0].video" accept="video/mp4,video/webm,video/mov" class="video-input" required>
+                        <div class="video-list">
+                            <div class="video-item" data-index="0">
+                                <input type="text" name="lectures[0].title" placeholder="챕터 제목" required class="chapter-input">
+                                <input type="text" name="lectures[0].content" placeholder="챕터 소개" required class="chapter-input">
 
-                                        <div class="video-btn-wrap">
-                                            <button type="button" class="add-video-btn">＋</button>
-                                            <button type="button" class="remove-video-btn">－</button>
-                                        </div>
-                                    </div>
+                                <div class="custom-file">
+                                    <label for="video_0" class="file-label">
+                                        <span class="file-button">파일 선택</span>
+                                        <span class="file-name">선택된 파일 없음</span>
+                                    </label>
+                                    <input type="file"
+                                           id="video_0"
+                                           name="lectures[0].video"
+                                           accept="video/mp4,video/webm,video/mov"
+                                           class="video-input"
+                                           required>
+                                </div>
+
+                                <div class="video-btn-wrap">
+                                    <button type="button" class="add-video-btn">＋</button>
+                                    <button type="button" class="remove-video-btn">－</button>
                                 </div>
                             </div>
                         </div>
@@ -103,12 +112,9 @@
                         <div class="field">
                             <label>강의 소개</label>
                             <div class="field-content">
-                                <textarea id="editor" name="content"></textarea>
+                                <textarea id="summernote" name="content"></textarea>
                             </div>
                         </div>
-
-                        <!-- 기본값 설정 일단 더미 나중에 하나씩 붙일거임-->
-                        <input type="hidden" name="lectureCount" value="1">
 
                         <div class="submit-wrap">
                             <button type="submit" class="submit-btn">저장하기</button>
@@ -121,8 +127,12 @@
 </main>
 
 <%@ include file="../common/footer.jsp" %>
-<script src="https://cdn.ckeditor.com/ckeditor5/35.3.2/classic/ckeditor.js"></script>
-<script src="/js/pages/teacher/ckeditor5.js?v=20251023"></script>
-<script src="/js/pages/teacher/classVideo.js"></script>
+
+<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+<link href="https://cdn.jsdelivr.net/npm/summernote@0.8.20/dist/summernote-lite.min.css" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/summernote@0.8.20/dist/summernote-lite.min.js"></script>
+<script src="/js/pages/teacher/common/summernote-init.js?v=20251023"></script>
+
+<script src="/js/pages/teacher/class/classVideoUpload.js"></script>
 </body>
 </html>

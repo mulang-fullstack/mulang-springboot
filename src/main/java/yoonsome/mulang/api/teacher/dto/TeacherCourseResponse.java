@@ -5,6 +5,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import java.time.LocalDate;
+import java.util.List;
 
 @Data
 @AllArgsConstructor
@@ -25,4 +26,5 @@ public class TeacherCourseResponse {
     private LocalDate createdDate;
     private Integer lectureCount;
 
+    private List<TeacherLectureEditResponse> lectures;
 }

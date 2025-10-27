@@ -47,4 +47,13 @@ public class LectureServiceImpl implements LectureService {
     public int countByCourse(Course course) {
         return lectureRepository.countByCourse(course);
     }
+
+    @Override
+    public List<Lecture> findByCourseOrdered(Course course) {
+        return lectureRepository.findByCourseOrderByOrderIndexAsc(course);
+    }
+    @Override
+    public Lecture save(Lecture lecture) {
+        return lectureRepository.save(lecture);
+    }
 }

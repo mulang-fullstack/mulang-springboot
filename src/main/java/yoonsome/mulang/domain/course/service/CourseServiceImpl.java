@@ -82,40 +82,9 @@ public class CourseServiceImpl implements CourseService {
     public void deleteCourse(long id) {
         courseRepository.deleteById(id);
     }
-    /**
-     * 강좌를 저장하고, 전달받은 리스트를 이용해 여러 개의 강의를 생성
-     */
-    @Override
-    public void createCourseWithLectures(
-            Course course,
-            List<String> lectureTitles,
-            List<MultipartFile> lectureVideos,
-            MultipartFile thumbnail
-    ) throws IOException {
-        if (thumbnail != null && !thumbnail.isEmpty()) {
-            File savedThumbnail = fileService.createFile(thumbnail);
-            course.setThumbnail(savedThumbnail.getUrl());
-        }
 
-        Course savedCourse = courseRepository.save(course);
-
-        if (lectureTitles == null || lectureTitles.isEmpty()) {
-            return;
-        }
-        for (int i = 0; i < lectureTitles.size(); i++) {
-            String title = lectureTitles.get(i);
-            String content = lectureTitles.get(i);
-
-            MultipartFile video = null;
-            if (lectureVideos != null && lectureVideos.size() > i) {
-                video = lectureVideos.get(i);
-            }
-            lectureService.createLectureWithFile(title, content, savedCourse, video);
-        }
-    }
     @Override
     public Page<Course> getTeacherCoursePage(Teacher teacher, List<StatusType> statuses, Pageable pageable) {
         return courseRepository.findByTeacherAndStatusIn(teacher, statuses, pageable);
     }
-
 }
