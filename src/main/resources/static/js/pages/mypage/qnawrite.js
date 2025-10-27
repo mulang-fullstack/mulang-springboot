@@ -1,6 +1,7 @@
 document.addEventListener('DOMContentLoaded', function() {
     const reviewForm = document.getElementById('reviewForm');
-    const courseSelect = document.getElementById('title');
+    const courseSelect = document.getElementById('courseId'); // ← 변경
+    const titleInput = document.getElementById('title');
     const contentTextarea = document.getElementById('content');
 
     reviewForm.addEventListener('submit', function(e) {
@@ -12,6 +13,15 @@ document.addEventListener('DOMContentLoaded', function() {
             return;
         }
         courseSelect.setCustomValidity('');
+
+        // 제목 입력 검증
+        if (titleInput.value.trim() === '') {
+            e.preventDefault();
+            titleInput.setCustomValidity('제목을 입력하세요');
+            titleInput.reportValidity();
+            return;
+        }
+        titleInput.setCustomValidity('');
 
         // 내용 입력 검증
         if (contentTextarea.value.trim() === '') {
@@ -25,6 +35,11 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // 강좌 선택 시 에러 제거
     courseSelect.addEventListener('change', function() {
+        this.setCustomValidity('');
+    });
+
+    // 제목 입력 시 에러 제거
+    titleInput.addEventListener('input', function() {
         this.setCustomValidity('');
     });
 

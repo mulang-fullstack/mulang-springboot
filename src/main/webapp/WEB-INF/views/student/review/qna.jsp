@@ -9,8 +9,8 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <link rel="icon" href="/img/favicon.svg" type="image/png">
     <link rel="stylesheet" href="/css/global.css"/>
-    <link rel="stylesheet" href="/css/pages/mypage/review/review.css"/>
-    <title>리뷰</title>
+    <link rel="stylesheet" href="/css/pages/mypage/review/qna.css"/>
+    <title>Q&A | Mulang?</title>
 </head>
 <body>
 
@@ -23,7 +23,7 @@
             <%@include file="../sidebar.jsp" %>
 
             <section class="content">
-                <h2>리뷰</h2>
+                <h2>Q&A</h2>
 
                 <!-- 탭 메뉴 -->
                 <div class="tab-menu">
@@ -48,37 +48,38 @@
                     <div class="error-message">${error}</div>
                 </c:if>
 
-                <!-- 리뷰 리스트 -->
+                <!-- Q&A 리스트 -->
                 <div class="qna-list">
                     <c:choose>
-                        <c:when test="${empty myReviews}">
-                            <div class="empty">리뷰가 없습니다.</div>
+                        <c:when test="${empty myqna}">
+                            <div class="empty">작성한 질문이 없습니다.</div>
                         </c:when>
                         <c:otherwise>
-                            <c:forEach var="review" items="${myReviews}">
-                                <div class="review-item">
-                                    <!-- 강좌 정보와 날짜 -->
-                                    <div class="review-header">
-                                        <h3 class="course-title">${review.course.title}</h3>
-                                        <span class="review-date">
-                                                ${review.createdAt.toString().substring(0, 16).replace('T', ' ')}
+                            <c:forEach var="qna" items="${myqna}">
+                                <div class="qna-item">
+                                    <!-- 질문 헤더 -->
+                                    <div class="qna-header">
+                                        <h3 class="qna-title">${qna.title}</h3>
+                                        <span class="qna-date">
+                                                ${qna.createdAt.toString().substring(0, 16).replace('T', ' ')}
                                         </span>
                                     </div>
 
-                                    <!-- 별점과 내용을 가로로 배치 -->
-                                    <div class="review-body">
-                                        <!-- 별점 -->
-                                        <div class="review-rating">
-                                            <c:forEach begin="1" end="5" var="i">
-                                                <span class="star ${i <= review.rating ? 'filled' : ''}">★</span>
-                                            </c:forEach>
-                                            <span class="rating-text">${review.rating}점</span>
-                                        </div>
+                                    <!-- 강좌 정보 -->
+                                    <div class="qna-course">
+                                        <span class="course-label">강좌:</span>
+                                        <span class="course-name">${qna.course.title}</span>
+                                    </div>
 
-                                        <!-- 리뷰 내용 -->
-                                        <div class="review-content">
-                                            <p>${review.content}</p>
-                                        </div>
+                                    <!-- 질문 내용 -->
+                                    <div class="qna-content">
+                                        <p>${qna.content}</p>
+                                    </div>
+
+                                    <!-- 액션 버튼 -->
+                                    <div class="qna-actions">
+                                        <button type="button" class="edit-btn" onclick="location.href='/student/qna/edit/${qna.id}'">수정</button>
+                                        <button type="button" class="delete-btn" onclick="deleteQna(${qna.id})">삭제</button>
                                     </div>
                                 </div>
                             </c:forEach>
@@ -90,7 +91,7 @@
     </div>
 </main>
 
-<script src="/js/pages/mypage/review.js"></script>
+<script src="/js/pages/mypage/qna.js"></script>
 <%@include file="../../common/footer.jsp" %>
 
 </body>

@@ -25,17 +25,26 @@
             <section class="content">
                 <h2>리뷰 작성</h2>
 
-                <form action="/student/qnawwrite" method="post" class="review-form" id="reviewForm" novalidate>
+                <form action="/student/qnawrite" method="post" class="review-form" id="reviewForm" novalidate>
 
                     <!-- 강좌 선택 -->
                     <div class="form-field">
-                        <label for="title">강좌선택</label>
-                        <select id="title" name="courseId" required>
+                        <label for="courseId">강좌선택</label>
+                        <select id="courseId" name="courseId" required>
                             <option value="">강좌를 선택하세요</option>
                             <c:forEach var="course" items="${mycourseDTO}">
                                 <option value="${course.courseId}">${course.courseTitle}</option>
                             </c:forEach>
                         </select>
+                    </div>
+
+                    <!-- 제목 추가 -->
+                    <div class="form-field">
+                        <label for="title">제목</label>
+                        <input type="text" id="title" name="title"
+                               placeholder="제목을 입력하세요"
+                               maxlength="100"
+                               required>
                     </div>
 
                     <!-- 내용 -->

@@ -10,6 +10,8 @@ import yoonsome.mulang.domain.qna.entity.CourseQuestion;
 import yoonsome.mulang.domain.qna.repository.CourseAnswerRepository;
 import yoonsome.mulang.domain.qna.repository.CourseQuestionRepository;
 
+import java.util.List;
+
 @Service
 @RequiredArgsConstructor
 @Transactional
@@ -42,8 +44,14 @@ public class CourseQnaServiceImpl implements CourseQnaService {
 
     @Override
     @Transactional(readOnly = true)
-    public Page<CourseQuestion> getQuestionPageByUser(Long userId, Pageable pageable) {
-        return courseQuestionRepository.findByUser_IdOrderByCreatedAtDesc(userId, pageable);
+    public List<CourseQuestion> getQuestionPageByUserDesc(Long userId) {
+        return courseQuestionRepository.findByUser_IdOrderByCreatedAtDesc(userId);
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public List<CourseQuestion> getQuestionPageByUserAsc(Long userId) {
+        return courseQuestionRepository.findByUser_IdOrderByCreatedAtAsc(userId);
     }
 
     @Override
