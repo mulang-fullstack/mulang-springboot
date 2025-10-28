@@ -260,7 +260,7 @@ public class TeacherCourseServiceImpl implements TeacherCourseService {
         }
         course.setStatus(StatusType.PRIVATE);
     }
-    
+
     //lecture 삭제 업데이트 폼에서 -누르면
     @Transactional
     public void deleteLecture(Long lectureId) {
