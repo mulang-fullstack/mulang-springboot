@@ -38,19 +38,19 @@
                             <div class="table-row">
                                 <!-- 썸네일 -->
                                 <div class="thumb">
-                                    <img src="${course.courseThumbnail}" alt="썸네일">
+                                    <img src="${course.course.thumbnail}" alt="썸네일">
                                 </div>
 
                                 <!-- 강좌 제목 -->
-                                <button type="button" class="title" onclick="openPlayer(${course.courseId})">
-                                        ${course.courseTitle}
+                                <button type="button" class="title" onclick="openPlayer(${course.course.id})">
+                                        ${course.course.title}
                                 </button>
 
                                 <!-- 강사명 -->
                                 <div class="teacher-name">
                                     <c:choose>
-                                        <c:when test="${not empty course.teacherName}">
-                                            ${course.teacherName}
+                                        <c:when test="${not empty course.course.teacher.user.username}">
+                                            ${course.course.teacher.user.username}
                                         </c:when>
                                         <c:otherwise>
                                             <span class="no-teacher">-</span>
@@ -61,17 +61,14 @@
                                 <!-- 진척도 -->
                                 <div class="progress-wrapper">
                                     <c:choose>
-                                        <c:when test="${course.progressPercentage == 0 or course.progressPercentage == null}">
+                                        <c:when test="${course.progress == 0 or course.progress == null}">
                                             <span class="no-progress">수강 정보 없음</span>
                                         </c:when>
                                         <c:otherwise>
                                             <div class="progress-bar">
-                                                <div class="progress-fill" style="width: ${course.progressPercentage}%"></div>
+                                                <div class="progress-fill" style="width: ${course.progress}%"></div>
                                             </div>
-                                            <span class="progress-text">
-                                                ${course.viewedLectures} / ${course.totalLectures}
-                                                (<fmt:formatNumber value="${course.progressPercentage}" maxFractionDigits="1" />%)
-                                            </span>
+
                                         </c:otherwise>
                                     </c:choose>
                                 </div>

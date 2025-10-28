@@ -14,11 +14,11 @@ import yoonsome.mulang.api.student.service.MypageService;
 
 @RequestMapping("/student")
 @Controller
-public class ModifyController {
+public class StuInfoModifyController {
 
     private final MypageService mypageService;
 
-    public ModifyController(MypageService mypageService) {
+    public StuInfoModifyController(MypageService mypageService) {
         this.mypageService = mypageService;
     }
 

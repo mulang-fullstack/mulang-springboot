@@ -36,7 +36,7 @@ public class Enrollment {
     private LocalDateTime enrolledAt;
 
     @Column(name = "progress", nullable = false)
-    private Integer progress = 0; // 진행률 (0-100)
+    private Integer progress; // 진행률 (0-100)
 
     @Column(name = "is_completed", nullable = false)
     private Boolean isCompleted = false;
