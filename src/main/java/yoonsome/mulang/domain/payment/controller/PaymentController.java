@@ -33,7 +33,7 @@ public class PaymentController {
                 .orElseThrow(() -> new IllegalArgumentException("강좌를 찾을 수 없습니다."));
 
         model.addAttribute("course", course);
-        model.addAttribute("clientKey", "test_gck_docs_Ovk5rk1EwkEbP0W43n07xlzm");
+        model.addAttribute("clientKey", "test_ck_P9BRQmyarY50Zx6zY1gXrJ07KzLN");
 
         return "payment/payment"; // payment.jsp
     }
@@ -119,7 +119,7 @@ public class PaymentController {
         model.addAttribute("errorMessage", message);
         model.addAttribute("orderId", orderId);
 
-        return "payfail"; // payFail.jsp
+        return "payment/payfail"; // payFail.jsp
     }
 
     /**

@@ -12,9 +12,9 @@
                 <img id="logo-img" src="/img/logo.svg" alt="로고">
             </a>
             <ul>
-                <li><a href="#">영어</a></li>
-                <li><a href="#">중국어</a></li>
-                <li><a href="#">일본어</a></li>
+                <li><a href="/course?languageId=1">영어</a></li>
+                <li><a href="/course?languageId=2">중국어</a></li>
+                <li><a href="/course?languageId=3">일본어</a></li>
                 <li><a href="#">AI테스트</a></li>
             </ul>
         </div>

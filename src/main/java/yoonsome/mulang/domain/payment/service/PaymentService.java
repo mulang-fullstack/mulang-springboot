@@ -23,6 +23,7 @@ import yoonsome.mulang.domain.user.repository.UserRepository;
 
 import java.nio.charset.StandardCharsets;
 import java.time.LocalDateTime;
+import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Base64;
 import java.util.UUID;
@@ -53,28 +54,22 @@ public class PaymentService {
      */
     @Transactional
     public PaymentResponseDto preparePayment(Long userId, PaymentRequestDto requestDto) {
-        // 사용자 조회
         User user = userRepository.findById(userId)
                 .orElseThrow(() -> new IllegalArgumentException("사용자를 찾을 수 없습니다."));
 
-        // 강좌 조회
         Course course = courseRepository.findById(requestDto.getCourseId())
                 .orElseThrow(() -> new IllegalArgumentException("강좌를 찾을 수 없습니다."));
 
-        // 이미 구매한 강좌인지 확인
         if (enrollmentRepository.existsByUserIdAndCourseId(userId, requestDto.getCourseId())) {
             throw new IllegalStateException("이미 구매한 강좌입니다.");
         }
 
-        // 금액 검증
         if (!course.getPrice().equals(requestDto.getAmount())) {
             throw new IllegalArgumentException("결제 금액이 일치하지 않습니다.");
         }
 
-        // 주문 ID 생성 (UUID 사용)
         String orderId = "ORDER_" + UUID.randomUUID().toString();
 
-        // Payment 엔티티 생성 및 저장
         Payment payment = new Payment();
         payment.setUser(user);
         payment.setCourse(course);
@@ -102,28 +97,34 @@ public class PaymentService {
     @Transactional
     public PaymentResponseDto confirmPayment(PaymentConfirmDto confirmDto) {
         try {
-            // 주문 조회
             Payment payment = paymentRepository.findByOrderId(confirmDto.getOrderId())
                     .orElseThrow(() -> new IllegalArgumentException("주문 정보를 찾을 수 없습니다."));
 
-            // 금액 검증
             if (!payment.getAmount().equals(confirmDto.getAmount())) {
                 throw new IllegalArgumentException("결제 금액이 일치하지 않습니다.");
             }
 
-            // 토스 페이먼츠 API 호출
             TossPaymentResponseDto tossResponse = requestTossPaymentConfirm(confirmDto);
 
-            // Payment 엔티티 업데이트
             payment.setPaymentKey(tossResponse.getPaymentKey());
             payment.setStatus(PaymentStatus.COMPLETED);
-            payment.setPaymentMethod(PaymentMethod.valueOf(tossResponse.getMethod().toUpperCase()));
-            payment.setApprovedAt(LocalDateTime.parse(
-                    tossResponse.getApprovedAt(),
-                    DateTimeFormatter.ISO_OFFSET_DATE_TIME
-            ));
 
-            // 결제 수단 상세 정보 저장
+            PaymentMethod paymentMethod = convertToPaymentMethod(tossResponse.getMethod());
+            payment.setPaymentMethod(paymentMethod);
+
+            if (tossResponse.getApprovedAt() != null) {
+                try {
+                    LocalDateTime approvedAt = ZonedDateTime.parse(
+                            tossResponse.getApprovedAt(),
+                            DateTimeFormatter.ISO_OFFSET_DATE_TIME
+                    ).toLocalDateTime();
+                    payment.setApprovedAt(approvedAt);
+                } catch (Exception e) {
+                    log.warn("승인 시간 파싱 실패, 현재 시간으로 설정: {}", e.getMessage());
+                    payment.setApprovedAt(LocalDateTime.now());
+                }
+            }
+
             if (tossResponse.getCard() != null) {
                 payment.setPaymentMethodDetail(tossResponse.getCard().getCompany());
             } else if (tossResponse.getVirtualAccount() != null) {
@@ -131,8 +132,6 @@ public class PaymentService {
             }
 
             paymentRepository.save(payment);
-
-            // Enrollment 생성 (강좌 등록)
             createEnrollment(payment);
 
             log.info("결제 승인 완료 - PaymentKey: {}, OrderId: {}",
@@ -154,7 +153,6 @@ public class PaymentService {
             log.error("결제 승인 실패 - OrderId: {}, Error: {}",
                     confirmDto.getOrderId(), e.getMessage());
 
-            // 결제 실패 처리
             paymentRepository.findByOrderId(confirmDto.getOrderId())
                     .ifPresent(payment -> {
                         payment.setStatus(PaymentStatus.FAILED);
@@ -166,82 +164,103 @@ public class PaymentService {
         }
     }
 
-    /**
-     * 토스 페이먼츠 API 호출
-     */
+    private PaymentMethod convertToPaymentMethod(String method) {
+        if (method == null) {
+            return PaymentMethod.CARD;
+        }
+
+        switch (method.toUpperCase()) {
+            case "카드":
+            case "CARD":
+                return PaymentMethod.CARD;
+            case "가상계좌":
+            case "VIRTUAL_ACCOUNT":
+                return PaymentMethod.VIRTUAL_ACCOUNT;
+            case "계좌이체":
+            case "TRANSFER":
+                return PaymentMethod.TRANSFER;
+            case "휴대폰":
+            case "MOBILE_PHONE":
+            case "휴대폰결제":
+                return PaymentMethod.MOBILE_PHONE;
+            case "문화상품권":
+            case "CULTURE_GIFT_CARD":
+                return PaymentMethod.CULTURE_GIFT_CARD;
+            case "도서문화상품권":
+            case "BOOK_CULTURE_GIFT_CARD":
+                return PaymentMethod.BOOK_CULTURE_GIFT_CARD;
+            case "게임문화상품권":
+            case "GAME_CULTURE_GIFT_CARD":
+                return PaymentMethod.GAME_CULTURE_GIFT_CARD;
+            default:
+                log.warn("알 수 없는 결제 수단: {}, CARD로 설정", method);
+                return PaymentMethod.CARD;
+        }
+    }
+
     private TossPaymentResponseDto requestTossPaymentConfirm(PaymentConfirmDto confirmDto) {
         try {
-            // 시크릿 키 로깅 (디버깅용)
-            log.info("🔑 Secret Key: {}", tossSecretKey);
-            log.info("📦 결제 승인 요청 데이터:");
+            log.info("=== 토스 페이먼츠 API 호출 시작 ===");
+            log.info("🔑 Secret Key 존재 여부: {}", tossSecretKey != null && !tossSecretKey.isEmpty());
+            log.info("📦 결제 승인 요청:");
             log.info("  - paymentKey: {}", confirmDto.getPaymentKey());
             log.info("  - orderId: {}", confirmDto.getOrderId());
             log.info("  - amount: {}", confirmDto.getAmount());
 
-            // Base64 인코딩
             String auth = tossSecretKey + ":";
             String encodedAuth = Base64.getEncoder()
                     .encodeToString(auth.getBytes(StandardCharsets.UTF_8));
 
-            log.info("🔐 Authorization: Basic {}", encodedAuth.substring(0, 20) + "...");
-
-            // HTTP 헤더 설정
             HttpHeaders headers = new HttpHeaders();
             headers.set("Authorization", "Basic " + encodedAuth);
             headers.setContentType(MediaType.APPLICATION_JSON);
 
-            // 요청 바디를 JSON으로 변환해서 로깅
-            String requestBody = objectMapper.writeValueAsString(confirmDto);
-            log.info("📤 Request Body: {}", requestBody);
-
-            // 요청 바디 설정
             HttpEntity<PaymentConfirmDto> request = new HttpEntity<>(confirmDto, headers);
 
-            log.info("🌐 토스 API 호출: {}", TOSS_PAYMENT_URL);
+            log.info("🌐 API URL: {}", TOSS_PAYMENT_URL);
 
-            // API 호출
-            ResponseEntity<String> response = restTemplate.exchange(
+            ResponseEntity<TossPaymentResponseDto> response = restTemplate.exchange(
                     TOSS_PAYMENT_URL,
                     HttpMethod.POST,
                     request,
-                    String.class  // 일단 String으로 받아서 로그 출력
+                    TossPaymentResponseDto.class
             );
 
-            log.info("✅ 토스 API 응답:");
-            log.info("  - Status: {}", response.getStatusCode());
-            log.info("  - Body: {}", response.getBody());
+            log.info("✅ 토스 API 응답 성공: {}", response.getStatusCode());
 
             if (response.getStatusCode() == HttpStatus.OK && response.getBody() != null) {
-                // JSON을 DTO로 변환
-                TossPaymentResponseDto tossResponse = objectMapper.readValue(
-                        response.getBody(),
-                        TossPaymentResponseDto.class
-                );
-                return tossResponse;
+                return response.getBody();
             } else {
                 throw new RuntimeException("토스 페이먼츠 API 응답이 올바르지 않습니다.");
             }
 
         } catch (HttpClientErrorException e) {
-            // 토스 API의 상세 에러 응답 로깅
-            log.error("❌ 토스 API 에러 응답:");
-            log.error("  Status Code: {}", e.getStatusCode());
-            log.error("  Response Body: {}", e.getResponseBodyAsString());
+            log.error("❌ 토스 API 에러:");
+            log.error("  Status: {}", e.getStatusCode());
+            log.error("  Body: {}", e.getResponseBodyAsString());
 
-            throw new RuntimeException("토스 페이먼츠 API 에러: " + e.getResponseBodyAsString(), e);
+            String errorMessage = parseErrorMessage(e.getResponseBodyAsString());
+            throw new RuntimeException("토스 페이먼츠 API 에러: " + errorMessage, e);
 
         } catch (Exception e) {
-            log.error("❌ 예외 타입: {}", e.getClass().getName());
-            log.error("❌ 예외 메시지: {}", e.getMessage());
-            log.error("❌ 스택 트레이스:", e);
-
-            throw new RuntimeException("토스 페이먼츠 결제 승인에 실패했습니다: " + e.getMessage(), e);
+            log.error("❌ 예외: {}", e.getClass().getName());
+            log.error("❌ 메시지: {}", e.getMessage());
+            throw new RuntimeException("토스 페이먼츠 결제 승인 실패: " + e.getMessage(), e);
         }
     }
 
-    /**
-     * 강좌 등록 (Enrollment) 생성
-     */
+    private String parseErrorMessage(String errorBody) {
+        try {
+            var errorNode = objectMapper.readTree(errorBody);
+            if (errorNode.has("message")) {
+                return errorNode.get("message").asText();
+            }
+            return errorBody;
+        } catch (Exception e) {
+            return errorBody;
+        }
+    }
+
     private void createEnrollment(Payment payment) {
         Enrollment enrollment = new Enrollment();
         enrollment.setUser(payment.getUser());
@@ -256,9 +275,6 @@ public class PaymentService {
                 payment.getUser().getId(), payment.getCourse().getId());
     }
 
-    /**
-     * 결제 실패 처리
-     */
     @Transactional
     public void handlePaymentFailure(String orderId, String failureCode, String failureMessage) {
         Payment payment = paymentRepository.findByOrderId(orderId)
@@ -274,9 +290,6 @@ public class PaymentService {
                 orderId, failureCode, failureMessage);
     }
 
-    /**
-     * 사용자의 결제 내역 조회
-     */
     public PaymentResponseDto getPayment(Long paymentId) {
         Payment payment = paymentRepository.findById(paymentId)
                 .orElseThrow(() -> new IllegalArgumentException("결제 정보를 찾을 수 없습니다."));
@@ -284,9 +297,6 @@ public class PaymentService {
         return convertToDto(payment);
     }
 
-    /**
-     * Payment 엔티티를 DTO로 변환
-     */
     private PaymentResponseDto convertToDto(Payment payment) {
         return PaymentResponseDto.builder()
                 .paymentId(payment.getId())

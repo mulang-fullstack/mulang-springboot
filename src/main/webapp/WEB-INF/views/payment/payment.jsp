@@ -11,8 +11,8 @@
     <link rel="icon" href="/img/favicon.svg" type="image/png" />
     <link rel="stylesheet" href="/css/global.css" />
     <link rel="stylesheet" href="/css/pages/payment/payment.css" />
-    <!-- 토스 페이먼츠 v2 Standard SDK -->
-    <script src="https://js.tosspayments.com/v2/standard"></script>
+    <!-- 토스 페이먼츠 결제 SDK -->
+    <script src="https://js.tosspayments.com/v1/payment"></script>
     <title>강의 결제 | Mulang</title>
 </head>
 <body>
@@ -101,9 +101,96 @@
                         결제 방법 선택
                     </h3>
 
-                    <!-- 토스페이먼츠 위젯 -->
-                    <div id="payment-method"></div>
-                    <div id="agreement"></div>
+                    <!-- 테스트 환경 알림 -->
+                    <div class="test-notice">
+                        ⚠️ 테스트 환경 - 실제로 결제되지 않습니다.
+                    </div>
+
+                    <!-- 커스텀 결제 방법 선택 UI -->
+                    <div class="payment-methods-grid">
+                        <!-- 일반결제 -->
+                        <div class="payment-method-item" data-method="NORMAL" data-type="CARD">
+                            <div class="method-content">
+                                <div class="method-icon">💳</div>
+                                <div class="method-name">일반결제</div>
+                            </div>
+                        </div>
+
+                        <!-- 신용·체크카드 -->
+                        <div class="payment-method-item" data-method="CARD" data-type="CARD">
+                            <div class="method-content">
+                                <div class="method-icon">💳</div>
+                                <div class="method-name">신용·체크카드</div>
+                            </div>
+                        </div>
+
+                        <!-- 토스페이 (추천 뱃지) -->
+                        <div class="payment-method-item recommended" data-method="TOSSPAY" data-type="TOSSPAY">
+                            <div class="recommended-badge">적립 혜택</div>
+                            <div class="method-content">
+                                <img src="/img/payment/tosspay-logo.png" alt="토스페이" class="method-logo" onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
+                                <div class="method-icon" style="display:none;">🎯</div>
+                                <div class="method-name">토스페이</div>
+                            </div>
+                        </div>
+
+                        <!-- PAYCO -->
+                        <div class="payment-method-item" data-method="PAYCO" data-type="PAYCO">
+                            <div class="method-content">
+                                <img src="/img/payment/payco-logo.png" alt="PAYCO" class="method-logo" onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
+                                <div class="method-icon" style="display:none;">💰</div>
+                                <div class="method-name">PAYCO</div>
+                            </div>
+                        </div>
+
+                        <!-- 카카오페이 -->
+                        <div class="payment-method-item" data-method="KAKAOPAY" data-type="KAKAOPAY">
+                            <div class="method-content">
+                                <div class="method-icon">💛</div>
+                                <div class="method-name">카카오페이</div>
+                            </div>
+                        </div>
+
+                        <!-- 네이버페이 -->
+                        <div class="payment-method-item" data-method="NAVERPAY" data-type="NAVERPAY">
+                            <div class="method-content">
+                                <div class="method-icon">💚</div>
+                                <div class="method-name">네이버페이</div>
+                            </div>
+                        </div>
+
+                        <!-- 휴대폰 -->
+                        <div class="payment-method-item" data-method="MOBILE" data-type="MOBILE_PHONE">
+                            <div class="method-content">
+                                <div class="method-icon">📱</div>
+                                <div class="method-name">휴대폰</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 신용카드 무이자 할부 안내 -->
+                    <div class="installment-info">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24"
+                             fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <circle cx="12" cy="12" r="10"></circle>
+                            <line x1="12" y1="16" x2="12" y2="12"></line>
+                            <line x1="12" y1="8" x2="12.01" y2="8"></line>
+                        </svg>
+                        신용카드 최대 3개월 무이자 할부
+                    </div>
+
+                    <!-- 약관 동의 -->
+                    <div class="payment-agreements">
+                        <div class="agreement-item">
+                            <input type="checkbox" id="agree-all" class="agreement-checkbox">
+                            <label for="agree-all" class="agreement-label">
+                                [필수] 결제 서비스 이용 약관, 개인정보 처리 동의
+                            </label>
+                        </div>
+                        <div class="agreement-details">
+                            신용카드 무이자 할부 안내 &gt;
+                        </div>
+                    </div>
                 </div>
             </div>
 
@@ -181,12 +268,13 @@
         const button = document.getElementById("payment-button");
         const coupon = document.getElementById("coupon-box-input");
         const discountRow = document.getElementById("discount-row");
+        const agreeCheckbox = document.getElementById("agree-all");
 
         // 강좌 정보
         const courseId = ${course.id};
         const courseTitle = "${course.title}";
         const coursePrice = ${course.price};
-        const totalAmount = coursePrice;
+        let totalAmount = coursePrice;
 
         // Spring Security에서 전달받은 사용자 정보
         <sec:authorize access="isAuthenticated()">
@@ -200,70 +288,32 @@
         window.location.href = '/login?redirect=/payments/${course.id}';
         </sec:authorize>
 
-        // ------ 1. 결제 준비 API 호출 ------
-        let orderId = null;
-        try {
-            const prepareResponse = await fetch('/payments/prepare?userId=' + userId, {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({
-                    courseId: courseId,
-                    amount: totalAmount,
-                    orderName: courseTitle
-                })
-            });
-
-            if (!prepareResponse.ok) {
-                const errorData = await prepareResponse.text();
-                console.error('결제 준비 실패 응답:', errorData);
-                throw new Error('결제 준비에 실패했습니다.');
-            }
-
-            const prepareData = await prepareResponse.json();
-            orderId = prepareData.orderId;
-            console.log('결제 준비 완료:', orderId);
-
-        } catch (error) {
-            console.error('결제 준비 실패:', error);
-            alert('결제 준비 중 오류가 발생했습니다. 다시 시도해주세요.');
-            window.location.href = '/course/' + courseId;
-            return;
-        }
-
-        // ------ 2. 결제위젯 초기화 ------
-        // 토스 페이먼츠 데모 키 사용 (사업자 등록 불필요)
-        const clientKey = "test_gck_docs_Ovk5rk1EwkEbP0W43n07xlzm";
+        // ------ 1. 토스페이먼츠 클라이언트 초기화 ------
+        const clientKey = "${clientKey}";
         const tossPayments = TossPayments(clientKey);
 
-        // 사용자별 고객 키 생성
-        const customerKey = "CUSTOMER_" + userId;
-        const widgets = tossPayments.widgets({ customerKey });
+        // ------ 2. 결제 방법 선택 처리 ------
+        let selectedMethod = null;
+        let selectedType = 'CARD'; // 기본값
+        const paymentMethodItems = document.querySelectorAll('.payment-method-item');
 
-        // ------ 3. 주문 금액 설정 ------
-        await widgets.setAmount({
-            currency: "KRW",
-            value: totalAmount
+        paymentMethodItems.forEach(item => {
+            item.addEventListener('click', () => {
+                // 모든 아이템의 선택 상태 제거
+                paymentMethodItems.forEach(el => el.classList.remove('selected'));
+                // 클릭된 아이템 선택
+                item.classList.add('selected');
+                selectedMethod = item.dataset.method;
+                selectedType = item.dataset.type;
+                console.log('선택된 결제 방법:', selectedMethod, selectedType);
+            });
         });
 
-        // ------ 4. 위젯 렌더링 ------
-        await Promise.all([
-            widgets.renderPaymentMethods({
-                selector: "#payment-method",
-                variantKey: "DEFAULT"
-            }),
-            widgets.renderAgreement({
-                selector: "#agreement",
-                variantKey: "AGREEMENT"
-            }),
-        ]);
-
-        // ------ 5. 쿠폰 적용 (선택사항) ------
+        // ------ 3. 쿠폰 적용 (선택사항) ------
         if (coupon) {
-            coupon.addEventListener("change", async () => {
-                const newAmount = coupon.checked ? totalAmount - 5000 : totalAmount;
-                await widgets.setAmount({ currency: "KRW", value: newAmount });
+            coupon.addEventListener("change", () => {
+                const newAmount = coupon.checked ? coursePrice - 5000 : coursePrice;
+                totalAmount = newAmount;
 
                 // UI 업데이트
                 document.getElementById("total-amount").textContent =
@@ -274,28 +324,59 @@
             });
         }
 
-        // ------ 6. 결제 요청 ------
+        // ------ 4. 결제 요청 ------
         button.addEventListener("click", async () => {
-            if (!orderId) {
-                alert('주문 정보가 없습니다. 페이지를 새로고침 해주세요.');
+            // 결제 방법 선택 확인
+            if (!selectedMethod) {
+                alert('결제 방법을 선택해주세요.');
+                return;
+            }
+
+            // 약관 동의 확인
+            if (!agreeCheckbox.checked) {
+                alert('결제 서비스 이용 약관에 동의해주세요.');
+                agreeCheckbox.focus();
                 return;
             }
 
             try {
-                await widgets.requestPayment({
+                // 주문 ID 생성 (결제 준비 API 호출)
+                const prepareResponse = await fetch('/payments/prepare?userId=' + userId, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        courseId: courseId,
+                        amount: totalAmount,
+                        orderName: courseTitle
+                    })
+                });
+
+                if (!prepareResponse.ok) {
+                    throw new Error('결제 준비에 실패했습니다.');
+                }
+
+                const prepareData = await prepareResponse.json();
+                const orderId = prepareData.orderId;
+
+                // 토스페이먼츠 결제 요청
+                await tossPayments.requestPayment(selectedType, {
+                    amount: totalAmount,
                     orderId: orderId,
                     orderName: courseTitle,
-                    successUrl: window.location.origin + "/payments/success",
-                    failUrl: window.location.origin + "/payments/fail",
                     customerName: userName,
                     customerEmail: userEmail,
+                    successUrl: window.location.origin + "/payments/success",
+                    failUrl: window.location.origin + "/payments/fail",
                 });
+
             } catch (error) {
-                console.error("결제 오류:", error);
+                console.error('결제 오류:', error);
                 if (error.code === 'USER_CANCEL') {
                     alert("결제를 취소하셨습니다.");
                 } else {
-                    alert("결제 중 오류가 발생했습니다: " + error.message);
+                    alert("결제 중 오류가 발생했습니다: " + (error.message || '알 수 없는 오류'));
                 }
             }
         });
