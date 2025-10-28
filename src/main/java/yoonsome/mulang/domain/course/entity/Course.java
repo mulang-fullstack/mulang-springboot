@@ -68,8 +68,8 @@ public class Course {
 
     @Column(name = "review_count")
     private Integer reviewCount;
-    /*
+
     @Column(name = "rejection_reason")
-    private String rejectionReason;*/
+    private String rejectionReason;
 }
 
