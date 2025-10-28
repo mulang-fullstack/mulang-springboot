@@ -36,9 +36,6 @@ public class CourseUploadController {
     private final CategoryService categoryService;
     private final LanguageService languageService;
     private final TeacherCourseService teacherCourseService;
-    private final TeacherService teacherService;
-    private final CourseService courseService;
-    private final FileService fileService;
 
     /** [GET] 새 강좌 업로드 폼 페이지 */
     @GetMapping("/new")
