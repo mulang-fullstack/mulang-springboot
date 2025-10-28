@@ -1,35 +1,33 @@
-// =============================
-// QnaController : 초기화 및 제어 모듈
-// =============================
-const QnaController = (() => {
-    async function load(courseId) {
-        try {
-            const data = await QnaApi.getQnaByCourse(courseId);
-            QnaView.render(data.content, courseId);
-        } catch (err) {
-            console.error(err);
-            alert("Q&A 데이터를 불러오지 못했습니다.");
-        }
-    }
+/**
+ * QnaController.js
+ * 이벤트 흐름 관리
+ */
+const QnaController = {
+    courseId: null,
+    listContainer: null,
 
-    function init(courseId) {
-        QnaView.bindEvents(courseId);
-        load(courseId);
+    init(courseId) {
+        this.courseId = courseId;
+        this.listContainer = document.getElementById("qna-list");
+        this.loadQnaList();
 
-        const submitBtn = document.querySelector("#QnaSubmit");
-        if (submitBtn) {
-            submitBtn.addEventListener("click", async () => {
-                const title = document.querySelector("#QnaTitle").value.trim();
-                const content = document.querySelector("#QnaContent").value.trim();
-                if (!title || !content) return alert("모든 필드를 입력하세요.");
+        // 질문 등록 버튼 이벤트
+        document.getElementById("QnaSubmit").addEventListener("click", async () => {
+            const content = document.getElementById("QnaContent").value.trim();
+            if (!content) return alert("질문 내용을 입력하세요.");
+            await QnaApi.createQuestion(this.courseId, content);
+            document.getElementById("QnaContent").value = "";
+            this.loadQnaList();
+        });
+    },
 
-                await QnaApi.createQuestion({ courseId, title, content });
-                document.querySelector("#QnaTitle").value = "";
-                document.querySelector("#QnaContent").value = "";
-                load(courseId);
-            });
-        }
-    }
+    async loadQnaList() {
+        const data = await QnaApi.getQnaByCourse(this.courseId);
+        QnaView.renderQuestionList(data.content || [], this.listContainer);
+    },
 
-    return { init, load };
-})();
+    async handleAnswerSubmit(questionId, content) {
+        await QnaApi.createAnswer(questionId, content);
+        this.loadQnaList();
+    },
+};

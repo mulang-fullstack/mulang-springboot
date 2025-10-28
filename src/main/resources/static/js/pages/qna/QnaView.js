@@ -1,93 +1,69 @@
-// =============================
-// QnaView : 화면 렌더링 모듈
-// =============================
-const QnaView = (() => {
-    const container = document.querySelector("#qna-list");
-
-    function render(questions, courseId) {
+/**
+ * QnaView.js
+ * DOM 렌더링 및 이벤트 제어
+ */
+const QnaView = {
+    renderQuestionList(qnaList, container) {
         container.innerHTML = "";
-        if (!questions.length) {
-            container.innerHTML = "<p class='empty'>등록된 질문이 없습니다.</p>";
-            return;
-        }
 
-        questions.forEach(q => {
-            const qElem = document.createElement("div");
-            qElem.className = "qna-item";
-            qElem.innerHTML = `
-        <div class="qna-question">
-          <h4>${q.title}</h4>
-          <p>${q.content}</p>
-          <small>${q.writerName} · ${new Date(q.createdAt).toLocaleString()}</small>
-          <div class="qna-actions">
-            <button class="QnaEditBtn" data-id="${q.id}">수정</button>
-            <button class="QnaDeleteBtn" data-id="${q.id}">삭제</button>
-          </div>
-        </div>
-        <div class="qna-answers">
-          ${q.answers.map(a => `
-            <div class="qna-answer">
-              <p>${a.content}</p>
-              <small>${a.teacherName} · ${new Date(a.createdAt).toLocaleString()}</small>
-              <div class="qna-actions">
-                <button class="AnswerEditBtn" data-id="${a.id}">수정</button>
-                <button class="AnswerDeleteBtn" data-id="${a.id}">삭제</button>
-              </div>
+        qnaList.forEach(q => {
+            const questionBox = document.createElement("div");
+            questionBox.className = "qna-question-box";
+            questionBox.dataset.id = q.id;
+
+            questionBox.innerHTML = `
+                <div class="qna-question-header">
+                    <span class="writer">${q.writerNickname || "익명"}</span>
+                    <span class="created">${new Date(q.createdAt).toLocaleString()}</span>
+                </div>
+                <div class="qna-question-content">${q.content}</div>
+                <div class="qna-answer-container" style="display: none;"></div>
+            `;
+
+            container.appendChild(questionBox);
+
+            // 질문 클릭 시 답변창 토글
+            questionBox.addEventListener("click", () => {
+                const answerContainer = questionBox.querySelector(".qna-answer-container");
+                if (answerContainer.style.display === "none") {
+                    QnaView.renderAnswerSection(q, answerContainer);
+                    answerContainer.style.display = "block";
+                } else {
+                    answerContainer.style.display = "none";
+                }
+            });
+        });
+    },
+
+    renderAnswerSection(question, container) {
+        const answersHtml = question.answers.map(a => `
+            <div class="qna-answer-box">
+                <div class="qna-answer-header">
+                    <span class="writer">${a.writerNickname || "익명"}</span>
+                    <span class="created">${new Date(a.createdAt).toLocaleString()}</span>
+                </div>
+                <div class="qna-answer-content">${a.content}</div>
             </div>
-          `).join("")}
-        </div>
-        <div class="qna-answer-form">
-          <textarea id="AnswerContent${q.id}" placeholder="답변 입력..."></textarea>
-          <button class="AnswerSubmitBtn" data-qid="${q.id}">등록</button>
-        </div>
-      `;
-            container.appendChild(qElem);
+        `).join("");
+
+        container.innerHTML = `
+            <div class="qna-answer-list">
+                ${answersHtml || "<p class='no-answer'>아직 답변이 없습니다.</p>"}
+            </div>
+            <div class="qna-answer-form">
+                <textarea class="qna-answer-input" placeholder="답변을 입력하세요."></textarea>
+                <button class="qna-answer-submit">등록</button>
+            </div>
+        `;
+
+        const submitBtn = container.querySelector(".qna-answer-submit");
+        const textarea = container.querySelector(".qna-answer-input");
+
+        submitBtn.addEventListener("click", async (e) => {
+            e.stopPropagation();
+            const content = textarea.value.trim();
+            if (!content) return alert("답변 내용을 입력하세요.");
+            await QnaController.handleAnswerSubmit(question.id, content);
         });
-    }
-
-    function bindEvents(courseId) {
-        container.addEventListener("click", async e => {
-            const t = e.target;
-
-            // 질문 삭제
-            if (t.classList.contains("QnaDeleteBtn")) {
-                await QnaApi.deleteQuestion(t.dataset.id);
-                QnaController.load(courseId);
-            }
-
-            // 질문 수정
-            if (t.classList.contains("QnaEditBtn")) {
-                const id = t.dataset.id;
-                const title = prompt("제목 수정:");
-                const content = prompt("내용 수정:");
-                await QnaApi.updateQuestion(id, { title, content });
-                QnaController.load(courseId);
-            }
-
-            // 답변 삭제
-            if (t.classList.contains("AnswerDeleteBtn")) {
-                await QnaApi.deleteAnswer(t.dataset.id);
-                QnaController.load(courseId);
-            }
-
-            // 답변 수정
-            if (t.classList.contains("AnswerEditBtn")) {
-                const id = t.dataset.id;
-                const content = prompt("새 답변 내용:");
-                await QnaApi.updateAnswer(id, { content });
-                QnaController.load(courseId);
-            }
-
-            // 답변 등록
-            if (t.classList.contains("AnswerSubmitBtn")) {
-                const qid = t.dataset.qid;
-                const content = document.querySelector(`#AnswerContent${qid}`).value.trim();
-                if (!content) return alert("내용을 입력하세요.");
-                await QnaApi.createAnswer({ questionId: qid, content });
-                QnaController.load(courseId);
-            }
-        });
-    }
-
-    return { render, bindEvents };
-})();
+    },
+};
