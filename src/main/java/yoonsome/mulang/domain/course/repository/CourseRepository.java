@@ -51,4 +51,6 @@ public interface CourseRepository extends JpaRepository<Course,Long> {
             @Param("teacher") Teacher teacher,
             @Param("statuses") List<StatusType> statuses,
             Pageable pageable);
+
+    List<Course> findByLanguage_IdAndStatus(Long languageId, StatusType status);
 }

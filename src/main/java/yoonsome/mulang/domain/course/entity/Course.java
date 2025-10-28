@@ -40,7 +40,7 @@ public class Course {
 
     @Enumerated(EnumType.STRING)
     @Column(nullable = false, length = 10)
-    private StatusType status; // ENUM('PUBLIC', 'PRIVATE', 'PENDING')
+    private StatusType status; // ENUM('PUBLIC', 'PRIVATE', 'PENDING' 'REVIEW', 'REJECTED')
 
     @Column
     private Integer price;
@@ -65,7 +65,11 @@ public class Course {
 
     @Column(name = "average_rating")
     private Double averageRating;
+
     @Column(name = "review_count")
     private Integer reviewCount;
+    /*
+    @Column(name = "rejection_reason")
+    private String rejectionReason;*/
 }
 

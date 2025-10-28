@@ -21,9 +21,9 @@
     <div class="contents">
         <!-- 카테고리 버튼 영역 -->
         <section class="category-menu">
-            <a href="#"><img src="/img/icon/main1.png"/>실시간 랭킹</a>
-            <a href="#"><img src="/img/icon/main2.png"/>신규 클래스</a>
-            <a href="#"><img src="/img/icon/main3.png"/>일상 회화</a>
+            <a href="/ranking?languageId=1"><img src="/img/icon/main1.png"/>실시간 랭킹</a>
+            <a href="/newCourse"><img src="/img/icon/main2.png"/>신규 클래스</a>
+            <a href="/dailyConversation"><img src="/img/icon/main3.png"/>일상 회화</a>
             <a href="#"><img src="/img/icon/main4.png"/>자격증 시험</a>
             <a href="#"><img src="/img/icon/main5.png"/>레벨 테스트</a>
             <a href="#"><img src="/img/icon/main6.png"/>학습 현황</a>

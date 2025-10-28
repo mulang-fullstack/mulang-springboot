@@ -1,0 +1,40 @@
+/* 모달 전체 배경 */
+.modal {
+    display: none; /* 초기 숨김 */
+    position: fixed;
+    z-index: 1000;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+}
+.profile-main, .dashboard, .content {
+    width: auto;      /* 부모 크기 그대로 따르지 않게 */
+}
+
+/* 모달 내용 영역 */
+.modal-content {
+    width: 500px;
+    /* ✅ 높이 관련 설정 */
+    height: auto;         /* 내용에 맞춤 */
+    max-height: 80vh;     /* 화면의 80% 넘으면 스크롤 */
+    overflow-y: auto;     /* 높이 초과 시 세로 스크롤 */
+    margin: 5% auto; /* 화면 중앙 */
+    padding: 10px 0 40px 30px;
+    background-color: var(--bg-point-sub);
+    border-radius: 10px;
+    box-shadow: var(--shadow-sm);
+}
+
+/* 닫기 버튼 */
+.close {
+    color: var(--text-disabled);
+    float: right;
+    font-size: 28px;
+    cursor: pointer;
+}
+.close:hover {
+    color: var(--text-black);
+}
+

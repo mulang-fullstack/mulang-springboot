@@ -14,11 +14,9 @@ public class CourseDetailResponse {
     private String subtitle;                    //  강의 부제목
     private String content;                     //  강의 설명
     private String teacherName;                 //  강사명
-    //private LocalDate applyStartedAt;           //  접수 시작일
-    //private LocalDate applyEndedAt;             //  접수 종료일
-    //private LocalDate startedAt;                //  강좌 시작일
-    //private LocalDate endedAt;                  //  강좌 종료일
     private Integer lectureCount;               //  강의 수
+    private Double averageRating;               //  평균 별점
+    private Integer reviewCount;                //  리뷰 수
     private Integer price;                      //  수강비
     private List<CourseLectureResponse> lectures;     //  커리큘럼
 }

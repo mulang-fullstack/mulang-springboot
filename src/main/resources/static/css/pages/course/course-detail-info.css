@@ -1,0 +1,108 @@
+/*강의명*/
+.course-name {
+    display: flex;
+    justify-content: flex-start;
+//width: 100%;
+    padding: 50px 0 20px;
+}
+
+.course-name h1 {
+    font-size: 36px;
+    font-weight: 400;
+}
+
+/* 요약 박스 */
+.course-summary {
+    display: flex;
+    justify-content: space-between;
+//align-items: flex-start;
+    gap: 40px;
+    height: 250px;
+    border-top: var(--border-primary);
+    border-bottom: var(--border-primary);
+    background: var(--bg-white);
+    overflow: hidden;
+    padding: 25px 0;
+}
+
+/* 강의 이미지 */
+.course-thumb {
+    width: 347px;
+    height: 200px;
+}
+
+/* 강의 정보 */
+.course-info {
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+    flex: 1;
+}
+
+.course-desc {
+    font-size: 20px;
+}
+
+.course-meta {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.course-meta > div {
+    display: flex;
+    align-items: center;
+}
+
+.course-meta .label {
+    width: 90px;
+    font-weight: 700;
+    margin-right: 10px;
+}
+/*별점*/
+.detailRating {
+    color: #F4B734;
+}
+
+.detailRating .stars {
+    display: flex;
+    align-items: center;
+    gap: 2px;
+}
+
+.detailRating .stars img {
+    //position: static;
+    //float: none;
+    width: 18px;
+    height: 18px;
+    display: block;
+}
+
+/* 가격 및 결제 버튼 */
+.course-purchase {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 20px;
+    align-self: flex-end;
+}
+
+.price {
+    font-size: 20px;
+    color: var(--text-secondary);
+}
+
+.purchase-btn {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 120px;
+    height: 50px;
+    background: var(--bg-point-main);
+    border: var(--bg-point-main);
+    color: var(--text-white);
+    border-radius: 10px;
+    font-size: 20px;
+    cursor: pointer;
+}

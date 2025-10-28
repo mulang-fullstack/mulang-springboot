@@ -94,8 +94,8 @@ public class CourseController {
     }
     /*강사 프로필 보기*/
     @GetMapping("/courseDetail/teacherProfile")
-    public String getTeacherProfile(Long id, Model model) {
-        TeacherProfileResponse teacherProfileResponse= displayingCourseService.getTeacherProfileResponse(id);
+    public String getTeacherProfile(@RequestParam Long id, Model model) {
+        TeacherProfileResponse teacherProfileResponse = displayingCourseService.getTeacherProfileResponse(id);
         model.addAttribute("teacher", teacherProfileResponse);
         return "course/teacherProfile";
     }

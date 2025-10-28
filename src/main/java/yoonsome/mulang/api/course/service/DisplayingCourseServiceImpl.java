@@ -121,6 +121,8 @@ public class DisplayingCourseServiceImpl implements DisplayingCourseService {
                 .content(course.getHtmlContent())
                 .teacherName(getTeacherName(course))
                 .lectureCount(course.getLectureCount())
+                .averageRating(course.getAverageRating())
+                .reviewCount(course.getReviewCount())
                 .price(course.getPrice())
                 .lectures(getLectureList(course.getId()))
                 .build();
