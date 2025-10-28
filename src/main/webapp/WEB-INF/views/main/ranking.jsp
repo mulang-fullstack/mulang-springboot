@@ -19,14 +19,11 @@
     <div class="contents">
         <div class="course-list-contents">
             <section class="course-category">
-                <h1>${languageName}</h1>
+                <h1>실시간 랭킹</h1>
                 <div class="course-tabs">
-                    <a href="/course" class="tab ${empty courseListRequest.categoryId ? 'active' : ''}">
-                        전체
-                    </a>
-                    <c:forEach var="category" items="${categories}">
-                        <a href="/course?categoryId=${category.id}" class="tab ${courseListRequest.categoryId == category.id ? 'active' : ''}">
-                                ${category.name}
+                    <c:forEach var="language" items="${languages}">
+                        <a href="/ranking?languageId=${language.id}" class="tab ${param.languageId == language.id ? 'active' : ''}">
+                                ${language.name}
                         </a>
                     </c:forEach>
                 </div>

@@ -25,7 +25,7 @@ document.addEventListener('DOMContentLoaded', () => {
     window.addEventListener('scroll', () => {
         let current = '';
         sections.forEach(section => {
-            const sectionTop = section.offsetTop - headerHeight - stickyDiv.offsetHeight - 0; // 여유 마진
+            const sectionTop = section.offsetTop - headerHeight - stickyDiv.offsetHeight + 310; // 여유 마진
             if (window.scrollY >= sectionTop) {
                 current = section.getAttribute('id');
             }

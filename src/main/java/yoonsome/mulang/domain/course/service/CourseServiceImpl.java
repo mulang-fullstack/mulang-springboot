@@ -21,6 +21,8 @@ import yoonsome.mulang.infra.file.service.FileService;
 import java.io.IOException;
 import java.util.*;
 
+import static yoonsome.mulang.domain.course.entity.StatusType.PUBLIC;
+
 @Transactional
 @RequiredArgsConstructor
 @Service
@@ -66,5 +68,10 @@ public class CourseServiceImpl implements CourseService {
     @Override
     public Page<Course> getTeacherCoursePage(Teacher teacher, List<StatusType> statuses, Pageable pageable) {
         return courseRepository.findByTeacherAndStatusIn(teacher, statuses, pageable);
+    }
+
+    @Override
+    public List<Course> getCourseRankingList(long languageId) {
+        return courseRepository.findByLanguage_IdAndStatus(languageId, PUBLIC);
     }
 }

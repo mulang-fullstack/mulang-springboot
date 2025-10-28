@@ -26,4 +26,7 @@ public interface CourseService {
 
     /* teacher 강사별 강좌 리스트 가져오기 */
     Page<Course> getTeacherCoursePage(Teacher teacher, List<StatusType> statuses, Pageable pageable);
+
+    /*실시간 랭킹 가져오기*/
+    List<Course> getCourseRankingList(long languageId);
 }
