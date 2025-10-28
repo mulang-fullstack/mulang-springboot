@@ -25,9 +25,7 @@ import yoonsome.mulang.infra.file.entity.File;
 import yoonsome.mulang.infra.file.service.FileService;
 
 import java.io.IOException;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 import java.util.stream.Collectors;
 
 
@@ -264,7 +262,7 @@ public class TeacherCourseServiceImpl implements TeacherCourseService {
         }
         course.setStatus(StatusType.PRIVATE);
     }
-    
+
     //lecture 삭제 업데이트 폼에서 -누르면
     @Transactional
     public void deleteLecture(Long lectureId) {

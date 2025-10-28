@@ -1,4 +1,4 @@
-package yoonsome.mulang.domain.enrollment.entity;
+package yoonsome.mulang.domain.progress.entity;
 
 import jakarta.persistence.*;
 import lombok.AccessLevel;
@@ -13,16 +13,16 @@ import yoonsome.mulang.domain.user.entity.User;
 import java.time.LocalDateTime;
 
 @Entity
-@Table(name = "enrollment",
+@Table(name = "progress",
         uniqueConstraints = @UniqueConstraint(columnNames = {"student_id", "lecture_id"}))
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @EntityListeners(AuditingEntityListener.class)
-public class EnrollmentEntity {
+public class Progress {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "enrollment_id")
+    @Column(name = "progress_id")
     private Long id;
 
     @ManyToOne(fetch = FetchType.LAZY)
@@ -33,27 +33,27 @@ public class EnrollmentEntity {
     @JoinColumn(name = "student_id", nullable = false)
     private User student;
 
-    @Column(name = "enrollment_status", nullable = false)
-    private Boolean enrollmentStatus = false;
+    @Column(name = "progress_status", nullable = false)
+    private Boolean progressStatus = false;
 
     @CreatedDate
     @Column(name = "applied_at", nullable = false, updatable = false)
     private LocalDateTime appliedAt;
 
     @Builder
-    public EnrollmentEntity(Lecture lecture, User student, Boolean enrollmentStatus) {
+    public Progress(Lecture lecture, User student, Boolean enrollmentStatus) {
         this.lecture = lecture;
         this.student = student;
-        this.enrollmentStatus = enrollmentStatus != null ? enrollmentStatus : false;
+        this.progressStatus = enrollmentStatus != null ? enrollmentStatus : false;
     }
 
     // 강의 입장 시 true로 변경
     public void markAsViewed() {
-        this.enrollmentStatus = true;
+        this.progressStatus = true;
     }
 
     // 상태 변경 메서드
     public void updateStatus(Boolean status) {
-        this.enrollmentStatus = status;
+        this.progressStatus = status;
     }
 }
