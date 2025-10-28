@@ -14,7 +14,6 @@ import yoonsome.mulang.domain.category.service.CategoryService;
 import yoonsome.mulang.domain.course.entity.Course;
 import yoonsome.mulang.domain.course.entity.StatusType;
 import yoonsome.mulang.domain.course.service.CourseService;
-import yoonsome.mulang.domain.enrollment.repository.EnrollmentRepository;
 import yoonsome.mulang.domain.language.entity.Language;
 import yoonsome.mulang.domain.language.service.LanguageService;
 import yoonsome.mulang.domain.lecture.entity.Lecture;
@@ -25,9 +24,7 @@ import yoonsome.mulang.infra.file.entity.File;
 import yoonsome.mulang.infra.file.service.FileService;
 
 import java.io.IOException;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 import java.util.stream.Collectors;
 
 
@@ -41,7 +38,6 @@ public class TeacherCourseServiceImpl implements TeacherCourseService {
     private final CourseService courseService;
     private final CategoryService categoryService;
     private final LanguageService languageService;
-    private final EnrollmentRepository enrollmentRepository;
 
 
     // 교사 본인의 강좌 목록 조회

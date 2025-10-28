@@ -6,16 +6,16 @@
     <meta charset="UTF-8">
     <title>${lecture.title} | Mulang</title>
 
+    <!-- 전역 / 페이지 CSS -->
     <link rel="stylesheet" href="/css/global.css"/>
     <link rel="stylesheet" href="/css/pages/mypage/mycourse/player.css">
     <link rel="stylesheet" href="/css/pages/mypage/mycourse/qna.css">
-
 </head>
-<body>
 
+<body>
 <div class="player-wrapper">
 
-    <!-- 왼쪽 영상 영역 -->
+    <!-- 왼쪽: 영상 영역 -->
     <section class="video-section">
         <!-- 영상 -->
         <div class="video-frame">
@@ -46,8 +46,8 @@
 
             <!-- 질문 작성 -->
             <div class="qna-write-box">
-                <textarea id="qna-content" placeholder="강좌에 대한 질문을 입력하세요."></textarea>
-                <button id="qna-submit">등록</button>
+                <textarea id="QnaContent" placeholder="강좌에 대한 질문을 입력하세요."></textarea>
+                <button id="QnaSubmit">등록</button>
             </div>
 
             <!-- 질문 목록 -->
@@ -74,9 +74,28 @@
     </aside>
 </div>
 
-<!-- 스크립트 -->
+<!-- ===============================
+     스크립트 영역
+================================ -->
+
+<!-- ① 서버에서 JS로 강좌 ID 전달 -->
+<script>
+    window.MulangContext = {
+        courseId: ${lecture.course.id}
+    };
+</script>
+
+<!-- ② 기존 player 관련 -->
 <script src="/js/pages/mypage/player.js"></script>
 <script src="/js/pages/mypage/qnaPagination.js"></script>
+
+<!-- ③ Q&A 모듈 -->
+<script src="/js/pages/qna/QnaApi.js"></script>
+<script src="/js/pages/qna/QnaView.js"></script>
+<script src="/js/pages/qna/QnaController.js"></script>
+
+<!-- ④ 페이지 초기화 (LecturePageInit.js) -->
+<script src="/js/pages/mypage/LecturePageInit.js"></script>
 
 </body>
 </html>
