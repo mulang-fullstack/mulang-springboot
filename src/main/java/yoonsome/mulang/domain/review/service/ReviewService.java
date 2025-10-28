@@ -17,4 +17,7 @@ public interface ReviewService {
     double getAverageRatingByCourseId(Long courseId);
     /*리뷰 수*/
     int countReviewByCourseId(Long courseId);
+    /*리뷰 존재 여부*/
+    boolean existReview(Long userId, Long courseId);
+
 }

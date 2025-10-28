@@ -4,18 +4,12 @@ import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
-import yoonsome.mulang.api.review.ReviewResponse;
 import yoonsome.mulang.domain.course.entity.Course;
 import yoonsome.mulang.domain.course.repository.CourseRepository;
-import yoonsome.mulang.domain.course.service.CourseService;
 import yoonsome.mulang.domain.review.entity.CourseReview;
 import yoonsome.mulang.domain.review.repository.ReviewRepository;
-
-import java.util.ArrayList;
-import java.util.List;
 
 @Transactional
 @RequiredArgsConstructor
@@ -68,5 +62,9 @@ public class ReviewServiceImpl implements ReviewService {
         Integer count = reviewRepository.countReviewByCourseId(courseId);
         int reviewCount = (count != null) ? count : 0;
         return reviewCount;
+    }
+    @Override
+    public boolean existReview(Long userId, Long courseId) {
+        return reviewRepository.existsByStudentIdAndCourseId(userId, courseId);
     }
 }

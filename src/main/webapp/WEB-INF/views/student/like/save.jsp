@@ -31,17 +31,25 @@
                 <!-- 툴바(검색/정렬) 필요시 -->
                 <div class="likes-toolbar">
                     <div class="left">
-                        <select class="sel-subject">
-                            <option>전체 과목</option>
-                            <option>영어</option>
-                            <option>일본어</option>
-                            <option>중국어</option>
+                        <select class="sel-subject" id="subjectFilter" onchange="filterBySubject()">
+                            <option value="">전체 과목</option>  <!-- ⭐ value="" (빈 문자열) -->
+                            <option value="1" ${languageId == 1 ? 'selected' : ''}>영어</option>
+                            <option value="2" ${languageId == 2 ? 'selected' : ''}>중국어</option>
+                            <option value="3" ${languageId == 3 ? 'selected' : ''}>일본어</option>
                         </select>
+
                     </div>
                     <div class="right">
-                        <input type="text" class="search-input" placeholder="강좌명 검색">
-                        <button class="btn search">검색</button>
+                        <form id="searchForm" onsubmit="return searchCourse(event)">
+                            <input type="text"
+                                   id="searchInput"
+                                   class="search-input"
+                                   placeholder="강좌명 검색"
+                                   value="${keyword}">
+                            <button type="submit" class="btn search">검색</button>
+                        </form>
                     </div>
+
                 </div>
 
                 <!-- 찜 목록 -->
@@ -69,7 +77,7 @@
                                         onclick="removeFavorite(${favorite.course.id}, ${favorite.id})">
                                     찜 해제
                                 </button>
-                                <button class="btn edit">수강하기</button>
+                                <button class="btn edit" onclick="location.href='/payments/${favorite.course.id}'">결제하기</button>
                             </div>
                         </article>
                     </c:forEach>

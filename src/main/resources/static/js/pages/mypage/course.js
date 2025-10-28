@@ -40,3 +40,49 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     }
 });
+
+// ⭐ 이것만 추가
+function filterBySubject() {
+    const languageId = document.getElementById('subjectFilter').value;
+    const keyword = document.getElementById('searchInput').value;
+
+    const urlParams = new URLSearchParams();
+
+    if (languageId) {
+        urlParams.set('languageId', languageId);
+    }
+
+    if (keyword) {
+        urlParams.set('keyword', keyword);
+    }
+
+    window.location.href = `/student/course?${urlParams.toString()}`;
+}
+
+// 검색 함수
+function searchCourse(event) {
+    event.preventDefault();  // 폼 기본 제출 방지
+
+    const keyword = document.getElementById('searchInput').value.trim();
+    const languageId = document.getElementById('subjectFilter').value;
+
+    if (!keyword) {
+        alert('검색어를 입력해주세요.');
+        return false;
+    }
+
+    const urlParams = new URLSearchParams();
+
+    if (keyword) {
+        urlParams.set('keyword', keyword);
+    }
+
+    if (languageId) {
+        urlParams.set('languageId', languageId);
+    }
+
+    urlParams.set('page', '0');
+    window.location.href = `/student/course?${urlParams.toString()}`;
+
+    return false;
+}

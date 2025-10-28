@@ -7,6 +7,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import yoonsome.mulang.api.student.dto.MycourseResponse;
 import yoonsome.mulang.api.student.service.MyCourseInfoService;
 import yoonsome.mulang.api.student.service.MycourseService;
@@ -26,12 +27,44 @@ public class MyCourseController {
     private final MyCourseInfoService mycourseInfoService;
 
     @GetMapping("/course")
-    public String course(@AuthenticationPrincipal CustomUserDetails userDetails,Model model) {
+    public String course(@AuthenticationPrincipal CustomUserDetails userDetails, Model model,
+                         @RequestParam(required = false) Long languageId, @RequestParam(required = false) String keyword) {
 
         Long userid = userDetails.getUser().getId();
-        List<MycourseResponse> mycourseDTO =  mycourseInfoService.findByUserId(userid);
 
-        model.addAttribute("mycourseDTO", mycourseDTO);
+
+        String searchKeyword = (keyword != null && !keyword.trim().isEmpty())
+                ? keyword.trim()
+                : null;
+
+        List<MycourseResponse> mycourseResponseList;
+        if(searchKeyword != null){
+            if(languageId != null){
+                System.out.println("검색, 언어");
+                mycourseResponseList = mycourseInfoService.findByUserIdAndLanguageAndKeyword(userid, languageId, searchKeyword);
+            }else{
+                System.out.println("검색");
+                mycourseResponseList = mycourseInfoService.findByUserIdAndKeyword(userid, searchKeyword);
+            }
+        }else{
+            if(languageId != null){
+                System.out.println("언어");
+                mycourseResponseList = mycourseInfoService.findByUserIdAndLanguage(userid, languageId);
+
+            }else{
+                System.out.println("고냥고냥");
+                mycourseResponseList = mycourseInfoService.findByUserIdWithCourse(userid);
+            }
+
+        }
+
+
+
+        model.addAttribute("mycourseResponseList", mycourseResponseList);
+        model.addAttribute("languageId", languageId);
+        model.addAttribute("searchKeyword", keyword);
+
+
 
 
         return "student/mycourse/course";

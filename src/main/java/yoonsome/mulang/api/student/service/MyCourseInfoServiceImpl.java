@@ -25,4 +25,39 @@ public class MyCourseInfoServiceImpl implements MyCourseInfoService {
                 .map(MycourseResponse::from)
                 .collect(Collectors.toList());
     }
+    @Override
+    public List<MycourseResponse> findByUserIdWithCourse(Long userId){
+        List<Enrollment> enrollments = enrollmentRepository
+                .findByUserIdWithCourse(userId);
+
+        return enrollments.stream()
+                .map(MycourseResponse::from)
+                .collect(Collectors.toList());
+    }
+    @Override
+    public List<MycourseResponse> findByUserIdAndLanguage(Long userId, Long languageId) {
+        List<Enrollment> enrollments = enrollmentRepository
+                .findByUserIdAndLanguage(userId, languageId);
+
+        return enrollments.stream()
+                .map(MycourseResponse::from)
+                .collect(Collectors.toList());
+    }
+    @Override
+    public List<MycourseResponse> findByUserIdAndKeyword(Long userId, String keyword) {
+        List<Enrollment> enrollments = enrollmentRepository
+                .findByUserIdAndKeyword(userId, keyword);
+        return enrollments.stream()
+                .map(MycourseResponse::from)
+                .collect(Collectors.toList());
+    }
+    @Override
+    public List<MycourseResponse> findByUserIdAndLanguageAndKeyword(Long userId, Long languageId, String keyword) {
+        List<Enrollment> enrollments = enrollmentRepository
+                .findByUserIdAndLanguageAndKeyword(userId, languageId, keyword);
+
+        return enrollments.stream()
+                .map(MycourseResponse::from)
+                .collect(Collectors.toList());
+    }
 }
