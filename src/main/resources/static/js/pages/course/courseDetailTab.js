@@ -15,7 +15,7 @@ document.addEventListener('DOMContentLoaded', () => {
             // sticky div가 이미 상단에 붙어있다면 높이만큼 offset 추가
             // const stickyOffset = (window.scrollY >= stickyDiv.offsetTop) ? stickyDiv.offsetHeight : 0;
 
-            const targetTop = target.offsetTop - headerHeight - stickyDiv.offsetHeight + 20;
+            const targetTop = target.offsetTop - headerHeight - stickyDiv.offsetHeight + 340;
 
             window.scrollTo({ top: targetTop, behavior: 'smooth' });
         });

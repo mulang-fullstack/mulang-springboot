@@ -31,31 +31,16 @@
             <%@include file="courseCurriculum.jsp" %>
         </div>
         <div id="review">
-            <h2>리뷰</h2>
-
-            <!-- 정렬 버튼
-            <div class="review-sort">
-                <button id="sort-rating" class="active">별점순</button>
-                <button id="sort-latest">최신순</button>
-            </div>-->
-
+            </br><h2>리뷰</h2>
             <!-- 리뷰 컨테이너 -->
             <div id="review-container">
             </div>
-
-            <!-- 페이지네이션
-            <section class="pagination">
-                <button class="prev"><img src="/img/icon/page-left.svg" alt="왼쪽 아이콘"></button>
-                <span id="page-numbers"></span>
-                <button class="next"><img src="/img/icon/page-right.svg" alt="오른쪽 아이콘"></button>
-            </section>-->
         </div>
     </div>
 </main>
 <%@include file="../common/footer.jsp" %>
 <script src="/js/pages/course/courseDetailTab.js"></script>
 <script src="/js/pages/course/courseReview.js"></script>
-<!-- <script src="/js/pages/course/courseReviewMore.js"></script>-->
 </body>
 </html>
 
