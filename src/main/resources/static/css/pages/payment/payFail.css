@@ -1,0 +1,290 @@
+/* ==================== 전체 컨테이너 ==================== */
+.pay-fail {
+    max-width: 600px;
+    margin: 80px auto;
+    text-align: center;
+    background-color: var(--bg-white);
+    border-radius: 16px;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.05);
+    padding: 60px 40px;
+    overflow: hidden;
+    position: relative;
+    animation: fadeIn 0.7s ease;
+}
+
+/* ==================== X 아이콘 (실패 표시) ==================== */
+.fail-icon {
+    width: 80px;
+    height: 80px;
+    background-color: #fee;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 0 auto 20px auto;
+    animation: shakeIn 0.6s ease-out;
+}
+
+.fail-icon img {
+    width: 40px;
+    height: 40px;
+    filter: invert(27%) sepia(82%) saturate(4241%) hue-rotate(345deg) brightness(95%) contrast(98%);
+}
+
+/* ==================== 텍스트 ==================== */
+.fail-title {
+    font-size: 24px;
+    font-weight: 700;
+    color: var(--text-primary);
+    margin-bottom: 8px;
+    animation: fadeUp 0.7s ease 0.2s both;
+}
+
+.fail-subtitle {
+    font-size: 15px;
+    color: var(--text-secondary);
+    margin-bottom: 40px;
+    animation: fadeUp 0.7s ease 0.3s both;
+}
+
+/* ==================== 실패 정보 요약 ==================== */
+.fail-summary {
+    text-align: left;
+    margin-bottom: 32px;
+    animation: fadeUp 0.7s ease 0.4s both;
+}
+
+.fail-summary h3 {
+    font-size: 18px;
+    font-weight: 600;
+    margin-bottom: 12px;
+    color: var(--text-primary);
+}
+
+.summary-box {
+    border: 1px solid var(--border-color);
+    border-radius: 10px;
+    background-color: var(--bg-secondary);
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.row {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 12px;
+}
+
+.label {
+    font-size: 14px;
+    color: var(--text-secondary);
+    flex-shrink: 0;
+}
+
+.value {
+    font-size: 15px;
+    color: var(--text-primary);
+    font-weight: 500;
+    text-align: right;
+}
+
+.value.error {
+    color: #dc2626;
+    font-weight: 600;
+}
+
+/* ==================== 도움말 섹션 ==================== */
+.help-section {
+    text-align: left;
+    margin-bottom: 32px;
+    padding: 24px;
+    background-color: var(--bg-secondary);
+    border-radius: 12px;
+    animation: fadeUp 0.7s ease 0.5s both;
+}
+
+.help-section h3 {
+    font-size: 16px;
+    font-weight: 600;
+    margin-bottom: 16px;
+    color: var(--text-primary);
+}
+
+.help-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.help-list li {
+    padding: 8px 0;
+    padding-left: 24px;
+    position: relative;
+    font-size: 14px;
+    color: var(--text-secondary);
+    line-height: 1.6;
+}
+
+.help-list li:before {
+    content: "•";
+    position: absolute;
+    left: 8px;
+    color: var(--bg-point-main);
+    font-weight: bold;
+    font-size: 16px;
+}
+
+/* ==================== 연락처 섹션 ==================== */
+.contact-section {
+    text-align: left;
+    margin-bottom: 40px;
+    animation: fadeUp 0.7s ease 0.6s both;
+}
+
+.contact-section h3 {
+    font-size: 16px;
+    font-weight: 600;
+    margin-bottom: 16px;
+    color: var(--text-primary);
+    text-align: center;
+}
+
+.contact-box {
+    border: 2px solid var(--bg-point-main);
+    border-radius: 12px;
+    background: linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 100%);
+    padding: 24px;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.contact-item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.contact-item svg {
+    color: var(--bg-point-main);
+    flex-shrink: 0;
+}
+
+.contact-item div {
+    flex: 1;
+}
+
+.contact-label {
+    font-size: 12px;
+    color: var(--text-secondary);
+    margin: 0 0 4px 0;
+}
+
+.contact-value {
+    font-size: 15px;
+    color: var(--text-primary);
+    font-weight: 600;
+    margin: 0;
+}
+
+/* ==================== 버튼 ==================== */
+.button-wrap {
+    display: flex;
+    justify-content: center;
+    gap: 16px;
+    animation: fadeUp 0.7s ease 0.7s both;
+}
+
+.btn-main,
+.btn-outline {
+    padding: 10px 24px;
+    border-radius: 8px;
+    font-size: 15px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.2s ease, color 0.2s ease, transform 0.15s ease;
+    text-decoration: none;
+    display: inline-block;
+    border: none;
+}
+
+.btn-main {
+    background-color: var(--bg-point-main);
+    color: var(--text-white);
+}
+
+.btn-main:hover {
+    opacity: 0.9;
+    transform: translateY(-2px);
+}
+
+.btn-outline {
+    border: 1px solid var(--bg-point-main);
+    color: var(--bg-point-main);
+    background-color: transparent;
+}
+
+.btn-outline:hover {
+    background-color: var(--bg-point-sub);
+    transform: translateY(-2px);
+}
+
+/* ==================== 애니메이션 ==================== */
+@keyframes fadeIn {
+    from { opacity: 0; transform: scale(0.97); }
+    to { opacity: 1; transform: scale(1); }
+}
+
+@keyframes shakeIn {
+    0% { transform: scale(0) rotate(0deg); opacity: 0; }
+    50% { transform: scale(1.1) rotate(-10deg); opacity: 1; }
+    70% { transform: scale(1.05) rotate(5deg); }
+    100% { transform: scale(1) rotate(0deg); }
+}
+
+@keyframes fadeUp {
+    0% { opacity: 0; transform: translateY(20px); }
+    100% { opacity: 1; transform: translateY(0); }
+}
+
+/* ==================== 모바일 대응 ==================== */
+@media (max-width: 600px) {
+    .pay-fail {
+        margin: 40px 16px;
+        padding: 40px 20px;
+    }
+
+    .summary-box,
+    .help-section,
+    .contact-box {
+        padding: 16px;
+    }
+
+    .button-wrap {
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    .btn-main,
+    .btn-outline {
+        width: 100%;
+    }
+
+    .row {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 4px;
+    }
+
+    .value {
+        text-align: left;
+    }
+
+    .contact-item {
+        flex-direction: row;
+        align-items: flex-start;
+    }
+}
