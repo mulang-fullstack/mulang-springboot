@@ -1,12 +1,9 @@
 package yoonsome.mulang.domain.teacher.repository;
 
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import yoonsome.mulang.domain.teacher.entity.Teacher;
-import java.util.List;
 import java.util.Optional;
 
 public interface TeacherRepository extends JpaRepository<Teacher, Long> {
@@ -27,28 +24,4 @@ public interface TeacherRepository extends JpaRepository<Teacher, Long> {
     """)
     Optional<Teacher> findByTeacherId(@Param("teacherId") Long teacherId);
 
-    // 전체 교사 조회
-    @Query("""
-        SELECT DISTINCT t FROM Teacher t
-        JOIN FETCH t.user u
-        ORDER BY t.id DESC
-    """)
-    List<Teacher> findAllWithUser();
-
-    // 페이징 전체 교사 조회
-    @Query(
-            value = "SELECT t FROM Teacher t JOIN FETCH t.user u",
-            countQuery = "SELECT COUNT(t) FROM Teacher t"
-    )
-    Page<Teacher> findAllWithUser(Pageable pageable);
-
-    // 이름 또는 이메일로 검색
-    @Query("""
-        SELECT DISTINCT t FROM Teacher t
-        JOIN FETCH t.user u
-        WHERE u.username LIKE %:keyword%
-           OR u.email LIKE %:keyword%
-        ORDER BY t.id DESC
-    """)
-    List<Teacher> searchByKeyword(@Param("keyword") String keyword);
 }

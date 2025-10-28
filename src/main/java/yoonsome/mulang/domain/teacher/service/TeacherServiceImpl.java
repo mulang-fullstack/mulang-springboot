@@ -40,21 +40,4 @@ public class TeacherServiceImpl implements TeacherService {
                 .orElseThrow(() -> new IllegalArgumentException("해당 교사를 찾을 수 없습니다."));
     }
 
-    // 전체 교사 조회
-    @Override
-    public List<Teacher> getAllTeachers() {
-        return teacherRepository.findAllWithUser();
-    }
-
-    // 페이징 전체 교사 조회
-    @Override
-    public Page<Teacher> getAllTeachers(Pageable pageable) {
-        return teacherRepository.findAllWithUser(pageable);
-    }
-
-    // 키워드로 교사 검색
-    @Override
-    public List<Teacher> searchTeachers(String keyword) {
-        return teacherRepository.searchByKeyword(keyword);
-    }
 }

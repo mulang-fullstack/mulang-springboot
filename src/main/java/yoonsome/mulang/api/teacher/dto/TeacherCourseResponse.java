@@ -24,7 +24,7 @@ public class TeacherCourseResponse {
     private String thumbnail;
     private String content;
     private String htmlContent;
-    private LocalDateTime createdDate;
+    private LocalDateTime createdAt;
     private Integer lectureCount;
 
     private List<TeacherLectureEditResponse> lectures;

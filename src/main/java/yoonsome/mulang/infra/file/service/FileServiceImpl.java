@@ -8,13 +8,11 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
-import yoonsome.mulang.domain.lecture.entity.Lecture;
 import yoonsome.mulang.infra.file.entity.File;
 import yoonsome.mulang.infra.file.repo.FileRepository;
 import java.io.IOException;
 import java.nio.file.*;
 import java.time.LocalDateTime;
-import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -28,49 +26,6 @@ public class FileServiceImpl implements FileService {
 
     private final FileRepository fileRepository;
 
-    @Override
-    public File createFile(MultipartFile multipartFile, Lecture lecture) throws IOException {
-        Path dirPath = Paths.get(fileDir);
-        if (!Files.exists(dirPath)) {
-            Files.createDirectories(dirPath);
-        }
-
-        if (multipartFile.isEmpty()) {
-            return null;
-        }
-
-        String originalFileName = multipartFile.getOriginalFilename();
-        String fileExtension = originalFileName.substring(originalFileName.lastIndexOf("."));
-        String uuid = UUID.randomUUID().toString();
-        String savedFileName = uuid + fileExtension;
-        String savedFilePath = fileDir + savedFileName;
-
-        Path savedPath = Paths.get(savedFilePath);
-        Files.copy(multipartFile.getInputStream(), savedPath, StandardCopyOption.REPLACE_EXISTING);
-
-        String url = "/upload/" + savedFileName;
-
-        File entity = File.builder()
-                .originalName(originalFileName)
-                .storedName(savedFileName)
-                .url(url)
-                .size(multipartFile.getSize())
-                .type(multipartFile.getContentType())
-                .uploadedAt(LocalDateTime.now())
-                .build();
-
-        return fileRepository.save(entity);
-    }
-
-    @Override
-    public List<File> getFileList() {
-        return fileRepository.findAll();
-    }
-
-    @Override
-    public Optional<File> getFileById(long id) {
-        return fileRepository.findById(id);
-    }
 
     @Override
     public void deleteFile(File file) {
