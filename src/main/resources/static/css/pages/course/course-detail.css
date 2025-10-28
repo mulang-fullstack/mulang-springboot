@@ -15,7 +15,8 @@ body {
 }*/
 .leture-detail-contents {
     position: sticky;
-    top: 30px; /* header 높이만큼 띄움 (헤더 밑에 붙게) */
+    top: -290px;
+    //top: 30px; /* header 높이만큼 띄움 (헤더 밑에 붙게) */
     background-color: #fff;
     z-index: 10;
     border-bottom: 1px solid #ddd;

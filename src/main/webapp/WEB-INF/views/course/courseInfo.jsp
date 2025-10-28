@@ -11,10 +11,13 @@
             <p class="course-desc">${detail.subtitle}</p>
             <div class="course-meta">
                 <div><span class="label">강사</span> <span>${detail.teacherName}</span>
-                    <!--<button><img src="/img/icon/user-circle.svg" alt="강사 정보"></button>-->
+                <!--
                 <a href="/courseDetail/teacherProfile?id=${detail.id}" target="_blank">
                     <img src="/img/icon/user-circle.svg" alt="강사 정보">
-                </a>
+                </a>-->
+                <button id="teacherBtn" data-course-id="${detail.id}">
+                    <img src="/img/icon/user-circle.svg" alt="강사 정보">
+                </button>
                 </div>
                 <!--
                 <div><span class="label">신청기간</span> <span></span></div>
@@ -27,10 +30,10 @@
                 <span class="price"><fmt:formatNumber value="${detail.price}" type="number" groupingUsed="true"/>원</span>
                 <form action="/" method="get">
                     <input type="hidden" name="courseId" value="${detail.id}">
-                    <button type="submit" class="purchase-btn">결제하기</button>
+                    <a href="/payment/${detail.id}"><button class="purchase-btn">결제하기</button></a>
                 </form>
             </div>
         </div>
     </div>
 </div>
-
+<script src="/js/pages/course/teacher.profile/openTeacherProfile.js"></script>

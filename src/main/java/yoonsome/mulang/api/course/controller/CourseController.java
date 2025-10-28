@@ -81,7 +81,7 @@ public class CourseController {
             @RequestParam(defaultValue = "0") int page,
             @RequestParam(defaultValue = "rating") String sortBy
     ) {
-        int size = 3;
+        int size = 6;
         Pageable pageable = PageRequest.of(page, size, Sort.by(Sort.Direction.DESC, sortBy));
         Page<ReviewResponse> reviewPage = displayingCourseService.getReviewPageByCourseId(courseId, pageable);
         Map<String, Object> response = new HashMap<>();

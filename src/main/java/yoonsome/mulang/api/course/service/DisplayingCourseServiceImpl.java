@@ -87,11 +87,6 @@ public class DisplayingCourseServiceImpl implements DisplayingCourseService {
             int reviewCount = reviewService.countReviewByCourseId(course.getId());
             course.setAverageRating(averageRating);
             course.setReviewCount(reviewCount);
-            //double averageRating = 2.5;
-            //int reviewCount = 1000;
-            //System.out.println("#courseId: "+course.getId());
-            //System.out.println("#averageRating: "+averageRating);
-            //System.out.println("#reviewCount: "+reviewCount);
             // DTO 생성
             CourseListResponse dto = CourseListResponse.builder()
                     .id(course.getId())
@@ -106,22 +101,6 @@ public class DisplayingCourseServiceImpl implements DisplayingCourseService {
                     .build();
             dtoList.add(dto);
         }
-
-        /* 정렬 수행
-        switch (request.getSort()) {
-            case "rating":
-                dtoList.sort(Comparator.comparingDouble(CourseListResponse::getAverageRating).reversed());
-                break;
-            case "review":
-                dtoList.sort(Comparator.comparingInt(CourseListResponse::getReviewCount).reversed());
-                break;
-            case "latest":
-                dtoList.sort(Comparator.comparing(CourseListResponse::getCreatedAt).reversed());
-                break;
-            default:
-                break;
-        }
-        */
 
         //** Pageable 생성 **//
         Pageable pageable = PageRequest.of(request.getPage(), request.getSize());
@@ -139,7 +118,7 @@ public class DisplayingCourseServiceImpl implements DisplayingCourseService {
                 .title(course.getTitle())
                 .thumbnail(course.getThumbnail())
                 .subtitle(course.getSubtitle())
-                .content(course.getContent())
+                .content(course.getHtmlContent())
                 .teacherName(getTeacherName(course))
                 .lectureCount(course.getLectureCount())
                 .price(course.getPrice())
