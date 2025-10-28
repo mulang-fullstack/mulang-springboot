@@ -12,23 +12,21 @@
     animation: fadeIn 0.7s ease;
 }
 
-/* ==================== X 아이콘 (실패 표시) ==================== */
+/* ==================== X 아이콘 ==================== */
 .fail-icon {
     width: 80px;
     height: 80px;
-    background-color: #fee;
+    background-color: #FEE2E2; /* 연한 빨강 */
     border-radius: 50%;
     display: flex;
     justify-content: center;
     align-items: center;
     margin: 0 auto 20px auto;
-    animation: shakeIn 0.6s ease-out;
+    animation: popIn 0.6s ease-out;
 }
 
-.fail-icon img {
-    width: 40px;
-    height: 40px;
-    filter: invert(27%) sepia(82%) saturate(4241%) hue-rotate(345deg) brightness(95%) contrast(98%);
+.fail-icon svg {
+    color: #DC2626; /* 빨강 */
 }
 
 /* ==================== 텍스트 ==================== */
@@ -47,10 +45,10 @@
     animation: fadeUp 0.7s ease 0.3s both;
 }
 
-/* ==================== 실패 정보 요약 ==================== */
+/* ==================== 실패 요약 ==================== */
 .fail-summary {
     text-align: left;
-    margin-bottom: 32px;
+    margin-bottom: 40px;
     animation: fadeUp 0.7s ease 0.4s both;
 }
 
@@ -69,12 +67,13 @@
     display: flex;
     flex-direction: column;
     gap: 12px;
+    margin-bottom: 20px;
 }
 
 .row {
     display: flex;
     justify-content: space-between;
-    align-items: flex-start;
+    align-items: center;
     gap: 12px;
 }
 
@@ -89,105 +88,57 @@
     color: var(--text-primary);
     font-weight: 500;
     text-align: right;
+    word-break: break-word;
 }
 
 .value.error {
-    color: #dc2626;
+    color: #DC2626;
     font-weight: 600;
 }
 
-/* ==================== 도움말 섹션 ==================== */
-.help-section {
+/* ==================== 도움말 박스 ==================== */
+.help-box {
+    background-color: #FEF3C7; /* 연한 노랑 */
+    border: 1px solid #FCD34D;
+    border-radius: 10px;
+    padding: 20px;
     text-align: left;
-    margin-bottom: 32px;
-    padding: 24px;
-    background-color: var(--bg-secondary);
-    border-radius: 12px;
-    animation: fadeUp 0.7s ease 0.5s both;
 }
 
-.help-section h3 {
+.help-box h4 {
     font-size: 16px;
     font-weight: 600;
-    margin-bottom: 16px;
     color: var(--text-primary);
+    margin-bottom: 12px;
 }
 
-.help-list {
+.help-box ul {
     list-style: none;
     padding: 0;
-    margin: 0;
+    margin: 0 0 12px 0;
 }
 
-.help-list li {
-    padding: 8px 0;
-    padding-left: 24px;
-    position: relative;
+.help-box ul li {
     font-size: 14px;
     color: var(--text-secondary);
-    line-height: 1.6;
+    padding: 6px 0;
+    padding-left: 20px;
+    position: relative;
 }
 
-.help-list li:before {
+.help-box ul li::before {
     content: "•";
     position: absolute;
-    left: 8px;
-    color: var(--bg-point-main);
-    font-weight: bold;
-    font-size: 16px;
+    left: 6px;
+    color: var(--text-tertiary);
 }
 
-/* ==================== 연락처 섹션 ==================== */
-.contact-section {
-    text-align: left;
-    margin-bottom: 40px;
-    animation: fadeUp 0.7s ease 0.6s both;
-}
-
-.contact-section h3 {
-    font-size: 16px;
-    font-weight: 600;
-    margin-bottom: 16px;
-    color: var(--text-primary);
-    text-align: center;
-}
-
-.contact-box {
-    border: 2px solid var(--bg-point-main);
-    border-radius: 12px;
-    background: linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 100%);
-    padding: 24px;
-    display: flex;
-    flex-direction: column;
-    gap: 16px;
-}
-
-.contact-item {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-}
-
-.contact-item svg {
-    color: var(--bg-point-main);
-    flex-shrink: 0;
-}
-
-.contact-item div {
-    flex: 1;
-}
-
-.contact-label {
-    font-size: 12px;
-    color: var(--text-secondary);
-    margin: 0 0 4px 0;
-}
-
-.contact-value {
-    font-size: 15px;
-    color: var(--text-primary);
-    font-weight: 600;
-    margin: 0;
+.help-text {
+    font-size: 13px;
+    color: var(--text-tertiary);
+    margin-top: 12px;
+    padding-top: 12px;
+    border-top: 1px solid #FCD34D;
 }
 
 /* ==================== 버튼 ==================== */
@@ -195,7 +146,7 @@
     display: flex;
     justify-content: center;
     gap: 16px;
-    animation: fadeUp 0.7s ease 0.7s both;
+    animation: fadeUp 0.7s ease 0.5s both;
 }
 
 .btn-main,
@@ -208,12 +159,12 @@
     transition: background 0.2s ease, color 0.2s ease, transform 0.15s ease;
     text-decoration: none;
     display: inline-block;
-    border: none;
 }
 
 .btn-main {
     background-color: var(--bg-point-main);
     color: var(--text-white);
+    border: none;
 }
 
 .btn-main:hover {
@@ -238,11 +189,10 @@
     to { opacity: 1; transform: scale(1); }
 }
 
-@keyframes shakeIn {
-    0% { transform: scale(0) rotate(0deg); opacity: 0; }
-    50% { transform: scale(1.1) rotate(-10deg); opacity: 1; }
-    70% { transform: scale(1.05) rotate(5deg); }
-    100% { transform: scale(1) rotate(0deg); }
+@keyframes popIn {
+    0% { transform: scale(0); opacity: 0; }
+    70% { transform: scale(1.1); opacity: 1; }
+    100% { transform: scale(1); }
 }
 
 @keyframes fadeUp {
@@ -258,8 +208,7 @@
     }
 
     .summary-box,
-    .help-section,
-    .contact-box {
+    .help-box {
         padding: 16px;
     }
 
@@ -281,10 +230,5 @@
 
     .value {
         text-align: left;
-    }
-
-    .contact-item {
-        flex-direction: row;
-        align-items: flex-start;
     }
 }
