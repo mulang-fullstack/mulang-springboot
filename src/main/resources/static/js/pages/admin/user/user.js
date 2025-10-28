@@ -8,8 +8,6 @@ async function fetchUserList(params) {
     try {
         isSearching = true;
         const queryString = new URLSearchParams(params).toString();
-        console.log('📤 API 요청:', queryString);
-
         const response = await fetch(`/admin/user/api?${queryString}`, {
             method: 'GET',
             headers: {
@@ -23,10 +21,8 @@ async function fetchUserList(params) {
         }
 
         const data = await response.json();
-        console.log('📥 API 응답:', data);
         return data;
     } catch (error) {
-        console.error('❌ Error fetching user list:', error);
         alert('데이터를 불러오는데 실패했습니다.');
         return null;
     } finally {
@@ -112,7 +108,6 @@ function renderUserTable(users, currentPage, pageSize) {
     const tbody = document.querySelector('#memberTable tbody');
 
     if (!tbody) {
-        console.error('❌ 테이블 tbody를 찾을 수 없습니다.');
         return;
     }
 

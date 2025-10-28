@@ -37,9 +37,9 @@
                         <div class="filter-group">
                             <span class="filter-label">기간</span>
                             <div class="date-filter">
-                                <input type="date" id="startDate" value="${search.startDate != null ? search.startDate.toLocalDate() : ''}">
+                                <input type="date" id="startDate">
                                 <span class="date-separator">~</span>
-                                <input type="date" id="endDate" value="${search.endDate != null ? search.endDate.toLocalDate() : ''}">
+                                <input type="date" id="endDate">
                             </div>
                         </div>
                         <div class="filter-group">
@@ -61,8 +61,7 @@
                                 <circle cx="11" cy="11" r="8"></circle>
                                 <path d="m21 21-4.35-4.35"></path>
                             </svg>
-                            <input type="text" id="searchKeyword" name="keyword" value="${param.keyword}"
-                                   placeholder="이름 또는 이메일 또는 IP 검색">
+                            <input type="text" id="searchKeyword" name="keyword" placeholder="이름 또는 이메일 또는 IP 검색">
                         </div>
                         <button class="search-btn" type="submit">검색</button>
                         <!-- 정렬 -->
@@ -76,16 +75,10 @@
                                 <path d="M17 4v16"></path>
                             </svg>
                             <select id="sortSelect" name="sort">
-                                <option value="LATEST" <c:if test="${param.sort == 'LATEST'}">selected</c:if>>최신순
-                                </option>
-                                <option value="OLDEST" <c:if test="${param.sort == 'OLDEST'}">selected</c:if>>오래된순
-                                </option>
-                                <option value="NAME_ASC" <c:if test="${param.sort == 'NAME_ASC'}">selected</c:if>>이름순
-                                    (가나다)
-                                </option>
-                                <option value="NAME_DESC" <c:if test="${param.sort == 'NAME_DESC'}">selected</c:if>>이름순
-                                    (역순)
-                                </option>
+                                <option value="LATEST" selected>최신순</option>
+                                <option value="OLDEST">오래된순</option>
+                                <option value="NAME_ASC">이름순 (가나다)</option>
+                                <option value="NAME_DESC">이름순 (역순)</option>
                             </select>
                         </div>
                         <button class="filter-reset" onclick="resetFilters()">
@@ -117,26 +110,7 @@
                         </tr>
                         </thead>
                         <tbody>
-                        <c:forEach var="log" items="${logs}" varStatus="status">
-                            <tr>
-                                <td>${page.number * page.size + status.index + 1}</td>
-                                <td>${log.username}</td>
-                                <td>${log.email}</td>
-                                <td>${log.ip}</td>
-                                <td>${log.userAgent}</td>
-                                <td>${log.createdAt}</td>
-                                <td>
-                                    <span class="log-badge ${log.action == 'LOGIN' ? 'login' : 'logout'}">
-                                            ${log.action == 'LOGIN' ? '로그인' : '로그아웃'}
-                                    </span>
-                                </td>
-                            </tr>
-                        </c:forEach>
-                        <c:if test="${empty logs}">
-                            <tr>
-                                <td colspan="7" class="no-data">발생한 로그가 없습니다.</td>
-                            </tr>
-                        </c:if>
+                        <!-- JavaScript로 동적 생성 -->
                         </tbody>
 
                     </table>

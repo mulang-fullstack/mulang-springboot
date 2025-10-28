@@ -49,7 +49,7 @@
                                 <label><input type="radio" name="noticeType" value="GENERAL"> 일반</label>
                                 <label><input type="radio" name="noticeType" value="EVENT"> 이벤트</label>
                                 <label><input type="radio" name="noticeType" value="UPDATE"> 업데이트</label>
-                                <label><input type="radio" name="noticeType" value="URGENT"> 긴급</label>
+                                <label><input type="radio" name="noticeType" value="SYSTEM"> 시스템</label>
                             </div>
                         </div>
 
@@ -58,8 +58,8 @@
                             <span class="filter-label">상태</span>
                             <div class="radio-group">
                                 <label><input type="radio" name="status" value="ALL" checked> 전체</label>
-                                <label><input type="radio" name="status" value="ACTIVE"> 공개</label>
-                                <label><input type="radio" name="status" value="INACTIVE"> 비공개</label>
+                                <label><input type="radio" name="status" value="PUBLIC"> 공개</label>
+                                <label><input type="radio" name="status" value="PRIVATE"> 비공개</label>
                             </div>
                         </div>
 
@@ -97,7 +97,7 @@
                                 <path d="M17 4v16"></path>
                             </svg>
                             <select id="sortSelect">
-                                <option value="LATEST">최신순</option>
+                                <option value="LATEST" selected>최신순</option>
                                 <option value="OLDEST">오래된순</option>
                                 <option value="TITLE_ASC">제목순</option>
                                 <option value="TITLE_DESC">제목순(역순)</option>
@@ -123,20 +123,17 @@
                     <table>
                         <thead>
                         <tr>
-                            <th style="width: 60px;">번호</th>
-                            <th style="width: 80px;">유형</th>
-                            <th style="width: auto;">제목</th>
-                            <th style="width: 100px;">작성자</th>
-                            <th style="width: 110px;">등록일</th>
-                            <th style="width: 80px;">상태</th>
-                            <th style="width: 140px;">관리</th>
+                            <th >번호</th>
+                            <th >유형</th>
+                            <th >제목</th>
+                            <th >작성자</th>
+                            <th >등록일</th>
+                            <th >상태</th>
+                            <th >관리</th>
                         </tr>
                         </thead>
                         <tbody>
                         <!-- JavaScript로 동적 생성 -->
-                        <tr>
-                            <td colspan="9" class="no-data">공지사항이 없습니다</td>
-                        </tr>
                         </tbody>
                     </table>
                 </div>
@@ -150,14 +147,6 @@
     </div>
 </div>
 <%@ include file="noticeModal.jsp" %>
-<script>
-    // 초기 페이지네이션 데이터
-    window.paginationData = {
-        currentPage: 0,
-        totalPages: 1,
-        baseUrl: '/admin/content/notice'
-    };
-</script>
 
 <script src="/js/common/currentTime.js"></script>
 <script src="/js/pages/admin/pagination.js"></script>

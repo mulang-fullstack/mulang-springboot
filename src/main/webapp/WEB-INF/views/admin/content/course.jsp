@@ -144,15 +144,6 @@
     </div>
 </div>
 
-<script>
-    // 초기 페이지네이션 데이터 (JavaScript가 업데이트함)
-    window.paginationData = {
-        currentPage: ${currentPage},
-        totalPages: ${totalPages},
-        baseUrl: '/admin/content/course'
-    };
-</script>
-
 <script src="/js/common/currentTime.js"></script>
 <script src="/js/pages/admin/pagination.js"></script>
 <script src="/js/pages/admin/content/course.js"></script>

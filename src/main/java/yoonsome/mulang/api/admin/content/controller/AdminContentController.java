@@ -25,30 +25,8 @@ public class AdminContentController {
      */
     @GetMapping("/course")
     public String course(@ModelAttribute CourseListRequest request, Model model) {
-
-        // DTO 내용 확인용 출력
-        System.out.println("============ CourseListRequest ===========");
-        System.out.println(request);
-
-        // 기본값 설정
-        if (request.getSize() == 0) {
-            request.setSize(10);
-        }
-
-        // 강좌 목록 조회
-        Page<AdminCourseResponse> coursePage = adminContentService.getCourseList(request);
-
-        // 모델에 데이터 추가
-        model.addAttribute("courses", coursePage.getContent());
-        model.addAttribute("currentPage", coursePage.getNumber());
-        model.addAttribute("totalPages", coursePage.getTotalPages());
-        model.addAttribute("totalElements", coursePage.getTotalElements());
-        model.addAttribute("search", request);
-
-        //사이드바
         model.addAttribute("activeMenu", "content");
         model.addAttribute("activeSubmenu", "course");
-
         return "admin/content/course";
     }
 
@@ -84,28 +62,8 @@ public class AdminContentController {
      */
     @GetMapping("/pendingCourse")
     public String pendingCourse(@ModelAttribute CourseListRequest request, Model model) {
-
-        // DTO 내용 확인용 출력
-        System.out.println("============ CourseListRequest ===========");
-        System.out.println(request);
-
-        // 기본값 설정
-        if (request.getSize() == 0) {
-            request.setSize(10);
-        }
-
-        // 강좌 목록 조회
-        Page<AdminCourseResponse> coursePage = adminContentService.getCourseList(request);
-
-        // 모델에 데이터 추가
-        model.addAttribute("courses", coursePage.getContent());
-        model.addAttribute("currentPage", coursePage.getNumber());
-        model.addAttribute("totalPages", coursePage.getTotalPages());
-        model.addAttribute("totalElements", coursePage.getTotalElements());
-        model.addAttribute("search", request);
         model.addAttribute("activeMenu", "content");
         model.addAttribute("activeSubmenu", "pendingCourse");
-
         return "admin/content/pendingCourse";
     }
 }

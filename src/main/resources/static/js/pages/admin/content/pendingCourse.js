@@ -2,129 +2,168 @@
 
 // 검색 파라미터 수집
 function collectSearchParams() {
-    const languageId = document.querySelector('input[name="language"]:checked')?.value;
+    const language = document.querySelector('input[name="language"]:checked')?.value;
     const status = document.querySelector('input[name="status"]:checked')?.value;
     const keyword = document.getElementById('searchKeyword')?.value.trim() || '';
     const sortValue = document.getElementById('sortSelect')?.value || 'LATEST';
+
+    // 정렬 파라미터 변환
+    let sortBy = 'createdAt';
+    let sortDirection = 'DESC';
+
+    switch(sortValue) {
+        case 'LATEST':
+            sortBy = 'createdAt';
+            sortDirection = 'DESC';
+            break;
+        case 'OLDEST':
+            sortBy = 'createdAt';
+            sortDirection = 'ASC';
+            break;
+        case 'COURSE_NAME_ASC':
+            sortBy = 'title';
+            sortDirection = 'ASC';
+            break;
+        case 'COURSE_NAME_DESC':
+            sortBy = 'title';
+            sortDirection = 'DESC';
+            break;
+    }
 
     const params = {
         page: 0,
         size: 10
     };
 
-    // 언어 파라미터 추가 (전체가 아닐 때만, "on"도 제외)
-    if (languageId && languageId !== 'ALL' && languageId !== 'on') {
-        params.languageId = languageId;
+    if (language && language !== 'ALL') {
+        params.languageId = language;
     }
 
-    // 상태 파라미터 추가 (전체가 아닐 때만, "on"도 제외)
-    if (status && status !== 'ALL' && status !== 'on') {
+    if (status && status !== 'ALL') {
         params.status = status;
     }
 
-    // 검색어가 빈 문자열이 아닐 때만 추가
     if (keyword) {
         params.keyword = keyword;
     }
 
-    // 정렬 파라미터
-    params.sort = sortValue;
-
-    // 🔍 디버깅: 수집된 파라미터 출력
-    console.log('📋 Collected Search Params:', params);
+    params.sortBy = sortBy;
+    params.sortDirection = sortDirection;
 
     return params;
 }
 
 // 비동기 요청 보내기
-async function fetchCourseRequestList(params) {
+async function fetchCourseList(params) {
     try {
         const queryString = new URLSearchParams(params).toString();
-        const url = `/admin/content/course/api?${queryString}`;
-
-        // 🔍 디버깅: 요청 URL 출력
-        console.log('🌐 Request URL:', url);
-
-        const response = await fetch(url, {
+        const response = await fetch(`/admin/content/course/api?${queryString}`, {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json',
-                'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]')?.content || ''
+                'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]')?.content
             }
         });
 
         if (!response.ok) {
-            throw new Error(`HTTP ${response.status}: 데이터를 불러오는데 실패했습니다.`);
+            throw new Error('데이터를 불러오는데 실패했습니다.');
         }
 
         const data = await response.json();
-
-        // 🔍 디버깅: 응답 데이터 출력
-        console.log('📦 Response Data:', data);
-
+        console.log('📦 받은 데이터:', data); // 디버깅용
         return data;
     } catch (error) {
-        console.error('❌ Error fetching course requests:', error);
-        alert('데이터를 불러오는데 실패했습니다.\n' + error.message);
+        console.error('Error fetching course list:', error);
+        alert('데이터를 불러오는데 실패했습니다.');
         return null;
     }
 }
 
-// 테이블 렌더링
-function renderCourseRequestTable(courses, currentPage, pageSize, totalElements) {
-    const tbody = document.querySelector('.table-wrap tbody');
-
-    if (!tbody) {
-        console.error('❌ Table tbody not found');
-        return;
+// 언어 배지 생성
+function createLanguageBadge(languageName) {
+    let badgeClass = '';
+    switch(languageName) {
+        case '영어':
+        case 'English':
+            badgeClass = 'english';
+            break;
+        case '중국어':
+        case 'Chinese':
+            badgeClass = 'chinese';
+            break;
+        case '일본어':
+        case 'Japanese':
+            badgeClass = 'japanese';
+            break;
+        default:
+            badgeClass = 'default';
     }
+    return `<span class="language-badge ${badgeClass}">${languageName}</span>`;
+}
+
+// 상태 배지 생성
+function createStatusBadge(status) {
+    let badgeClass = '';
+    let badgeText = '';
+
+    switch(status) {
+        case 'PENDING':
+            badgeClass = 'pending';
+            badgeText = '심사대기';
+            break;
+        case 'REVIEW':
+            badgeClass = 'review';
+            badgeText = '심사중';
+            break;
+        case 'REJECTED':
+            badgeClass = 'rejected';
+            badgeText = '거절됨';
+            break;
+        default:
+            badgeClass = 'default';
+            badgeText = status;
+    }
+
+    return `<span class="status-badge ${badgeClass}">${badgeText}</span>`;
+}
+
+// 테이블 렌더링
+function renderCourseTable(courses, currentPage, pageSize) {
+    const tbody = document.querySelector('table tbody');
 
     if (!courses || courses.length === 0) {
         tbody.innerHTML = '<tr><td colspan="8" class="no-data">신청된 강의가 없습니다.</td></tr>';
-        console.log('ℹ️ No course requests to display');
         return;
     }
 
-    // 🔍 디버깅: 렌더링할 강의 신청 개수 출력
-    console.log(`✅ Rendering ${courses.length} course requests (Page ${currentPage + 1})`);
+    console.log('🎨 렌더링할 강좌 수:', courses.length); // 디버깅용
+    console.log('📋 첫 번째 강좌 데이터:', courses[0]); // 디버깅용
 
     tbody.innerHTML = courses.map((course, index) => {
-        const rowNumber = totalElements - (currentPage * pageSize + index);
+        const rowNumber = currentPage * pageSize + index + 1;
 
-        // 상태 배지 클래스 및 텍스트
-        let statusClass = '';
-        let statusText = '';
-
-        switch (course.status) {
-            case 'PENDING':
-                statusClass = 'pending';
-                statusText = '심사대기';
-                break;
-            case 'REVIEW':
-                statusClass = 'review';
-                statusText = '심사중';
-                break;
-            default:
-                statusClass = '';
-                statusText = course.status;
-        }
-
-        // 날짜 포맷팅 (ISO 문자열을 YYYY-MM-DD로 변환)
-        const createdAt = course.createdAt ? course.createdAt.substring(0, 10) : '-';
+        // ✅ 백엔드 필드명에 맞게 수정
+        const courseTitle = course.courseName || course.title || '제목 없음';
+        const languageBadge = createLanguageBadge(course.languageName);
+        const statusBadge = createStatusBadge(course.status);
+        const createdAt = course.createdAt || '';
 
         return `
-            <tr>
+            <tr data-id="${course.id}"
+                data-language="${course.languageId || ''}"
+                data-status="${course.status}"
+                data-date="${createdAt}">
                 <td>${rowNumber}</td>
-                <td>${course.courseName || '-'}</td>
-                <td>${course.languageName || '-'}</td>
+                <td class="course-title">${courseTitle}</td>
+                <td>${languageBadge}</td>
                 <td>${course.teacherName || '-'}</td>
                 <td>${course.teacherNickname || '-'}</td>
                 <td>${createdAt}</td>
-                <td><span class="status-badge ${statusClass}">${statusText}</span></td>
-                <td>
+                <td>${statusBadge}</td>
+                <td class="actions">
                     <button class="btn-approve" onclick="approveCourse(${course.id})">승인</button>
                     <button class="btn-reject" onclick="rejectCourse(${course.id})">거절</button>
-                    <button class="btn-edit" onclick="location.href='/admin/content/request/${course.id}'">상세</button>
+                    <button class="btn-detail" onclick="viewCourseDetail(${course.id})">상세</button>
                 </td>
             </tr>
         `;
@@ -136,74 +175,87 @@ function updatePagination(currentPage, totalPages) {
     window.paginationData = {
         currentPage: currentPage,
         totalPages: totalPages,
-        baseUrl: '/admin/content/request',
+        baseUrl: '/admin/content/pendingCourse',
         asyncMode: true
     };
 
-    // 🔍 디버깅: 페이지네이션 정보 출력
-    console.log('📄 Pagination Updated:', window.paginationData);
-
     if (typeof renderPagination === 'function') {
         renderPagination();
-    } else {
-        console.warn('⚠️ renderPagination function not found');
     }
 }
 
 // 검색 실행
 async function performSearch() {
-    console.log('🔍 === 검색 시작 ===');
-
     const params = collectSearchParams();
-    const data = await fetchCourseRequestList(params);
+    console.log('🔍 검색 파라미터:', params); // 디버깅용
+
+    const data = await fetchCourseList(params);
 
     if (data) {
-        renderCourseRequestTable(data.courses, data.currentPage, data.size, data.totalElements);
+        console.log('✅ 데이터 수신 성공:', data); // 디버깅용
+        renderCourseTable(data.courses, data.currentPage, data.size);
         updatePagination(data.currentPage, data.totalPages);
-        console.log('✅ === 검색 완료 ===');
-    } else {
-        console.error('❌ === 검색 실패 ===');
     }
 }
 
 // 페이지 변경 (pagination.js에서 호출될 함수)
-window.changePage = async function (page) {
-    console.log(`📄 페이지 변경: ${page + 1}페이지로 이동`);
-
+window.changePage = async function(page) {
     const params = collectSearchParams();
     params.page = page;
 
-    const data = await fetchCourseRequestList(params);
+    const data = await fetchCourseList(params);
 
     if (data) {
-        renderCourseRequestTable(data.courses, data.currentPage, data.size, data.totalElements);
+        renderCourseTable(data.courses, data.currentPage, data.size);
         updatePagination(data.currentPage, data.totalPages);
     }
 };
 
 // 필터 초기화
 function resetFilters() {
-    console.log('🔄 필터 초기화');
+    document.querySelector('input[name="language"][value="ALL"]').checked = true;
+    document.querySelector('input[name="status"][value="ALL"]').checked = true;
 
-    // 언어 전체 선택
-    const allLanguageRadio = document.querySelector('input[name="language"][value="ALL"]');
-    if (allLanguageRadio) allLanguageRadio.checked = true;
+    document.getElementById('searchKeyword').value = '';
+    document.getElementById('sortSelect').value = 'LATEST';
 
-    // 상태 전체 선택
-    const allStatusRadio = document.querySelector('input[name="status"][value="ALL"]');
-    if (allStatusRadio) allStatusRadio.checked = true;
-
-    // 검색어 초기화
-    const keywordInput = document.getElementById('searchKeyword');
-    if (keywordInput) keywordInput.value = '';
-
-    // 정렬 초기화
-    const sortSelect = document.getElementById('sortSelect');
-    if (sortSelect) sortSelect.value = 'LATEST';
-
-    // 검색 실행
     performSearch();
 }
+
+// ==================== 이벤트 리스너 ====================
+
+document.addEventListener('DOMContentLoaded', function() {
+    console.log('🚀 pendingCourse.js 초기화'); // 디버깅용
+
+    // 초기 데이터 로드
+    performSearch();
+
+    // 검색 버튼 클릭
+    document.querySelector('.search-btn').addEventListener('click', performSearch);
+
+    // 검색어 입력 시 엔터키
+    document.getElementById('searchKeyword').addEventListener('keypress', function(e) {
+        if (e.key === 'Enter') {
+            e.preventDefault();
+            performSearch();
+        }
+    });
+
+    // 언어 라디오 버튼
+    document.querySelectorAll('input[name="language"]').forEach(radio => {
+        radio.addEventListener('change', performSearch);
+    });
+
+    // 상태 라디오 버튼
+    document.querySelectorAll('input[name="status"]').forEach(radio => {
+        radio.addEventListener('change', performSearch);
+    });
+
+    // 정렬 선택
+    document.getElementById('sortSelect').addEventListener('change', performSearch);
+});
+
+// ==================== 기존 함수들 ====================
 
 // 강의 승인
 async function approveCourse(courseId) {
@@ -212,17 +264,17 @@ async function approveCourse(courseId) {
     }
 
     try {
-        const response = await fetch(`/admin/content/request/${courseId}/status?status=PUBLIC`, {
+        const response = await fetch(`/admin/content/pendingCourse/${courseId}/approve`, {
             method: 'PATCH',
             headers: {
                 'Content-Type': 'application/json',
-                'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]')?.content || ''
+                'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]')?.content
             }
         });
 
         if (response.ok) {
             alert('강의가 승인되었습니다.');
-            performSearch(); // 목록 새로고침
+            performSearch();
         } else {
             const errorData = await response.json().catch(() => ({}));
             alert(errorData.message || '강의 승인에 실패했습니다.');
@@ -240,17 +292,17 @@ async function rejectCourse(courseId) {
     }
 
     try {
-        const response = await fetch(`/admin/content/request/${courseId}/status?status=REJECTED`, {
+        const response = await fetch(`/admin/content/pendingCourse/${courseId}/reject`, {
             method: 'PATCH',
             headers: {
                 'Content-Type': 'application/json',
-                'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]')?.content || ''
+                'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]')?.content
             }
         });
 
         if (response.ok) {
             alert('강의가 거절되었습니다.');
-            performSearch(); // 목록 새로고침
+            performSearch();
         } else {
             const errorData = await response.json().catch(() => ({}));
             alert(errorData.message || '강의 거절에 실패했습니다.');
@@ -261,77 +313,6 @@ async function rejectCourse(courseId) {
     }
 }
 
-// ==================== 이벤트 리스너 ====================
-
-document.addEventListener('DOMContentLoaded', function () {
-    console.log('🚀 CourseRequest.js 초기화 시작');
-
-    // 검색 버튼
-    const searchBtn = document.querySelector('.search-btn');
-    if (searchBtn) {
-        searchBtn.addEventListener('click', function(e) {
-            e.preventDefault();
-            performSearch();
-        });
-        console.log('✅ 검색 버튼 이벤트 등록');
-    } else {
-        console.warn('⚠️ 검색 버튼을 찾을 수 없습니다');
-    }
-
-    // 엔터 검색
-    const searchKeyword = document.getElementById('searchKeyword');
-    if (searchKeyword) {
-        searchKeyword.addEventListener('keypress', function (e) {
-            if (e.key === 'Enter') {
-                e.preventDefault();
-                performSearch();
-            }
-        });
-        console.log('✅ 검색어 입력 이벤트 등록');
-    }
-
-    // 언어 라디오 버튼
-    const languageRadios = document.querySelectorAll('input[name="language"]');
-    languageRadios.forEach(radio => {
-        radio.addEventListener('change', performSearch);
-    });
-    if (languageRadios.length > 0) {
-        console.log('✅ 언어 필터 이벤트 등록');
-    }
-
-    // 상태 라디오 버튼
-    const statusRadios = document.querySelectorAll('input[name="status"]');
-    statusRadios.forEach(radio => {
-        radio.addEventListener('change', performSearch);
-    });
-    if (statusRadios.length > 0) {
-        console.log('✅ 상태 필터 이벤트 등록');
-    }
-
-    // 정렬 변경
-    const sortSelect = document.getElementById('sortSelect');
-    if (sortSelect) {
-        sortSelect.addEventListener('change', performSearch);
-        console.log('✅ 정렬 셀렉트 이벤트 등록');
-    }
-
-    // 초기화 버튼 (전역 함수로 이미 정의됨)
-    console.log('ℹ️ 초기화 버튼은 onclick으로 연결됨');
-
-    console.log('🎉 CourseRequest.js 초기화 완료');
-
-    // 🔧 초기 데이터 로드 - 서버에서 이미 렌더링했으면 스킵
-    const tbody = document.querySelector('.table-wrap tbody');
-    const hasServerData = tbody && !tbody.querySelector('.no-data') && tbody.querySelectorAll('tr').length > 0;
-
-    if (hasServerData) {
-        console.log('ℹ️ 초기 데이터는 서버에서 렌더링됨 (동기 방식)');
-        // 페이지네이션만 초기화
-        if (typeof renderPagination === 'function') {
-            renderPagination();
-        }
-    } else {
-        console.log('ℹ️ 초기 데이터 비동기 로드 시작');
-        performSearch();
-    }
-});
+function viewCourseDetail(courseId) {
+    window.location.href = `/admin/content/pendingCourse/${courseId}`;
+}
