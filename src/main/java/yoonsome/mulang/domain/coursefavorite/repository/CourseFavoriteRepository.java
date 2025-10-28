@@ -15,19 +15,6 @@ import java.util.Optional;
 @Repository
 public interface CourseFavoriteRepository extends JpaRepository<CourseFavorite, Long> {
 
-    // 조회
-    @Query("""
-        SELECT cf
-        FROM CourseFavorite cf
-        JOIN FETCH cf.course c
-        LEFT JOIN FETCH c.teacher t
-        LEFT JOIN FETCH t.user
-        WHERE cf.student.id = :studentId
-        ORDER BY cf.createdAt DESC
-    """)
-    List<CourseFavorite> findByStudentIdWithCourse(@Param("studentId") Long studentId);
-
-
     // 조회 (페이지네이션 - 5개씩)
     @Query("""
         SELECT cf
@@ -38,8 +25,78 @@ public interface CourseFavoriteRepository extends JpaRepository<CourseFavorite, 
         WHERE cf.student.id = :studentId
         ORDER BY cf.createdAt DESC
     """)
-    Page<CourseFavorite> findByStudentIdWithCourse(
+    Page<CourseFavorite> findByStudentIdWithCoursePage(
             @Param("studentId") Long studentId,
+            Pageable pageable
+    );
+
+    // 과목별 조회
+    @Query("""
+        SELECT cf
+        FROM CourseFavorite cf
+        JOIN FETCH cf.course c
+        JOIN FETCH c.language l
+        LEFT JOIN FETCH c.teacher t
+        LEFT JOIN FETCH t.user
+        WHERE cf.student.id = :studentId
+        AND l.id = :languageId
+        ORDER BY cf.createdAt DESC
+    """)
+    Page<CourseFavorite> findByStudentIdAndLanguage(
+            @Param("studentId") Long studentId,
+            @Param("languageId") Long languageId,
+            Pageable pageable
+    );
+    // ⭐ 검색 (전체 과목)
+    @Query(value = """
+        SELECT cf
+        FROM CourseFavorite cf
+        JOIN FETCH cf.course c
+        JOIN FETCH c.language l
+        LEFT JOIN FETCH c.teacher t
+        LEFT JOIN FETCH t.user
+        WHERE cf.student.id = :studentId
+        AND (c.title LIKE %:keyword% OR c.subtitle LIKE %:keyword%)
+        ORDER BY cf.createdAt DESC
+        """,
+            countQuery = """
+        SELECT COUNT(cf)
+        FROM CourseFavorite cf
+        JOIN cf.course c
+        WHERE cf.student.id = :studentId
+        AND (c.title LIKE %:keyword% OR c.subtitle LIKE %:keyword%)
+        """)
+    Page<CourseFavorite> findByStudentIdAndKeyword(
+            @Param("studentId") Long studentId,
+            @Param("keyword") String keyword,
+            Pageable pageable
+    );
+
+    // ⭐ 검색 + 과목 필터
+    @Query(value = """
+        SELECT cf
+        FROM CourseFavorite cf
+        JOIN FETCH cf.course c
+        JOIN FETCH c.language l
+        LEFT JOIN FETCH c.teacher t
+        LEFT JOIN FETCH t.user
+        WHERE cf.student.id = :studentId
+        AND c.language.id = :languageId
+        AND (c.title LIKE %:keyword% OR c.subtitle LIKE %:keyword%)
+        ORDER BY cf.createdAt DESC
+        """,
+            countQuery = """
+        SELECT COUNT(cf)
+        FROM CourseFavorite cf
+        JOIN cf.course c
+        WHERE cf.student.id = :studentId
+        AND c.language.id = :languageId
+        AND (c.title LIKE %:keyword% OR c.subtitle LIKE %:keyword%)
+        """)
+    Page<CourseFavorite> findByStudentIdAndLanguageAndKeyword(
+            @Param("studentId") Long studentId,
+            @Param("languageId") Long languageId,
+            @Param("keyword") String keyword,
             Pageable pageable
     );
 

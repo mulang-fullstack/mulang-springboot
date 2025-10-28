@@ -25,6 +25,30 @@
 
             <section class="content">
                 <h2>나의 학습방</h2>
+
+                <!-- 툴바(검색/정렬) -->
+                <div class="likes-toolbar">
+                    <div class="left">
+                        <select class="sel-subject" id="subjectFilter" onchange="filterBySubject()">
+                            <option value="">전체 과목</option>
+                            <option value="1" ${languageId == 1 ? 'selected' : ''}>영어</option>
+                            <option value="2" ${languageId == 2 ? 'selected' : ''}>중국어</option>
+                            <option value="3" ${languageId == 3 ? 'selected' : ''}>일본어</option>
+                        </select>
+                    </div>
+                    <div class="right">
+                        <form id="searchForm" onsubmit="return searchCourse(event)">
+                            <input type="text"
+                                   id="searchInput"
+                                   class="search-input"
+                                   placeholder="강좌명 검색"
+                                   value="${keyword}">
+                            <button type="submit" class="btn search">검색</button>
+                        </form>
+                    </div>
+                </div>  <!-- ⭐ likes-toolbar 닫기 -->
+
+                <!-- 테이블 -->
                 <div class="class-table">
                     <div class="table-header">
                         <span>썸네일</span>
@@ -34,7 +58,7 @@
                     </div>
 
                     <div class="table-body">
-                        <c:forEach var="course" items="${mycourseDTO}">
+                        <c:forEach var="course" items="${mycourseResponseList}">
                             <div class="table-row">
                                 <!-- 썸네일 -->
                                 <div class="thumb">
@@ -68,7 +92,6 @@
                                             <div class="progress-bar">
                                                 <div class="progress-fill" style="width: ${course.progress}%"></div>
                                             </div>
-
                                         </c:otherwise>
                                     </c:choose>
                                 </div>
@@ -76,16 +99,17 @@
                         </c:forEach>
 
                         <!-- 데이터가 없을 때 -->
-                        <c:if test="${empty mycourseDTO}">
+                        <c:if test="${empty mycourseResponseList}">
                             <div class="empty-state">
                                 <p>수강 중인 강좌가 없습니다.</p>
                             </div>
                         </c:if>
                     </div>
-                </div>
-            </section>
-        </section>
-    </div>
+                </div>  <!-- ⭐ class-table 닫기 -->
+
+            </section>  <!-- ⭐ content 닫기 -->
+        </section>  <!-- ⭐ mypage 닫기 -->
+    </div>  <!-- ⭐ contents 닫기 -->
 </main>
 
 <%@include file="../../common/footer.jsp" %>

@@ -25,12 +25,6 @@
             <section class="content">
                 <h2>리뷰</h2>
 
-                <!-- 탭 메뉴 -->
-                <div class="tab-menu">
-                    <a href="review" class="tab active">리뷰</a>
-                    <a href="qna" class="tab">Q&A</a>
-                </div>
-
                 <!-- 필터 영역 -->
                 <div class="filter-bar">
                     <select class="sort-select">
@@ -56,7 +50,8 @@
                         </c:when>
                         <c:otherwise>
                             <c:forEach var="review" items="${myReviews}">
-                                <div class="review-item">
+                                <!-- ⭐ 클릭 가능하도록 수정 -->
+                                <div class="review-item" onclick="location.href='/student/review/${review.id}'" style="cursor: pointer;">
                                     <!-- 강좌 정보와 날짜 -->
                                     <div class="review-header">
                                         <h3 class="course-title">${review.course.title}</h3>
@@ -84,6 +79,7 @@
                             </c:forEach>
                         </c:otherwise>
                     </c:choose>
+
                 </div>
             </section>
         </section>

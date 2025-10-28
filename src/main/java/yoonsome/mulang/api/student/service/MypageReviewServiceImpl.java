@@ -11,7 +11,7 @@ import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
-public class ReviewForShowServiceImpl implements ReviewForShowService {
+public class MypageReviewServiceImpl implements MypageReviewService {
 
     private final ReviewRepository reviewRepository;
 
@@ -35,4 +35,13 @@ public class ReviewForShowServiceImpl implements ReviewForShowService {
                 .map(ReviewResponse::from)
                 .collect(Collectors.toList());
     }
+
+    @Override
+    public ReviewResponse findById(Long reviewId) {
+        CourseReview review = reviewRepository.findById(reviewId)
+                .orElseThrow(() -> new IllegalArgumentException("리뷰를 찾을 수 없습니다."));
+
+        return ReviewResponse.from(review);
+    }
+
 }
