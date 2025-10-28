@@ -60,13 +60,18 @@ public class CourseQnaApiServiceImpl implements CourseQnaApiService {
      */
     @Override
     public void createAnswer(CourseAnswerRequest request, Long teacherId) {
-        Teacher teacher = teacherService.getTeacherById(teacherId);
         CourseQuestion question = courseQnaService.getQuestionById(request.getQuestionId());
+
+        // teacherId 없을 경우 teacher=null로 처리 (학생도 등록 가능)
+        Teacher teacher = null;
+        if (teacherId != null) {
+            teacher = teacherService.getTeacherById(teacherId);
+        }
 
         CourseAnswer answer = CourseAnswer.builder()
                 .content(request.getContent())
                 .courseQuestion(question)
-                .teacher(teacher)
+                .teacher(teacher) // null 허용 → 일반 사용자 답변도 등록됨
                 .createdAt(Timestamp.from(Instant.now()))
                 .build();
 

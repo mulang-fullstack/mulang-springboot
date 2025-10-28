@@ -41,10 +41,12 @@
                                     <img src="<c:url value='${course.thumbnail}'/>"
                                          alt="클래스 썸네일" width="160" height="90">
                                 </div>
-                                <div class="title-wrap">
+
+                                <div class="title-wrap" data-id="${course.id}">
                                     <div class="title">${course.title}</div>
                                     <div class="subtitle">${course.subtitle}</div>
                                 </div>
+
                                 <div class="category">${course.category} / ${course.language}</div>
                                 <div class="menu-wrap">
                                     <button class="menu-btn">⋯</button>
@@ -75,7 +77,7 @@
 </main>
 
 <%@ include file="../common/footer.jsp" %>
-
+<script src="/js/pages/teacher/class/classNavigate.js"></script>
 <script src="/js/pages/teacher/class/menuDropdown.js"></script>
 <script src="/js/pages/teacher/class/course.js"></script>
 <script src="/js/pages/teacher/class/statusLabel.js"></script>

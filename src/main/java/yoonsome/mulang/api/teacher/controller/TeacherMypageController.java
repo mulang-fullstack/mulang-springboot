@@ -17,8 +17,12 @@ import yoonsome.mulang.api.teacher.service.TeacherCourseService;
 import yoonsome.mulang.api.teacher.service.TeacherMypageService;
 import yoonsome.mulang.domain.category.entity.Category;
 import yoonsome.mulang.domain.category.service.CategoryService;
+import yoonsome.mulang.domain.course.entity.Course;
+import yoonsome.mulang.domain.course.service.CourseService;
 import yoonsome.mulang.domain.language.entity.Language;
 import yoonsome.mulang.domain.language.service.LanguageService;
+import yoonsome.mulang.domain.lecture.entity.Lecture;
+import yoonsome.mulang.domain.lecture.service.LectureService;
 import yoonsome.mulang.infra.security.CustomUserDetails;
 
 import java.io.IOException;
@@ -34,6 +38,8 @@ public class TeacherMypageController {
     private final TeacherMypageService teacherMypageService;
     private final TeacherCourseService teacherCourseService;
     private final CategoryService categoryService;
+    private final CourseService courseService;
+    private final LectureService lectureService;
 
     /** 프로필 보기 */
     @GetMapping("/profile")

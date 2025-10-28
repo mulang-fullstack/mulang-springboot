@@ -59,7 +59,7 @@ public class TeacherCourseServiceImpl implements TeacherCourseService {
                         .category(course.getCategory().getName())
                         .thumbnail(course.getThumbnail())
                         .lectureCount(course.getLectureCount())
-                        //.createdDate(course.getCreatedDate())
+                        .createdAt(course.getCreatedAt())
                         .build())
                 .collect(Collectors.toList());
 
@@ -96,7 +96,8 @@ public class TeacherCourseServiceImpl implements TeacherCourseService {
         if (request.getLectures() != null && !request.getLectures().isEmpty()) {
             for (LectureUploadRequest lectureReq : request.getLectures()) {
                 MultipartFile video = lectureReq.getVideo();
-                if (video == null || video.isEmpty()) continue; // 영상 없으면 skip
+                if (video == null || video.isEmpty()) continue;
+                // 영상 없으면 skip
 
                 // 파일 업로드 (FileService)
                 File videoFile = fileService.createFile(video);
@@ -145,7 +146,7 @@ public class TeacherCourseServiceImpl implements TeacherCourseService {
                 .thumbnail(course.getThumbnail())
                 .content(course.getContent())
                 .htmlContent(course.getHtmlContent())
-                //.createdDate(course.getCreatedDate())
+                .createdAt(course.getCreatedAt())
                 .lectureCount(course.getLectureCount())
                 .lectures(lectureList)
                 .build();
@@ -238,7 +239,6 @@ public class TeacherCourseServiceImpl implements TeacherCourseService {
                 }
             }
         }
-
         // ---------- Lecture 개수 및 순서 재정렬 ----------
         List<Lecture> updatedLectures = lectureService.getLecturesByCourseId(courseId);
         for (int i = 0; i < updatedLectures.size(); i++) {
@@ -300,5 +300,4 @@ public class TeacherCourseServiceImpl implements TeacherCourseService {
         // 변경사항 저장
         courseService.registerCourse(course);
     }
-
 }

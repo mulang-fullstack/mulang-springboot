@@ -15,6 +15,8 @@ import yoonsome.mulang.domain.teacher.entity.Teacher;
 import yoonsome.mulang.domain.teacher.service.TeacherService;
 import yoonsome.mulang.infra.security.CustomUserDetails;
 
+import java.util.Map;
+
 @RequestMapping("/api/qna")
 @RequiredArgsConstructor
 @RestController
@@ -27,14 +29,22 @@ public class CourseQnaApiController {
      * 강좌별 Q&A 조회
      */
     @GetMapping("/course/{courseId}")
-    public ResponseEntity<Page<CourseQuestionResponse>> getQnaByCourse(
+    public ResponseEntity<Map<String, Object>> getQnaByCourse(
             @PathVariable Long courseId,
             @RequestParam(defaultValue = "0") int page,
             @RequestParam(defaultValue = "10") int size) {
 
         Pageable pageable = PageRequest.of(page, size);
         Page<CourseQuestionResponse> result = courseQnaApiService.getQnaByCourse(courseId, pageable);
-        return ResponseEntity.ok(result);
+
+        Map<String, Object> response = Map.of(
+                "content", result.getContent(),
+                "page", result.getNumber(),
+                "size", result.getSize(),
+                "totalElements", result.getTotalElements(),
+                "totalPages", result.getTotalPages()
+        );
+        return ResponseEntity.ok(response);
     }
 
     /**
@@ -58,11 +68,11 @@ public class CourseQnaApiController {
             @RequestBody CourseAnswerRequest request,
             @AuthenticationPrincipal CustomUserDetails userDetails) {
 
-        Long userId = userDetails.getUser().getId();
-        Teacher teacher = teacherService.getTeacherByUserId(userId);
-        courseQnaApiService.createAnswer(request, teacher.getId());
+        courseQnaApiService.createAnswer(request, null);
         return ResponseEntity.ok().build();
     }
+
+
     /**
      * 질문 수정
      */
