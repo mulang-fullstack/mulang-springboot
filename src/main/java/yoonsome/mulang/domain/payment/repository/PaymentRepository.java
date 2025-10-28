@@ -61,7 +61,6 @@ public interface PaymentRepository extends JpaRepository<Payment, Long> {
           AND (:endDate IS NULL OR p.createdAt <= :endDate)
           AND (
                :keyword IS NULL
-            OR LOWER(p.orderId) LIKE LOWER(CONCAT('%', :keyword, '%'))
             OR LOWER(p.user.email) LIKE LOWER(CONCAT('%', :keyword, '%'))
             OR LOWER(p.user.nickname) LIKE LOWER(CONCAT('%', :keyword, '%'))
             OR LOWER(p.course.title) LIKE LOWER(CONCAT('%', :keyword, '%'))

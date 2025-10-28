@@ -46,7 +46,7 @@
                             <span class="filter-label">결제 수단</span>
                             <div class="radio-group">
                                 <label><input type="radio" name="paymentMethod" value="ALL" checked> 전체</label>
-                                <label><input type="radio" name="paymentMethod" value="CARD"> 카드</label>
+                                <label><input type="radio" name="paymentMethod" value="CARD" > 카드</label>
                                 <label><input type="radio" name="paymentMethod" value="BANK"> 계좌이체</label>
                                 <label><input type="radio" name="paymentMethod" value="KAKAO"> 카카오페이</label>
                                 <label><input type="radio" name="paymentMethod" value="NAVER"> 네이버페이</label>
@@ -57,11 +57,10 @@
                         <div class="filter-group">
                             <span class="filter-label">결제 상태</span>
                             <div class="radio-group">
-                                <label><input type="radio" name="status" value="ALL" checked> 전체</label>
-                                <label><input type="radio" name="status" value="SUCCESS"> 완료</label>
+                                <label><input type="radio" name="status" value="COMPLETED" checked> 완료</label>
                                 <label><input type="radio" name="status" value="PENDING"> 대기</label>
+                                <label><input type="radio" name="status" value="CANCELLED"> 취소</label>
                                 <label><input type="radio" name="status" value="FAILED"> 실패</label>
-                                <label><input type="radio" name="status" value="REFUND"> 환불</label>
                             </div>
                         </div>
                     </div>
@@ -75,7 +74,7 @@
                                 <circle cx="11" cy="11" r="8"></circle>
                                 <path d="m21 21-4.35-4.35"></path>
                             </svg>
-                            <input type="text" id="searchKeyword" placeholder="주문번호, 구매자, 강좌명 검색">
+                            <input type="text" id="searchKeyword" placeholder="이메일, 구매자, 강좌명 검색">
                         </div>
                         <button class="search-btn" type="button">검색</button>
 
@@ -92,9 +91,10 @@
                             <select id="sortSelect">
                                 <option value="LATEST">최신순</option>
                                 <option value="OLDEST">오래된순</option>
+                                <option value="COURSE_DESC">강좌명순</option>
+                                <option value="COURSE_ASC">강좌명순(역순)</option>
                                 <option value="AMOUNT_DESC">금액 높은순</option>
                                 <option value="AMOUNT_ASC">금액 낮은순</option>
-                                <option value="BUYER_ASC">구매자순</option>
                             </select>
                         </div>
 
@@ -117,14 +117,14 @@
                     <table>
                         <thead>
                         <tr>
-                            <th style="width: 80px;">번호</th>
-                            <th style="width: auto;">강좌명</th>
-                            <th style="width: 100px;">구매자</th>
-                            <th style="width: 110px;">결제금액</th>
-                            <th style="width: 100px;">결제수단</th>
-                            <th style="width: 120px;">결제일시</th>
-                            <th style="width: 100px;">상태</th>
-                            <th style="width: 120px;">관리</th>
+                            <th>번호</th>
+                            <th>강좌명</th>
+                            <th>구매자</th>
+                            <th>결제금액</th>
+                            <th>결제수단</th>
+                            <th>결제일시</th>
+                            <th>상태</th>
+                            <th>관리</th>
                         </tr>
                         </thead>
                         <tbody>
@@ -156,6 +156,6 @@
 
 <script src="/js/common/currentTime.js"></script>
 <script src="/js/pages/admin/pagination.js"></script>
-<script src="/js/pages/admin/payment/payment.js"></script>
+<script src="/js/pages/admin/payment/paymentList.js"></script>
 </body>
 </html>
