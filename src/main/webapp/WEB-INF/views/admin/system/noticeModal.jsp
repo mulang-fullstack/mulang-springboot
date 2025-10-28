@@ -31,7 +31,7 @@
                         <option value="GENERAL">일반</option>
                         <option value="EVENT">이벤트</option>
                         <option value="UPDATE">업데이트</option>
-                        <option value="URGENT">긴급</option>
+                        <option value="SYSTEM">시스템</option>
                     </select>
                 </div>
 

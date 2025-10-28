@@ -48,6 +48,7 @@
                             <div class="radio-group">
                                 <label><input type="radio" name="status" value="PENDING" checked> 심사대기</label>
                                 <label><input type="radio" name="status" value="REVIEW"> 심사중</label>
+                                <label><input type="radio" name="status" value="REJECTED"> 심사거절</label>
                             </div>
                         </div>
                     </div>
@@ -80,8 +81,6 @@
                                 <option value="OLDEST">오래된순</option>
                                 <option value="COURSE_NAME_ASC">강좌명순</option>
                                 <option value="COURSE_NAME_DESC">강좌명순(역순)</option>
-                                <option value="TEACHER_NAME_ASC">강사이름순</option>
-                                <option value="TEACHER_NAME_DESC">강사이름순(역순)</option>
                             </select>
                         </div>
 

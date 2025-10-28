@@ -50,13 +50,11 @@
                             <span class="filter-label">회원 구분</span>
                             <div class="radio-group">
                                 <label>
-                                    <input type="radio" name="role" value="STUDENT" checked
-                                           <c:if test="${param.role == 'STUDENT'}">checked</c:if>>
+                                    <input type="radio" name="role" value="STUDENT" checked>
                                     학생
                                 </label>
                                 <label>
-                                    <input type="radio" name="role" value="TEACHER"
-                                           <c:if test="${param.role == 'TEACHER'}">checked</c:if>>
+                                    <input type="radio" name="role" value="TEACHER">
                                     강사
                                 </label>
                             </div>
@@ -67,18 +65,15 @@
                             <span class="filter-label">상태</span>
                             <div class="radio-group">
                                 <label>
-                                    <input type="radio" name="status" value="ALL"
-                                           <c:if test="${empty param.status || param.status == 'ALL'}">checked</c:if>>
+                                    <input type="radio" name="status" value="ALL" checked>
                                     전체
                                 </label>
                                 <label>
-                                    <input type="radio" name="status" value="ACTIVE"
-                                           <c:if test="${param.status == 'ACTIVE'}">checked</c:if>>
+                                    <input type="radio" name="status" value="ACTIVE">
                                     활성
                                 </label>
                                 <label>
-                                    <input type="radio" name="status" value="INACTIVE"
-                                           <c:if test="${param.status == 'INACTIVE'}">checked</c:if>>
+                                    <input type="radio" name="status" value="INACTIVE">
                                     비활성
                                 </label>
                             </div>
@@ -94,8 +89,7 @@
                                 <circle cx="11" cy="11" r="8"></circle>
                                 <path d="m21 21-4.35-4.35"></path>
                             </svg>
-                            <input type="text" id="searchKeyword" name="keyword" value="${param.keyword}"
-                                   placeholder="이름 또는 이메일 검색">
+                            <input type="text" id="searchKeyword" name="keyword" placeholder="이름 또는 이메일 검색">
                         </div>
                         <button class="search-btn" type="submit">검색</button>
                         <!-- 정렬 -->
@@ -109,16 +103,10 @@
                                 <path d="M17 4v16"></path>
                             </svg>
                             <select id="sortSelect" name="sort">
-                                <option value="LATEST" <c:if test="${param.sort == 'LATEST'}">selected</c:if>>최신순
-                                </option>
-                                <option value="OLDEST" <c:if test="${param.sort == 'OLDEST'}">selected</c:if>>오래된순
-                                </option>
-                                <option value="NAME_ASC" <c:if test="${param.sort == 'NAME_ASC'}">selected</c:if>>이름순
-                                    (가나다)
-                                </option>
-                                <option value="NAME_DESC" <c:if test="${param.sort == 'NAME_DESC'}">selected</c:if>>이름순
-                                    (역순)
-                                </option>
+                                <option value="LATEST" selected>최신순</option>
+                                <option value="OLDEST">오래된순</option>
+                                <option value="NAME_ASC">이름순 (가나다)</option>
+                                <option value="NAME_DESC">이름순 (역순)</option>
                             </select>
                         </div>
                         <button class="filter-reset" onclick="resetFilters()">
@@ -151,48 +139,7 @@
                         </tr>
                         </thead>
                         <tbody>
-                        <c:forEach var="user" items="${users}" varStatus="status">
-                            <tr data-id="${user.id}"
-                                data-role="${user.role}"
-                                data-status="${user.userStatus == "ACTIVE" ? 'active' : 'inactive'}"
-                                data-date="${user.createdAt}">
-                                <td>${currentPage * size + status.index + 1}</td>
-                                <td>
-                                    <c:choose>
-                                        <c:when test="${user.role == 'TEACHER'}">
-                                            <span class="role-badge tutor">강사</span>
-                                        </c:when>
-                                        <c:when test="${user.role == 'STUDENT'}">
-                                            <span class="role-badge student">학생</span>
-                                        </c:when>
-                                        <c:otherwise>
-                                            <span class="role-badge admin">관리자</span>
-                                        </c:otherwise>
-                                    </c:choose>
-                                </td>
-                                <td>${user.username}</td>
-                                <td>${user.nickname}</td>
-                                <td>${user.email}</td>
-                                <td>${user.createdAt}</td>
-                                <td class="status-cell">
-                                    <span class="status-badge ${user.userStatus == "ACTIVE" ? 'active' : 'inactive'}">
-                                            ${user.userStatus == "ACTIVE" ? '정상' : '정지'}
-                                    </span>
-                                </td>
-                                <td class="actions">
-                                    <button class="btn-edit" onclick="editStatus(${user.id})">수정</button>
-                                    <button class="btn-delete"
-                                            onclick="confirmDelete(${user.id}, '${user.nickname}')">삭제
-                                    </button>
-                                </td>
-                            </tr>
-                        </c:forEach>
-
-                        <c:if test="${empty users}">
-                            <tr>
-                                <td colspan="8" class="no-data">등록된 회원이 없습니다.</td>
-                            </tr>
-                        </c:if>
+                        <!-- JavaScript로 동적 생성 -->
                         </tbody>
                     </table>
                 </div>
@@ -205,37 +152,6 @@
         </div>
     </div>
 </div>
-
-<!-- 삭제 확인 모달 -->
-<div id="deleteModal" class="modal-overlay">
-    <div class="modal-content">
-        <div class="modal-header">
-            <h3>회원 영구 삭제</h3>
-        </div>
-        <div class="modal-body">
-            <p><strong id="deleteMemberName"></strong>님을 정말 삭제하시겠습니까?</p>
-            <p class="warning">⚠️ 이 작업은 되돌릴 수 없습니다.</p>
-        </div>
-        <div class="modal-footer">
-            <button class="modal-btn-cancel" onclick="closeDeleteModal()">취소</button>
-            <button class="modal-btn-confirm" onclick="executeDelete()">삭제</button>
-        </div>
-    </div>
-</div>
-
-<!-- 서버 데이터 전달 (수정됨) -->
-<script>
-    // 기본값 처리로 undefined 방지
-    window.paginationData = {
-        currentPage: ${currentPage},       // Page.number는 0-based → 1-based로 보정
-        totalPages: ${totalPages},        // Page.totalPages로 전체 페이지 수
-        baseUrl: '/admin/user'
-    };
-
-    console.log('Pagination Data:', window.paginationData);
-</script>
-
-
 
 <!-- JavaScript 파일 로드 -->
 <script src="/js/common/currentTime.js"></script>

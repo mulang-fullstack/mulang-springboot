@@ -19,16 +19,12 @@
     color: #fff;
 }
 
-.status-badge.active {
+.status-badge.public {
     background: #4b7bec;
 }
 
-.status-badge.hidden {
+.status-badge.private {
     background: #9ca3af;
-}
-
-.status-badge.review {
-    background: #f59e0b;
 }
 
 .btn-edit, .btn-delete {

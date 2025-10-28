@@ -77,7 +77,7 @@
             <!-- 어드민 사용자 -->
             <sec:authorize access="hasRole('ADMIN')">
                 <div class="user-menu">
-                    <a href="/mypage.do?tap=my" class="menu-item">관리자 페이지</a>
+                    <a href="/admin/dashboard/visitor" class="menu-item">관리자 페이지</a>
                     <div class="menu-divider"></div>
                     <div class="profile-section">
                         <button class="profile-toggle">
