@@ -28,8 +28,14 @@ document.addEventListener("DOMContentLoaded", () => {
         <div class="review-list">
         `;
 
-        reviews.forEach(review => {
+        if (reviews.length === 0) {
             html += `
+                <div class="empty-review">                  
+                    <p>현재 등록된 리뷰가 없습니다.</p>
+                </div>`;
+        } else {
+            reviews.forEach(review => {
+                html += `
             <div class="review-item">
                 <img src="/img/icon/review-mulang.svg" alt="머랭 캐릭터" class="review-profile-img">
                 <div class="review-profile-border"></div>
@@ -37,8 +43,8 @@ document.addEventListener("DOMContentLoaded", () => {
                 <div class="rating">
                 <span class="stars">
                     ${[1,2,3,4,5].map(i =>
-                `<img src="/img/icon/star-${i <= review.rating ? 'full' : 'empty'}.svg" alt="별">`
-            ).join('')}
+                    `<img src="/img/icon/star-${i <= review.rating ? 'full' : 'empty'}.svg" alt="별">`
+                ).join('')}
                 </span>
                     <span class="review-score-text">${review.rating}</span>
                 </div>
@@ -46,9 +52,15 @@ document.addEventListener("DOMContentLoaded", () => {
                     <div class="review-content">${review.content}</div>
                     <div class="review-more">더보기</div>
                 </div>
+                ${review.studentId === currentUserId ? `
+                <div class="review-actions">
+                    <button class="edit-review">수정</button>
+                    <button class="delete-review">삭제</button>
+                </div>
+                ` : ''}
             </div>`;
-        });
-
+            });
+        }
         html += `</div><section class="pagination">`;
 
         if (currentPage > 0)
@@ -68,6 +80,21 @@ document.addEventListener("DOMContentLoaded", () => {
 
     // 이벤트 위임
     reviewContainer.addEventListener("click", (e) => {
+        // 수정 버튼
+        if (e.target.closest(".edit-review")) {
+            const reviewId = e.target.closest(".review-item").dataset.reviewId;
+            //editReview(reviewId);
+            return;
+        }
+
+        // 삭제 버튼
+        if (e.target.closest(".delete-review")) {
+            const reviewId = e.target.closest(".review-item").dataset.reviewId;
+            //deleteReview(reviewId);
+            return;
+        }
+
+        // 페이징
         const target = e.target.closest(".page-btn, .prev, .next");
         if (target) {
             const page = target.dataset.page;
@@ -75,6 +102,7 @@ document.addEventListener("DOMContentLoaded", () => {
             return; // 아래 코드 실행 막음
         }
 
+        // 정렬
         if (e.target.closest(".sort-item")) {
             const sort = e.target.closest(".sort-item").dataset.sort;
             if (sort !== sortBy) {
@@ -82,7 +110,6 @@ document.addEventListener("DOMContentLoaded", () => {
             }
         }
     });
-
     // 초기 로드
     loadReviews();
 });

@@ -17,16 +17,14 @@ import yoonsome.mulang.api.course.dto.CourseLectureResponse;
 import yoonsome.mulang.domain.course.entity.Course;
 import yoonsome.mulang.domain.course.entity.StatusType;
 import yoonsome.mulang.domain.course.service.CourseService;
+import yoonsome.mulang.domain.coursefavorite.entity.CourseFavorite;
+import yoonsome.mulang.domain.coursefavorite.service.CourseFavoriteService;
 import yoonsome.mulang.domain.language.service.LanguageService;
 import yoonsome.mulang.domain.lecture.entity.Lecture;
 import yoonsome.mulang.domain.lecture.service.LectureService;
 import yoonsome.mulang.domain.review.entity.CourseReview;
 import yoonsome.mulang.domain.review.service.ReviewService;
-import yoonsome.mulang.domain.teacher.service.TeacherService;
-
-import java.util.ArrayList;
-import java.util.Comparator;
-import java.util.List;
+import java.util.*;
 
 @Transactional
 @RequiredArgsConstructor
@@ -38,6 +36,7 @@ public class DisplayingCourseServiceImpl implements DisplayingCourseService {
     private final LectureService lectureService;
     private final ReviewService reviewService;
     private final TeacherMypageService teacherMypageService;
+    private final CourseFavoriteService courseFavoriteService;
 
     //언어 이름
     //LanguageId null일 경우에 세션에서 마지막 사용한 값으로 설정, 세션값 null일 경우에 초기값 1로 설정
@@ -55,7 +54,7 @@ public class DisplayingCourseServiceImpl implements DisplayingCourseService {
 
     //강좌 리스트 정보 페이지 객체
     @Override
-    public Page<CourseListResponse> getCoursePage(CourseListRequest request, HttpSession session) {
+    public Page<CourseListResponse> getCoursePage(Long userId, CourseListRequest request, HttpSession session) {
         //** request dto에 변수값 담아서 강좌 페이지 객체 가져오기 **//
         //languageId 세션 복원/저장
         resolveLanguageId(request, session);
@@ -80,13 +79,19 @@ public class DisplayingCourseServiceImpl implements DisplayingCourseService {
         //**CourseListResponse DTO 리스트 생성**//
         List<CourseListResponse> dtoList = new ArrayList<>();
 
+        // 로그인 했을 시 찜 여부 정보 가져오기
+        // 다회쿼리 방지 해당 user 찜한 set 모두 가져옴
+        Set<Long> favoriteCourseIds = Collections.emptySet();
+        if(userId != null){
+            favoriteCourseIds = new HashSet<>(courseFavoriteService.getCourseIdsByUserId(userId));
+        }
         for (Course course : coursePage) {
-            //System.out.println("#course.getId(): "+ course.getId());
-            // 리뷰 정보 가져오기
+            /* 리뷰 정보 가져오기
             double averageRating = reviewService.getAverageRatingByCourseId(course.getId());
             int reviewCount = reviewService.countReviewByCourseId(course.getId());
             course.setAverageRating(averageRating);
-            course.setReviewCount(reviewCount);
+            course.setReviewCount(reviewCount);*/
+
             // DTO 생성
             CourseListResponse dto = CourseListResponse.builder()
                     .id(course.getId())
@@ -98,6 +103,7 @@ public class DisplayingCourseServiceImpl implements DisplayingCourseService {
                     .reviewCount(course.getReviewCount())
                     .price(course.getPrice())
                     .createdAt(course.getCreatedAt())
+                    .favorited(favoriteCourseIds.contains(course.getId()))
                     .build();
             dtoList.add(dto);
         }
@@ -111,7 +117,7 @@ public class DisplayingCourseServiceImpl implements DisplayingCourseService {
 
     //강좌 상세페이지 정보(강의소개, 커리큘럼)
     @Override
-    public CourseDetailResponse getCourseDetail(long id) {
+    public CourseDetailResponse getCourseDetail(Long userId, long id) {
         Course course = courseService.getCourse(id);
         CourseDetailResponse dto = CourseDetailResponse.builder()
                 .id(course.getId())
@@ -125,8 +131,12 @@ public class DisplayingCourseServiceImpl implements DisplayingCourseService {
                 .reviewCount(course.getReviewCount())
                 .price(course.getPrice())
                 .lectures(getLectureList(course.getId()))
+                .favorited(existsCourseFavorite(userId, course.getId()))
                 .build();
         return dto;
+    }
+    public boolean existsCourseFavorite(Long userId, long courseId) {
+        return courseFavoriteService.existsCourseFavorite(userId, courseId);
     }
 
     //강좌 상세페이지 리뷰 정보(리뷰)
@@ -137,6 +147,7 @@ public class DisplayingCourseServiceImpl implements DisplayingCourseService {
         for (CourseReview courseReview : reviews.getContent()) {
             ReviewResponse reviewResponse = new ReviewResponse(
                     courseReview.getId(),
+                    courseReview.getStudent().getId(),
                     courseReview.getStudent().getNickname(),
                     courseReview.getRating(),
                     courseReview.getContent(),
@@ -154,6 +165,12 @@ public class DisplayingCourseServiceImpl implements DisplayingCourseService {
         Course course = courseService.getCourse(id);
         Long userId = course.getTeacher().getUser().getId();
         return teacherMypageService.getTeacherProfileResponse(userId);
+    }
+
+    //찜 기능
+    @Override
+    public void addOrRemoveFavorite(Long studentId, Long courseId){
+        courseFavoriteService.addOrRemoveCourseFavorite(studentId, courseId);
     }
 
     //LanguageId null일 경우에 세션에서 마지막 사용한 값으로 설정, 세션값 null일 경우에 초기값 1로 설정
