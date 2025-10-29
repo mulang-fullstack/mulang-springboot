@@ -52,5 +52,12 @@ public interface CourseRepository extends JpaRepository<Course,Long> {
             @Param("statuses") List<StatusType> statuses,
             Pageable pageable);
 
-    List<Course> findByLanguage_IdAndStatus(Long languageId, StatusType status);
+    @Query("SELECT c FROM Course c " +
+            "WHERE (:languageId = 0 OR c.language.id = :languageId)" +
+            "AND c.status = 'PUBLIC' " +
+            "AND c.averageRating >= 4 " +
+            "ORDER BY c.reviewCount DESC")
+    List<Course> findTop4ByLanguageIdAndStatusAndAverageRating(@Param("languageId") Long languageId, Pageable pageable);
+
+    List<Course> findAllByOrderByCreatedAtDesc(Pageable pageable);
 }

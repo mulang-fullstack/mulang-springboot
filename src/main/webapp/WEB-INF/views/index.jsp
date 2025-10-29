@@ -33,41 +33,18 @@
         <section class="best-class">
             <h3>주간 BEST 인기 클래스</h3>
             <div class="class-list">
-                <article class="class-card">
-                    <img src="/img/dummy/teacher1.png" alt="영어 클래스 썸네일">
-                    <div class="class-info">
-                        <h4>톰에 박힌 한국식 영어는 이제 그만!</h4>
-                        <p>⭐ 4.8 (1000)</p>
-                        <p class="price">155,000원</p>
-                    </div>
-                </article>
-
-                <article class="class-card">
-                    <img src="/img/dummy/teacher2.png" alt="문법 토크쇼">
-                    <div class="class-info">
-                        <h4>하루 단 10분 실생활 영문법 토크쇼</h4>
-                        <p>⭐ 4.8 (1000)</p>
-                        <p class="price">155,000원</p>
-                    </div>
-                </article>
-
-                <article class="class-card">
-                    <img src="/img/dummy/teacher3.png" alt="문법 토크쇼">
-                    <div class="class-info">
-                        <h4>하루 단 10분 실생활 영문법 토크쇼</h4>
-                        <p>⭐ 4.8 (1000)</p>
-                        <p class="price">155,000원</p>
-                    </div>
-                </article>
-
-                <article class="class-card">
-                    <img src="/img/dummy/teacher1.png" alt="문법 토크쇼">
-                    <div class="class-info">
-                        <h4>하루 단 10분 실생활 영문법 토크쇼</h4>
-                        <p>⭐ 4.8 (1000)</p>
-                        <p class="price">155,000원</p>
-                    </div>
-                </article>
+                <c:forEach var="course" items="${courses}">
+                    <a href="courseDetail?id=${course.id}">
+                        <article class="class-card">
+                            <img src="${course.thumbnail}" alt="주간 BEST 인기 클래스">
+                            <div class="class-info">
+                                <h4>${course.title}</h4>
+                                <p>⭐ ${course.averageRating} (${course.reviewCount})</p>
+                                <p class="price">${course.price}</p>
+                            </div>
+                        </article>
+                    </a>
+                </c:forEach>
             </div>
         </section>
     </div>
