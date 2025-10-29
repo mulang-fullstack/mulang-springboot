@@ -15,6 +15,10 @@ import yoonsome.mulang.domain.course.entity.Course;
 import yoonsome.mulang.domain.course.repository.CourseRepository;
 import yoonsome.mulang.domain.enrollment.entity.Enrollment;
 import yoonsome.mulang.domain.enrollment.repository.EnrollmentRepository;
+import yoonsome.mulang.domain.lecture.entity.Lecture;
+import yoonsome.mulang.domain.lecture.service.LectureService;
+import yoonsome.mulang.domain.progress.entity.Progress;
+import yoonsome.mulang.domain.progress.repository.ProgressRepository;
 import yoonsome.mulang.domain.payment.dto.*;
 import yoonsome.mulang.domain.payment.entity.*;
 import yoonsome.mulang.domain.payment.repository.PaymentRepository;
@@ -41,6 +45,8 @@ public class PaymentServiceImpl implements PaymentService {
     private final CourseRepository courseRepository;
     private final UserRepository userRepository;
     private final EnrollmentRepository enrollmentRepository;
+    private final LectureService lectureService;
+    private final ProgressRepository progressRepository;
     private final RestTemplate restTemplate;
     private final ObjectMapper objectMapper;
 
@@ -128,7 +134,9 @@ public class PaymentServiceImpl implements PaymentService {
             }
 
             paymentRepository.save(payment);
-            createEnrollment(payment);
+
+            // Enrollment 생성 및 Progress 자동 생성
+            createEnrollmentWithProgress(payment);
 
             return PaymentResponseDto.from(payment);
         } catch (Exception e) {
@@ -235,7 +243,11 @@ public class PaymentServiceImpl implements PaymentService {
         }
     }
 
-    private void createEnrollment(Payment payment) {
+    /**
+     * Enrollment 생성 및 해당 강좌의 모든 강의에 대한 Progress 자동 생성
+     */
+    private void createEnrollmentWithProgress(Payment payment) {
+        // 1. Enrollment 생성
         Enrollment enrollment = new Enrollment();
         enrollment.setUser(payment.getUser());
         enrollment.setCourse(payment.getCourse());
@@ -243,5 +255,34 @@ public class PaymentServiceImpl implements PaymentService {
         enrollment.setProgress(0);
         enrollment.setIsCompleted(false);
         enrollmentRepository.save(enrollment);
+
+        log.info("✅ Enrollment 생성 완료 - UserId: {}, CourseId: {}",
+                payment.getUser().getId(), payment.getCourse().getId());
+
+        // 2. 해당 강좌의 모든 강의 조회
+        List<Lecture> lectures = lectureService.getLecturesByCourseId(
+                payment.getCourse().getId()
+        );
+
+        // 3. 각 강의에 대한 Progress 생성
+        int createdCount = 0;
+        for (Lecture lecture : lectures) {
+            // 중복 체크 (이미 Progress가 있으면 스킵)
+            if (!progressRepository.existsByStudentIdAndLectureId(
+                    payment.getUser().getId(), lecture.getId())) {
+
+                Progress progress = Progress.builder()
+                        .lecture(lecture)
+                        .student(payment.getUser())
+                        .enrollmentStatus(false) // 초기값: 미시청
+                        .build();
+
+                progressRepository.save(progress);
+                createdCount++;
+            }
+        }
+
+        log.info("✅ Progress 생성 완료 - CourseId: {}, 생성된 Progress 수: {}/{}",
+                payment.getCourse().getId(), createdCount, lectures.size());
     }
 }

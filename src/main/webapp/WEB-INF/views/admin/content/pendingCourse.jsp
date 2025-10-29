@@ -173,7 +173,7 @@
         </div>
 
         <div class="modal-footer">
-            <button type="button" class="btn-cancel" onclick="closeApproveModal()">취소</button>
+            <button type="button" class="btn-cancel-modal" onclick="closeApproveModal()">취소</button>
             <button type="button" class="btn-approve-confirm" onclick="executeApprove()">승인하기</button>
         </div>
     </div>
@@ -219,7 +219,7 @@
         </div>
 
         <div class="modal-footer">
-            <button type="button" class="btn-cancel" onclick="closeRejectModal()">취소</button>
+            <button type="button" class="btn-cancel-modal" onclick="closeRejectModal()">취소</button>
             <button type="button" class="btn-reject-confirm" onclick="executeReject()">거절하기</button>
         </div>
     </div>

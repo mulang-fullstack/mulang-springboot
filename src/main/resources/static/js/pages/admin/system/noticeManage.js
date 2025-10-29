@@ -34,6 +34,30 @@ async function fetchNoticeList(params) {
     }
 }
 
+// 공지사항 상세 조회
+async function fetchNoticeDetail(noticeId) {
+    try {
+        console.log(`📤 공지 상세 조회: ${noticeId}`);
+        const response = await fetch(`/admin/system/notice/${noticeId}`, {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]')?.content
+            }
+        });
+
+        if (!response.ok) throw new Error('공지사항을 불러오는데 실패했습니다.');
+
+        const data = await response.json();
+        console.log('📥 공지 상세:', data);
+        return data;
+    } catch (error) {
+        console.error('❌ Error fetching notice detail:', error);
+        alert('공지사항을 불러오는데 실패했습니다.');
+        return null;
+    }
+}
+
 // ==================== 파라미터 수집 ====================
 function collectSearchParams() {
     const startDateInput = document.getElementById('startDate');
@@ -100,8 +124,7 @@ function renderNoticeTable(notices, currentPage, pageSize) {
                 <td>${notice.createdAt}</td>
                 <td><span class="status-badge ${statusClass}">${statusText}</span></td>
                 <td class="actions">
-                    <button class="btn-edit" onclick="editNotice(${notice.id})">수정</button>
-                    <button class="btn-delete" onclick="confirmDelete(${notice.id}, '${notice.title}')">삭제</button>
+                    <button class="btn-edit" onclick="editNotice(${notice.id})">정보 수정</button>
                 </td>
             </tr>
         `;
@@ -111,6 +134,32 @@ function renderNoticeTable(notices, currentPage, pageSize) {
 function updatePagination(currentPage, totalPages) {
     window.paginationData = { currentPage, totalPages };
     if (typeof window.renderPagination === 'function') window.renderPagination();
+}
+
+// ==================== 수정 기능 ====================
+async function editNotice(noticeId) {
+    console.log(`✏️ 수정 모달 열기: ${noticeId}`);
+
+    // 1. 상세 정보 가져오기
+    const notice = await fetchNoticeDetail(noticeId);
+    if (!notice) return;
+
+    // 2. 수정 모달에 데이터 채우기
+    document.getElementById('editNoticeId').value = notice.id;
+    document.getElementById('editNoticeType').value = notice.type;
+    document.getElementById('editNoticeTitle').value = notice.title;
+    document.getElementById('editNoticeContent').value = notice.content;
+    document.getElementById('editCharCount').textContent = notice.content?.length || 0;
+
+    // 라디오 버튼 설정
+    if (notice.status === 'PUBLIC') {
+        document.getElementById('editStatusPublic').checked = true;
+    } else {
+        document.getElementById('editStatusPrivate').checked = true;
+    }
+
+    // 3. 모달 열기
+    openEditModal();
 }
 
 // ==================== 검색 및 필터 ====================
@@ -162,7 +211,6 @@ function resetFilters() {
     // 6. 즉시 검색 갱신
     performSearch();
 }
-
 
 // ==================== 초기화 및 이벤트 ====================
 function initializeDateFilters() {

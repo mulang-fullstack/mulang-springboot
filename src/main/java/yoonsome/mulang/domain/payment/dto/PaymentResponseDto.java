@@ -21,6 +21,7 @@ public class PaymentResponseDto {
     private Long paymentId;
     private String orderId;
     private String paymentKey;
+    private String username;
     private Integer amount;
     private String status;
     private String orderName;
@@ -38,6 +39,7 @@ public class PaymentResponseDto {
                 .paymentId(payment.getId())
                 .orderId(payment.getOrderId())
                 .paymentKey(payment.getPaymentKey())
+                .username(payment.getUser().getUsername())
                 .amount(payment.getAmount())
                 .status(payment.getStatus() != null ? payment.getStatus().name() : "")
                 .orderName(payment.getCourse() != null ? payment.getCourse().getTitle() : "")

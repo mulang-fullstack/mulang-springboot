@@ -9,6 +9,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+import yoonsome.mulang.api.admin.system.dto.NoticeUpdateRequest;
+import yoonsome.mulang.api.support.dto.NoticeDetailResponse;
 import yoonsome.mulang.domain.notice.dto.NoticeCreateRequest;
 import yoonsome.mulang.domain.notice.dto.NoticeListResponse;
 import yoonsome.mulang.domain.notice.dto.NoticeSearchRequest;
@@ -74,6 +76,42 @@ public class AdminSystemController {
         }
         Notice saved = noticeService.createNotice(request, principal.getUser());
         return ResponseEntity.ok("공지사항 등록 완료 (ID: " + saved.getId() + ")");
+    }
+
+    /**
+     * 공지사항 상세 조회 (수정 모달용)
+     * 기존 getNoticeById() 메서드 재사용
+     */
+    @GetMapping("/notice/{id}")
+    @ResponseBody
+    public ResponseEntity<NoticeDetailResponse> getNoticeDetail(@PathVariable Long id) {
+        NoticeDetailResponse notice = noticeService.getNoticeById(id);  // 기존 메서드 호출
+        return ResponseEntity.ok(notice);
+    }
+
+    /**
+     * 공지 수정 (JSON 요청)
+     */
+    @PutMapping("/notice/{id}")
+    @ResponseBody
+    public ResponseEntity<?> updateNotice(
+            @PathVariable Long id,
+            @Valid @RequestBody NoticeUpdateRequest request,
+            BindingResult bindingResult,
+            @AuthenticationPrincipal CustomUserDetails principal
+    ) {
+        if (bindingResult.hasErrors()) {
+            return ResponseEntity.badRequest().body("입력값 오류");
+        }
+
+        try {
+            noticeService.updateNotice(id, request, principal.getUser());
+            return ResponseEntity.ok("공지사항 수정 완료");
+        } catch (IllegalArgumentException e) {
+            return ResponseEntity.notFound().build();
+        } catch (IllegalStateException e) {
+            return ResponseEntity.status(403).body("수정 권한이 없습니다");
+        }
     }
 
     /**

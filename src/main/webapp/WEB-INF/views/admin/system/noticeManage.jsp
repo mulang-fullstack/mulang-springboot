@@ -148,7 +148,12 @@
         </div>
     </div>
 </div>
+
+<!-- 등록 모달 -->
 <%@ include file="noticeModal.jsp" %>
+
+<!-- 수정 모달 -->
+<%@ include file="noticeEditModal.jsp" %>
 
 <script src="/js/common/utils.js"></script>
 <script src="/js/pages/admin/pagination.js"></script>
