@@ -208,7 +208,7 @@ function renderCourseTable(courses, currentPage, pageSize) {
         return `
             <tr data-id="${course.id}">
                 <td>${rowNumber}</td>
-                <td class="course-title">${courseTitle}</td>
+                <td class="course-title"><a href="/course/${course.id}/vod">${courseTitle}</a></td>
                 <td>${languageBadge}</td>
                 <td>${course.teacherName || '-'}</td>
                 <td>${course.teacherNickname || '-'}</td>

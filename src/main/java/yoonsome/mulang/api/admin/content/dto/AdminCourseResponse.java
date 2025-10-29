@@ -7,7 +7,6 @@ import lombok.NoArgsConstructor;
 import yoonsome.mulang.domain.course.entity.Course;
 import yoonsome.mulang.domain.course.entity.StatusType;
 
-import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
 @Getter
@@ -32,8 +31,7 @@ public class AdminCourseResponse {
                 .languageName(course.getLanguage().getName())
                 .teacherName(course.getTeacher().getUser().getUsername())
                 .teacherNickname(course.getTeacher().getUser().getNickname())
-                .createdAt(course.getTeacher().getUser().getCreatedAt()!= null ?
-                        course.getTeacher().getUser().getCreatedAt().format(fmt)  : "")
+                .createdAt(course.getCreatedAt()!= null ? course.getCreatedAt().format(fmt)  : "")
                 .status(course.getStatus())
                 .rejectionReason(course.getRejectionReason())
                 .build();

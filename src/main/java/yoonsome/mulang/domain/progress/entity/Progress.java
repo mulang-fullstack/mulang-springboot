@@ -47,6 +47,13 @@ public class Progress {
         this.progressStatus = enrollmentStatus != null ? enrollmentStatus : false;
     }
 
+    @PrePersist
+    protected void onCreate() {
+        if (this.appliedAt == null) {
+            this.appliedAt = LocalDateTime.now();
+        }
+    }
+
     // 강의 입장 시 true로 변경
     public void markAsViewed() {
         this.progressStatus = true;

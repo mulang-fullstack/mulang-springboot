@@ -9,6 +9,8 @@ import yoonsome.mulang.domain.progress.entity.Progress;
 @Repository
 public interface ProgressRepository extends JpaRepository<Progress, Long> {
 
+    boolean existsByStudentIdAndLectureId(Long studentId, Long lectureId);
+
     // 특정 강좌의 완료한 강의 수
     @Query("""
         SELECT COUNT(p)

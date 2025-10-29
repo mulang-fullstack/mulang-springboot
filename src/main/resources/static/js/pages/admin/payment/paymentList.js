@@ -196,7 +196,7 @@ function renderPaymentTable(payments, currentPage, pageSize) {
             <tr data-id="${payment.id}">
                 <td>${rowNumber}</td>
                 <td class="course-name">${payment.orderName || '-'}</td>
-                <td>${payment.buyerName || '-'}</td>
+                <td>${payment.username || '-'}</td>
                 <td class="amount">${formattedAmount}원</td>
                 <td>${paymentMethodText}</td>
                 <td>${approvedAt}</td>

@@ -109,7 +109,9 @@ async function saveCourseStatus(courseId) {
                 'Content-Type': 'application/json',
                 'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]')?.content
             },
-            body: JSON.stringify(newStatus)
+            body: JSON.stringify({
+                status: newStatus
+            })
         });
 
         if (!response.ok) {
@@ -122,23 +124,10 @@ async function saveCourseStatus(courseId) {
         // 성공 메시지
         showMessage(result.message || '성공적으로 수정되었습니다.', 'success');
 
-        // UI 업데이트
-        const statusText = newStatus === 'PUBLIC' ? '공개' : '비공개';
-        const statusCell = row.querySelector('td:nth-child(7)');
-        statusCell.innerHTML = `
-            <span class="status-badge ${newStatus === 'PUBLIC' ? 'public' : 'private'}">
-                ${statusText}
-            </span>
-        `;
-
-        // 액션 버튼 복원
-        const actionsCell = row.querySelector('.actions');
-        actionsCell.innerHTML = `
-            <button class="btn-edit" onclick="enableCourseEditMode(${courseId})">정보 수정</button>
-        `;
-
-        // 수정 모드 해제
-        row.classList.remove('editing');
+        // 페이지 새로고침
+        setTimeout(() => {
+            window.location.reload();
+        }, 500); // 메시지를 잠깐 보여준 후 새로고침
 
     } catch (error) {
         console.error('Error updating course status:', error);
@@ -148,7 +137,6 @@ async function saveCourseStatus(courseId) {
         cancelCourseEdit(courseId);
     }
 }
-
 /**
  * ESC 키로 수정 취소
  */

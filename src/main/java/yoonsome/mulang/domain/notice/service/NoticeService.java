@@ -7,6 +7,7 @@ import yoonsome.mulang.domain.notice.dto.NoticeSearchRequest;
 import yoonsome.mulang.api.support.dto.NoticeDetailResponse;
 import yoonsome.mulang.domain.notice.entity.Notice;
 import yoonsome.mulang.domain.user.entity.User;
+import yoonsome.mulang.api.admin.system.dto.NoticeUpdateRequest;
 
 /**
  * 공지사항 서비스 인터페이스
@@ -24,7 +25,12 @@ public interface NoticeService {
     Page<NoticeListResponse> getNoticeList(NoticeSearchRequest request);
 
     /**
-     * 공지사항 단건 조회
+     * 공지사항 상세 조회
      */
     NoticeDetailResponse getNoticeById(Long id);
+
+    /**
+     * 공지사항 수정
+     */
+    void updateNotice(Long id, NoticeUpdateRequest request, User user);
 }

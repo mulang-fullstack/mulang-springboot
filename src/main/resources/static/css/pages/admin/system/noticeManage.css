@@ -35,14 +35,8 @@
     height: 16px;
 }
 
-/* 제목 - 왼쪽 정렬 */
-.table-wrap td:nth-child(3) {
-    text-align: left;
-    padding-left: 20px;
-}
-
 /* 공지 유형 뱃지 */
-.notice-type-badge {
+.type-badge {
     display: inline-block;
     padding: 4px 10px;
     border-radius: 12px;
@@ -52,19 +46,19 @@
     text-transform: uppercase;
 }
 
-.notice-type-badge.general {
+.type-badge.general {
     background: var(--admin-badge-general-bg);
 }
 
-.notice-type-badge.event {
+.type-badge.event {
     background: var(--admin-gradient-event);
 }
 
-.notice-type-badge.update {
+.type-badge.update {
     background: var(--admin-gradient-success);
 }
 
-.notice-type-badge.urgent {
+.type-badge.system {
     background: var(--admin-gradient-danger);
     animation: pulse 2s infinite;
 }
@@ -139,12 +133,6 @@
 
 .pin-toggle input:checked + .pin-slider:before {
     transform: translateX(20px);
-}
-
-/* 조회수 */
-.views-count {
-    color: var(--admin-text-quaternary);
-    font-weight: 500;
 }
 
 /* 작성자 */

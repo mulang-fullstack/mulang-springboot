@@ -9,6 +9,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import yoonsome.mulang.api.admin.system.dto.NoticeUpdateRequest;
 import yoonsome.mulang.domain.notice.dto.NoticeCreateRequest;
 import yoonsome.mulang.domain.notice.dto.NoticeListResponse;
 import yoonsome.mulang.domain.notice.dto.NoticeSearchRequest;
@@ -85,5 +86,45 @@ public class NoticeServiceImpl implements NoticeService {
         NoticeDetailResponse response = NoticeDetailResponse.from(notice);
         log.debug("공지사항 조회 완료: id={}, title={}", id, notice.getTitle());
         return response;
+    }
+
+    @Override
+    @Transactional
+    public void updateNotice(Long id, NoticeUpdateRequest request, User user) {
+
+        Notice notice = noticeRepository.findById(id)
+                .orElseThrow(() -> {
+                    log.warn("공지사항을 찾을 수 없음: id={}", id);
+                    return new EntityNotFoundException("공지사항을 찾을 수 없습니다. ID: " + id);
+                });
+
+        // 권한 확인: 작성자 본인 또는 관리자만 수정 가능
+        if (!notice.getUser().getId().equals(user.getId()) && !isAdmin(user)) {
+            log.warn("공지사항 수정 권한 없음: userId={}, noticeId={}", user.getId(), id);
+            throw new IllegalStateException("공지사항을 수정할 권한이 없습니다.");
+        }
+
+        // 엔티티 업데이트
+        notice.update(
+                request.getType(),
+                request.getTitle(),
+                request.getContent(),
+                request.getStatus()
+        );
+
+        log.info("공지사항 수정 완료 - ID: {}, 제목: {}", notice.getId(), notice.getTitle());
+    }
+
+    /**
+     * 관리자 권한 확인
+     * User 엔티티에 isAdmin() 메서드가 없는 경우 여기서 처리
+     */
+    private boolean isAdmin(User user) {
+        // User 엔티티에 isAdmin() 메서드가 있다면 그것을 사용
+        // return user.isAdmin();
+
+        // 또는 Role을 직접 체크
+        return user.getRole() != null &&
+                user.getRole().name().equals("ADMIN");
     }
 }

@@ -96,22 +96,6 @@
     padding: 20px 28px;
     border-top: 1px solid var(--admin-border-divider);
 }
-
-.btn-cancel {
-    padding: 10px 20px;
-    background: var(--admin-btn-cancel);
-    color: var(--admin-text-secondary);
-    border: 1px solid var(--admin-border-input);
-    border-radius: 8px;
-    font-size: 14px;
-    font-weight: 600;
-    transition: all 0.2s ease;
-}
-
-.btn-cancel:hover {
-    background: var(--admin-btn-cancel-hover);
-}
-
 /* ==================== 승인 모달 스타일 ==================== */
 
 .modal-approve {
@@ -256,6 +240,21 @@
     color: var(--admin-text-tertiary);
     margin-top: 8px;
     margin-bottom: 0;
+}
+.btn-cancel-modal {
+    padding: 10px 20px;
+    background: var(--admin-btn-cancel);
+    color: var(--text-white);
+    border-radius: 8px;
+    font-size: 14px;
+    font-weight: 600;
+    transition: all 0.2s ease;
+}
+
+.btn-cancel-modal:hover {
+    background: var(--admin-btn-cancel-hover);
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(239, 68, 68, 0.3);
 }
 
 .btn-reject-confirm {

@@ -60,15 +60,38 @@ public class Notice {
         this.updatedAt = LocalDateTime.now();
     }
 
-    /** 공개 상태 */
-    public enum NoticeStatus {
-        PUBLIC, PRIVATE
+    /**
+     * 공지사항 수정 메서드
+     */
+    public void update(NoticeType type, String title, String content, NoticeStatus status) {
+        this.type = type;
+        this.title = title;
+        this.content = content;
+        this.status = status;
     }
 
-    /** 공지 유형 */
+    /**
+     * 공지 유형 Enum
+     */
+    @Getter
+    @AllArgsConstructor
     public enum NoticeType {
-        GENERAL,  // 일반 공지
-        SYSTEM,   // 시스템 점검/장애
-        UPDATE    // 서비스 업데이트 공지
+        GENERAL("일반"),
+        UPDATE("업데이트"),
+        SYSTEM("시스템");
+
+        private final String description;
+    }
+
+    /**
+     * 공개 상태 Enum
+     */
+    @Getter
+    @AllArgsConstructor
+    public enum NoticeStatus {
+        PUBLIC("공개"),
+        PRIVATE("비공개");
+
+        private final String description;
     }
 }
