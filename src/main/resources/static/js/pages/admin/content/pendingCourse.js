@@ -42,7 +42,7 @@ function collectSearchParams() {
     const startDate = startDateInput?.value || '';
     const endDate = endDateInput?.value || '';
     const language = languageRadio?.value || 'ALL';
-    const status = statusRadio?.value || 'ALL';
+    const status = statusRadio?.value || 'PENDING';
     const keyword = keywordInput?.value.trim() || '';
     const sortValue = sortSelect?.value || 'LATEST';
 
@@ -97,10 +97,8 @@ function collectSearchParams() {
         params.languageId = language;
     }
 
-    // 상태 - ALL이 아닐 때만 추가
-    if (status && status !== 'ALL') {
-        params.status = status;
-    }
+    // 상태 - 항상 추가
+    params.status = status;
 
     // 검색어 - 값이 있을 때만 추가
     if (keyword) {
@@ -111,22 +109,59 @@ function collectSearchParams() {
     return params;
 }
 
+// ==================== 테이블 헤더 업데이트 ====================
+function updateTableHeader(status) {
+    const headerRow = document.querySelector('table thead tr');
+    if (!headerRow) return;
+
+    if (status === 'REJECTED') {
+        // 심사거절 상태: 상태 + 거절 사유 표시
+        headerRow.innerHTML = `
+            <th>번호</th>
+            <th>강좌명</th>
+            <th>언어</th>
+            <th>강사명</th>
+            <th>닉네임</th>
+            <th>등록일</th>
+            <th>상태</th>
+            <th>거절 사유</th>
+        `;
+    } else {
+        // 심사중(PENDING) 상태: 기본 헤더
+        headerRow.innerHTML = `
+            <th>번호</th>
+            <th>강좌명</th>
+            <th>언어</th>
+            <th>강사명</th>
+            <th>닉네임</th>
+            <th>등록일</th>
+            <th>상태</th>
+            <th>관리</th>
+        `;
+    }
+}
+
 // ==================== 렌더링 ====================
 function renderCourseTable(courses, currentPage, pageSize) {
     const tbody = document.querySelector('table tbody');
+    const statusRadio = document.querySelector('input[name="status"]:checked');
+    const currentStatus = statusRadio?.value || 'PENDING';
 
     if (!tbody) {
         return;
     }
 
+    // 테이블 헤더 업데이트
+    updateTableHeader(currentStatus);
+
     if (!courses || courses.length === 0) {
-        tbody.innerHTML = '<tr><td colspan="8" class="no-data">등록된 강좌가 없습니다.</td></tr>';
+        const colspan = currentStatus === 'REJECTED' ? '8' : '8';
+        tbody.innerHTML = `<tr><td colspan="${colspan}" class="no-data">등록된 강좌가 없습니다.</td></tr>`;
         return;
     }
 
     tbody.innerHTML = courses.map((course, index) => {
         const rowNumber = currentPage * pageSize + index + 1;
-
         const courseTitle = course.courseName || course.title || '제목 없음';
 
         let languageBadge = '';
@@ -147,9 +182,28 @@ function renderCourseTable(courses, currentPage, pageSize) {
                 languageBadge = `<span class="language-badge default">${course.languageName || '-'}</span>`;
         }
 
-        let statusBadge = '';
-        const statusText = course.status === 'PUBLIC' ? '공개' : '비공개';
-        statusBadge = `<span class="status-badge ${course.status === 'PUBLIC' ? 'public' : 'private'}">${statusText}</span>`;
+        // 상태별로 다른 컬럼 표시
+        let lastColumn = '';
+
+        if (currentStatus === 'REJECTED') {
+            // 거절 상태: 상태 배지 + 거절 사유 표시
+            const statusText = course.status === 'REJECTED' ? '심사거절' : '심사대기';
+            const rejectionReason = course.rejectionReason || '사유 없음';
+            lastColumn = `
+                <td><span class="status-badge ${course.status === 'REJECTED' ? 'rejected' : 'pending'}">${statusText}</span></td>
+                <td class="rejection-reason">${truncateText(rejectionReason, 30)}</td>
+            `;
+        } else {
+            // 심사중 상태: 상태 배지 + 관리 버튼
+            const statusText = course.status === 'PENDING' ? '심사대기' : '심사거절';
+            lastColumn = `
+                <td><span class="status-badge ${course.status === 'PENDING' ? 'pending' : 'rejected'}">${statusText}</span></td>
+                <td class="actions">
+                    <button class="btn-approve" onclick="openApproveModal(${course.id}, '${courseTitle.replace(/'/g, "\\'")}')">심사완료</button>
+                    <button class="btn-reject" onclick="openRejectModal(${course.id}, '${courseTitle.replace(/'/g, "\\'")}')">심사거절</button>
+                </td>
+            `;
+        }
 
         return `
             <tr data-id="${course.id}">
@@ -159,10 +213,7 @@ function renderCourseTable(courses, currentPage, pageSize) {
                 <td>${course.teacherName || '-'}</td>
                 <td>${course.teacherNickname || '-'}</td>
                 <td>${course.createdAt || '-'}</td>
-                <td>${statusBadge}</td>
-                <td class="actions">
-                    <button class="btn-edit" onclick="editCourse(${course.id})">정보 수정</button>
-                </td>
+                ${lastColumn}
             </tr>
         `;
     }).join('');
@@ -214,10 +265,10 @@ function resetFilters() {
 
     // 라디오 버튼 초기화
     const allLanguageRadio = document.querySelector('input[name="language"][value="ALL"]');
-    const allStatusRadio = document.querySelector('input[name="status"][value="ALL"]');
+    const pendingStatusRadio = document.querySelector('input[name="status"][value="PENDING"]');
 
     if (allLanguageRadio) allLanguageRadio.checked = true;
-    if (allStatusRadio) allStatusRadio.checked = true;
+    if (pendingStatusRadio) pendingStatusRadio.checked = true;
 
     // 검색어 초기화
     const keywordInput = document.getElementById('searchKeyword');
@@ -290,7 +341,7 @@ document.addEventListener('DOMContentLoaded', function () {
         radio.addEventListener('change', performSearch);
     });
 
-    // 상태 라디오
+    // 상태 라디오 - 변경 시 테이블 헤더도 같이 변경
     document.querySelectorAll('input[name="status"]').forEach(radio => {
         radio.addEventListener('change', performSearch);
     });

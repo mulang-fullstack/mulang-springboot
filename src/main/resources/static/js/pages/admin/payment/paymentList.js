@@ -201,12 +201,6 @@ function renderPaymentTable(payments, currentPage, pageSize) {
                 <td>${paymentMethodText}</td>
                 <td>${approvedAt}</td>
                 <td>${statusBadge}</td>
-                <td class="actions">
-                    <button class="btn-detail" onclick="viewPaymentDetail(${payment.id})">상세</button>
-                    ${payment.status === 'COMPLETED' ?
-            `<button class="btn-refund" onclick="confirmRefund(${payment.id}, '${payment.orderName}')">환불</button>`
-            : ''}
-                </td>
             </tr>
         `;
     }).join('');
@@ -259,12 +253,8 @@ function resetFilters() {
     if (startDateInput) startDateInput.value = '';
     if (endDateInput) endDateInput.value = '';
 
-    // 결제 수단 초기화
-    const allPaymentMethodRadio = document.querySelector('input[name="paymentMethod"][value="ALL"]');
-    if (allPaymentMethodRadio) allPaymentMethodRadio.checked = true;
-
     // 상태 초기화
-    const allStatusRadio = document.querySelector('input[name="status"][value="ALL"]');
+    const allStatusRadio = document.querySelector('input[name="status"][value="COMPLETED"]');
     if (allStatusRadio) allStatusRadio.checked = true;
 
     // 검색어 초기화

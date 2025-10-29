@@ -161,7 +161,7 @@ function renderCourseTable(courses, currentPage, pageSize) {
                 <td>${course.createdAt || '-'}</td>
                 <td>${statusBadge}</td>
                 <td class="actions">
-                    <button class="btn-edit" onclick="editCourse(${course.id})">정보 수정</button>
+                    <button class="btn-edit" onclick="enableCourseEditMode(${course.id})">정보 수정</button>
                 </td>
             </tr>
         `;
@@ -214,7 +214,7 @@ function resetFilters() {
 
     // 라디오 버튼 초기화
     const allLanguageRadio = document.querySelector('input[name="language"][value="ALL"]');
-    const allStatusRadio = document.querySelector('input[name="status"][value="ALL"]');
+    const allStatusRadio = document.querySelector('input[name="status"][value="PUBLIC"]');
 
     if (allLanguageRadio) allLanguageRadio.checked = true;
     if (allStatusRadio) allStatusRadio.checked = true;

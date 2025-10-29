@@ -141,7 +141,7 @@ function renderUserTable(users, currentPage, pageSize) {
                     </span>
                 </td>
                 <td class="actions">
-                    <button class="btn-edit" onclick="">정보 수정</button>
+                    <button class="btn-edit" onclick="enableEditMode(${user.id})">정보 수정</button>
                 </td>
             </tr>
         `;

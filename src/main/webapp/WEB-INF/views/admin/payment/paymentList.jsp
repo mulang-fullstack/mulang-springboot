@@ -41,24 +41,14 @@
                             </div>
                         </div>
 
-                        <!-- 결제 수단 -->
-                        <div class="filter-group">
-                            <span class="filter-label">결제 수단</span>
-                            <div class="radio-group">
-                                <label><input type="radio" name="paymentMethod" value="ALL" checked> 전체</label>
-                                <label><input type="radio" name="paymentMethod" value="CARD" > 카드</label>
-                                <label><input type="radio" name="paymentMethod" value="BANK"> 계좌이체</label>
-                                <label><input type="radio" name="paymentMethod" value="KAKAO"> 카카오페이</label>
-                                <label><input type="radio" name="paymentMethod" value="NAVER"> 네이버페이</label>
-                            </div>
-                        </div>
-
                         <!-- 결제 상태 -->
                         <div class="filter-group">
                             <span class="filter-label">결제 상태</span>
                             <div class="radio-group">
-                                <label><input type="radio" name="status" value="COMPLETED" checked> 완료</label>
+                                <label><input type="radio" name="status" value="ALL" checked> 전체</label>
+                                <label><input type="radio" name="status" value="COMPLETED"> 완료</label>
                                 <label><input type="radio" name="status" value="PENDING"> 대기</label>
+                                <label><input type="radio" name="status" value="REFUND"> 환불</label>
                                 <label><input type="radio" name="status" value="CANCELLED"> 취소</label>
                                 <label><input type="radio" name="status" value="FAILED"> 실패</label>
                             </div>
@@ -124,13 +114,12 @@
                             <th>결제수단</th>
                             <th>결제일시</th>
                             <th>상태</th>
-                            <th>관리</th>
                         </tr>
                         </thead>
                         <tbody>
                         <!-- JavaScript로 동적 생성 -->
                         <tr>
-                            <td colspan="9" class="no-data">데이터를 불러오는 중...</td>
+                            <td colspan="7" class="no-data">데이터를 불러오는 중...</td>
                         </tr>
                         </tbody>
                     </table>
@@ -145,16 +134,7 @@
     </div>
 </div>
 
-<script>
-    // 초기 페이지네이션 데이터
-    window.paginationData = {
-        currentPage: 0,
-        totalPages: 1,
-        baseUrl: '/admin/payment'
-    };
-</script>
-
-<script src="/js/common/currentTime.js"></script>
+<script src="/js/common/utils.js"></script>
 <script src="/js/pages/admin/pagination.js"></script>
 <script src="/js/pages/admin/payment/paymentList.js"></script>
 </body>

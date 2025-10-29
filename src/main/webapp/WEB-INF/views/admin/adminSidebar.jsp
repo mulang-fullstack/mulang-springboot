@@ -37,7 +37,6 @@
                 <div><img src="/img/icon/admin-card.png"> 결제 관리</div>
                 <ul class="submenu">
                     <li><a href="/admin/payment" data-submenu="payment">결제 내역</a></li>
-                    <li><a href="/admin/payment/refund" data-submenu="refund">환불 내역</a></li>
                 </ul>
             </li>
 

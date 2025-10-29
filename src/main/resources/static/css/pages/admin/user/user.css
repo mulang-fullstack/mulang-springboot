@@ -1,26 +1,10 @@
 /* ==========================================================
-   관리자 회원 관리 페이지 스타일
+   관리자 회원 관리 페이지 전용 스타일
    Path: /css/pages/admin/user/user.css
+
+   admin.css에서 공통 스타일을 상속받아 사용하며,
+   이 파일에는 회원 관리 페이지만의 고유한 스타일만 포함됩니다.
    ========================================================== */
-
-/* 상태 배지 */
-.status-badge {
-    display: inline-block;
-    padding: 3px 8px;
-    border-radius: 12px;
-    font-size: 11px;
-    font-weight: 500;
-}
-
-.status-badge.active {
-    background: #d4f4dd;
-    color: #22a55a;
-}
-
-.status-badge.inactive {
-    background: #ffe4e6;
-    color: #e11d48;
-}
 
 /* 권한 배지 */
 .role-badge {
@@ -32,137 +16,19 @@
 }
 
 .role-badge.student {
-    background: #e0e7ff;
-    color: #4f46e5;
+    background: var(--admin-badge-student-bg);
+    color: var(--admin-badge-student-text);
 }
 
 .role-badge.tutor {
-    background: #fef3c7;
-    color: #d97706;
+    background: var(--admin-badge-tutor-bg);
+    color: var(--admin-badge-tutor-text);
 }
 
-/* 상태 수정 모드 */
-.status-select {
-    padding: 3px 6px;
-    border: 1px solid #4b7bec;
-    border-radius: 6px;
-    background: #fff;
-    color: #333;
-    font-size: 12px;
-}
-
-/* 관리 버튼 */
-.actions {
-    display: flex;
-    gap: 5px;
-    justify-content: center;
-}
-
-.actions button {
-    padding: 5px 10px;
-    border-radius: 6px;
-    font-size: 11px;
-    font-weight: 500;
-    border: none;
-    cursor: pointer;
-    transition: all 0.2s;
-    white-space: nowrap;
-}
-
-.btn-edit {
-    background: #4b7bec;
-    color: #fff;
-}
-
-.btn-edit:hover {
-    background: #3968c3;
-    transform: translateY(-1px);
-    box-shadow: 0 2px 4px rgba(75, 123, 236, 0.3);
-}
-
-.btn-delete {
-    background: #ef4444;
-    color: #fff;
-}
-
-.btn-delete:hover {
-    background: #dc2626;
-    transform: translateY(-1px);
-    box-shadow: 0 2px 4px rgba(239, 68, 68, 0.3);
-}
-
-.btn-save {
-    background: #10b981;
-    color: #fff;
-}
-
-.btn-save:hover {
-    background: #059669;
-}
-
-.btn-cancel {
-    background: #6b7280;
-    color: #fff;
-}
-
-.btn-cancel:hover {
-    background: #4b5563;
-}
-
-/* 상태 표시 */
-.status-dot {
-    display: inline-block;
-    width: 8px;
-    height: 8px;
-    border-radius: 50%;
-    margin: 0 auto;
-}
-
-.status-dot.success {
-    background: #10b981;
-    box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.2);
-}
-
-.status-dot.fail {
-    background: #ef4444;
-    box-shadow: 0 0 0 3px rgba(239, 68, 68, 0.2);
-}
-
-.no-data {
-    color: #888;
-    padding: 30px 0;
-    text-align: center;
-    font-size: 14px;
-}
-
-/* ==========================================================
-   모달
-   ========================================================== */
-.modal-overlay {
-    display: none;
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background: rgba(0, 0, 0, 0.5);
-    z-index: 1000;
-    align-items: center;
-    justify-content: center;
-}
-
-.modal-overlay.show {
-    display: flex;
-}
-
-.modal-content {
-    background: #fff;
-    border-radius: 12px;
-    padding: 28px;
-    max-width: 400px;
-    width: 90%;
-    box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
-    animation: modalSlideIn 0.3s ease;
+/* 모달 추가 스타일 */
+.modal-body .warning {
+    color: var(--admin-status-failed);
+    margin-top: 10px;
 }
 
 @keyframes modalSlideIn {
@@ -173,100 +39,5 @@
     to {
         opacity: 1;
         transform: translateY(0);
-    }
-}
-
-.modal-header {
-    margin-bottom: 16px;
-}
-
-.modal-header h3 {
-    font-size: 18px;
-    color: #333;
-    margin: 0;
-}
-
-.modal-body {
-    margin-bottom: 20px;
-    color: #555;
-    line-height: 1.6;
-    font-size: 14px;
-}
-
-.modal-body .warning {
-    color: #ef4444;
-    margin-top: 10px;
-}
-
-.modal-footer {
-    display: flex;
-    gap: 10px;
-    justify-content: flex-end;
-}
-
-.modal-footer button {
-    padding: 8px 16px;
-    border-radius: 8px;
-    border: none;
-    font-size: 13px;
-    font-weight: 500;
-    cursor: pointer;
-    transition: all 0.2s;
-}
-
-.modal-btn-cancel {
-    background: #e5e7eb;
-    color: #374151;
-}
-
-.modal-btn-cancel:hover {
-    background: #d1d5db;
-}
-
-.modal-btn-confirm {
-    background: #ef4444;
-    color: #fff;
-}
-
-.modal-btn-confirm:hover {
-    background: #dc2626;
-}
-
-/* ==========================================================
-   반응형 디자인
-   ========================================================== */
-@media (max-width: 1024px) {
-    .filter-container {
-        grid-template-columns: 1fr;
-    }
-
-    .right-container header {
-        padding: 0 30px;
-    }
-
-    .content-wrap {
-        padding: 20px;
-    }
-}
-
-@media (max-width: 768px) {
-    .search-section {
-        flex-direction: column;
-    }
-
-    .table-wrap {
-        overflow-x: auto;
-    }
-
-    .table-wrap table {
-        min-width: 600px;
-    }
-
-    .pagination button span {
-        display: none;
-    }
-
-    .pagination .page-info {
-        font-size: 11px;
     }
 }

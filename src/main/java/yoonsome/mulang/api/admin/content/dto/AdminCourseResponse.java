@@ -22,6 +22,7 @@ public class AdminCourseResponse {
     private String teacherNickname; // 강사 닉네임
     private String createdAt; // 등록일
     private StatusType status;      // 상태
+    private String rejectionReason; //거절 사유
 
     public static AdminCourseResponse from(Course course) {
         DateTimeFormatter fmt = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
@@ -34,6 +35,7 @@ public class AdminCourseResponse {
                 .createdAt(course.getTeacher().getUser().getCreatedAt()!= null ?
                         course.getTeacher().getUser().getCreatedAt().format(fmt)  : "")
                 .status(course.getStatus())
+                .rejectionReason(course.getRejectionReason())
                 .build();
     }
 }

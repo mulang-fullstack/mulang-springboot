@@ -47,6 +47,8 @@ public class AuthServiceImpl implements AuthService {
         return savedUser.getId() != null;
     }
 
+    @Override
+    @Transactional
     public void sendSignupVerification(String email) {
         // 6자리 인증코드 생성
         String code = generateCode();

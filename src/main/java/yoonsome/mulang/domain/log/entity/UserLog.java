@@ -42,6 +42,6 @@ public class UserLog {
     }
 
     public enum ActionType {
-        LOGIN, LOGOUT
+        LOGIN, LOGOUT, UPDATE
     }
 }
