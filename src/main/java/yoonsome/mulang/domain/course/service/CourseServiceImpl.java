@@ -72,6 +72,11 @@ public class CourseServiceImpl implements CourseService {
 
     @Override
     public List<Course> getCourseRankingList(long languageId) {
-        return courseRepository.findByLanguage_IdAndStatus(languageId, PUBLIC);
+        return courseRepository.findTop4ByLanguageIdAndStatusAndAverageRating(languageId, PageRequest.of(0, 4));
+    }
+
+    @Override
+    public List<Course> getNewCourseList(){
+        return courseRepository.findAllByOrderByCreatedAtDesc(PageRequest.of(0, 20));
     }
 }

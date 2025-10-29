@@ -36,7 +36,7 @@ document.addEventListener("DOMContentLoaded", () => {
         } else {
             reviews.forEach(review => {
                 html += `
-            <div class="review-item">
+            <div class="review-item" data-review-id="${review.id}">
                 <img src="/img/icon/review-mulang.svg" alt="머랭 캐릭터" class="review-profile-img">
                 <div class="review-profile-border"></div>
                 <div class="review-name">${review.studentName}</div>
@@ -47,17 +47,17 @@ document.addEventListener("DOMContentLoaded", () => {
                 ).join('')}
                 </span>
                     <span class="review-score-text">${review.rating}</span>
-                </div>
-                <div class="review-content-wrapper">
-                    <div class="review-content">${review.content}</div>
-                    <div class="review-more">더보기</div>
-                </div>
-                ${review.studentId === currentUserId ? `
+                    ${review.studentId === currentUserId ? `
                 <div class="review-actions">
                     <button class="edit-review">수정</button>
                     <button class="delete-review">삭제</button>
                 </div>
                 ` : ''}
+                </div>               
+                <div class="review-content-wrapper">
+                    <div class="review-content">${review.content}</div>
+                    <div class="review-more">더보기</div>
+                </div>                
             </div>`;
             });
         }
@@ -83,14 +83,14 @@ document.addEventListener("DOMContentLoaded", () => {
         // 수정 버튼
         if (e.target.closest(".edit-review")) {
             const reviewId = e.target.closest(".review-item").dataset.reviewId;
-            //editReview(reviewId);
+            editReview(reviewId);
             return;
         }
 
         // 삭제 버튼
         if (e.target.closest(".delete-review")) {
             const reviewId = e.target.closest(".review-item").dataset.reviewId;
-            //deleteReview(reviewId);
+            deleteReview(reviewId);
             return;
         }
 
@@ -135,4 +135,43 @@ function initReviewMore() {
             };
         }
     });
+}
+
+function editReview(reviewId) {
+    // 1. 수정 폼 표시
+    const reviewItem = document.querySelector(`.review-item[data-review-id="${reviewId}"]`);
+    const contentDiv = reviewItem.querySelector('.review-content');
+    const originalContent = contentDiv.textContent;
+
+    // 간단한 textarea로 교체
+    contentDiv.innerHTML = `<textarea class="edit-text">${originalContent}</textarea>
+                            <button class="save-edit">저장</button>
+                            <button class="cancel-edit">취소</button>`;
+
+    // 2. 저장 버튼 이벤트
+    reviewItem.querySelector('.save-edit').onclick = () => {
+        const newContent = reviewItem.querySelector('.edit-text').value;
+
+        // 서버에 PATCH/PUT 요청
+        fetch(`/courseDetail/reviews/${reviewId}`, {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ content: newContent })
+        })
+            .then(res => res.json())
+            .then(data => {
+                if (data.success) {
+                    contentDiv.textContent = newContent;
+                } else {
+                    alert('수정 실패');
+                }
+            });
+    };
+
+    // 취소 버튼 이벤트
+    reviewItem.querySelector('.cancel-edit').onclick = () => {
+        contentDiv.textContent = originalContent;
+    };
 }
