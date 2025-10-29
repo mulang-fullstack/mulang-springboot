@@ -43,7 +43,6 @@ dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
     /* security */
     implementation 'org.mindrot:jbcrypt:0.4'
-
     implementation 'org.springframework.boot:spring-boot-starter-security'
     implementation 'org.springframework.security:spring-security-taglibs'
     /* 소셜 로그인 */
@@ -54,6 +53,10 @@ dependencies {
     implementation 'org.jsoup:jsoup:1.17.2'
     /* validation */
     implementation 'org.springframework.boot:spring-boot-starter-validation'
+    // AWS SDK v2 (직접 추가)
+    implementation platform('software.amazon.awssdk:bom:2.20.26')
+    implementation 'software.amazon.awssdk:s3'
+    implementation 'software.amazon.awssdk:s3-transfer-manager'
 }
 
 tasks.named('test') {

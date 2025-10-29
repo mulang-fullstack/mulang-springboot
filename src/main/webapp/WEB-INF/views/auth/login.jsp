@@ -63,7 +63,7 @@
         </div>
 
         <!-- 소셜 로그인 -->
-        <button type="button" class="social-btn google-btn" onclick="handleGoogleLogin()">
+        <button type="button" class="social-btn google-btn" onclick="location.href='/login/oauth2/code/google'">
             <img src="/img/icon/google.svg" alt="Google" width="20">
             <span>Google 계정으로 로그인</span>
         </button>

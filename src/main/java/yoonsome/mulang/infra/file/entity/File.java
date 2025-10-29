@@ -2,7 +2,6 @@ package yoonsome.mulang.infra.file.entity;
 
 import jakarta.persistence.*;
 import lombok.*;
-import yoonsome.mulang.domain.lecture.entity.Lecture;
 import java.time.LocalDateTime;
 
 @Entity
@@ -43,4 +42,15 @@ public class File {
     @Column(name = "uploaded_at", nullable = false)
     private LocalDateTime uploadedAt;
 
+    /** 저장소 타입 (NULL이면 기존 로컬 파일) */
+    @Column(name = "storage_type", length = 20)
+    private String storageType;  // "LOCAL" or "S3"
+
+    /** S3 버킷 이름 */
+    @Column(name = "bucket_name", length = 100)
+    private String bucketName;
+
+    /** 파일 용도 (NULL이면 일반 파일) */
+    @Column(name = "file_type", length = 30)
+    private String fileType;  // "VIDEO", "THUMBNAIL", "PROFILE_IMAGE" 등
 }
