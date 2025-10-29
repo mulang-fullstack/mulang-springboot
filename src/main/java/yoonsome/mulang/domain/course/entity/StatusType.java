@@ -6,8 +6,7 @@ import lombok.Getter;
 public enum StatusType {
     PUBLIC("public", "공개"),
     PRIVATE("private", "비공개"),
-    PENDING("pending", "대기중"),
-    REVIEW("review", "심사중"),
+    PENDING("pending", "심사중"),
     REJECTED("rejected", "거절됨");
 
     private final String badgeClass;

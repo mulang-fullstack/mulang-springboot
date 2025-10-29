@@ -52,14 +52,4 @@ public class AdminPaymentController {
 
         return ResponseEntity.ok(result);
     }
-
-    /**
-     * 환불 내역 목록 페이지
-     */
-    @GetMapping("/refund")
-    public String refund(Model model){
-        model.addAttribute("activeMenu","payment");
-        model.addAttribute("activeSubmenu","refund");
-        return "admin/payment/refund";
-    }
 }

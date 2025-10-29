@@ -8,9 +8,8 @@
             <a href="#">회사소개</a>
             <a href="#">이용약관</a>
             <a href="#">개인정보처리방침</a>
-            <a href="#">청소년보호정책</a>
-            <a href="#">Q&A</a>
-            <a href="#">공지사항</a>
+            <a href="#">문의하기</a>
+            <a href="/support/notice">공지사항</a>
         </nav>
 
         <!-- 회사 정보 -->

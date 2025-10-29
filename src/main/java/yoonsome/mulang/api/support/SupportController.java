@@ -4,10 +4,11 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-import yoonsome.mulang.api.admin.system.dto.NoticeListResponse;
-import yoonsome.mulang.api.admin.system.dto.NoticeSearchRequest;
-import yoonsome.mulang.domain.notice.entity.Notice;
+import yoonsome.mulang.domain.notice.dto.NoticeListResponse;
+import yoonsome.mulang.domain.notice.dto.NoticeSearchRequest;
+import yoonsome.mulang.api.support.dto.NoticeDetailResponse;
 import yoonsome.mulang.domain.notice.service.NoticeService;
 
 import java.util.HashMap;
@@ -21,7 +22,7 @@ public class SupportController {
     private final NoticeService noticeService;
 
     /**
-     * 공지사항 페이지
+     * 공지사항 목록 페이지
      * @return notice.jsp
      */
     @GetMapping
@@ -30,9 +31,9 @@ public class SupportController {
     }
 
     /**
-     * 공지사항 데이터(비동기)
-     * @param request
-     * @return 공지사항LIST, PAGINATION
+     * 공지사항 목록 데이터 (비동기)
+     * @param request 검색 조건
+     * @return 공지사항 LIST, PAGINATION
      */
     @GetMapping("/api")
     @ResponseBody
@@ -49,15 +50,17 @@ public class SupportController {
     }
 
     /**
-     * 공지사항 상세 조회 페이지
+     * 공지사항 상세 조회 페이지 (동기)
      * @param noticeId 공지사항 ID
-     * @return noticeDetail.jsp
+     * @param model 뷰 모델
+     * @return notice-detail.jsp
      */
     @GetMapping("/{noticeId}")
-    public String getNoticeDetail(@PathVariable Long noticeId, org.springframework.ui.Model model) {
-        Notice notice = noticeService.getNoticeById(noticeId);
-        model.addAttribute("notice", notice);
-        return "noticeDetail";
-    }
+    public String getNoticeDetail(@PathVariable Long noticeId, Model model) {
+        // 서비스에서 DTO로 변환된 데이터 받기
+        NoticeDetailResponse notice = noticeService.getNoticeById(noticeId);
 
+        model.addAttribute("notice", notice);
+        return "notice/noticeDetail";
+    }
 }

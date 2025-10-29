@@ -34,11 +34,11 @@ function collectSearchParams() {
     let startDate = document.querySelector('.date-filter input[type="date"]:first-child')?.value;
     let endDate = document.querySelector('.date-filter input[type="date"]:last-child')?.value;
 
-    // 날짜가 비어있으면 기본값 설정 (이번 달 1일 ~ 오늘)
     if (!startDate) {
-        const firstDay = new Date();
-        firstDay.setDate(1);
-        startDate = formatDate(firstDay);
+        // const firstDay = new Date();
+        // firstDay.setDate(1);
+        // startDate = formatDate(firstDay);
+        startDate = formatDate(new Date());
     }
 
     if (!endDate) {
@@ -180,7 +180,7 @@ window.changePage = async function (page) {
 // 필터 초기화
 function resetFilters() {
     const today = new Date();
-    const firstDay = new Date(today.getFullYear(), today.getMonth(), 1);
+    const firstDay = new Date();
 
     const dateInputs = document.querySelectorAll('.date-filter input[type="date"]');
     if (dateInputs.length >= 2) {
@@ -217,7 +217,7 @@ function formatDate(date) {
 // 날짜 초기값 설정
 function initializeDateFilters() {
     const today = new Date();
-    const firstDay = new Date(today.getFullYear(), today.getMonth(), 1);
+    const firstDay = new Date();
 
     const dateInputs = document.querySelectorAll('.date-filter input[type="date"]');
     if (dateInputs.length >= 2) {

@@ -1,17 +1,21 @@
 /* ==========================================================
-   관리자 결제 내역 관리 페이지 스타일
+   관리자 결제 내역 관리 페이지 전용 스타일
    Path: /css/pages/admin/payment/payment.css
+
+   admin.css에서 공통 스타일을 상속받아 사용하며,
+   이 파일에는 결제 내역 관리 페이지만의 고유한 스타일만 포함됩니다.
    ========================================================== */
+
 /* 강좌명 */
 .course-title {
     font-weight: 500;
-    color: #333;
+    color: var(--admin-text-primary);
     cursor: pointer;
     transition: color 0.2s;
 }
 
 .course-title:hover {
-    color: #4b7bec;
+    color: var(--admin-text-link);
 }
 
 /* 구매자 정보 */
@@ -23,13 +27,13 @@
 }
 
 .buyer-name {
-    color: #4b5563;
+    color: var(--admin-text-tertiary);
     font-weight: 600;
     font-size: 13px;
 }
 
 .buyer-email {
-    color: #9ca3af;
+    color: var(--admin-text-muted);
     font-size: 11px;
 }
 
@@ -37,11 +41,11 @@
 .amount {
     font-size: 15px;
     font-weight: 700;
-    color: #1f2937;
+    color: var(--admin-text-primary);
 }
 
 .amount.refunded {
-    color: #f59e0b;
+    color: var(--admin-status-pending);
     text-decoration: line-through;
 }
 
@@ -52,51 +56,24 @@
     border-radius: 12px;
     font-size: 11px;
     font-weight: 600;
-    color: #fff;
+    color: var(--text-white);
 }
 
 .payment-method-badge.card {
-    background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
+    background: var(--admin-gradient-card);
 }
 
 .payment-method-badge.bank {
-    background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+    background: var(--admin-gradient-bank);
 }
 
 .payment-method-badge.kakao {
-    background: linear-gradient(135deg, #fee500 0%, #ffd600 100%);
-    color: #3c1e1e;
+    background: var(--admin-gradient-kakao);
+    color: var(--admin-text-kakao);
 }
 
 .payment-method-badge.naver {
-    background: linear-gradient(135deg, #03c75a 0%, #00b050 100%);
-}
-
-/* 결제 상태 뱃지 */
-.status-badge {
-    display: inline-block;
-    padding: 5px 12px;
-    border-radius: 14px;
-    font-size: 12px;
-    font-weight: 600;
-    color: #fff;
-}
-
-.status-badge.success {
-    background: linear-gradient(135deg, #10b981 0%, #059669 100%);
-}
-
-.status-badge.pending {
-    background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
-    animation: statusPulse 2s infinite;
-}
-
-.status-badge.failed {
-    background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
-}
-
-.status-badge.refund {
-    background: linear-gradient(135deg, #8b5cf6 0%, #7c3aed 100%);
+    background: var(--admin-gradient-naver);
 }
 
 @keyframes statusPulse {
@@ -108,74 +85,15 @@
     }
 }
 
-/* 관리 버튼 */
-.action-buttons {
-    display: flex;
-    gap: 6px;
-    justify-content: center;
-}
-
-.btn-detail, .btn-refund, .btn-receipt {
-    padding: 6px 12px;
-    border-radius: 6px;
-    font-size: 12px;
-    font-weight: 500;
-    cursor: pointer;
-    transition: all 0.2s;
-    border: none;
-    color: #fff;
-}
-
-.btn-detail {
-    background: linear-gradient(135deg, #8b5cf6 0%, #7c3aed 100%);
-}
-
-.btn-detail:hover {
-    transform: translateY(-1px);
-    box-shadow: 0 2px 8px rgba(139, 92, 246, 0.4);
-}
-
-.btn-refund {
-    background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
-}
-
-.btn-refund:hover {
-    transform: translateY(-1px);
-    box-shadow: 0 2px 8px rgba(245, 158, 11, 0.4);
-}
-
-.btn-refund:disabled {
-    background: #d1d5db;
-    cursor: not-allowed;
-    transform: none;
-}
-
-.btn-receipt {
-    background: linear-gradient(135deg, #4b7bec 0%, #3867d6 100%);
-}
-
-.btn-receipt:hover {
-    transform: translateY(-1px);
-    box-shadow: 0 2px 8px rgba(75, 123, 236, 0.4);
-}
-
-/* 데이터 없음 */
-.no-data {
-    padding: 40px !important;
-    text-align: center;
-    color: #9ca3af;
-    font-size: 14px;
-}
-
 /* 날짜 스타일 */
 .date-text {
-    color: #6b7280;
+    color: var(--admin-text-quaternary);
     font-size: 12px;
 }
 
 /* 환불 행 스타일 */
 .refund-row {
-    background: #fef3f2 !important;
+    background: var(--admin-bg-refund) !important;
 }
 
 .refund-row:hover {
@@ -199,26 +117,5 @@
 
     .stat-box.total .stat-value {
         font-size: 16px;
-    }
-}
-
-@media (max-width: 1200px) {
-    .table-wrap table {
-        font-size: 12px;
-    }
-
-    .table-wrap th, .table-wrap td {
-        padding: 10px 8px;
-    }
-
-    .filter-container {
-        flex-direction: column;
-        align-items: stretch;
-    }
-
-    .btn-export {
-        margin-left: 0;
-        width: 100%;
-        justify-content: center;
     }
 }

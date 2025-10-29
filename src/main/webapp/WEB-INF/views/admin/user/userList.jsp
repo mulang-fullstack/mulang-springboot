@@ -140,6 +140,9 @@
                         </thead>
                         <tbody>
                         <!-- JavaScript로 동적 생성 -->
+                        <tr>
+                            <td colspan="8" class="no-data">데이터를 불러오는 중...</td>
+                        </tr>
                         </tbody>
                     </table>
                 </div>
@@ -154,9 +157,10 @@
 </div>
 
 <!-- JavaScript 파일 로드 -->
-<script src="/js/common/currentTime.js"></script>
+<script src="/js/common/utils.js"></script>
 <script src="/js/pages/admin/pagination.js"></script>
 <script src="/js/pages/admin/user/user.js"></script>
+<script src="/js/pages/admin/user/user-action.js"></script>
 
 </body>
 </html>

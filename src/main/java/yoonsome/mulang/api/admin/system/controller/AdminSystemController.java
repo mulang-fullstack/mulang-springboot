@@ -9,10 +9,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
-import yoonsome.mulang.api.admin.system.dto.NoticeCreateRequest;
-import yoonsome.mulang.api.admin.system.dto.NoticeListResponse;
-import yoonsome.mulang.api.admin.system.dto.NoticeSearchRequest;
-import yoonsome.mulang.api.admin.system.dto.NoticeUpdateRequest;
+import yoonsome.mulang.domain.notice.dto.NoticeCreateRequest;
+import yoonsome.mulang.domain.notice.dto.NoticeListResponse;
+import yoonsome.mulang.domain.notice.dto.NoticeSearchRequest;
 import yoonsome.mulang.domain.notice.entity.Notice;
 import yoonsome.mulang.domain.notice.service.NoticeService;
 import yoonsome.mulang.infra.security.CustomUserDetails;
@@ -75,31 +74,6 @@ public class AdminSystemController {
         }
         Notice saved = noticeService.createNotice(request, principal.getUser());
         return ResponseEntity.ok("공지사항 등록 완료 (ID: " + saved.getId() + ")");
-    }
-
-    /**
-     * 공지사항 수정 (비동기 API)
-     */
-    @PutMapping("/api/notice/{id}")
-    @ResponseBody
-    public ResponseEntity<Map<String, Object>> updateNotice(
-            @PathVariable Long id,
-            @Valid @RequestBody NoticeUpdateRequest request,
-            BindingResult bindingResult,
-            @AuthenticationPrincipal CustomUserDetails principal
-    ) {
-        if (bindingResult.hasErrors()) {
-            return ResponseEntity.badRequest()
-                    .body(Map.of("message", "입력값 오류", "errors", bindingResult.getAllErrors()));
-        }
-
-        Notice updated = noticeService.updateNotice(id, request, principal.getUser());
-
-        Map<String, Object> result = new HashMap<>();
-        result.put("message", "공지사항 수정 완료");
-        result.put("noticeId", updated.getId());
-
-        return ResponseEntity.ok(result);
     }
 
     /**

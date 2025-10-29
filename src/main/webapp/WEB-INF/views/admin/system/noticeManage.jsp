@@ -25,7 +25,7 @@
 
         <div class="content-wrap">
             <div class="content-header">
-                <p class="date-range" id="current-time">2025.10.19 18:03:24</p>
+                <p class="date-range" id="current-time"></p>
             </div>
 
             <section class="notice-section">
@@ -47,7 +47,6 @@
                             <div class="radio-group">
                                 <label><input type="radio" name="noticeType" value="ALL" checked> 전체</label>
                                 <label><input type="radio" name="noticeType" value="GENERAL"> 일반</label>
-                                <label><input type="radio" name="noticeType" value="EVENT"> 이벤트</label>
                                 <label><input type="radio" name="noticeType" value="UPDATE"> 업데이트</label>
                                 <label><input type="radio" name="noticeType" value="SYSTEM"> 시스템</label>
                             </div>
@@ -134,6 +133,9 @@
                         </thead>
                         <tbody>
                         <!-- JavaScript로 동적 생성 -->
+                        <tr>
+                            <td colspan="7" class="no-data">데이터를 불러오는 중...</td>
+                        </tr>
                         </tbody>
                     </table>
                 </div>
@@ -148,7 +150,7 @@
 </div>
 <%@ include file="noticeModal.jsp" %>
 
-<script src="/js/common/currentTime.js"></script>
+<script src="/js/common/utils.js"></script>
 <script src="/js/pages/admin/pagination.js"></script>
 <script src="/js/pages/admin/system/noticeManage.js"></script>
 </body>

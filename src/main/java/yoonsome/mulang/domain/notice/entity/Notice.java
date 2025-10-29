@@ -68,7 +68,6 @@ public class Notice {
     /** 공지 유형 */
     public enum NoticeType {
         GENERAL,  // 일반 공지
-        EVENT,    // 이벤트/프로모션
         SYSTEM,   // 시스템 점검/장애
         UPDATE    // 서비스 업데이트 공지
     }

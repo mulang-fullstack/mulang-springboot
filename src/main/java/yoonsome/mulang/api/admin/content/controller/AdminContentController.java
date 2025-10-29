@@ -7,8 +7,11 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import yoonsome.mulang.api.admin.content.dto.AdminCourseResponse;
+import yoonsome.mulang.api.admin.content.dto.AdminStatusUpdateRequest;
 import yoonsome.mulang.api.admin.content.service.AdminContentService;
+import yoonsome.mulang.api.admin.user.dto.UserUpdateRequest;
 import yoonsome.mulang.domain.course.dto.CourseListRequest;
+import yoonsome.mulang.domain.course.entity.StatusType;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -21,7 +24,7 @@ public class AdminContentController {
     private final AdminContentService adminContentService;
 
     /**
-     * 강좌 관리 페이지 (초기 로드 - 동기 방식)
+     * 강좌 관리 페이지 (초기 로드 - 동기 방식(jsp))
      */
     @GetMapping("/course")
     public String course(@ModelAttribute CourseListRequest request, Model model) {
@@ -58,7 +61,20 @@ public class AdminContentController {
     }
 
     /**
-     * 강좌 관리 페이지 (초기 로드 - 동기 방식)
+     * 회원 정보 수정 (비동기)
+     */
+    @PutMapping("/course/api/{userId}")
+    @ResponseBody
+    public ResponseEntity<?> updateUserInfo(
+            @PathVariable Long userId,
+            @RequestBody AdminStatusUpdateRequest request
+            ) {
+        adminContentService.updateCourseInfo(userId, request);
+        return ResponseEntity.ok(Map.of("success", true, "message", "성공적으로 수정되었습니다."));
+    }
+
+    /**
+     * 강좌 관리 페이지 (초기 로드 - 동기 방식(jsp))
      */
     @GetMapping("/pendingCourse")
     public String pendingCourse(@ModelAttribute CourseListRequest request, Model model) {

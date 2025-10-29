@@ -83,9 +83,8 @@ function renderNoticeTable(notices, currentPage, pageSize) {
         const rowNumber = currentPage * pageSize + i + 1;
         const typeLabel = {
             GENERAL: '일반',
-            EVENT: '이벤트',
             UPDATE: '업데이트',
-            URGENT: '긴급'
+            SYSTEM: '시스템'
         }[notice.type] || '일반';
         const statusText = notice.status === 'PUBLIC' ? '공개' : '비공개';
         const statusClass = notice.status === 'PUBLIC' ? 'active' : 'inactive';

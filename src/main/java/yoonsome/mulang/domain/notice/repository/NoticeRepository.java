@@ -26,7 +26,8 @@ public interface NoticeRepository extends JpaRepository<Notice, Long> {
             "WHERE (:type IS NULL OR n.type = :type) " +
             "AND (:status IS NULL OR n.status = :status) " +
             "AND (:keyword IS NULL OR :keyword = '' OR n.title LIKE %:keyword% OR n.content LIKE %:keyword%) " +
-            "AND (n.createdAt BETWEEN :startDate AND :endDate)")
+            "AND (:startDate IS NULL OR n.createdAt >= :startDate) " +  // 변경
+            "AND (:endDate IS NULL OR n.createdAt <= :endDate)")        // 변경
     Page<Notice> findBySearchConditions(
             @Param("type") NoticeType type,
             @Param("status") NoticeStatus status,

@@ -111,6 +111,9 @@
                         </thead>
                         <tbody>
                         <!-- JavaScript로 동적 생성 -->
+                        <tr>
+                            <td colspan="7" class="no-data">데이터를 불러오는 중...</td>
+                        </tr>
                         </tbody>
 
                     </table>
@@ -125,20 +128,8 @@
     </div>
 </div>
 
-<!-- 서버 데이터 전달 -->
-<script>
-    // 기본값 처리로 undefined 방지
-    window.paginationData = {
-        currentPage: ${currentPage},       // Page.number는 0-based → 1-based로 보정
-        totalPages: ${totalPages},        // Page.totalPages로 전체 페이지 수
-        baseUrl: '/admin/user/log'
-    };
-
-    console.log('Pagination Data:', window.paginationData);
-</script>
-
 <!-- JS -->
-<script src="/js/common/currentTime.js"></script>
+<script src="/js/common/utils.js"></script>
 <script src="/js/pages/admin/pagination.js"></script>
 <script src="/js/pages/admin/user/userLog.js"></script>
 </body>
