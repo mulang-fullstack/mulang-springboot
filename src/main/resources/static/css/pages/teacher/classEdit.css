@@ -32,15 +32,15 @@
 /* -------------------- 테이블 헤더 -------------------- */
 .table-header {
     display: grid;
-    grid-template-columns: 200px 1fr 200px 200px auto;
-    align-items: center;          /* 기준선 통일 */
+    grid-template-columns: 180px 2fr 1.2fr 0.6fr 60px; /* 썸네일 / 클래스명 / 카테고리 / 상태 / 메뉴 */
+    align-items: center;
     justify-items: start;
-    padding: 16px 24px;           /* 행과 동일 패딩 */
+    padding: 16px 24px;
     border-bottom: var(--border-default);
     font-size: 15px;
     font-weight: 600;
     color: var(--text-secondary);
-    line-height: 1.6;             /* 텍스트 기준선 일치 */
+    line-height: 1.6;
 }
 
 /* -------------------- 테이블 바디 -------------------- */
@@ -51,8 +51,8 @@
 
 .table-row {
     display: grid;
-    grid-template-columns: 200px 1fr 200px 200px auto;
-    align-items: center;          /* 세로축 통일 */
+    grid-template-columns: 180px 2fr 1.2fr 0.6fr 60px; /* 헤더와 동일 비율 */
+    align-items: center;
     justify-items: start;
     padding: 16px 24px;
     border-bottom: 1px solid var(--bg-overlay);
@@ -99,22 +99,34 @@
 .category {
     display: flex;
     align-items: center;
-    justify-content: flex-end;   /* 오른쪽으로 이동 */
+    justify-content: flex-start;
     font-size: 15px;
     color: var(--text-primary);
-    padding-right: 20px;         /* 진행기간과 간격 최소화 */
-    gap: 6px;                    /* 언어 사이 여백 유지 */
+    gap: 6px;
 }
 
-
-/* -------------------- 진행기간 -------------------- */
-.date {
+/* -------------------- 상태 -------------------- */
+.status {
     display: flex;
+    justify-content: center;
     align-items: center;
-    justify-content: flex-start;
-    white-space: nowrap;
-    font-size: 15px;
 }
+
+.status-badge {
+    display: inline-block;
+    padding: 4px 10px;
+    border-radius: 8px;
+    font-size: 13px;
+    font-weight: 600;
+    color: #fff;
+    text-transform: capitalize;
+}
+
+.status-badge.public   { background-color: var(--text-success); }   /* 공개 */
+.status-badge.pending  { background-color: var(--text-warning); }   /* 대기중 */
+.status-badge.private  { background-color: var(--text-subtle); }    /* 비공개 */
+.status-badge.review   { background-color: var(--text-info); }      /* 심사중 */
+.status-badge.rejected { background-color: var(--text-error); }     /* 거절됨 */
 
 /* -------------------- 메뉴 -------------------- */
 .menu-wrap {
@@ -215,40 +227,8 @@
     background: var(--bg-secondary);
     opacity: 0.9;
 }
+
 /* -------------------- 페이지네이션 -------------------- */
-.pagination {
-    display: flex;
-    justify-content: center;       /* 중앙 정렬 */
-    align-items: center;
-    margin-top: 32px;
-    gap: 6px;
-}
-
-.pagination a {
-    display: inline-block;
-    padding: 6px 12px;
-    border: 1px solid var(--border-default);
-    border-radius: 4px;
-    color: var(--text-primary);
-    font-size: 14px;
-    text-decoration: none;
-    transition: background-color 0.2s, color 0.2s;
-}
-
-.pagination a:hover {
-    background-color: var(--bg-overlay);
-}
-
-.pagination a.active {
-    background-color: var(--text-point-main);
-    color: var(--bg-white);
-    border-color: var(--text-point-main);
-}
-
-.pagination a.prev,
-.pagination a.next {
-    font-weight: 700;
-}
 .pagination {
     display: flex;
     justify-content: center;
@@ -281,12 +261,50 @@
 .pagination a.next {
     font-weight: 700;
 }
-.status-badge {
-    display: inline-block;
-    padding: 4px 10px;
-    border-radius: 8px;
-    font-size: 13px;
-    font-weight: 600;
-    color: #fff;
-    text-transform: capitalize;
+.rejection-popup {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0,0,0,0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 999;
+}
+
+.rejection-popup .popup-content {
+    background: var(--bg-white);
+    padding: 24px 32px;
+    border-radius: 12px;
+    box-shadow: 0 4px 16px rgba(0,0,0,0.2);
+    text-align: center;
+    width: 360px;
+}
+
+.rejection-popup .popup-content h3 {
+    color: var(--text-error);
+    font-size: 18px;
+    margin-bottom: 12px;
+}
+
+.rejection-popup .popup-content p {
+    color: var(--text-primary);
+    font-size: 15px;
+    line-height: 1.6;
+    margin-bottom: 20px;
+}
+
+.rejection-popup .close-popup-btn {
+    background: var(--text-point-main);
+    color: var(--bg-white);
+    border: none;
+    padding: 8px 16px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 14px;
+}
+.rejection-popup .close-popup-btn:hover {
+    opacity: 0.9;
 }

@@ -301,11 +301,3 @@ input[type="file"]::file-selector-button:hover {
 #editor {
     margin-top: 8px;
 }
-/* -------------------- 외곽 박스 -------------------- */
-.content {
-    background-color: var(--bg-white);
-    border: var(--border-default);
-    border-radius: 12px;
-    box-shadow: var(--shadow-md);
-    padding: 40px;
-}

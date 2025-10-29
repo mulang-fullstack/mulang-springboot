@@ -1,10 +1,10 @@
 /* ===============================
-   교사 판매현황 페이지 (최종 수정)
+   교사 판매현황 페이지 (정렬 완전 보정)
    =============================== */
 
 .dashboard {
     display: flex;
-    gap: 24px;
+    gap: 60px;
     width: 100%;
     max-width: 1280px;
     margin: 0 auto;
@@ -12,19 +12,19 @@
 
 .content {
     flex: 1;
-    background-color: var(--bg-white);
-    border: var(--border-default);
-    border-radius: 12px;
-    box-shadow: var(--shadow-md);
-    padding: 32px;
+    background: none;
+    border: none;
+    border-radius: 0;
+    box-shadow: none;
+    padding: 0;
 }
 
 /* 제목 */
 .content h2 {
-    font-size: 22px;
+    font-size: 24px;
     font-weight: 700;
     color: var(--text-primary);
-    margin-bottom: 28px;
+    margin-bottom: 30px;
 }
 
 /* ---------------------
@@ -32,26 +32,26 @@
    --------------------- */
 .settlement-summary {
     display: flex;
-    margin-bottom: 30px;
+    margin-bottom: 24px;
 }
 
 .summary-box {
     flex: 1;
-    padding: 24px 28px;
+    padding: 20px 24px;
     border: var(--border-default);
-    border-radius: 10px;
+    border-radius: 8px;
     background-color: var(--bg-secondary);
 }
 
 .summary-box h3 {
-    font-size: 16px;
+    font-size: 15px;
     font-weight: 600;
     color: var(--text-secondary);
-    margin-bottom: 8px;
+    margin-bottom: 6px;
 }
 
 .summary-box .amount {
-    font-size: 20px;
+    font-size: 19px;
     font-weight: 700;
     color: var(--text-point-main);
 }
@@ -61,20 +61,24 @@
    --------------------- */
 .settlement-table {
     border: var(--border-default);
-    border-radius: 10px;
+    border-radius: 8px;
     overflow: hidden;
     background-color: var(--bg-white);
+    margin-bottom: 32px;
 }
 
+/* 헤더와 데이터 행 공통 grid 설정 */
 .table-header,
 .table-body .row {
     display: grid;
-    grid-template-columns: minmax(0, 1fr) 180px;
+    grid-template-columns: 1fr 200px;
+    gap: 16px;
+    padding: 14px 24px;
     align-items: center;
 }
 
+/* 테이블 헤더 */
 .table-header {
-    padding: 14px 24px;
     border-bottom: var(--border-default);
     background-color: var(--bg-secondary);
     font-size: 15px;
@@ -82,16 +86,24 @@
     color: var(--text-secondary);
 }
 
+.table-header span:first-child {
+    text-align: left;
+}
+
+.table-header span:last-child {
+    text-align: right;
+}
+
+/* 테이블 바디 */
 .table-body {
     display: flex;
     flex-direction: column;
 }
 
 .table-body .row {
-    padding: 14px 24px;
     border-bottom: var(--border-default);
-    color: var(--text-primary);
     font-size: 15px;
+    color: var(--text-primary);
     background-color: var(--bg-white);
     transition: background-color 0.2s ease;
 }
@@ -104,28 +116,30 @@
     border-bottom: none;
 }
 
-/* 컬럼 정렬 */
+/* 클래스명 (왼쪽 정렬) */
 .course-title {
     text-align: left;
-    padding-left: 8px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
 }
 
+/* 클래스 매출 (오른쪽 정렬) */
 .course-amount {
-    display: flex;
-    justify-content: flex-end;
-    align-items: center;
     text-align: right;
-    padding-right: 28px;
     font-weight: 600;
     color: var(--text-point-main);
+    white-space: nowrap;
 }
 
+/* 빈 데이터 */
 .table-body .empty {
     text-align: center;
-    padding: 40px;
+    padding: 36px;
     font-size: 15px;
     color: var(--text-muted);
     background-color: var(--bg-secondary);
+    grid-column: 1 / -1;
 }
 
 /* ---------------------
@@ -135,7 +149,7 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    margin-top: 32px;
+    margin-top: 28px;
     gap: 8px;
 }
 
@@ -159,4 +173,9 @@
     background-color: var(--bg-point-main);
     color: var(--text-white);
     font-weight: 600;
+}
+
+.sales-pagination button:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
 }

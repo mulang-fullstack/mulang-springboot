@@ -14,12 +14,16 @@
     <link rel="stylesheet" href="/css/pages/mypage/mycourse/qna.css">
 </head>
 <body>
+<%@include file="../common/header.jsp" %>
 <div class="player-layout">
 
     <!-- ===============================
          중앙 VOD 플레이어 + Q&A 섹션
     =============================== -->
     <main class="player-main">
+        <div class="video-info">
+            <h3>${lecture.title}</h3>
+        </div>
         <!-- 영상 영역 -->
         <section class="video-section">
             <div class="video-frame">
@@ -27,10 +31,6 @@
                     <source src="${lecture.fileUrl}" type="video/mp4">
                     브라우저가 video 태그를 지원하지 않습니다.
                 </video>
-            </div>
-
-            <div class="video-info">
-                <h3>${lecture.title}</h3>
             </div>
         </section>
 
@@ -95,5 +95,6 @@
         QnaController.init(window.MulangContext.courseId);
     });
 </script>
+<%@include file="../common/footer.jsp" %>
 </body>
 </html>
