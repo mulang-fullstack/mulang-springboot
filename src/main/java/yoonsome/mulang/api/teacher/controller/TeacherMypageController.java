@@ -9,24 +9,23 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-import yoonsome.mulang.api.teacher.dto.CourseUpdateRequest;
-import yoonsome.mulang.api.teacher.dto.TeacherCourseResponse;
-import yoonsome.mulang.api.teacher.dto.TeacherProfileResponse;
-import yoonsome.mulang.api.teacher.dto.TeacherProfileUpdateRequest;
+import yoonsome.mulang.api.teacher.dto.*;
 import yoonsome.mulang.api.teacher.service.TeacherCourseService;
 import yoonsome.mulang.api.teacher.service.TeacherMypageService;
+import yoonsome.mulang.api.teacher.service.TeacherSalesService;
 import yoonsome.mulang.domain.category.entity.Category;
 import yoonsome.mulang.domain.category.service.CategoryService;
-import yoonsome.mulang.domain.course.entity.Course;
 import yoonsome.mulang.domain.course.service.CourseService;
 import yoonsome.mulang.domain.language.entity.Language;
 import yoonsome.mulang.domain.language.service.LanguageService;
-import yoonsome.mulang.domain.lecture.entity.Lecture;
 import yoonsome.mulang.domain.lecture.service.LectureService;
+import yoonsome.mulang.domain.teacher.entity.Teacher;
+import yoonsome.mulang.domain.teacher.service.TeacherService;
 import yoonsome.mulang.infra.security.CustomUserDetails;
 
 import java.io.IOException;
 import java.util.List;
+
 
 @Controller
 @RequiredArgsConstructor
@@ -40,6 +39,8 @@ public class TeacherMypageController {
     private final CategoryService categoryService;
     private final CourseService courseService;
     private final LectureService lectureService;
+    private final TeacherSalesService teacherSalesService;
+    private final TeacherService teacherService;
 
     /** 프로필 보기 */
     @GetMapping("/profile")
@@ -148,12 +149,34 @@ public class TeacherMypageController {
 
     // 정산 관리
     @GetMapping("/settlement")
-    public String settlement(@AuthenticationPrincipal CustomUserDetails userDetails, Model model) {
+    public String settlementPage(@AuthenticationPrincipal CustomUserDetails userDetails,
+                                 @PageableDefault(size = 5) Pageable pageable,
+                                 Model model) {
+
         Long userId = userDetails.getUser().getId();
-        TeacherProfileResponse teacherProfileResponse = teacherMypageService.getTeacherProfileResponse(userId);
-        model.addAttribute("teacher", teacherProfileResponse);
+        Teacher teacher = teacherService.getTeacherByUserId(userId);
+        Long teacherId = teacher.getId();
+
+        model.addAttribute("teacher", teacherMypageService.getTeacherProfileResponse(userId));
+        model.addAttribute("totalSales", teacherSalesService.getTeacherTotalSales(teacherId));
+        model.addAttribute("salesPage", teacherSalesService.getTeacherSalesPage(teacherId, pageable));
+
         return "teacher/settlement";
     }
+    // 정산 현황 비동기 페이징
+    @GetMapping("/settlement/page")
+    @ResponseBody
+    public Page<TeacherSalesResponse> getTeacherSalesPageAjax(
+            @AuthenticationPrincipal CustomUserDetails userDetails,
+            @PageableDefault(size = 5) Pageable pageable) {
+
+        Long userId = userDetails.getUser().getId();
+        Teacher teacher = teacherService.getTeacherByUserId(userId);
+        Long teacherId = teacher.getId();
+
+        return teacherSalesService.getTeacherSalesPage(teacherId, pageable);
+    }
+
 
     // 비동기 페이징
     @GetMapping("/classes/page")

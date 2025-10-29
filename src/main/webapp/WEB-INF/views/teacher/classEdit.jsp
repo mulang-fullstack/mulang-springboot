@@ -1,7 +1,8 @@
 <%@ page contentType="text/html;charset=utf-8" %>
 <%@ taglib prefix="c" uri="jakarta.tags.core" %>
+<%@ taglib prefix="fn" uri="jakarta.tags.functions" %>
 <!doctype html>
-<html lang="en">
+<html lang="ko">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -9,7 +10,8 @@
     <link rel="icon" href="/img/favicon.svg" type="image/png">
     <link rel="stylesheet" href="/css/global.css"/>
     <link rel="stylesheet" href="/css/pages/teacher/classEdit.css"/>
-    <title>클래스 관리 | Mulang?</title>
+    <link rel="stylesheet" href="/css/pages/teacher/statusLabel.css"/>
+    <title>클래스 관리 | Mulang</title>
 </head>
 <body>
 <%@ include file="../common/header.jsp" %>
@@ -47,12 +49,14 @@
                                     <div class="subtitle">${course.subtitle}</div>
                                 </div>
 
-                                <div class="category">${course.category} / ${course.language}</div>
+                                <div class="category">
+                                        ${course.category} / ${course.language}
+                                </div>
+
                                 <div class="menu-wrap">
                                     <button class="menu-btn">⋯</button>
                                     <div class="menu-dropdown">
                                         <button class="menu-item edit-btn" data-id="${course.id}">수정</button>
-                                        <button class="menu-item delete-btn" data-id="${course.id}">삭제</button>
                                     </div>
                                 </div>
                             </div>

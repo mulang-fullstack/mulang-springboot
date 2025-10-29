@@ -17,4 +17,7 @@ public class CourseQuestionResponse {
     private Timestamp createdAt;
     private List<CourseAnswerResponse> answers;
 
+    private boolean deletable; // 삭제 가능 여부
+    private boolean editable; // 수정 가능 여부
+
 }

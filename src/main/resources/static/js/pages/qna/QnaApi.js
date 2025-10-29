@@ -4,7 +4,7 @@
  */
 const QnaApi = {
     /** 강좌별 Q&A 조회 */
-    async getQnaByCourse(courseId, page = 0, size = 10) {
+    async getQnaByCourse(courseId, page = 0, size = 5) {
         const response = await fetch(`/api/qna/course/${courseId}?page=${page}&size=${size}`);
         if (!response.ok) throw new Error("질문 목록을 불러올 수 없습니다.");
         return response.json();

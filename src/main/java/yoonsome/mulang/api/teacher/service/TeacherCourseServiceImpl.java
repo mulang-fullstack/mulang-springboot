@@ -44,7 +44,7 @@ public class TeacherCourseServiceImpl implements TeacherCourseService {
     @Override
     public Page<TeacherCourseResponse> getTeacherCoursePage(Long userId, Pageable pageable) {
         Teacher teacher = teacherService.getTeacherByUserId(userId);
-        List<StatusType> statuses = List.of(StatusType.PUBLIC, StatusType.PENDING);
+        List<StatusType> statuses = List.of(StatusType.values());
 
         Page<Course> coursePage = courseService.getTeacherCoursePage(teacher, statuses, pageable);
 
@@ -68,10 +68,16 @@ public class TeacherCourseServiceImpl implements TeacherCourseService {
     // 강좌 생성
     @Override
     public void createCourse(Long userId, CourseUploadRequest request) throws IOException {
+        final int MAX_LECTURE_COUNT = 10;
+
         Teacher teacher = teacherService.getTeacherByUserId(userId);
         Language language = languageService.getById(request.getLanguageId());
         Category category = categoryService.getById(request.getCategoryId());
 
+        // [0] 강의 개수 제한
+        if (request.getLectures() != null && request.getLectures().size() > MAX_LECTURE_COUNT) {
+            throw new IllegalArgumentException("강의는 최대 " + MAX_LECTURE_COUNT + "개까지 업로드할 수 있습니다.");
+        }
         // [1] 강좌 생성
         Course course = new Course();
         course.setTeacher(teacher);
@@ -82,7 +88,7 @@ public class TeacherCourseServiceImpl implements TeacherCourseService {
         course.setPrice(request.getPrice());
         course.setCategory(category);
         course.setLanguage(language);
-        course.setStatus(request.getStatus() != null ? request.getStatus() : StatusType.PENDING);
+        course.setStatus(StatusType.PENDING);
         course.setLectureCount(request.getLectureCount() != null ? request.getLectureCount() : 1);
 
         if (request.getThumbnailFile() != null && !request.getThumbnailFile().isEmpty()) {
@@ -97,18 +103,14 @@ public class TeacherCourseServiceImpl implements TeacherCourseService {
             for (LectureUploadRequest lectureReq : request.getLectures()) {
                 MultipartFile video = lectureReq.getVideo();
                 if (video == null || video.isEmpty()) continue;
-                // 영상 없으면 skip
-
                 // 파일 업로드 (FileService)
                 File videoFile = fileService.createFile(video);
-
                 // Lecture 엔티티 조립
                 Lecture lecture = new Lecture();
                 lecture.setCourse(savedCourse);
                 lecture.setTitle(lectureReq.getTitle());
                 lecture.setContent(lectureReq.getContent());
                 lecture.setFile(videoFile);
-
                 // 도메인 서비스는 단순 저장만 담당
                 lectureService.save(lecture);
             }
@@ -155,11 +157,18 @@ public class TeacherCourseServiceImpl implements TeacherCourseService {
     @Override
     @Transactional
     public void updateCourse(Long userId, Long courseId, CourseUpdateRequest request) throws IOException {
+        final int MAX_LECTURE_COUNT = 10;
+
         Teacher teacher = teacherService.getTeacherByUserId(userId);
         Course course = courseService.getCourse(courseId);
 
         if (!course.getTeacher().getId().equals(teacher.getId())) {
             throw new IllegalArgumentException("본인의 강좌만 수정할 수 있습니다.");
+        }
+
+        // [0] 강의 개수 제한
+        if (request.getLectures() != null && request.getLectures().size() > MAX_LECTURE_COUNT) {
+            throw new IllegalArgumentException("강의는 최대 " + MAX_LECTURE_COUNT + "개까지 업로드할 수 있습니다.");
         }
 
         // ---------- 기본 필드 수정 ----------
@@ -170,7 +179,6 @@ public class TeacherCourseServiceImpl implements TeacherCourseService {
             course.setContent(Jsoup.parse(request.getContent()).text());
         }
         if (request.getPrice() != null) course.setPrice(request.getPrice());
-        if (request.getStatus() != null) course.setStatus(request.getStatus());
 
         MultipartFile thumbnail = request.getThumbnailFile();
         if (thumbnail != null && !thumbnail.isEmpty()) {
@@ -197,7 +205,6 @@ public class TeacherCourseServiceImpl implements TeacherCourseService {
                 System.out.println("[DELETE] 강의 삭제됨: ID=" + lectureId);
             }
         }
-
         // [2] 신규 및 수정 처리
         if (request.getLectures() != null && !request.getLectures().isEmpty()) {
             for (int i = 0; i < request.getLectures().size(); i++) {
@@ -239,26 +246,26 @@ public class TeacherCourseServiceImpl implements TeacherCourseService {
                 }
             }
         }
+
         // ---------- Lecture 개수 및 순서 재정렬 ----------
         List<Lecture> updatedLectures = lectureService.getLecturesByCourseId(courseId);
         for (int i = 0; i < updatedLectures.size(); i++) {
             updatedLectures.get(i).setOrderIndex(i);
         }
         course.setLectureCount(updatedLectures.size());
+
+        // ---------- 모든 상태에서 수정 시 PENDING 전환 ----------
+        course.setStatus(StatusType.PENDING);
+
         courseService.registerCourse(course);
     }
 
+
     //course 삭제 상태변경 private로
+    //빈 구현 잘가라... 팀장의 시나리오 요청 ...잘가라....
     @Override
     @Transactional
     public void deleteCourse(Long userId, Long courseId) {
-        Teacher teacher = teacherService.getTeacherByUserId(userId);
-        Course course = courseService.getCourse(courseId);
-
-        if (!course.getTeacher().getId().equals(teacher.getId())) {
-            throw new IllegalArgumentException("본인의 강좌만 수정할 수 있습니다.");
-        }
-        course.setStatus(StatusType.PRIVATE);
     }
 
     //lecture 삭제 업데이트 폼에서 -누르면
@@ -284,7 +291,6 @@ public class TeacherCourseServiceImpl implements TeacherCourseService {
         if (!course.getTeacher().getId().equals(teacher.getId())) {
             throw new IllegalArgumentException("본인의 강좌만 수정할 수 있습니다.");
         }
-
         // 새 이미지 업로드
         File newFile = fileService.createFile(newImage);
 

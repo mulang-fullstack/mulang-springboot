@@ -7,6 +7,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import yoonsome.mulang.domain.teacher.entity.Teacher;
+import yoonsome.mulang.domain.user.entity.User;
 
 import java.sql.Timestamp;
 
@@ -33,8 +34,8 @@ public class CourseAnswer {
     private Timestamp updatedAt;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "teacher_id")
-    private Teacher teacher;
+    @JoinColumn(name = "user_id")
+    private User user;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "question_id")

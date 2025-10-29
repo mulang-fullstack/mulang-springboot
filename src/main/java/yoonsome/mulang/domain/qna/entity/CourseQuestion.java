@@ -45,12 +45,12 @@ public class CourseQuestion {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id", nullable = false)
     private User user;
+
     // @PrePersist는 메서드에 붙입니다!
     @PrePersist
     protected void onCreate() {
         createdAt = Timestamp.valueOf(LocalDateTime.now());
     }
-
     // @PreUpdate는 수정 시 자동 호출
     @PreUpdate
     protected void onUpdate() {
