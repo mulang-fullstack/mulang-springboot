@@ -1,0 +1,21 @@
+.status-badge {
+    display: inline-block;
+    padding: 4px 10px;
+    border-radius: 8px;
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--text-white);
+    text-transform: capitalize;
+}
+
+.status-badge.public   { background-color: var(--text-success); }   /* 공개 */
+.status-badge.pending  { background-color: var(--text-warning); }   /* 대기중 */
+.status-badge.private  { background-color: var(--text-subtle); }    /* 비공개 */
+.status-badge.review   { background-color: var(--text-info); }      /* 심사중 */
+.status-badge.rejected { background-color: var(--text-error); }     /* 거절됨 */
+
+.status {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}

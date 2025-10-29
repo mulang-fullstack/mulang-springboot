@@ -11,8 +11,7 @@ import yoonsome.mulang.api.qna.dto.CourseAnswerRequest;
 import yoonsome.mulang.api.qna.dto.CourseQuestionRequest;
 import yoonsome.mulang.api.qna.dto.CourseQuestionResponse;
 import yoonsome.mulang.api.qna.service.CourseQnaApiService;
-import yoonsome.mulang.domain.teacher.entity.Teacher;
-import yoonsome.mulang.domain.teacher.service.TeacherService;
+import yoonsome.mulang.domain.user.entity.User;
 import yoonsome.mulang.infra.security.CustomUserDetails;
 
 import java.util.Map;
@@ -23,7 +22,6 @@ import java.util.Map;
 public class CourseQnaApiController {
 
     private final CourseQnaApiService courseQnaApiService;
-    private final TeacherService teacherService;
 
     /**
      * 강좌별 Q&A 조회
@@ -32,10 +30,15 @@ public class CourseQnaApiController {
     public ResponseEntity<Map<String, Object>> getQnaByCourse(
             @PathVariable Long courseId,
             @RequestParam(defaultValue = "0") int page,
-            @RequestParam(defaultValue = "10") int size) {
+            @RequestParam(defaultValue = "10") int size,
+            @AuthenticationPrincipal CustomUserDetails userDetails) {
 
         Pageable pageable = PageRequest.of(page, size);
-        Page<CourseQuestionResponse> result = courseQnaApiService.getQnaByCourse(courseId, pageable);
+
+        User currentUser = (userDetails != null) ? userDetails.getUser() : null;
+
+        Page<CourseQuestionResponse> result =
+                courseQnaApiService.getQnaByCourse(courseId, pageable, currentUser);
 
         Map<String, Object> response = Map.of(
                 "content", result.getContent(),
@@ -44,6 +47,7 @@ public class CourseQnaApiController {
                 "totalElements", result.getTotalElements(),
                 "totalPages", result.getTotalPages()
         );
+
         return ResponseEntity.ok(response);
     }
 
@@ -54,6 +58,10 @@ public class CourseQnaApiController {
     public ResponseEntity<Void> createQuestion(
             @RequestBody CourseQuestionRequest request,
             @AuthenticationPrincipal CustomUserDetails userDetails) {
+
+        if (userDetails == null || userDetails.getUser() == null) {
+            throw new IllegalStateException("로그인이 필요합니다.");
+        }
 
         Long userId = userDetails.getUser().getId();
         courseQnaApiService.createQuestion(request, userId);
@@ -68,10 +76,14 @@ public class CourseQnaApiController {
             @RequestBody CourseAnswerRequest request,
             @AuthenticationPrincipal CustomUserDetails userDetails) {
 
-        courseQnaApiService.createAnswer(request, null);
+        if (userDetails == null || userDetails.getUser() == null) {
+            throw new IllegalStateException("로그인이 필요합니다.");
+        }
+
+        Long userId = userDetails.getUser().getId();
+        courseQnaApiService.createAnswer(request, userId);
         return ResponseEntity.ok().build();
     }
-
 
     /**
      * 질문 수정
@@ -81,6 +93,10 @@ public class CourseQnaApiController {
             @PathVariable Long questionId,
             @RequestBody CourseQuestionRequest request,
             @AuthenticationPrincipal CustomUserDetails userDetails) {
+
+        if (userDetails == null || userDetails.getUser() == null) {
+            throw new IllegalStateException("로그인이 필요합니다.");
+        }
 
         Long userId = userDetails.getUser().getId();
         courseQnaApiService.updateQuestion(questionId, request, userId);
@@ -96,9 +112,12 @@ public class CourseQnaApiController {
             @RequestBody CourseAnswerRequest request,
             @AuthenticationPrincipal CustomUserDetails userDetails) {
 
+        if (userDetails == null || userDetails.getUser() == null) {
+            throw new IllegalStateException("로그인이 필요합니다.");
+        }
+
         Long userId = userDetails.getUser().getId();
-        Teacher teacher = teacherService.getTeacherByUserId(userId);
-        courseQnaApiService.updateAnswer(answerId, request, teacher.getId());
+        courseQnaApiService.updateAnswer(answerId, request, userId);
         return ResponseEntity.ok().build();
     }
 
@@ -109,6 +128,10 @@ public class CourseQnaApiController {
     public ResponseEntity<Void> deleteQuestion(
             @PathVariable Long questionId,
             @AuthenticationPrincipal CustomUserDetails userDetails) {
+
+        if (userDetails == null || userDetails.getUser() == null) {
+            throw new IllegalStateException("로그인이 필요합니다.");
+        }
 
         Long userId = userDetails.getUser().getId();
         courseQnaApiService.deleteQuestion(questionId, userId);
@@ -123,9 +146,12 @@ public class CourseQnaApiController {
             @PathVariable Long answerId,
             @AuthenticationPrincipal CustomUserDetails userDetails) {
 
+        if (userDetails == null || userDetails.getUser() == null) {
+            throw new IllegalStateException("로그인이 필요합니다.");
+        }
+
         Long userId = userDetails.getUser().getId();
-        Teacher teacher = teacherService.getTeacherByUserId(userId);
-        courseQnaApiService.deleteAnswer(answerId, teacher.getId());
+        courseQnaApiService.deleteAnswer(answerId, userId);
         return ResponseEntity.ok().build();
     }
 }

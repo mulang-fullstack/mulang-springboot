@@ -43,8 +43,10 @@
 
             <div class="qna-body">
                 <!-- 왼쪽: 질문 리스트 -->
-                <div id="qna-list" class="qna-list-wrapper scrollable"></div>
-
+                <div class="qna-list-wrapper-container">
+                    <div id="qna-list" class="qna-list-wrapper scrollable"></div>
+                    <div class="qna-pagination"></div>
+                </div>
                 <!-- 오른쪽: 질문 작성 폼 -->
                 <div id="qna-write-form" class="qna-write-form" style="display:none;">
                     <input type="text" id="QnaTitle" placeholder="질문 제목을 입력하세요.">
@@ -65,7 +67,7 @@
         <h4 class="lecture-title">강의 목록</h4>
         <ul class="lecture-list">
             <c:forEach var="lec" items="${lectureList}">
-                <li onclick="location.href='${baseUrl}/${course.id}?lectureId=${lec.id}'"
+                <li onclick="location.href='/course/${course.id}/vod?lectureId=${lec.id}'"
                     class="${lec.id == lecture.id ? 'active' : ''}">
                         ${lec.title}
                 </li>
@@ -86,6 +88,7 @@
 <script src="/js/pages/qna/QnaApi.js"></script>
 <script src="/js/pages/qna/QnaView.js"></script>
 <script src="/js/pages/qna/QnaController.js"></script>
+<script src="/js/pages/qna/QnaPagination.js"></script>
 
 <script>
     document.addEventListener("DOMContentLoaded", () => {
