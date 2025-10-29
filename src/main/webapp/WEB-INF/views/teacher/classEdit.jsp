@@ -34,6 +34,7 @@
                         <span>썸네일</span>
                         <span>클래스명 / 부제목</span>
                         <span>카테고리 / 강의언어</span>
+                        <span>상태</span>
                     </div>
 
                     <div class="table-body">
@@ -52,15 +53,28 @@
                                 <div class="category">
                                         ${course.category} / ${course.language}
                                 </div>
-
+                                <div class="status">
+                                    <span class="status-badge ${fn:toLowerCase(course.status)}">
+                                            ${course.statusText}
+                                    </span>
+                                </div>
                                 <div class="menu-wrap">
                                     <button class="menu-btn">⋯</button>
-                                    <div class="menu-dropdown">
-                                        <button class="menu-item edit-btn" data-id="${course.id}">수정</button>
+                                        <div class="menu-dropdown">
+                                            <button class="menu-item edit-btn"
+                                                    data-id="${course.id}">
+                                                수정
+                                            </button>
+                                            <c:if test="${course.status eq 'REJECTED'}">
+                                                <button class="menu-item reason-btn"
+                                                        data-reason="${course.rejectionReason}">
+                                                    심사반려사유
+                                                </button>
+                                            </c:if>
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
-                        </c:forEach>
+                            </c:forEach>
 
                         <c:if test="${empty courses}">
                             <div class="table-row">
@@ -84,7 +98,6 @@
 <script src="/js/pages/teacher/class/classNavigate.js"></script>
 <script src="/js/pages/teacher/class/menuDropdown.js"></script>
 <script src="/js/pages/teacher/class/course.js"></script>
-<script src="/js/pages/teacher/class/statusLabel.js"></script>
 <script src="/js/pages/teacher/class/pagination.js"></script>
 </body>
 </html>

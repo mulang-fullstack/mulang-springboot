@@ -34,11 +34,17 @@ document.addEventListener("DOMContentLoaded", () => {
                 <div class="thumb">
                     <img src="${course.thumbnail}" alt="썸네일" width="160" height="90">
                 </div>
-                <div class="title-wrap">
+                <div class="title-wrap" data-id="${course.id}">
                     <div class="title">${course.title}</div>
                     <div class="subtitle">${course.subtitle}</div>
                 </div>
                 <div class="category">${course.category} / ${course.language}</div>
+              
+                <div class="status">
+                    <span class="status-badge ${course.status ? course.status.toLowerCase() : ''}">
+                        ${course.statusText || ''}
+                    </span>
+                </div>
                 <div class="menu-wrap">
                     <button class="menu-btn">⋯</button>
                     <div class="menu-dropdown">

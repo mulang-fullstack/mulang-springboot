@@ -22,7 +22,6 @@ import yoonsome.mulang.domain.teacher.entity.Teacher;
 import yoonsome.mulang.domain.teacher.service.TeacherService;
 import yoonsome.mulang.infra.file.entity.File;
 import yoonsome.mulang.infra.file.service.FileService;
-
 import java.io.IOException;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -54,10 +53,12 @@ public class TeacherCourseServiceImpl implements TeacherCourseService {
                         .title(course.getTitle())
                         .subtitle(course.getSubtitle())
                         .status(course.getStatus().name())
+                        .statusText(course.getStatus().getBadgeText())
                         .price(course.getPrice())
                         .language(course.getLanguage().getName())
                         .category(course.getCategory().getName())
                         .thumbnail(course.getThumbnail())
+                        .rejectionReason(course.getRejectionReason())
                         .lectureCount(course.getLectureCount())
                         .createdAt(course.getCreatedAt())
                         .build())
