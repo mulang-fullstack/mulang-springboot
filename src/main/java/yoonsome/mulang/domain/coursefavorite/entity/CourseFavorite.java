@@ -13,7 +13,7 @@ import yoonsome.mulang.domain.user.entity.User;
 import java.time.LocalDateTime;
 
 @Entity
-@Table(name = "course_favorite")
+@Table(name = "course_favorite", uniqueConstraints = @UniqueConstraint(columnNames = {"student_id", "course_id"}))
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @EntityListeners(AuditingEntityListener.class)
@@ -40,5 +40,6 @@ public class CourseFavorite {
     public CourseFavorite(Course course, User student) {
         this.course = course;
         this.student = student;
+        this.createdAt = LocalDateTime.now();
     }
 }

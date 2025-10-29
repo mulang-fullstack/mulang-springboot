@@ -11,6 +11,7 @@ import yoonsome.mulang.domain.coursefavorite.entity.CourseFavorite;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
 @Repository
 public interface CourseFavoriteRepository extends JpaRepository<CourseFavorite, Long> {
@@ -106,4 +107,8 @@ public interface CourseFavoriteRepository extends JpaRepository<CourseFavorite, 
     //  삭제
     @Transactional
     void deleteByStudentIdAndCourseId(Long studentId, Long courseId);
+
+    @Query("SELECT cf.course.id FROM CourseFavorite cf WHERE cf.student.id = :userId")
+    Set<Long> findCourseIdsByStudentId(@Param("userId") Long userId);
+
 }

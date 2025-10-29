@@ -25,6 +25,10 @@
 }
 
 /* === 리뷰 리스트 영역 === */
+.empty-review {
+    color: var(--text-muted);
+}
+
 .review-list {
     display: flex;
     flex-direction: column;
@@ -76,15 +80,6 @@
     white-space: nowrap;
 }
 
-/*
-.review-score-bar {
-    position: absolute;
-    left: 45px;
-    top: 27px;
-    width: 90px;
-    height: 15px;
-    background: #F4B734;
-}*/
 .rating {
     position: absolute;
     top: 20px;

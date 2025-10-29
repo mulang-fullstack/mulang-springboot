@@ -8,6 +8,7 @@ import java.time.LocalDateTime;
 @Data
 public class ReviewResponse {
     private Long id;
+    private Long studentId;
     private String studentName;
     private double rating;
     private String content;

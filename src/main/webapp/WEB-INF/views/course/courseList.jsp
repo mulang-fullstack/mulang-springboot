@@ -8,6 +8,8 @@
     <meta name="viewport"
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <meta name="_csrf" content="${_csrf.token}">
+    <meta name="_csrf_header" content="${_csrf.headerName}">
     <link rel="icon" href="img/favicon.svg" type="image/png">
     <link rel="stylesheet" href="/css/global.css"/>
     <link rel="stylesheet" href="/css/pages/course/course-list.css"/>
@@ -60,36 +62,45 @@
             </section>
 
             <section class="course-list">
-                <c:forEach var="course" items="${courses}">
-                    <div class="course-card">
-                        <a href="courseDetail?id=${course.id}">
-                            <img src="${course.thumbnail}" alt="course">
-                        </a>
-                        <div class="course-list-info">
-                            <h2><a href="courseDetail?id=${course.id}">${course.title}</a></h2>
-                            <p class="subtitle">${course.subtitle}</p>
-                            <p class="teacher">${course.teacherName}</p>
-                            <div class="rating">
-                                <span class="score">${course.averageRating}</span>
-                                <span class="stars">
-                                    <c:forEach begin="1" end="5" var="i">
-                                        <img src="/img/icon/star-${i <= course.averageRating ? 'full' : (i - 0.5 <= course.averageRating ? 'half' : 'empty')}.svg" alt="별">
-                                    </c:forEach>
-                                </span>
-                                <span class="review-count">(${course.reviewCount})</span>
+                <c:choose>
+                    <c:when test="${not empty courses}">
+                        <c:forEach var="course" items="${courses}">
+                            <div class="course-card">
+                                <a href="courseDetail?id=${course.id}">
+                                    <img src="${course.thumbnail}" alt="course">
+                                </a>
+                                <div class="course-list-info">
+                                    <h2><a href="courseDetail?id=${course.id}">${course.title}</a></h2>
+                                    <p class="subtitle">${course.subtitle}</p>
+                                    <p class="teacher">${course.teacherName}</p>
+                                    <div class="rating">
+                                        <span class="score">${course.averageRating}</span>
+                                        <span class="stars">
+                                            <c:forEach begin="1" end="5" var="i">
+                                                <img src="/img/icon/star-${i <= course.averageRating ? 'full' : (i - 0.5 <= course.averageRating ? 'half' : 'empty')}.svg" alt="별">
+                                            </c:forEach>
+                                        </span>
+                                        <span class="review-count">(${course.reviewCount})</span>
+                                    </div>
+                                </div>
+                                <div class="heart-purchase-wrap">
+                                    <div class="heart-icon" data-course-id="${course.id}">
+                                        <img src="${course.favorited ? '/img/icon/heart-full.svg' : '/img/icon/heart-empty.svg'}" alt="찜 아이콘">
+                                    </div>
+                                    <div class="course-purchase">
+                                        <span class="price"><fmt:formatNumber value="${course.price}" type="number" groupingUsed="true"/>원</span>
+                                        <a href="/payments/${course.id}"><button class="purchase-btn">결제하기</button></a>
+                                    </div>
+                                </div>
                             </div>
+                        </c:forEach>
+                    </c:when>
+                    <c:otherwise>
+                        <div class="empty-content">
+                        <img src="/img/dummy/empty-content.jpg" alt="강좌 없음">
                         </div>
-                        <div class="heart-purchase-wrap">
-                            <div class="heart-icon">
-                                <img src="/img/icon/heart-full.svg" alt="찜 아이콘">
-                            </div>
-                            <div class="course-purchase">
-                                <span class="price"><fmt:formatNumber value="${course.price}" type="number" groupingUsed="true"/>원</span>
-                                <a href="/payments/${course.id}"><button class="purchase-btn">결제하기</button></a>
-                            </div>
-                        </div>
-                    </div>
-                </c:forEach>
+                    </c:otherwise>
+                </c:choose>
             </section>
 
             <!-- 페이지네이션 -->
@@ -133,5 +144,6 @@
     </div>
 </main>
 <%@include file="../common/footer.jsp" %>
+<script src="/js/pages/course/courseFavorite.js"></script>
 </body>
 </html>

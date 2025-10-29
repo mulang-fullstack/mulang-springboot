@@ -19,4 +19,5 @@ public class CourseDetailResponse {
     private Integer reviewCount;                //  리뷰 수
     private Integer price;                      //  수강비
     private List<CourseLectureResponse> lectures;     //  커리큘럼
+    private boolean favorited;                  // 찜
 }
