@@ -1,111 +1,162 @@
-@charset "UTF-8";
+/* ===============================
+   교사 판매현황 페이지 (최종 수정)
+   =============================== */
 
-/* -------------------- 대시보드 -------------------- */
 .dashboard {
     display: flex;
-    align-items: flex-start;
-    width: 1280px;
-    gap: 60px;
+    gap: 24px;
+    width: 100%;
+    max-width: 1280px;
+    margin: 0 auto;
 }
 
-/* -------------------- 콘텐츠 -------------------- */
 .content {
     flex: 1;
     background-color: var(--bg-white);
+    border: var(--border-default);
+    border-radius: 12px;
+    box-shadow: var(--shadow-md);
+    padding: 32px;
 }
 
+/* 제목 */
 .content h2 {
-    margin-bottom: 30px;
-    font-size: 24px;
+    font-size: 22px;
     font-weight: 700;
     color: var(--text-primary);
+    margin-bottom: 28px;
 }
 
-/* -------------------- 정산 요약 -------------------- */
+/* ---------------------
+   정산 요약
+   --------------------- */
 .settlement-summary {
     display: flex;
-    gap: 40px;
-    margin-bottom: 25px;
+    margin-bottom: 30px;
 }
 
 .summary-box {
     flex: 1;
-    padding: 20px 30px;
+    padding: 24px 28px;
     border: var(--border-default);
-    border-radius: 12px;
-    background-color: var(--bg-white);
+    border-radius: 10px;
+    background-color: var(--bg-secondary);
 }
 
 .summary-box h3 {
-    margin-bottom: 12px;
-    font-size: 15px;
+    font-size: 16px;
     font-weight: 600;
     color: var(--text-secondary);
+    margin-bottom: 8px;
 }
 
 .summary-box .amount {
-    font-size: 22px;
+    font-size: 20px;
     font-weight: 700;
-    color: var(--text-primary);
+    color: var(--text-point-main);
 }
 
-.summary-box .amount span {
-    margin-left: 6px;
-    font-size: 14px;
-    font-weight: 400;
-    color: var(--text-subtle);
-}
-
-/* -------------------- 액션 영역 -------------------- */
-.action-bar {
-    display: flex;
-    gap: 10px;
-    margin-bottom: 20px;
-}
-
-.apply-btn,
-.pending-btn {
-    padding: 10px 20px;
-    border: var(--border-default);
-    border-radius: 8px;
-    background-color: var(--bg-secondary);
-    font-size: 14px;
-    font-weight: 500;
-    color: var(--text-muted);
-    cursor: not-allowed;
-}
-
-/* -------------------- 테이블 -------------------- */
+/* ---------------------
+   매출 테이블
+   --------------------- */
 .settlement-table {
-    width: 100%;
-    margin-bottom: 30px;
-    border-top: 2px solid var(--text-point-main);
+    border: var(--border-default);
+    border-radius: 10px;
+    overflow: hidden;
     background-color: var(--bg-white);
 }
 
-/* -------------------- 테이블 헤더 -------------------- */
-/* 신청서번호 / 정산 상태 / 클래스명 / 정산 대상 금액 */
-.table-header {
+.table-header,
+.table-body .row {
     display: grid;
-    grid-template-columns: 180px 180px 1fr 180px;
+    grid-template-columns: minmax(0, 1fr) 180px;
     align-items: center;
-    padding: 14px 20px;
-    border-bottom: var(--border-default);
-    background-color: var(--bg-white);
+}
 
+.table-header {
+    padding: 14px 24px;
+    border-bottom: var(--border-default);
+    background-color: var(--bg-secondary);
     font-size: 15px;
     font-weight: 600;
     color: var(--text-secondary);
 }
 
-.table-header span {
-    text-align: left;
+.table-body {
+    display: flex;
+    flex-direction: column;
 }
 
-/* -------------------- 테이블 바디 -------------------- */
-.table-body {
-    padding: 60px 0;
+.table-body .row {
+    padding: 14px 24px;
+    border-bottom: var(--border-default);
+    color: var(--text-primary);
+    font-size: 15px;
+    background-color: var(--bg-white);
+    transition: background-color 0.2s ease;
+}
+
+.table-body .row:hover {
+    background-color: var(--bg-white-hover);
+}
+
+.table-body .row:last-child {
+    border-bottom: none;
+}
+
+/* 컬럼 정렬 */
+.course-title {
+    text-align: left;
+    padding-left: 8px;
+}
+
+.course-amount {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    text-align: right;
+    padding-right: 28px;
+    font-weight: 600;
+    color: var(--text-point-main);
+}
+
+.table-body .empty {
     text-align: center;
+    padding: 40px;
     font-size: 15px;
     color: var(--text-muted);
+    background-color: var(--bg-secondary);
+}
+
+/* ---------------------
+   페이징 디자인
+   --------------------- */
+.sales-pagination {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 32px;
+    gap: 8px;
+}
+
+.sales-pagination button {
+    background-color: var(--bg-white);
+    color: var(--text-secondary);
+    border: var(--border-default);
+    border-radius: 6px;
+    padding: 6px 12px;
+    cursor: pointer;
+    font-size: 14px;
+    transition: all 0.2s ease;
+}
+
+.sales-pagination button:hover {
+    background-color: var(--bg-point-sub);
+    color: var(--text-point-main);
+}
+
+.sales-pagination button.active {
+    background-color: var(--bg-point-main);
+    color: var(--text-white);
+    font-weight: 600;
 }

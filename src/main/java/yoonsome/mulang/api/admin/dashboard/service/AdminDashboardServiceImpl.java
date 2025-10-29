@@ -39,8 +39,8 @@ public class AdminDashboardServiceImpl implements AdminDashboardService {
                 .totalUsers(totalUsers)
                 .weeklyLogins(mapToChart(loginStats))
                 .weeklyNewUsers(mapToChart(signupStats))
-                .loginChangeRate(loginChange)
-                .signupChangeRate(signupChange)
+                .loginChangeRate(Double.parseDouble(String.format("%.2f", loginChange)))
+                .signupChangeRate(Double.parseDouble(String.format("%.2f", signupChange)))
                 .build();
     }
     /**

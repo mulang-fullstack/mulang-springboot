@@ -1,170 +1,201 @@
 @charset "UTF-8";
 
 /* ===============================
-   Q&A Section
-================================= */
+   Q&A 게시판 (player.jsp 전용)
+   완전 복원본: 전버전 스타일 + 분할 + 페이징 컨테이너
+================================ */
+
+/* ===== Q&A 전체 섹션 ===== */
 .qna-section {
-    width: 100%; /* VOD와 동일 폭 */
+    width: 100%;
     margin-top: 40px;
     background: var(--bg-white);
     border-radius: 12px;
     box-shadow: var(--shadow-sm);
     border: var(--border-default);
     padding: 32px 36px;
-    display: flex;
-    flex-direction: column;
+    box-sizing: border-box;
 }
 
-/* ===============================
-   헤더 영역
-================================= */
+/* ===== 헤더 ===== */
 .qna-header {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-bottom: 28px;
+    margin-bottom: 24px;
 }
-
 .qna-title {
-    font-size: 1.3rem;
-    font-weight: 600;
+    font-size: 1.4rem;
+    font-weight: 700;
     color: var(--text-point-main);
 }
 
-/* ===============================
-   본문 레이아웃 (좌: 리스트 / 우: 폼)
-================================= */
+/* 질문 작성 버튼 */
+.qna-write-btn {
+    padding: 8px 18px;
+    font-size: 14px;
+    background-color: var(--bg-point-main);
+    color: var(--text-white);
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background 0.2s ease;
+}
+.qna-write-btn:hover {
+    background-color: var(--bg-point-hover);
+}
+
+/* ===== Q&A 본문: 리스트 좌 / 작성폼 우 ===== */
 .qna-body {
     display: flex;
     justify-content: space-between;
     align-items: flex-start;
-    gap: 36px;
+    gap: 32px;
 }
 
-/* ===============================
-   질문 리스트 (좌측 절반)
-================================= */
-.qna-list-wrapper {
-    width: 50%; /* 🔹게시판 전체의 절반 */
+/* 좌측: 질문 리스트 + 페이징 묶음 */
+.qna-list-wrapper-container {
+    flex: 1;
+    max-width: 55%;
     display: flex;
     flex-direction: column;
-    gap: 18px;
-    align-items: flex-start; /* 왼쪽 정렬 */
 }
 
-/* 스크롤 */
-.qna-list-wrapper::-webkit-scrollbar {
-    width: 8px;
-}
-.qna-list-wrapper::-webkit-scrollbar-thumb {
-    background: var(--text-muted);
-    border-radius: 4px;
-}
-.qna-list-wrapper::-webkit-scrollbar-thumb:hover {
-    background: var(--text-subtle);
+/* 질문 리스트 */
+.qna-list-wrapper {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    margin-bottom: 20px;
 }
 
-/* 질문 카드 */
+/* ===== 질문 카드 ===== */
 .qna-question-box {
-    width: 100%; /* 리스트 영역 내에서 꽉 차게 */
-    background: var(--bg-secondary);
+    background-color: var(--bg-secondary);
     border: var(--border-default);
     border-radius: 8px;
-    padding: 18px 20px;
-    cursor: pointer;
-    transition: all 0.25s ease;
+    padding: 16px 20px;
     box-shadow: var(--shadow-sm);
+    transition: all 0.2s ease;
 }
-
 .qna-question-box:hover {
     transform: translateY(-3px);
     box-shadow: var(--shadow-md);
 }
 
-/* 질문 메타 */
+/* ===== 질문 헤더 ===== */
 .qna-question-header {
     display: flex;
     justify-content: space-between;
-    color: var(--text-tertiary);
-    font-size: 0.9rem;
+    align-items: center;
     margin-bottom: 6px;
+    flex-wrap: wrap;
 }
-
-.qna-question-content {
-    font-size: 1rem;
+.qna-question-header .writer {
+    font-weight: 600;
     color: var(--text-primary);
 }
+.qna-question-header .created {
+    font-size: 13px;
+    color: var(--text-subtle);
+}
 
-/* ===============================
-   답변 리스트
-================================= */
-.qna-answer-container {
+/* ===== 수정·삭제 버튼 ===== */
+.qna-actions button {
+    margin-left: 10px;
+    padding: 4px 10px;
+    font-size: 13px;
+    border: var(--border-default);
+    border-radius: 4px;
+    background-color: var(--bg-white);
+    color: var(--text-primary);
+    cursor: pointer;
+    transition: background 0.15s ease;
+}
+.qna-actions button:hover {
+    background-color: var(--bg-point-sub);
+}
+
+/* ===== 질문/답변 내용 ===== */
+.qna-question-content,
+.qna-answer-content {
+    font-size: 15px;
+    line-height: 1.6;
+    color: var(--text-secondary);
+    word-break: break-word;
+}
+
+/* ===== 답변 리스트 ===== */
+.qna-answer-list {
     margin-top: 12px;
-    padding-left: 8px;
+    padding-left: 14px;
+    border-left: 2px solid var(--text-point-main);
 }
 .qna-answer-box {
-    background: var(--bg-white);
-    border: var(--border-default);
-    border-radius: 8px;
-    padding: 10px 12px;
-    margin-top: 6px;
+    padding: 8px 0;
+    border-bottom: var(--border-default);
 }
 .qna-answer-header {
     display: flex;
     justify-content: space-between;
-    color: var(--text-tertiary);
-    font-size: 0.85rem;
-    margin-bottom: 6px;
+    align-items: center;
+    margin-bottom: 4px;
 }
-.qna-answer-content {
-    font-size: 0.95rem;
-    color: var(--text-secondary);
-}
-
-/* 답변 입력 */
-.qna-answer-input {
-    width: 100%;
-    min-height: 80px;
-    border: var(--border-default);
-    border-radius: 8px;
-    padding: 10px 12px;
-    margin-top: 10px;
-    background: var(--bg-secondary);
+.qna-answer-header .writer {
+    font-weight: 500;
     color: var(--text-primary);
-    transition: all 0.2s ease;
 }
-.qna-answer-input:focus {
-    background: var(--bg-white);
-    outline: 2px solid var(--text-point-main);
+.qna-answer-header .created {
+    font-size: 12px;
+    color: var(--text-subtle);
 }
 
-/* ===============================
-   질문 작성 폼 (우측 절반)
-================================= */
+/* ===== 답변 입력 ===== */
+.qna-answer-form {
+    margin-top: 10px;
+    display: flex;
+    gap: 8px;
+    align-items: flex-start;
+}
+.qna-answer-input {
+    flex: 1;
+    resize: vertical;
+    padding: 8px;
+    border: var(--border-default);
+    border-radius: 6px;
+    font-size: 14px;
+    line-height: 1.5;
+    color: var(--text-primary);
+    background-color: var(--bg-white);
+}
+.qna-answer-submit {
+    padding: 8px 12px;
+    border-radius: 6px;
+    background-color: var(--bg-point-main);
+    color: var(--text-white);
+    font-size: 14px;
+    cursor: pointer;
+    transition: background 0.15s ease;
+}
+.qna-answer-submit:hover {
+    background-color: var(--bg-point-active);
+}
+
+/* ===== 우측: 질문 작성 폼 ===== */
 .qna-write-form {
-    width: 50%; /* 🔹전체의 절반 */
-    background: var(--bg-secondary);
+    flex: 1;
+    max-width: 45%; /* ✅ 비율 살짝 줄임 */
+    background-color: var(--bg-secondary);
     border: var(--border-default);
     border-radius: 10px;
     padding: 24px;
     box-shadow: var(--shadow-sm);
-    transition: all 0.25s ease;
-    display: none; /* 기본 숨김 */
+}
+.qna-write-form[style*="display: none"] {
+    visibility: hidden;
 }
 
-.qna-write-form.active {
-    display: flex;
-    flex-direction: column;
-    gap: 14px;
-}
-
-/* 띄용 효과 */
-.qna-write-form:hover {
-    transform: translateY(-4px);
-    box-shadow: var(--shadow-md);
-}
-
-/* 입력 필드 */
+/* 입력창 */
 .qna-write-form input,
 .qna-write-form textarea {
     width: 100%;
@@ -172,21 +203,16 @@
     border-radius: 8px;
     padding: 10px 12px;
     font-size: 0.95rem;
-    background: var(--bg-white);
     color: var(--text-primary);
+    background: var(--bg-white);
     transition: all 0.2s ease;
 }
 .qna-write-form input {
     margin-bottom: 6px;
 }
-.qna-write-form input:focus,
-.qna-write-form textarea:focus {
-    outline: 2px solid var(--text-point-main);
-}
-
 .qna-write-form textarea {
-    resize: none;
     min-height: 100px;
+    resize: vertical;
 }
 
 /* 버튼 영역 */
@@ -194,58 +220,123 @@
     display: flex;
     justify-content: flex-end;
     gap: 10px;
+    margin-top: 10px;
 }
-
-/* 버튼 공통 */
-.qna-write-btn,
-#QnaSubmit,
-.qna-answer-submit {
+#QnaSubmit {
     background: var(--bg-point-main);
     color: var(--text-white);
+    border-radius: 6px;
     border: none;
-    border-radius: 8px;
-    padding: 8px 18px;
-    font-weight: 500;
+    padding: 8px 16px;
     cursor: pointer;
-    transition: all 0.25s ease;
+    transition: background 0.2s ease;
 }
-.qna-write-btn:hover,
-#QnaSubmit:hover,
-.qna-answer-submit:hover {
+#QnaSubmit:hover {
     background: var(--bg-point-hover);
-    transform: translateY(-2px);
-    box-shadow: var(--shadow-sm);
 }
-
-/* 취소 버튼 */
 #QnaCancel {
     background: var(--bg-secondary);
     color: var(--text-secondary);
-    border-radius: 8px;
-    padding: 8px 18px;
-    font-weight: 500;
-    transition: all 0.2s ease;
+    border-radius: 6px;
+    border: var(--border-default);
+    padding: 8px 16px;
+    cursor: pointer;
 }
 #QnaCancel:hover {
     background: var(--bg-overlay);
 }
 
-/* ===============================
-   기타
-================================= */
-.no-answer {
-    color: var(--text-muted);
-    font-size: 0.9rem;
-    margin-top: 8px;
+/* ===== 페이징 (리스트 하단 중앙) ===== */
+.qna-pagination {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 8px;
+    flex-wrap: wrap;
+}
+.qna-page-btn {
+    padding: 6px 12px;
+    border: var(--border-default);
+    border-radius: 4px;
+    background-color: var(--bg-white);
+    color: var(--text-primary);
+    font-size: 14px;
+    cursor: pointer;
+    transition: background 0.15s ease;
+}
+.qna-page-btn:hover:not(:disabled) {
+    background-color: var(--bg-point-sub);
+}
+.qna-page-btn.active {
+    background-color: var(--bg-point-main);
+    color: var(--text-white);
+}
+.qna-page-btn:disabled {
+    opacity: 0.5;
+    cursor: default;
 }
 
-/* 반응형 */
+/* ===============================
+   반응형
+================================ */
 @media (max-width: 1024px) {
     .qna-body {
         flex-direction: column;
     }
-    .qna-list-wrapper,
+    .qna-list-wrapper-container,
     .qna-write-form {
-        width: 100%;
+        max-width: 100%;
     }
+    .qna-write-form {
+        margin-top: 20px;
+    }
+}
+
+.qna-question-header .created {
+    margin-left: auto;
+    text-align: right;
+    min-width: 120px;
+}
+
+/* 좌우 비율을 완전 고정하여 폭 일치 */
+.qna-body {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+}
+
+.qna-list-wrapper-container {
+    flex-basis: 50%;
+    max-width: 50%;
+}
+
+.qna-write-form {
+    flex-basis: 50%;
+    max-width: 50%;
+}
+
+.qna-write-form[style*="display: none"] {
+    visibility: hidden;
+    opacity: 0;
+}
+
+/* ===== 질문·답변 수정 시 textarea 크기 ===== */
+.qna-edit-textarea {
+    width: 100%;
+    min-height: 80px;
+    resize: vertical;
+    padding: 8px 10px;
+    border: var(--border-default);
+    border-radius: 6px;
+    font-size: 14px;
+    color: var(--text-primary);
+    background-color: var(--bg-white);
+    box-sizing: border-box;
+}
+
+/* ===== 답변 날짜 정렬 (질문과 동일하게 오른쪽) ===== */
+.qna-answer-header .created {
+    margin-left: auto;
+    text-align: right;
+    min-width: 120px;
 }

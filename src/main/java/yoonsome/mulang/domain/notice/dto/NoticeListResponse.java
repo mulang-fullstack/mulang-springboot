@@ -1,9 +1,8 @@
-package yoonsome.mulang.api.admin.system.dto;
+package yoonsome.mulang.domain.notice.dto;
 
 import lombok.*;
 import yoonsome.mulang.domain.notice.entity.Notice;
 
-import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
 @Getter

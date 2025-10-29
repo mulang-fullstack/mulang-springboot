@@ -115,14 +115,14 @@
                     <table>
                         <thead>
                         <tr>
-                            <th style="width: 60px;">번호</th>
-                            <th style="width: 100px;">카테고리</th>
-                            <th style="width: auto;">제목</th>
-                            <th style="width: 100px;">작성자</th>
-                            <th style="width: 110px;">작성일</th>
-                            <th style="width: 110px;">답변일</th>
-                            <th style="width: 100px;">답변상태</th>
-                            <th style="width: 140px;">관리</th>
+                            <th>번호</th>
+                            <th>카테고리</th>
+                            <th>제목</th>
+                            <th>작성자</th>
+                            <th>작성일</th>
+                            <th>답변일</th>
+                            <th>답변상태</th>
+                            <th>관리</th>
                         </tr>
                         </thead>
                         <tbody>
@@ -152,7 +152,7 @@
     };
 </script>
 
-<script src="/js/common/currentTime.js"></script>
+<script src="/js/common/utils.js"></script>
 <script src="/js/pages/admin/pagination.js"></script>
 <script src="/js/pages/admin/system/inquiryManage.js"></script>
 </body>

@@ -1,6 +1,9 @@
 /* ==========================================================
-   관리자 사용자 로그 페이지 스타일
+   관리자 사용자 로그 페이지 전용 스타일
    Path: /css/pages/admin/user/userLog.css
+
+   admin.css에서 공통 스타일을 상속받아 사용하며,
+   이 파일에는 사용자 로그 페이지만의 고유한 스타일만 포함됩니다.
    ========================================================== */
 
 /* 로그 타입 배지 */
@@ -13,20 +16,20 @@
 }
 
 .log-badge.login {
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-    color: #fff;
+    background: var(--admin-gradient-purple);
+    color: var(--text-white);
 }
 
 .log-badge.logout {
-    background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
-    color: #fff;
+    background: var(--admin-gradient-pink);
+    color: var(--text-white);
 }
 
 /* IP 주소 스타일 */
 .ip-address {
-    font-family: 'Courier New', monospace;
+    font-family: var(--admin-code-font);
     font-size: 12px;
-    background: #f5f5f5;
+    background: var(--admin-ip-bg);
     padding: 2px 5px;
     border-radius: 4px;
 }
@@ -34,15 +37,10 @@
 /* 브라우저 정보 */
 .browser-info {
     font-size: 11px;
-    color: #666;
+    color: var(--admin-text-quaternary);
 }
 
 /* 빈 상태 */
-.no-data {
-    padding: 40px 20px;
-    text-align: center;
-}
-
 .empty-state {
     display: flex;
     flex-direction: column;
@@ -51,11 +49,11 @@
 }
 
 .empty-state svg {
-    color: #d1d5db;
+    color: var(--admin-btn-disabled);
 }
 
 .empty-state p {
-    color: #9ca3af;
+    color: var(--admin-text-muted);
     font-size: 13px;
     margin: 0;
 }

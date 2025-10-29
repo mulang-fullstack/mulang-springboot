@@ -1,4 +1,4 @@
-package yoonsome.mulang.api.admin.system.dto;
+package yoonsome.mulang.domain.notice.dto;
 
 import lombok.Data;
 import org.springframework.format.annotation.DateTimeFormat;

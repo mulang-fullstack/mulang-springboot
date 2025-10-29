@@ -46,10 +46,13 @@
             </div>
         </div>
             <div class="course-purchase">
-                <button class="heart-icon"><img src="/img/icon/heart-full.svg" alt="찜 아이콘"></button>
+                <div class="heart-icon" data-course-id="${detail.id}">
+                    <img src="${detail.favorited ? '/img/icon/heart-full.svg' : '/img/icon/heart-empty.svg'}" alt="찜 아이콘">
+                </div>
                 <span class="price"><fmt:formatNumber value="${detail.price}" type="number" groupingUsed="true"/>원</span>
                 <a href="/payments/${detail.id}"><button class="purchase-btn">결제하기</button></a>
             </div>
     </div>
 </div>
 <script src="/js/pages/course/teacher.profile/openTeacherProfile.js"></script>
+<script src="/js/pages/course/courseFavorite.js"></script>

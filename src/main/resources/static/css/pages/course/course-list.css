@@ -190,6 +190,10 @@
     cursor: pointer;
 }
 
+.heart-icon img:hover {
+    transform: scale(1.2);
+}
+
 .price {
     font-size: 20px;
     color: var(--text-secondary);
@@ -207,6 +211,13 @@
     border-radius: 10px;
     font-size: 20px;
     cursor: pointer;
+}
+.purchase-btn:hover {
+    opacity: 0.9;
+}
+
+.empty-content img{
+    width:1280px;
 }
 
 /* 페이지네이션 */

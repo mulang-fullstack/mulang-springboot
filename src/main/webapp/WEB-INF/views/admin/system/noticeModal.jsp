@@ -29,7 +29,6 @@
                     <select id="noticeType" name="type" required>
                         <option value="">유형을 선택하세요</option>
                         <option value="GENERAL">일반</option>
-                        <option value="EVENT">이벤트</option>
                         <option value="UPDATE">업데이트</option>
                         <option value="SYSTEM">시스템</option>
                     </select>
@@ -120,4 +119,3 @@
     </div>
 </div>
 <script src="/js/pages/admin/system/noticeModal.js"></script>
-<script src="/js/common/utils.js"></script>

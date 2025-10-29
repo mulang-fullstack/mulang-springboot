@@ -2,7 +2,9 @@ package yoonsome.mulang.api.admin.content.service;
 
 import org.springframework.data.domain.Page;
 import yoonsome.mulang.api.admin.content.dto.AdminCourseResponse;
+import yoonsome.mulang.api.admin.content.dto.AdminStatusUpdateRequest;
 import yoonsome.mulang.domain.course.dto.CourseListRequest;
+import yoonsome.mulang.domain.course.entity.StatusType;
 
 public interface AdminContentService {
     /**
@@ -11,4 +13,6 @@ public interface AdminContentService {
      * @return 강좌 목록 페이지
      */
     Page<AdminCourseResponse> getCourseList(CourseListRequest request);
+
+    void updateCourseInfo(Long userId, AdminStatusUpdateRequest request);
 }

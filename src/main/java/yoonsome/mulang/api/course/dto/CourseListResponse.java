@@ -18,4 +18,5 @@ public class CourseListResponse {
     private int reviewCount;       // 리뷰 수
     private Integer price;         // 수강료
     private LocalDateTime createdAt; // 강의 등록일
+    private boolean favorited;     // 찜
 }

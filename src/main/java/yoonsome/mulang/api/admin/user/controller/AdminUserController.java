@@ -45,6 +45,19 @@ public class AdminUserController {
         return ResponseEntity.ok(response);
     }
 
+    /**
+     * 회원 정보 수정 (비동기)
+     */
+    @PutMapping("/api/{userId}")
+    @ResponseBody
+    public ResponseEntity<?> updateUserInfo(
+            @PathVariable Long userId,
+            @RequestBody User.UserStatus userStatus
+            ) {
+        adminUserService.updateUserInfo(userId, userStatus);
+        return ResponseEntity.ok(Map.of("success", true, "message", "성공적으로 수정되었습니다."));
+    }
+
     /** 사용자 로그 (동기 JSP) */
     @GetMapping("/log")
     public String getUserLogList(@ModelAttribute UserLogSearchRequest request, Model model) {

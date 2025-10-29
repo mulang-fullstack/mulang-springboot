@@ -17,11 +17,13 @@ public interface DisplayingCourseService {
     //카테고리 목록
     List<Category> getCategoryList(CourseListRequest request);
     //강좌 리스트 정보 페이지 객체
-    Page<CourseListResponse> getCoursePage(CourseListRequest request, HttpSession session);
+    Page<CourseListResponse> getCoursePage(Long userId, CourseListRequest request, HttpSession session);
     //강좌 상세페이지 정보
-    CourseDetailResponse getCourseDetail(long id);
+    CourseDetailResponse getCourseDetail(Long userId, long id);
     //강좌 상세페이지 리뷰
     Page<ReviewResponse> getReviewPageByCourseId(Long courseId, Pageable pageable);
     //강사 프로필 조회
     TeacherProfileResponse getTeacherProfileResponse(long id);
+    //찜 기능
+    void addOrRemoveFavorite(Long studentId, Long courseId);
 }

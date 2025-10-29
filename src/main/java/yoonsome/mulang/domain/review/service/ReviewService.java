@@ -11,6 +11,8 @@ public interface ReviewService {
     Page<CourseReview> getReviewsByCourseId(Long courseId, Pageable pageable);
     /*리뷰 등록*/
     void saveReview(CourseReview review);
+    /*리뷰 수정*/
+    void editReview(CourseReview review);
     /*리뷰 삭제*/
     void deleteReview(Long reviewId);
     /*평균 별점*/

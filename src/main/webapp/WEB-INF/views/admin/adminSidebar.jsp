@@ -29,7 +29,7 @@
                 <div><img src="/img/icon/calendar-edit.png"> 콘텐츠 관리</div>
                 <ul class="submenu">
                     <li><a href="/admin/content/course" data-submenu="course">강좌 조회</a></li>
-                    <li><a href="/admin/content/pendingCourse" data-submenu="pendingCourse">강좌 신청</a></li>
+                    <li><a href="/admin/content/pendingCourse" data-submenu="pendingCourse">강좌 심사</a></li>
                 </ul>
             </li>
 
@@ -37,7 +37,6 @@
                 <div><img src="/img/icon/admin-card.png"> 결제 관리</div>
                 <ul class="submenu">
                     <li><a href="/admin/payment" data-submenu="payment">결제 내역</a></li>
-                    <li><a href="/admin/payment/refund" data-submenu="refund">환불 신청</a></li>
                 </ul>
             </li>
 

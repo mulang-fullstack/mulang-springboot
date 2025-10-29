@@ -12,5 +12,7 @@ public class CourseAnswerResponse {
     private String content;
     private String teacherName;
     private Timestamp createdAt;
+    private boolean deletable; // 삭제 가능 여부
+    private boolean editable; // 수정 가능 여부
 
 }

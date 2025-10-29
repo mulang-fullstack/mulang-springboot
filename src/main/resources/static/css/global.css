@@ -60,6 +60,103 @@ html {
     --shadow-default: 0px 1px 4px 0px rgba(0, 0, 0, 0.1); /* 수정: 0.3 → 0.1 (너무 진함) */
     --shadow-md: 0 4px 8px rgba(0, 0, 0, 0.1);           /* 기존 primary를 md로 변경 */
     --shadow-lg: 0 10px 25px rgba(0, 0, 0, 0.1);         /* 추가: 큰 그림자 */
+
+    /* ==================== 관리자 페이지 전용 색상 변수 ==================== */
+
+    /* Admin - 배경색 */
+    --admin-bg-main: #f5f7fa;                               /* 관리자 메인 배경 */
+    --admin-bg-page: #f5f7fa;                               /* 페이지 배경 */
+    --admin-bg-card: #ffffff;                               /* 카드 배경 */
+    --admin-bg-header: #ffffff;                             /* 헤더 배경 */
+    --admin-bg-hover: #f8f9ff;                              /* 테이블 행 호버 */
+    --admin-bg-filter: #fafbfc;                             /* 필터 입력 배경 */
+    --admin-bg-modal-overlay: rgba(0, 0, 0, 0.6);          /* 모달 오버레이 */
+    --admin-bg-editing: #fff9e6;                            /* 편집 중 행 배경 */
+    --admin-bg-pending: #fffbeb;                            /* 대기 상태 배경 */
+    --admin-bg-refund: #fef3f2;                             /* 환불 행 배경 */
+
+    /* Admin - 그라데이션 배경 */
+    --admin-gradient-header: linear-gradient(to bottom, #f8f9fa, #f3f4f6);
+    --admin-gradient-modal: linear-gradient(to bottom, #fafbfc, #ffffff);
+    --admin-gradient-primary: linear-gradient(135deg, #4b7bec 0%, #3867d6 100%);
+    --admin-gradient-success: linear-gradient(135deg, #10b981 0%, #059669 100%);
+    --admin-gradient-danger: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
+    --admin-gradient-warning: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
+    --admin-gradient-info: linear-gradient(135deg, #8b5cf6 0%, #7c3aed 100%);
+    --admin-gradient-purple: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    --admin-gradient-pink: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+    --admin-gradient-card: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
+    --admin-gradient-bank: linear-gradient(135deg, #10b981 0%, #059669 100%);
+    --admin-gradient-kakao: linear-gradient(135deg, #fee500 0%, #ffd600 100%);
+    --admin-gradient-naver: linear-gradient(135deg, #03c75a 0%, #00b050 100%);
+    --admin-gradient-event: linear-gradient(135deg, #ec4899 0%, #db2777 100%);
+
+    /* Admin - 텍스트 색상 */
+    --admin-text-primary: #1f2937;                          /* 주 텍스트 */
+    --admin-text-secondary: #374151;                        /* 부 텍스트 */
+    --admin-text-tertiary: #4b5563;                         /* 3차 텍스트 */
+    --admin-text-quaternary: #6b7280;                       /* 4차 텍스트 */
+    --admin-text-muted: #9ca3af;                            /* 약한 텍스트 */
+    --admin-text-header: #555555;                           /* 헤더 텍스트 */
+    --admin-text-table-header: #444444;                     /* 테이블 헤더 */
+    --admin-text-link: #4b7bec;                             /* 링크 색상 */
+    --admin-text-kakao: #3c1e1e;                            /* 카카오 텍스트 */
+
+    /* Admin - 상태별 색상 */
+    --admin-status-active: #22C55E;                         /* 활성 */
+    --admin-status-inactive: #e11d48;                       /* 비활성 */
+    --admin-status-success: #10b981;                        /* 성공 */
+    --admin-status-pending: #f59e0b;                        /* 대기 */
+    --admin-status-failed: #ef4444;                         /* 실패 */
+    --admin-status-refund: #8b5cf6;                         /* 환불 */
+    --admin-status-approved: #3b82f6;                       /* 승인 */
+    --admin-status-rejected: #ef4444;                       /* 거절 */
+    --admin-status-completed: #10b981;                      /* 완료 */
+
+    /* Admin - 배지 배경색 */
+    --admin-badge-active-bg: #d4f4dd;                       /* 활성 배지 배경 */
+    --admin-badge-active-text: #22a55a;                     /* 활성 배지 텍스트 */
+    --admin-badge-inactive-bg: #ffe4e6;                     /* 비활성 배지 배경 */
+    --admin-badge-inactive-text: #e11d48;                   /* 비활성 배지 텍스트 */
+    --admin-badge-student-bg: #e0e7ff;                      /* 학생 배지 배경 */
+    --admin-badge-student-text: #4f46e5;                    /* 학생 배지 텍스트 */
+    --admin-badge-tutor-bg: #fef3c7;                        /* 강사 배지 배경 */
+    --admin-badge-tutor-text: #d97706;                      /* 강사 배지 텍스트 */
+    --admin-badge-general-bg: linear-gradient(135deg, #6b7280 0%, #4b5563 100%);
+
+    /* Admin - 버튼 색상 */
+    --admin-btn-primary: #4b7bec;                           /* 주 버튼 */
+    --admin-btn-primary-hover: #3968c3;                     /* 주 버튼 호버 */
+    --admin-btn-success: #10b981;                           /* 성공 버튼 */
+    --admin-btn-success-hover: #059669;                     /* 성공 버튼 호버 */
+    --admin-btn-danger: #ef4444;                            /* 위험 버튼 */
+    --admin-btn-danger-hover: #dc2626;                      /* 위험 버튼 호버 */
+    --admin-btn-secondary: #6b7280;                         /* 2차 버튼 */
+    --admin-btn-secondary-hover: #4b5563;                   /* 2차 버튼 호버 */
+    --admin-btn-cancel: #a3a4a6;                            /* 취소 버튼 */
+    --admin-btn-cancel-hover: #c5c7cb;                      /* 취소 버튼 호버 */
+    --admin-btn-disabled: #d1d5db;                          /* 비활성 버튼 */
+
+    /* Admin - 테두리 색상 */
+    --admin-border-light: #e5e8eb;                          /* 밝은 테두리 */
+    --admin-border-default: #e0e0e0;                        /* 기본 테두리 */
+    --admin-border-focus: #4b7bec;                          /* 포커스 테두리 */
+    --admin-border-input: #d1d5db;                          /* 인풋 테두리 */
+    --admin-border-divider: #f0f0f0;                        /* 구분선 */
+    --admin-border-modal: #e5e7eb;                          /* 모달 테두리 */
+
+    /* Admin - 그림자 */
+    --admin-shadow-card: 0 2px 8px rgba(0, 0, 0, 0.08);    /* 카드 그림자 */
+    --admin-shadow-header: 0 1px 3px rgba(0, 0, 0, 0.05);  /* 헤더 그림자 */
+    --admin-shadow-modal: 0 20px 60px rgba(0, 0, 0, 0.3);  /* 모달 그림자 */
+    --admin-shadow-hover: 0 2px 8px rgba(75, 123, 236, 0.4); /* 호버 그림자 */
+    --admin-shadow-focus: 0 0 0 3px rgba(75, 123, 236, 0.1); /* 포커스 그림자 */
+    --admin-shadow-button: 0 4px 12px rgba(75, 123, 236, 0.3); /* 버튼 그림자 */
+
+    /* Admin - 기타 */
+    --admin-ip-bg: #f5f5f5;                                 /* IP 주소 배경 */
+    --admin-reason-bg: #f9fafb;                             /* 사유 배경 */
+    --admin-code-font: 'Courier New', monospace;            /* 코드 폰트 */
 }
 
 /* 기본 reset */

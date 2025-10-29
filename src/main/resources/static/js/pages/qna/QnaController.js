@@ -1,18 +1,21 @@
 /**
  * QnaController.js
- * 이벤트 흐름 관리
+ * Q&A 게시판 전체 제어 (등록, 수정, 삭제, 페이징 포함)
  */
 const QnaController = {
     courseId: null,
     listContainer: null,
     qnaList: [],
+    currentPage: 0,
+    totalPages: 0,
 
+    /** 초기화 */
     init(courseId) {
         this.courseId = courseId;
         this.listContainer = document.getElementById("qna-list");
         this.loadQnaList();
 
-        // 질문 등록 버튼 이벤트
+        // 질문 등록 버튼
         document.getElementById("QnaSubmit").addEventListener("click", async () => {
             const title = document.getElementById("QnaTitle").value.trim();
             const content = document.getElementById("QnaContent").value.trim();
@@ -20,44 +23,49 @@ const QnaController = {
             if (!title) return alert("질문 제목을 입력하세요.");
             if (!content) return alert("질문 내용을 입력하세요.");
 
-            await QnaApi.createQuestion(this.courseId, title, content);
-
-            // 입력창 초기화
-            document.getElementById("QnaTitle").value = "";
-            document.getElementById("QnaContent").value = "";
-
-            // 목록 새로고침
-            this.loadQnaList();
+            try {
+                await QnaApi.createQuestion(this.courseId, title, content);
+                document.getElementById("QnaTitle").value = "";
+                document.getElementById("QnaContent").value = "";
+                await this.loadQnaList(this.currentPage);
+            } catch (err) {
+                console.error(err);
+                alert("질문 등록 중 오류가 발생했습니다.");
+            }
         });
     },
 
-    /** QnA 목록 불러오기 */
-    async loadQnaList() {
-        const data = await QnaApi.getQnaByCourse(this.courseId);
-        this.qnaList = data.content || data; // PageImpl 대응
-        QnaView.renderQuestionList(this.qnaList, this.listContainer);
+    /** QnA 목록 불러오기 (페이징 포함) */
+    async loadQnaList(page = 0) {
+        try {
+            const data = await QnaApi.getQnaByCourse(this.courseId, page);
+            this.qnaList = data.content || [];
+            this.currentPage = data.page || 0;
+            this.totalPages = data.totalPages || 1;
+
+            QnaView.renderQuestionList(this.qnaList, this.listContainer);
+            QnaView.renderPagination(this.currentPage, this.totalPages);
+        } catch (err) {
+            console.error(err);
+            alert("Q&A 목록을 불러오지 못했습니다.");
+        }
     },
 
     /** 답변 등록 처리 */
     async handleAnswerSubmit(questionId, content) {
         try {
-            // 새 답변 등록 요청
-            const response = await QnaApi.createAnswer(questionId, content);
-
-            // 기존 질문 데이터 찾기
-            const question = this.qnaList.find(q => q.id === questionId);
-            if (question) {
-                question.answers = question.answers || [];
-                question.answers.push(response);
-            }
-
-            // 열린 질문 박스만 갱신 (닫히지 않음)
+            await QnaApi.createAnswer(questionId, content);
+            // 동일 페이지에서 유지
             const questionBox = document.querySelector(`.qna-question-box[data-id="${questionId}"]`);
-            if (questionBox) {
-                const container = questionBox.querySelector(".qna-answer-container");
-                QnaView.renderAnswerSection(question, container);
+            const container = questionBox?.querySelector(".qna-answer-container");
+            if (container) {
+                const data = await QnaApi.getQnaByCourse(this.courseId, this.currentPage);
+                const updatedQ = data.content.find(q => q.id === questionId);
+                if (updatedQ) {
+                    QnaView.renderAnswerSection(updatedQ, container);
+                    container.style.display = "block";
+                }
             }
-
         } catch (err) {
             console.error(err);
             alert("답변 등록 중 오류가 발생했습니다.");
@@ -66,7 +74,7 @@ const QnaController = {
 };
 
 /* ===============================
-   질문 작성 폼 토글 버튼 제어
+   질문 작성 폼 토글
 ================================= */
 document.getElementById("QnaWriteBtn").addEventListener("click", () => {
     const form = document.getElementById("qna-write-form");

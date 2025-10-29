@@ -17,7 +17,7 @@ public interface CourseQnaApiService {
     //답변 등록
     void createAnswer(CourseAnswerRequest request, Long teacherId);
     //강좌별 Q&A 전체조회
-    Page<CourseQuestionResponse> getQnaByCourse(Long courseId, Pageable pageable);
+    Page<CourseQuestionResponse> getQnaByCourse(Long courseId, Pageable pageable, User currentUser);
     //질문 업데이트
     void updateQuestion(Long questionId, CourseQuestionRequest request, Long userId);
     //답변 업데이트

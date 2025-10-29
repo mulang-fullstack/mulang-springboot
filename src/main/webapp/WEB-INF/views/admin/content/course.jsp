@@ -122,7 +122,7 @@
                             <th>강사</th>
                             <th>닉네임</th>
                             <th>등록일</th>
-                            <th>상태</th>
+                            <th>강좌상태</th>
                             <th>관리</th>
                         </tr>
                         </thead>
@@ -144,8 +144,9 @@
     </div>
 </div>
 
-<script src="/js/common/currentTime.js"></script>
+<script src="/js/common/utils.js"></script>
 <script src="/js/pages/admin/pagination.js"></script>
 <script src="/js/pages/admin/content/course.js"></script>
+<script src="/js/pages/admin/content/course-action.js"></script>
 </body>
 </html>

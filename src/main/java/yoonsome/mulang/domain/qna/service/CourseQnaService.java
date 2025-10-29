@@ -28,7 +28,7 @@ public interface CourseQnaService {
     List<CourseQuestion> getQuestionPageByUserAsc(Long userId);
 
     /** 특정 교사 답변 페이징 조회 */
-    Page<CourseAnswer> getAnswerPageByTeacher(Long teacherId, Pageable pageable);
+    Page<CourseAnswer> getAnswerPageByUser(Long userId, Pageable pageable);
 
     /** 단일 질문 조회 */
     CourseQuestion getQuestionById(Long questionId);

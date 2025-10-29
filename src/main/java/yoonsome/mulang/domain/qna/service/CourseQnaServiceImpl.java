@@ -56,8 +56,8 @@ public class CourseQnaServiceImpl implements CourseQnaService {
 
     @Override
     @Transactional(readOnly = true)
-    public Page<CourseAnswer> getAnswerPageByTeacher(Long teacherId, Pageable pageable) {
-        return courseAnswerRepository.findByTeacher_IdOrderByCreatedAtDesc(teacherId, pageable);
+    public Page<CourseAnswer> getAnswerPageByUser(Long userId, Pageable pageable) {
+        return courseAnswerRepository.findByUser_IdOrderByCreatedAtDesc(userId, pageable);
     }
 
     @Override
@@ -76,6 +76,12 @@ public class CourseQnaServiceImpl implements CourseQnaService {
 
     @Override
     public void deleteQuestion(Long questionId) {
+        // [1] 연결된 모든 답변 먼저 삭제
+        List<CourseAnswer> answers = courseAnswerRepository.findByCourseQuestion_Id(questionId);
+        if (!answers.isEmpty()) {
+            courseAnswerRepository.deleteAll(answers);
+        }
+        // [2] 질문 삭제
         courseQuestionRepository.deleteById(questionId);
     }
 
