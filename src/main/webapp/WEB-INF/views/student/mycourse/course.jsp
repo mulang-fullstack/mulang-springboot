@@ -66,10 +66,9 @@
                                 </div>
 
                                 <!-- 강좌 제목 -->
-                                <button type="button" class="title" onclick="openPlayer(${course.course.id})">
-                                        ${course.course.title}
-                                </button>
-
+                                <div class="title-wrap" data-id="${course.course.id}">
+                                    <div class="title">${course.course.title}</div>
+                                </div>
                                 <!-- 강사명 -->
                                 <div class="teacher-name">
                                     <c:choose>
@@ -85,13 +84,17 @@
                                 <!-- 진척도 -->
                                 <div class="progress-wrapper">
                                     <c:choose>
-                                        <c:when test="${course.progress == 0 or course.progress == null}">
+                                        <c:when test="${course.progress == null}">
                                             <span class="no-progress">수강 정보 없음</span>
                                         </c:when>
                                         <c:otherwise>
                                             <div class="progress-bar">
-                                                <div class="progress-fill" style="width: ${course.progress}%"></div>
+                                                <div class="progress-fill ${course.progress < 30 ? 'low' : course.progress < 70 ? 'medium' : 'high'}"
+                                                     style="width: ${course.progress}%">
+                                                    <span class="progress-text">${course.progress}%</span>
+                                                </div>
                                             </div>
+
                                         </c:otherwise>
                                     </c:choose>
                                 </div>

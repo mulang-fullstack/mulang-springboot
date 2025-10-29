@@ -22,4 +22,16 @@ public interface ProgressRepository extends JpaRepository<Progress, Long> {
             @Param("userId") Long userId,
             @Param("courseId") Long courseId
     );
+    // 특정 강좌의 전체 강의 수 (추가)
+    @Query("""
+        SELECT COUNT(p)
+        FROM Progress p
+        JOIN p.lecture l
+        WHERE p.student.id = :userId
+        AND l.course.id = :courseId
+    """)
+    Long countTotalLecturesByCourseId(
+            @Param("userId") Long userId,
+            @Param("courseId") Long courseId
+    );
 }

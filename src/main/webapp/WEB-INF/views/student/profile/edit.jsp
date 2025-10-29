@@ -29,67 +29,69 @@
                     <h2>강사 프로필 관리</h2>
 
                     <section class="profile-section">
-                        <!-- 프로필 이미지 -->
-                        <div class="field">
-                            <label>프로필 이미지</label>
-                            <div class="field-content profile-img-area">
-                                <div class="profile-img-wrap">
-                                    <img id="profile-preview" src="/img/dummy/profile.jpg" alt="프로필 이미지">
+
+                        <!-- form 시작 위치 변경 + enctype 추가 -->
+                        <form action="/student/edit" method="post" enctype="multipart/form-data">
+
+                            <!-- 프로필 이미지 -->
+                            <div class="field">
+                                <label>프로필 이미지</label>
+                                <div class="field-content profile-img-area">
+                                    <div class="profile-img-wrap">
+                                        <img id="profile-preview"
+                                             src="${not empty user.photoUrl ? user.photoUrl : '/img/dummy/profile.jpg'}"
+                                             alt="프로필 이미지">
+                                    </div>
+
+                                    <!-- 카메라 버튼 -->
+                                    <button type="button" class="camera-btn" onclick="document.getElementById('fileInput').click();">
+                                        <img src="/img/icon/bx-camera.svg" alt="사진 변경">
+                                    </button>
+
+                                    <!-- 숨겨진 파일 업로드 input - name을 photo로 변경 -->
+                                    <input type="file" id="fileInput" name="photo" accept="image/*" style="display:none;">
                                 </div>
-
-                                <!-- 카메라 버튼 -->
-                                <button type="button" class="camera-btn" onclick="document.getElementById('fileInput').click();">
-                                    <img src="/img/icon/bx-camera.svg" alt="사진 변경">
-                                </button>
-
-                                <!-- 숨겨진 파일 업로드 input -->
-                                <input type="file" id="fileInput" name="file" accept="image/*" style="display:none;">
                             </div>
-                        </div>
 
-
-                    <form action="/student/edit" method="post">
-
-                        <!-- 강사명 -->
-                        <div class="field">
-                            <label>이름</label>
-                            <div class="input-wrap">
-                                <span>${user.username}</span>
+                            <!-- 강사명 -->
+                            <div class="field">
+                                <label>이름</label>
+                                <div class="input-wrap">
+                                    <span>${user.username}</span>
+                                </div>
                             </div>
-                        </div>
 
-                        <!-- 닉네임 -->
-                        <div class="field">
-                            <label>닉네임</label>
-                            <div class="input-wrap">
-                                <input type="text" name="nickname" value="${user.nickname}">
+                            <!-- 닉네임 -->
+                            <div class="field">
+                                <label>닉네임</label>
+                                <div class="input-wrap">
+                                    <input type="text" name="nickname" value="${user.nickname}">
+                                </div>
                             </div>
-                        </div>
 
+                            <!-- 이메일 -->
+                            <div class="field">
+                                <label>이메일</label>
+                                <div class="input-wrap">
+                                    <input type="text" name="email" value="${user.email}">
 
-                        <!-- 이메일 -->
-                        <div class="field">
-                            <label>이메일</label>
-                            <div class="input-wrap">
-                                <input type="text" name="email" value="${user.email}">
+                                    <!-- 유효성 검사 에러 메시지 -->
+                                    <c:if test="${not empty emailerror}">
+                                        <p class="error">${emailerror}</p>
+                                    </c:if>
 
-                                <!-- 유효성 검사 에러 메시지 -->
-                                <c:if test="${not empty emailerror}">
-                                    <p class="error">${emailerror}</p>
-                                </c:if>
+                                    <!-- 파일 업로드 에러 메시지 추가 -->
+                                    <c:if test="${not empty errorMessage}">
+                                        <p class="error">${errorMessage}</p>
+                                    </c:if>
+                                </div>
                             </div>
-                        </div>
 
-
-
-
-
-
-                        <!-- 수정 버튼 -->
-                        <div class="submit-wrap">
-                            <button type="submit" class="submit-btn">수정하기</button>
-                        </div>
-                    </form>
+                            <!-- 수정 버튼 -->
+                            <div class="submit-wrap">
+                                <button type="submit" class="submit-btn">수정하기</button>
+                            </div>
+                        </form>
                     </section>
 
                 </div>
@@ -98,7 +100,7 @@
 
     </div>
 </main>
-<script src = "/js/pages/mypage/edit.js"></script>
+<script src="/js/pages/mypage/edit.js"></script>
 <%@ include file="../../common/footer.jsp" %>
 </body>
 </html>

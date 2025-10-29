@@ -14,6 +14,7 @@ import java.util.stream.Collectors;
 public class MyCourseInfoServiceImpl implements MyCourseInfoService {
 
     private final EnrollmentRepository enrollmentRepository;
+    private final ProgressCalculateService progressCalculateService;
 
     @Override
     public List<MycourseResponse> findByUserId(Long userId) {
@@ -22,7 +23,19 @@ public class MyCourseInfoServiceImpl implements MyCourseInfoService {
                 .findByUserId(userId);
 
         return enrollments.stream()
-                .map(MycourseResponse::from)
+                .map(enrollment -> {
+                    // DTO 변환
+                    MycourseResponse response = MycourseResponse.from(enrollment);
+
+                    // 진척도 계산 및 설정
+                    Integer progress = progressCalculateService.progressCalculate(
+                            userId,
+                            enrollment.getCourse().getId()
+                    );
+                    response.setProgress(progress);
+
+                    return response;
+                })
                 .collect(Collectors.toList());
     }
     @Override
@@ -31,7 +44,19 @@ public class MyCourseInfoServiceImpl implements MyCourseInfoService {
                 .findByUserIdWithCourse(userId);
 
         return enrollments.stream()
-                .map(MycourseResponse::from)
+                .map(enrollment -> {
+                    // DTO 변환
+                    MycourseResponse response = MycourseResponse.from(enrollment);
+
+                    // 진척도 계산 및 설정
+                    Integer progress = progressCalculateService.progressCalculate(
+                            userId,
+                            enrollment.getCourse().getId()
+                    );
+                    response.setProgress(progress);
+
+                    return response;
+                })
                 .collect(Collectors.toList());
     }
     @Override
@@ -40,7 +65,19 @@ public class MyCourseInfoServiceImpl implements MyCourseInfoService {
                 .findByUserIdAndLanguage(userId, languageId);
 
         return enrollments.stream()
-                .map(MycourseResponse::from)
+                .map(enrollment -> {
+                    // DTO 변환
+                    MycourseResponse response = MycourseResponse.from(enrollment);
+
+                    // 진척도 계산 및 설정
+                    Integer progress = progressCalculateService.progressCalculate(
+                            userId,
+                            enrollment.getCourse().getId()
+                    );
+                    response.setProgress(progress);
+
+                    return response;
+                })
                 .collect(Collectors.toList());
     }
     @Override
@@ -48,7 +85,19 @@ public class MyCourseInfoServiceImpl implements MyCourseInfoService {
         List<Enrollment> enrollments = enrollmentRepository
                 .findByUserIdAndKeyword(userId, keyword);
         return enrollments.stream()
-                .map(MycourseResponse::from)
+                .map(enrollment -> {
+                    // DTO 변환
+                    MycourseResponse response = MycourseResponse.from(enrollment);
+
+                    // 진척도 계산 및 설정
+                    Integer progress = progressCalculateService.progressCalculate(
+                            userId,
+                            enrollment.getCourse().getId()
+                    );
+                    response.setProgress(progress);
+
+                    return response;
+                })
                 .collect(Collectors.toList());
     }
     @Override
@@ -57,7 +106,19 @@ public class MyCourseInfoServiceImpl implements MyCourseInfoService {
                 .findByUserIdAndLanguageAndKeyword(userId, languageId, keyword);
 
         return enrollments.stream()
-                .map(MycourseResponse::from)
+                .map(enrollment -> {
+                    // DTO 변환
+                    MycourseResponse response = MycourseResponse.from(enrollment);
+
+                    // 진척도 계산 및 설정
+                    Integer progress = progressCalculateService.progressCalculate(
+                            userId,
+                            enrollment.getCourse().getId()
+                    );
+                    response.setProgress(progress);
+
+                    return response;
+                })
                 .collect(Collectors.toList());
     }
 }

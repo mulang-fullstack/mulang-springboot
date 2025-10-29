@@ -21,5 +21,7 @@ public interface ReviewService {
     int countReviewByCourseId(Long courseId);
     /*리뷰 존재 여부*/
     boolean existReview(Long userId, Long courseId);
+    /*리뷰 조회*/
+    CourseReview findById(Long reviewId);
 
 }

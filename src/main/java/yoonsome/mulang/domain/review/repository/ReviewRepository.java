@@ -29,4 +29,6 @@ public interface ReviewRepository extends JpaRepository<CourseReview, Long> {
 
     /*학생이 작성한 모든 리뷰 조회 (오래된순)*/
     List<CourseReview> findByStudentIdOrderByCreatedAtAsc(Long studentId);
+
+
 }

@@ -3,10 +3,8 @@ package yoonsome.mulang.api.student.controller;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import yoonsome.mulang.infra.security.CustomUserDetails;
 import yoonsome.mulang.api.student.dto.MypageResponse;
@@ -23,8 +21,10 @@ public class StuInfoModifyController {
     }
 
     @GetMapping("passwordchange")
-    public String passwordchange(){
-
+    public String passwordchange(@AuthenticationPrincipal CustomUserDetails userDetails, Model model) {
+        Long userid =  userDetails.getUser().getId();
+        MypageResponse user = mypageService.getUserInfo(userid);
+        model.addAttribute("user", user);
         return "student/profile/passwordchange";
     }
     @PostMapping("passwordchange")
@@ -56,25 +56,21 @@ public class StuInfoModifyController {
     @GetMapping("edit")  // 편집창에 정보 가져와서 보여주기
     public String edit(Model model, @AuthenticationPrincipal CustomUserDetails userDetails) {
 
-        Long id = userDetails.getUser().getId();
-        MypageResponse user = mypageService.getUserInfo(id);
+        Long userid = userDetails.getUser().getId();
+        MypageResponse user = mypageService.getUserInfo(userid);
         model.addAttribute("user", user);
 
         return "student/profile/edit";
     }
     @PostMapping("edit")
-    public  String edit(Model model,
-                        @AuthenticationPrincipal CustomUserDetails userDetails,
-                        @RequestParam String email,
-                        @RequestParam String nickname, RedirectAttributes redirectAttributes) {
+    public String edit(Model model,
+                       @AuthenticationPrincipal CustomUserDetails userDetails,
+                       @RequestParam String email,
+                       @RequestParam String nickname,
+                       @RequestPart(required = false) MultipartFile photo,
+                       RedirectAttributes redirectAttributes) {
 
         Long userId = userDetails.getUser().getId();
-
-
-            // Service 메서드 호출 (자동으로 DB 저장됨!)
-            mypageService.updateUserInfo(userId, email, nickname);
-
-            redirectAttributes.addFlashAttribute("message", "프로필이 수정되었습니다.");
 
         if(!email.contains("@") || !email.contains(".")) {
             MypageResponse user = mypageService.getUserInfo(userId);
@@ -83,9 +79,17 @@ public class StuInfoModifyController {
             return "student/profile/edit";
         }
 
-
-
-        return "redirect:/student/personal";
+        try {
+            mypageService.updateUserInfo(userId, email, nickname, photo);
+            redirectAttributes.addFlashAttribute("message", "프로필이 수정되었습니다.");
+            return "redirect:/student/personal";
+        } catch (RuntimeException e) {
+            model.addAttribute("errorMessage", "파일 업로드 중 오류가 발생했습니다.");
+            MypageResponse user = mypageService.getUserInfo(userId);
+            model.addAttribute("user", user);
+            return "student/profile/edit";
+        }
     }
+
 
 }

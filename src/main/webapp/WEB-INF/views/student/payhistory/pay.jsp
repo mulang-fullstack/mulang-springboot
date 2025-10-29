@@ -1,5 +1,6 @@
 <%@ page contentType="text/html;charset=utf-8" %>
 <%@ taglib prefix="c" uri="jakarta.tags.core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <!DOCTYPE html>
 <html lang="ko">
 <head>
@@ -30,45 +31,50 @@
                 <!-- 정산 요약 -->
                 <div class="settlement-summary">
                     <div class="summary-box">
-                        <h3>이번달 결제 금액</h3>
-                        <p class="amount">123,000원 <span>(4건)</span></p>
+                        <h3>총 결제 금액</h3>
+                        <p class="amount">
+                            <fmt:formatNumber value="${totalamount}" type="number" groupingUsed="true"/>원
+                            <span>(${totalsize}건)</span>
+                        </p>
                     </div>
                 </div>
-
-
 
                 <!-- 정산 테이블 -->
                 <div class="settlement-table">
                     <div class="table-header">
-                        <span>결제번호</span>
-                        <span>강의 기한</span>
-                        <span>강좌 이름</span>
-                        <span>가격</span>
+                        <span>주문번호</span>
+                        <span>강의명</span>
+                        <span>결제수단</span>
+                        <span>결제금액</span>
                     </div>
 
-
-                        <div class="table-body">
+                    <div class="table-body">
+                        <c:forEach var="payment" items="${paymentResponseList}">
                             <div class="table-row">
-                                <span>202510150001</span>
-                                <span>2025-10-01 ~ 2025-11-01</span>
-                                <span>왕초보 일본어 회화</span>
-                                <span>30,000원</span>
-                            </div>
+                                <!-- 주문번호 -->
+                                <span>${payment.paymentId}</span>
 
-                            <div class="table-row">
-                                <span>202510150002</span>
-                                <span>2025-09-15 ~ 2025-10-15</span>
-                                <span>영어 발음 완성반</span>
-                                <span>25,000원</span>
-                            </div>
+                                <!-- 강의명 -->
+                                <span>${payment.course.title}</span>
 
-                            <div class="table-row">
-                                <span>202510150003</span>
-                                <span>2025-08-01 ~ 2025-09-01</span>
-                                <span>중국어 입문 코스</span>
-                                <span>68,000원</span>
-                            </div>
+                                <!-- 결제수단-->
+                                <span>${payment.paymentMethod}</span>
 
+                                <!-- 결제 금액 -->
+                                <span>
+                                    <fmt:formatNumber value="${payment.course.price}" type="number" groupingUsed="true"/>원
+                                </span>
+                            </div>
+                        </c:forEach>
+
+                        <!-- 결제 내역이 없을 때 -->
+                        <c:if test="${empty paymentResponseList}">
+                            <div class="table-row empty-message">
+                                <span style="text-align: center; width: 100%; padding: 40px 0; color: #999;">
+                                    결제 내역이 없습니다.
+                                </span>
+                            </div>
+                        </c:if>
                     </div>
                 </div>
             </section>
@@ -76,7 +82,7 @@
     </div>
 </main>
 
-    <%@include file="../../common/footer.jsp" %>
+<%@include file="../../common/footer.jsp" %>
 
-    </body>
-    </html>
+</body>
+</html>
