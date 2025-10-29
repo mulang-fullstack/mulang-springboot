@@ -9,14 +9,14 @@
     <link rel="stylesheet" href="/css/global.css"/>
     <link rel="stylesheet" href="/css/pages/admin/admin.css"/>
     <link rel="stylesheet" href="/css/pages/admin/content/course.css"/>
-    <title>관리자 | 강의 신청 관리</title>
+    <title>관리자 | 강좌 심사</title>
 </head>
 <body>
 <div class="main-container">
     <%@ include file="../adminSidebar.jsp" %>
     <div class="right-container">
         <header>
-            <h1>콘텐츠 관리 - 강의 신청 관리</h1>
+            <h1>콘텐츠 관리 - 강좌 심사</h1>
             <div class="header-info">
                 <div class="info-box"><p>안녕하세요 <span>관리자</span>님</p></div>
                 <a class="logout" href="#">로그아웃</a>
@@ -31,6 +31,15 @@
             <section class="course-section">
                 <div class="filter-bar">
                     <div class="filter-container">
+                        <!-- 기간 -->
+                        <div class="filter-group">
+                            <span class="filter-label">기간</span>
+                            <div class="date-filter">
+                                <input type="date" id="startDate">
+                                <span class="date-separator">~</span>
+                                <input type="date" id="endDate">
+                            </div>
+                        </div>
                         <!-- 언어 -->
                         <div class="filter-group">
                             <span class="filter-label">언어</span>
@@ -121,7 +130,6 @@
                         </tbody>
                     </table>
                 </div>
-
                 <!-- 페이징 -->
                 <div class="pagination" id="pagination">
                     <!-- JavaScript로 동적 생성 -->

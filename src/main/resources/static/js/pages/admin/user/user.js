@@ -141,8 +141,7 @@ function renderUserTable(users, currentPage, pageSize) {
                     </span>
                 </td>
                 <td class="actions">
-                    <button class="btn-edit" onclick="editStatus(${user.id})">수정</button>
-                    <button class="btn-delete" onclick="confirmDelete(${user.id}, '${user.nickname}')">삭제</button>
+                    <button class="btn-edit" onclick="">정보 수정</button>
                 </td>
             </tr>
         `;
