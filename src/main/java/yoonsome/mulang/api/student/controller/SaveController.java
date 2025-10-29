@@ -8,7 +8,9 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import yoonsome.mulang.api.student.dto.MypageResponse;
 import yoonsome.mulang.api.student.dto.SaveResponse;
+import yoonsome.mulang.api.student.service.MypageService;
 import yoonsome.mulang.api.student.service.SaveService;
 import yoonsome.mulang.infra.security.CustomUserDetails;
 
@@ -19,6 +21,7 @@ import yoonsome.mulang.infra.security.CustomUserDetails;
 public class SaveController {
 
     private final SaveService saveService;
+    private final MypageService mypageService;
 
     @GetMapping("/save")
     public String getFavorites(
@@ -52,7 +55,8 @@ public class SaveController {
         }
 
 
-    
+        MypageResponse user = mypageService.getUserInfo(userId);
+        model.addAttribute("user", user);
 
         model.addAttribute("favorites", favorites.getContent());  // .getContent() 추가!
         model.addAttribute("currentPage", page);

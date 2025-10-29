@@ -1,5 +1,6 @@
 package yoonsome.mulang.domain.review.service;
 
+import jakarta.persistence.EntityNotFoundException;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -66,5 +67,10 @@ public class ReviewServiceImpl implements ReviewService {
     @Override
     public boolean existReview(Long userId, Long courseId) {
         return reviewRepository.existsByStudentIdAndCourseId(userId, courseId);
+    }
+    @Override
+    public CourseReview findById(Long reviewId) {
+        return reviewRepository.findById(reviewId)
+                .orElseThrow(() -> new EntityNotFoundException("리뷰를 찾을 수 없습니다. ID: " + reviewId));
     }
 }

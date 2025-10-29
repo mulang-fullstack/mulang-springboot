@@ -53,7 +53,8 @@ public class PersonalController {
     @PostMapping("passwordchanging") // serssion에는 비밀번호에 관한정보는 담겨있지 않기 때문에 findbyid로 다시 조회해야함
     public String passwordCheck2(@AuthenticationPrincipal CustomUserDetails userDetails,
                                 @RequestParam String password,
-                                RedirectAttributes redirectAttributes) {
+                                RedirectAttributes redirectAttributes,
+                                 Model model) {
 
         Long id = userDetails.getUser().getId();
         MypageResponse user = mypageService.getUserInfo(id);
@@ -64,7 +65,7 @@ public class PersonalController {
             redirectAttributes.addFlashAttribute("passwordError", "비밀번호가 일치하지 않습니다.");
             return "redirect:/student/personal";
         }
-
+        model.addAttribute("user", user);
         return "student/profile/passwordchange";
     }
 

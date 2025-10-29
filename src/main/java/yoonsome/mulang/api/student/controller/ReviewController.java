@@ -7,10 +7,12 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import yoonsome.mulang.api.student.dto.MycourseResponse;
+import yoonsome.mulang.api.student.dto.MypageResponse;
 import yoonsome.mulang.api.student.dto.ReviewRequest;
 import yoonsome.mulang.api.student.dto.ReviewResponse;
 import yoonsome.mulang.api.student.service.MyCourseInfoService;
 import yoonsome.mulang.api.student.service.MypageReviewService;
+import yoonsome.mulang.api.student.service.MypageService;
 import yoonsome.mulang.domain.review.entity.CourseReview;
 import yoonsome.mulang.domain.review.service.ReviewService;
 import yoonsome.mulang.infra.security.CustomUserDetails;
@@ -26,6 +28,7 @@ public class ReviewController {
     private final MypageReviewService mypageReviewService;
     private final ReviewService reviewService;
     private final MyCourseInfoService myCourseInfoService;
+    private final MypageService mypageService;
 
     @GetMapping("review")
     public String review(
@@ -40,6 +43,8 @@ public class ReviewController {
         } else {
             reviews = mypageReviewService.findByStudentIdOrderByCreatedAtAsc(userId);
         }
+        MypageResponse user = mypageService.getUserInfo(userId);
+        model.addAttribute("user", user);
         model.addAttribute("myReviews", reviews);
         model.addAttribute("currentSort", sort);
 
@@ -53,6 +58,8 @@ public class ReviewController {
         Long userid = userDetails.getUser().getId();
         List<MycourseResponse> mycourseDTO = myCourseInfoService.findByUserId(userid); //
 
+        MypageResponse user = mypageService.getUserInfo(userid);
+        model.addAttribute("user", user);
         model.addAttribute("mycourseDTO", mycourseDTO);
 
         return "student/review/reviewwrite";
@@ -115,7 +122,8 @@ public class ReviewController {
         if (!review.getStudent().getId().equals(userId)) {
             return "redirect:/student/review";
         }
-
+        MypageResponse user = mypageService.getUserInfo(userId);
+        model.addAttribute("user", user);
         model.addAttribute("review", review);
         return "student/review/detailreview";
 
@@ -136,28 +144,43 @@ public class ReviewController {
             return "redirect:/student/review";
         }
 
+        MypageResponse user = mypageService.getUserInfo(userId);
+        model.addAttribute("user", user);
         model.addAttribute("review", review);
         return "student/review/reviewmodify";  // 수정 폼 JSP
     }
 
     @PostMapping("/review/edit/{reviewid}")
-    public String editReview(@AuthenticationPrincipal CustomUserDetails userDetails, @ModelAttribute ReviewRequest request,
-                             RedirectAttributes redirectAttributes, Model model) {
+    public String editReview(
+            @PathVariable("reviewid") Long reviewId,
+            @AuthenticationPrincipal CustomUserDetails userDetails,
+            @ModelAttribute ReviewRequest request,
+            RedirectAttributes redirectAttributes,
+            Model model) {
 
         Long userId = userDetails.getUser().getId();
-        try {
-            CourseReview review = request.toEntity(userId);
-            reviewService.saveReview(review);
 
-            // ⭐ 성공 시에만 redirectAttributes 사용
-            redirectAttributes.addFlashAttribute("message", "리뷰가 등록되었습니다.");
+        try {
+            // ⭐ 기존 리뷰 조회
+            CourseReview existingReview = reviewService.findById(reviewId);
+
+            // ⭐ 작성자 확인
+            if (!existingReview.getStudent().getId().equals(userId)) {
+                throw new IllegalArgumentException("본인의 리뷰만 수정할 수 있습니다.");
+            }
+
+            // ⭐ 리뷰 수정 (기존 엔티티의 값만 변경)
+            existingReview.setRating(request.getRating());
+            existingReview.setContent(request.getContent());
+
+            reviewService.saveReview(existingReview);
+
+            redirectAttributes.addFlashAttribute("message", "리뷰가 수정되었습니다.");
             return "redirect:/student/review";
 
         } catch (Exception e) {
             e.printStackTrace();
-
-
-            model.addAttribute("error", "리뷰 등록에 실패했습니다: " + e.getMessage());
+            model.addAttribute("error", "리뷰 수정에 실패했습니다: " + e.getMessage());
 
             // 강좌 목록 다시 조회
             List<MycourseResponse> mycourseDTO = myCourseInfoService.findByUserId(userId);

@@ -9,8 +9,10 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import yoonsome.mulang.api.student.dto.MycourseResponse;
+import yoonsome.mulang.api.student.dto.MypageResponse;
 import yoonsome.mulang.api.student.service.MyCourseInfoService;
 import yoonsome.mulang.api.student.service.MycourseService;
+import yoonsome.mulang.api.student.service.MypageService;
 import yoonsome.mulang.domain.enrollment.repository.EnrollmentRepository;
 import yoonsome.mulang.domain.lecture.entity.Lecture;
 import yoonsome.mulang.domain.lecture.repository.LectureRepository;
@@ -25,6 +27,7 @@ import java.util.stream.Collectors;
 public class MyCourseController {
 
     private final MyCourseInfoService mycourseInfoService;
+    private final MypageService mypageService;
 
     @GetMapping("/course")
     public String course(@AuthenticationPrincipal CustomUserDetails userDetails, Model model,
@@ -58,8 +61,8 @@ public class MyCourseController {
 
         }
 
-
-
+        MypageResponse user = mypageService.getUserInfo(userid);
+        model.addAttribute("user", user);
         model.addAttribute("mycourseResponseList", mycourseResponseList);
         model.addAttribute("languageId", languageId);
         model.addAttribute("searchKeyword", keyword);

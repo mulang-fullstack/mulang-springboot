@@ -18,22 +18,22 @@
 <%@include file="../../common/header.jsp" %>
 <!-- 비밀번호 확인 모달 -->
 <div id="passwordCheckModal" class="password-modal">
-        <div class="password-modal-content">
-            <h3>비밀번호 확인</h3>
-            <c:if test="${empty passwordError}">
-                <p>본인 확인을 위해 비밀번호를 입력해주세요.</p>
-            </c:if>
+    <div class="password-modal-content">
+        <h3>비밀번호 확인</h3>
+        <c:if test="${empty passwordError}">
+            <p>본인 확인을 위해 비밀번호를 입력해주세요.</p>
+        </c:if>
 
-            <c:if test="${not empty passwordError}">
-                <div class="error-message">${passwordError}</div>
-            </c:if>
+        <c:if test="${not empty passwordError}">
+            <div class="error-message">${passwordError}</div>
+        </c:if>
 
-            <form action="/student/check-password" method="post" id="passwordCheckForm">
-                <input type="password" name="password" placeholder="비밀번호 입력" required>
-                <div class="password-modal-buttons">
-                    <button type="submit" class="confirm-btn">확인</button>
-                    <button type="button" class="cancel-btn" onclick="closePasswordModalor()">취소</button>
-                </div>
+        <form action="/student/check-password" method="post" id="passwordCheckForm">
+            <input type="password" name="password" placeholder="비밀번호 입력" required>
+            <div class="password-modal-buttons">
+                <button type="submit" class="confirm-btn">확인</button>
+                <button type="button" class="cancel-btn" onclick="closePasswordModalor()">취소</button>
+            </div>
 
         </form>
     </div>
@@ -72,12 +72,13 @@
                     <section class="profile-section">
 
 
-                        <!-- 프로필 이미지 -->
+                        <!-- 프로필 이미지 - 수정된 부분 -->
                         <div class="field">
                             <label>프로필 이미지</label>
                             <div class="field-content">
                                 <div class="profile-img-wrap">
-                                    <img src="/img/dummy/profile.jpg" alt="프로필 이미지">
+                                    <img src="${not empty user.photoUrl ? user.photoUrl : '/img/dummy/profile.jpg'}"
+                                         alt="프로필 이미지">
                                 </div>
                             </div>
                         </div>
@@ -114,9 +115,9 @@
                                 </div>
                             </div>
                             <form id="editpassword">
-                            <div class="passwordsubmit-wrap">
-                                <button type="submit" class="passwordsubmit-btn">비밀번호 변경</button>
-                            </div>
+                                <div class="passwordsubmit-wrap">
+                                    <button type="submit" class="passwordsubmit-btn">비밀번호 변경</button>
+                                </div>
                             </form>
                         </div>
 
