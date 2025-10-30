@@ -1,47 +1,51 @@
 @charset "UTF-8";
 
-/* ===== 전체 ===== */
+/* ===============================
+   PLAYER LAYOUT (변경된 JSP 구조 대응)
+   - 왼쪽: VOD + 가로 강의목록
+   - 오른쪽: Q&A 사이드바
+================================ */
+
+/* ===== 기본 리셋 ===== */
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
 }
 
+/* ===== 전체 레이아웃 ===== */
 .player-layout {
     display: flex;
     flex-direction: row;
     align-items: flex-start;
     justify-content: space-between;
-    width: 100%;
+    width: 90%;              /* 전역 contents 기준 */
+    max-width: 1280px;
+    margin: 0 auto;          /* 헤더 로고 기준 중앙 정렬 */
     background-color: var(--bg-secondary);
     font-family: "Noto Sans KR", sans-serif;
-    gap: 24px;
-    padding: 40px 60px;
+    gap: 32px;
+    padding: 40px 0;         /* 좌우 패딩 제거 */
 }
 
-/* ===== 중앙 영상 + Q&A 영역 ===== */
+/* ===== 왼쪽 VOD 영역 ===== */
 .player-main {
-    flex: 1;
-    width: calc(100% - 300px);
+    flex: 3;
     display: flex;
     flex-direction: column;
-    align-items: center;
+    gap: 28px;
 }
 
 /* ===== 영상 섹션 ===== */
 .video-section {
     width: 100%;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
     background: var(--bg-white);
     border-radius: 14px;
-    box-shadow: var(--shadow-md);
-    padding: 30px 40px;
     border: var(--border-default);
+    box-shadow: var(--shadow-md);
+    padding: 24px 36px;
 }
 
-/* ===== 동영상 프레임 ===== */
 .video-frame {
     width: 100%;
     border-radius: 14px;
@@ -58,167 +62,131 @@ video {
     display: block;
 }
 
-video:fullscreen,
-video:-webkit-full-screen,
-video:-moz-full-screen,
-video:-ms-fullscreen {
-    width: 100vw;
-    height: 100vh;
-    object-fit: contain;
-}
-
-/* ===== 영상 정보 ===== */
-.video-info {
-    width: 100%;
-    margin-top: 20px;
-    padding: 18px 22px;
-    background: var(--bg-secondary);
-    border-radius: 10px;
-}
-
-.video-info h3 {
-    font-size: 22px;
-    font-weight: 700;
-    color: var(--text-point-main);
-    margin-bottom: 8px;
-}
-
-.video-info p {
-    font-size: 15px;
-    color: var(--text-secondary);
-}
-
-.video-info #currentTime {
-    font-weight: 600;
-    color: var(--text-point-main);
-}
-
-/* ===== 재생속도 버튼 ===== */
-.video-controls {
-    margin-top: 18px;
-    display: flex;
-    gap: 10px;
-}
-
-.video-controls button {
-    background-color: var(--bg-point-main);
-    color: var(--text-white);
-    border: none;
-    border-radius: 8px;
-    padding: 10px 20px;
-    font-size: 15px;
-    font-weight: 600;
-    cursor: pointer;
-    box-shadow: var(--shadow-md);
-    transition: all 0.25s ease;
-}
-
-.video-controls button:hover {
-    background: var(--bg-point-hover);
-    transform: translateY(-2px);
-    box-shadow: var(--shadow-lg);
-}
-
-.video-controls button:active {
-    background: var(--bg-point-active);
-    transform: translateY(0);
-}
-
-/* ===== Q&A 섹션 (플레이어 하단) ===== */
-.qna-section {
-    width: 100%;
-    margin-top: 50px;
+/* ===== 가로 강의목록 ===== */
+.lecture-horizontal {
     background: var(--bg-white);
     border-radius: 12px;
-    box-shadow: var(--shadow-sm);
     border: var(--border-default);
-    padding: 28px 30px;
-}
-
-/* ===== 오른쪽 강의 목록 사이드바 ===== */
-.lecture-sidebar {
-    width: 260px;
-    min-width: 260px;
-    background: var(--bg-white);
-    border-left: var(--border-primary);
-    border-radius: 12px;
-    box-shadow: var(--shadow-md);
-    padding: 28px 22px;
-    position: sticky;
-    top: 100px;
-    height: fit-content;
+    box-shadow: var(--shadow-sm);
+    padding: 16px 20px;
 }
 
 .lecture-title {
     font-size: 1.1rem;
     font-weight: 700;
     color: var(--text-point-main);
-    margin-bottom: 16px;
+    margin-bottom: 12px;
     border-bottom: 3px solid var(--bg-point-sub);
+    padding-bottom: 6px;
+}
+
+.lecture-list-horizontal {
+    display: flex;
+    gap: 12px;
+    overflow-x: auto;
     padding-bottom: 8px;
 }
 
-.lecture-list {
-    list-style: none;
-    padding: 0;
-    margin: 0;
-    max-height: 70vh;
-    overflow-y: auto;
+.lecture-list-horizontal::-webkit-scrollbar {
+    height: 6px;
 }
-
-.lecture-list::-webkit-scrollbar {
-    width: 8px;
-}
-.lecture-list::-webkit-scrollbar-thumb {
+.lecture-list-horizontal::-webkit-scrollbar-thumb {
     background: var(--text-muted);
-    border-radius: 4px;
+    border-radius: 3px;
 }
-.lecture-list::-webkit-scrollbar-thumb:hover {
+.lecture-list-horizontal::-webkit-scrollbar-thumb:hover {
     background: var(--text-subtle);
 }
 
-/* ===== 강의 목록 아이템 ===== */
-.lecture-list li {
+.lecture-list-horizontal li {
     background: var(--bg-secondary);
-    border-radius: 10px;
-    padding: 14px 16px;
-    margin-bottom: 10px;
+    border-radius: 8px;
+    padding: 10px 16px;
     cursor: pointer;
     font-size: 15px;
     font-weight: 500;
     color: var(--text-primary);
     border: 2px solid transparent;
+    white-space: nowrap;
     transition: all 0.25s ease;
 }
-
-.lecture-list li:hover {
+.lecture-list-horizontal li:hover {
     background: var(--bg-point-sub);
     color: var(--text-point-main);
     border-color: var(--text-point-main);
     transform: translateY(-2px);
 }
-
-.lecture-list li.active {
+.lecture-list-horizontal li.active {
     background: linear-gradient(135deg, var(--bg-point-main), var(--bg-point-hover));
     color: var(--text-white);
     border-color: var(--bg-point-main);
     box-shadow: var(--shadow-md);
 }
 
+/* ===== 오른쪽 Q&A 사이드바 ===== */
+.qna-sidebar {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    background-color: var(--bg-white);
+    border: var(--border-default);
+    border-radius: 12px;
+    box-shadow: var(--shadow-md);
+    padding: 20px 18px;
+    max-height: calc(100vh - 120px);
+    position: sticky;
+    top: 100px;
+    overflow: hidden;
+}
+
+.qna-sidebar .qna-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: var(--border-default);
+    padding-bottom: 8px;
+    margin-bottom: 10px;
+}
+
+.qna-sidebar .qna-title {
+    font-size: 1.2rem;
+    font-weight: 700;
+    color: var(--text-point-main);
+}
+
+.qna-sidebar .qna-body {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    overflow-y: auto;
+    padding-right: 6px;
+}
+
+.qna-sidebar .qna-body::-webkit-scrollbar {
+    width: 6px;
+}
+.qna-sidebar .qna-body::-webkit-scrollbar-thumb {
+    background: var(--text-muted);
+    border-radius: 3px;
+}
+.qna-sidebar .qna-body::-webkit-scrollbar-thumb:hover {
+    background: var(--text-subtle);
+}
+
 /* ===== 반응형 ===== */
-@media (max-width: 1024px) {
+@media (max-width: 1280px) {
     .player-layout {
         flex-direction: column;
-        align-items: center;
+        padding: 30px 24px;
     }
-    .lecture-sidebar {
+    .player-main {
+        width: 100%;
+    }
+    .qna-sidebar {
         position: static;
         width: 100%;
-        max-width: 700px;
-        margin-top: 30px;
-    }
-    .video-section {
-        padding: 20px;
+        max-height: none;
+        margin-top: 20px;
     }
     video {
         height: 420px;

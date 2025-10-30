@@ -25,12 +25,12 @@
                 <div class="class-upload">
                     <h2>CLASS 수정</h2>
 
-                    <!-- ✅ action 수정 -->
+                    <!--  action 수정 -->
                     <form action="/teacher/mypage/classes/update"
                           method="post"
                           enctype="multipart/form-data">
 
-                        <!-- ✅ courseId 전달 -->
+                        <!--  courseId 전달 -->
                         <input type="hidden" name="courseId" value="${course.id}"/>
 
                         <!-- 클래스 이름 -->
@@ -75,7 +75,6 @@
                                 </select>
                             </div>
                         </div>
-
                         <!-- 수강비용 -->
                         <div class="field">
                             <label>수강비용</label>
@@ -98,11 +97,11 @@
                             </div>
                         </div>
 
-                        <!-- ✅ VOD 챕터 수정 -->
+                        <!--  VOD 챕터 수정 -->
                         <div class="video-list">
                             <c:forEach var="lecture" items="${course.lectures}" varStatus="status">
                                 <div class="video-item" data-index="${status.index}">
-                                    <!-- ✅ 기존 강의 식별용 -->
+                                    <!--  기존 강의 식별용 -->
                                     <input type="hidden" name="lectures[${status.index}].id" value="${lecture.id}">
 
                                     <!-- 챕터 제목 -->
@@ -145,7 +144,7 @@
                             </c:forEach>
                         </div>
 
-                        <!-- ✅ 삭제 ID 전송용 hidden -->
+                        <!--  삭제 ID 전송용 hidden -->
                         <div id="deletedLectureContainer"></div>
 
                         <!-- 강의 소개 -->
@@ -173,5 +172,7 @@
 <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.20/dist/summernote-lite.min.js"></script>
 <script src="/js/pages/teacher/common/summernote-init.js?v=20251023"></script>
 <script src="/js/pages/teacher/class/classVideoUpdate.js"></script>
+<script src="/js/pages/teacher/class/classSubmitLock.js"></script>
+<script src="/js/pages/teacher/class/classThumbnailPreview.js"></script>
 </body>
 </html>

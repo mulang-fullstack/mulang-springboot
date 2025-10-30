@@ -132,7 +132,7 @@
 <link href="https://cdn.jsdelivr.net/npm/summernote@0.8.20/dist/summernote-lite.min.css" rel="stylesheet">
 <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.20/dist/summernote-lite.min.js"></script>
 <script src="/js/pages/teacher/common/summernote-init.js?v=20251023"></script>
-
+<script src="/js/pages/teacher/class/classSubmitLock.js"></script>
 <script src="/js/pages/teacher/class/classVideoUpload.js"></script>
 </body>
 </html>
