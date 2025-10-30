@@ -1,19 +1,18 @@
-package yoonsome.mulang.domain.payment.dto;
+package yoonsome.mulang.api.payments.dto;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.NoArgsConstructor;
 
+/**
+ * 토스 페이먼츠 API 응답
+ */
 @Data
-@NoArgsConstructor
-@AllArgsConstructor
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class TossPaymentResponseDto {
+public class TossPaymentResponse {
     private String paymentKey;
     private String orderId;
     private String orderName;
-    private String method;
+    private String method;           // 결제 수단
     private Integer totalAmount;
     private String status;
     private String requestedAt;
@@ -25,35 +24,21 @@ public class TossPaymentResponseDto {
     // 가상계좌 정보
     private VirtualAccountInfo virtualAccount;
 
-    // 실패 정보
-    private String failure;
-
     @Data
-    @NoArgsConstructor
-    @AllArgsConstructor
     @JsonIgnoreProperties(ignoreUnknown = true)
     public static class CardInfo {
-        private String company;
-        private String number;
-        private String installmentPlanMonths;
-        private String approveNo;
-        private String cardType;
-        private String ownerType;
-        private String acquirerCode;
-        private String issuerCode;
+        private String company;      // 카드사
+        private String number;       // 카드번호 (마스킹)
+        private String installmentPlanMonths; // 할부 개월
+        private String cardType;     // 카드 타입
     }
 
     @Data
-    @NoArgsConstructor
-    @AllArgsConstructor
     @JsonIgnoreProperties(ignoreUnknown = true)
     public static class VirtualAccountInfo {
         private String accountNumber;
         private String bankCode;
         private String customerName;
         private String dueDate;
-        private String refundStatus;
-        private Boolean expired;
-        private String settlementStatus;
     }
 }

@@ -9,11 +9,11 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import yoonsome.mulang.api.admin.payment.dto.PaymentSearchRequest;
-import yoonsome.mulang.domain.payment.dto.PaymentResponseDto;
+import yoonsome.mulang.api.payments.dto.PaymentDetailResponse;
+import yoonsome.mulang.api.payments.dto.PaymentSuccessResponse;
 import yoonsome.mulang.domain.payment.service.PaymentService;
 
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 @Controller
@@ -40,7 +40,7 @@ public class AdminPaymentController {
     @ResponseBody
     public ResponseEntity<?> getPaymentList(PaymentSearchRequest request) {
         // 결제 목록 조회 (페이지 단위)
-        Page<PaymentResponseDto> page = paymentService.searchPayments(request);
+        Page<PaymentDetailResponse> page = paymentService.searchPayments(request);
 
         // 응답 데이터 구성
         Map<String, Object> result = new HashMap<>();

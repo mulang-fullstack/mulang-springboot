@@ -6,11 +6,12 @@ import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import yoonsome.mulang.api.payments.dto.PaymentDetailResponse;
 import yoonsome.mulang.api.teacher.dto.TeacherSalesResponse;
 import yoonsome.mulang.domain.course.entity.Course;
 import yoonsome.mulang.domain.course.entity.StatusType;
 import yoonsome.mulang.domain.course.service.CourseService;
-import yoonsome.mulang.domain.payment.dto.PaymentResponseDto;
+import yoonsome.mulang.api.payments.dto.PaymentSuccessResponse;
 import yoonsome.mulang.domain.payment.entity.PaymentStatus;
 import yoonsome.mulang.domain.payment.service.PaymentService;
 import yoonsome.mulang.domain.teacher.entity.Teacher;
@@ -46,8 +47,8 @@ public class TeacherSalesServiceImpl implements TeacherSalesService {
             int totalAmount = 0;
             int totalCount = 0;
 
-            List<PaymentResponseDto> payments = paymentService.getPaymentsByCourseId(course.getId());
-            for (PaymentResponseDto payment : payments) {
+            List<PaymentDetailResponse> payments = paymentService.getPaymentsByCourseId(course.getId());
+            for (PaymentDetailResponse payment : payments) {
                 if (PaymentStatus.COMPLETED.name().equals(payment.getStatus())) {
                     totalAmount += payment.getAmount();
                     totalCount++;
@@ -93,9 +94,9 @@ public class TeacherSalesServiceImpl implements TeacherSalesService {
         int totalSales = 0;
         // 모든 코스의 완료된 결제 합계
         for (Course course : coursePage.getContent()) {
-            List<PaymentResponseDto> payments = paymentService.getPaymentsByCourseId(course.getId());
+            List<PaymentDetailResponse> payments = paymentService.getPaymentsByCourseId(course.getId());
 
-            for (PaymentResponseDto payment : payments) {
+            for (PaymentDetailResponse payment : payments) {
                 if (PaymentStatus.COMPLETED.name().equals(payment.getStatus())) {
                     totalSales += payment.getAmount();
                 }

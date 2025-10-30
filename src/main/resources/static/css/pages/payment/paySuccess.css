@@ -1,4 +1,8 @@
 /* ==================== 전체 컨테이너 ==================== */
+.contents {
+    height: 100vh;
+}
+
 .pay-success {
     max-width: 600px;
     margin: 80px auto;
