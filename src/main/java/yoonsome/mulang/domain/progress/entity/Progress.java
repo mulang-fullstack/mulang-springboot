@@ -1,10 +1,7 @@
 package yoonsome.mulang.domain.progress.entity;
 
 import jakarta.persistence.*;
-import lombok.AccessLevel;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 import yoonsome.mulang.domain.lecture.entity.Lecture;
@@ -16,6 +13,7 @@ import java.time.LocalDateTime;
 @Table(name = "progress",
         uniqueConstraints = @UniqueConstraint(columnNames = {"student_id", "lecture_id"}))
 @Getter
+@Setter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @EntityListeners(AuditingEntityListener.class)
 public class Progress {

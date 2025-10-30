@@ -1,14 +1,17 @@
+// 프로필 이미지 미리보기
 const fileInput = document.getElementById('fileInput');
 const profilePreview = document.getElementById('profile-preview');
 
-fileInput.addEventListener('change', () => {
-    const file = fileInput.files[0];
-    if (file) {
-        const reader = new FileReader();
-        reader.onload = e => profilePreview.src = e.target.result;
-        reader.readAsDataURL(file);
-    }
-});
+if (fileInput && profilePreview) {
+    fileInput.addEventListener('change', () => {
+        const file = fileInput.files[0];
+        if (file) {
+            const reader = new FileReader();
+            reader.onload = e => profilePreview.src = e.target.result;
+            reader.readAsDataURL(file);
+        }
+    });
+}
 
 // 상태 관리
 const editState = {
@@ -16,7 +19,7 @@ const editState = {
     isEmailCodeVerified: false,
     originalEmail: '',
     emailValue: '',
-    isVerifying: false  // 추가
+    isVerifying: false
 };
 
 // 페이지 로드 시 초기화
@@ -41,31 +44,27 @@ document.addEventListener('DOMContentLoaded', function() {
                 if (verifyBtn) {
                     verifyBtn.textContent = '인증하기';
                     verifyBtn.classList.remove('resend');
+                    verifyBtn.classList.remove('verified');
+                    verifyBtn.disabled = false;
+                    verifyBtn.style.backgroundColor = '';
+                    verifyBtn.style.color = '';
                 }
-            }
-        });
-    }
 
-    // 파일 선택 시 미리보기
-    const fileInput = document.getElementById('fileInput');
-    if (fileInput) {
-        fileInput.addEventListener('change', function(e) {
-            const file = e.target.files[0];
-            if (file) {
-                const reader = new FileReader();
-                reader.onload = function(e) {
-                    document.getElementById('profile-preview').src = e.target.result;
+                // 인증코드 입력창 숨기기
+                const emailCodeGroup = document.querySelector('.email-code-group');
+                if (emailCodeGroup) {
+                    emailCodeGroup.classList.remove('show');
+                    emailCodeGroup.classList.add('hidden');
                 }
-                reader.readAsDataURL(file);
             }
         });
     }
 });
 
 /**
- * 인증하기 버튼 클릭 - 인증코드 입력창 표시
+ * 인증하기 버튼 클릭 - 서버에 인증코드 전송 요청
  */
-function verifyEmail() {
+async function verifyEmail() {
     // 이미 처리 중이면 무시
     if (editState.isVerifying) {
         return;
@@ -73,28 +72,45 @@ function verifyEmail() {
 
     const emailInput = document.getElementById('email');
     const email = emailInput.value.trim();
-    const emailCodeGroup = document.querySelector('.email-code-group');
     const verifyBtn = event.target;
 
-    // 인증코드 입력창 표시
-    if (emailCodeGroup) {
-        emailCodeGroup.classList.remove('hidden');
-        emailCodeGroup.classList.add('show');
+    // 이메일 유효성 검사
+    if (!email || !email.includes('@')) {
+        alert('올바른 이메일 주소를 입력해주세요.');
+        return;
     }
 
-    const codeInput = document.getElementById('emailCode');
-    if (codeInput) {
-        codeInput.disabled = false;
-        codeInput.value = '';
-        codeInput.focus();
+    editState.isVerifying = true;
+    verifyBtn.disabled = true;
+    const originalText = verifyBtn.textContent;
+    verifyBtn.textContent = '전송 중...';
+
+    try {
+        // 서버에 인증코드 전송 요청
+        const response = await fetch('/student/send-verification', {
+            method: 'POST',
+            headers: {'Content-Type': 'application/x-www-form-urlencoded'},
+            body: new URLSearchParams({ email: email })
+        });
+
+        if (response.ok) {
+            // 페이지 새로고침으로 인증코드 입력창 표시
+            const html = await response.text();
+            document.open();
+            document.write(html);
+            document.close();
+        } else {
+            alert('인증코드 전송에 실패했습니다.');
+            verifyBtn.textContent = originalText;
+        }
+    } catch (error) {
+        console.error('에러:', error);
+        alert('서버 요청 중 오류가 발생했습니다.');
+        verifyBtn.textContent = originalText;
+    } finally {
+        editState.isVerifying = false;
+        verifyBtn.disabled = false;
     }
-
-    // 이메일 값 저장
-    editState.emailValue = email;
-
-    // 버튼 텍스트를 "재전송"으로 변경
-    verifyBtn.textContent = '재전송';
-    verifyBtn.classList.add('resend');
 }
 
 /**
@@ -109,6 +125,12 @@ async function submitVerifyCode() {
     const email = document.getElementById('email').value.trim();
     const emailCode = document.getElementById('emailCode').value.trim();
     const verifyBtn = document.querySelector('.verify-code-btn');
+
+    // 인증코드 유효성 검사
+    if (!emailCode || emailCode.length !== 6) {
+        alert('6자리 인증코드를 입력해주세요.');
+        return;
+    }
 
     // 로딩 상태 시작
     editState.isVerifying = true;
@@ -126,7 +148,7 @@ async function submitVerifyCode() {
         });
 
         if (response.ok) {
-            // 새로고침 대신 HTML 응답을 받아서 페이지 교체
+            // HTML 응답을 받아서 페이지 교체
             const html = await response.text();
             document.open();
             document.write(html);

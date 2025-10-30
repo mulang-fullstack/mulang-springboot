@@ -30,12 +30,12 @@
 
                     <section class="profile-section">
 
-                        <!-- 이메일 인증 form 추가 -->
+                        <!-- 이메일 인증 form (action 수정) -->
                         <form id="emailVerifyForm" action="/student/editemail" method="post" style="display:none;">
                             <input type="hidden" name="email" id="hiddenEmail">
                         </form>
 
-                        <!-- form 시작 위치 변경 + enctype 추가 -->
+                        <!-- 프로필 수정 form -->
                         <form action="/student/edit" method="post" enctype="multipart/form-data" id="editForm">
 
                             <!-- 프로필 이미지 -->
@@ -72,6 +72,10 @@
                                 <div class="input-wrap">
                                     <input type="text" name="nickname" value="${user.nickname}">
                                 </div>
+                                <!-- ✅ 닉네임 에러 메시지 -->
+                                <c:if test="${not empty nicknameError}">
+                                    <p class="error-text">${nicknameError}</p>
+                                </c:if>
                             </div>
 
                             <!-- 이메일 -->
@@ -79,38 +83,70 @@
                                 <label>이메일</label>
                                 <div class="input-wrap email-verify-wrap">
                                     <div class="email-input-group">
-                                        <input type="text" id="email" name="email" value="${user.email}">
-                                        <button type="button" class="verify-btn" onclick="document.getElementById('hiddenEmail').value = document.getElementById('email').value; document.getElementById('emailVerifyForm').submit();">인증하기</button>
-                                    </div>
-
-                                    <!-- 이메일 관련 메시지 (인증코드 전송 성공/실패) -->
-                                    <c:if test="${not empty message}">
-                                        <p class="success-message">${message}</p>
-                                    </c:if>
-
-                                    <c:if test="${not empty errorMessage}">
-                                        <p class="error-message">${errorMessage}</p>
-                                    </c:if>
-
-                                    <!-- 인증코드 입력창 -->
-                                    <div class="email-code-group ${not empty showCodeInput ? 'show' : 'hidden'}">
+                                        <!-- 인증 완료 시에도 readonly로 변경 (disabled 대신) -->
                                         <input type="text"
-                                               id="emailCode"
-                                               placeholder="인증코드 6자리"
-                                               maxlength="6"
-                                        ${empty showCodeInput ? 'disabled' : ''}>
-                                        <button type="button" class="verify-code-btn" onclick="submitVerifyCode()">확인</button>
+                                               id="email"
+                                               name="email"
+                                               value="${user.email}"
+                                        ${not empty emailVerified and emailVerified ? 'readonly style="background-color: #f5f5f5; cursor: not-allowed;"' : ''}>
+
+                                        <!-- 인증 완료 시 버튼 변경 -->
+                                        <c:choose>
+                                            <c:when test="${not empty emailVerified and emailVerified}">
+                                                <button type="button"
+                                                        class="verify-btn verified"
+                                                        disabled
+                                                        style="background-color: #4CAF50; color: white; cursor: not-allowed;">
+                                                    ✓ 인증완료
+                                                </button>
+                                            </c:when>
+                                            <c:otherwise>
+                                                <button type="button"
+                                                        class="verify-btn"
+                                                        onclick="document.getElementById('hiddenEmail').value = document.getElementById('email').value; document.getElementById('emailVerifyForm').submit();">
+                                                    인증하기
+                                                </button>
+                                            </c:otherwise>
+                                        </c:choose>
                                     </div>
 
-                                    <!-- 인증코드 확인 메시지 (인증 성공/실패) -->
-                                    <c:if test="${not empty emailVerified and emailVerified}">
-                                        <p class="success-message">이메일 인증이 완료되었습니다.</p>
+                                    <!-- ✅ 이메일 에러 메시지 -->
+                                    <c:if test="${not empty emailerror}">
+                                        <p class="error-text">${emailerror}</p>
                                     </c:if>
 
-                                    <c:if test="${not empty emailerror}">
-                                        <p class="error-message">${emailerror}</p>
+                                    <!-- ✅ 이메일 전송 성공 메시지 (인증 완료 전) -->
+                                    <c:if test="${not empty message and (empty emailVerified or not emailVerified)}">
+                                        <p class="success-text">${message}</p>
+                                    </c:if>
+
+                                    <!-- 인증코드 입력창: 인증 완료되면 완전히 숨김 -->
+                                    <c:if test="${empty emailVerified or not emailVerified}">
+                                        <div class="email-code-group ${not empty showCodeInput ? 'show' : 'hidden'}">
+                                            <input type="text"
+                                                   id="emailCode"
+                                                   placeholder="인증코드 6자리"
+                                                   maxlength="6"
+                                                ${empty showCodeInput ? 'disabled' : ''}>
+                                            <button type="button"
+                                                    class="verify-code-btn"
+                                                    onclick="submitVerifyCode()">
+                                                확인
+                                            </button>
+                                        </div>
+                                    </c:if>
+
+                                    <!-- ✅ 인증 완료 메시지 -->
+                                    <c:if test="${not empty emailVerified and emailVerified}">
+                                        <p class="success-text">✓ 이메일 인증이 완료되었습니다.</p>
                                     </c:if>
                                 </div>
+
+                                <!-- 인증된 이메일 hidden input (수정 시 검증용) -->
+                                <c:if test="${not empty emailVerified and emailVerified}">
+                                    <input type="hidden" name="emailVerified" value="true">
+                                    <input type="hidden" name="verifiedEmail" value="${verifiedEmail}">
+                                </c:if>
                             </div>
 
 
