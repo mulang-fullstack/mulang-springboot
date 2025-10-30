@@ -99,6 +99,7 @@
 <script src="/js/pages/teacher/profile/profileImageHandler.js"></script>
 <script src="/js/pages/teacher/profile/profileImagePreview.js"></script>
 <script src="/js/pages/teacher/profile/profileValidator.js"></script>
+<script src="/js/pages/teacher/profile/profileSubmitLock.js"></script>
 <%@ include file="../common/footer.jsp" %>
 </body>
 </html>

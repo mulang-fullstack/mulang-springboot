@@ -25,6 +25,6 @@
         <li><a href="/teacher/mypage/settlement"><img src="/img/icon/money.png" alt="">판매현황</a></li>
     </ul>
 </aside>
-
+<script src="/js/pages/teacher/common/sidebarLock.js"></script>
 </body>
 </html>
