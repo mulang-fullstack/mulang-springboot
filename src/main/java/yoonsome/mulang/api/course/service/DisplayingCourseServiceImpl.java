@@ -24,6 +24,8 @@ import yoonsome.mulang.domain.lecture.entity.Lecture;
 import yoonsome.mulang.domain.lecture.service.LectureService;
 import yoonsome.mulang.domain.review.entity.CourseReview;
 import yoonsome.mulang.domain.review.service.ReviewService;
+import yoonsome.mulang.infra.file.service.S3FileService;
+
 import java.util.*;
 
 @Transactional
@@ -37,6 +39,7 @@ public class DisplayingCourseServiceImpl implements DisplayingCourseService {
     private final ReviewService reviewService;
     private final TeacherMypageService teacherMypageService;
     private final CourseFavoriteService courseFavoriteService;
+    private final S3FileService s3FileService;
 
     //언어 이름
     //LanguageId null일 경우에 세션에서 마지막 사용한 값으로 설정, 세션값 null일 경우에 초기값 1로 설정
@@ -95,7 +98,7 @@ public class DisplayingCourseServiceImpl implements DisplayingCourseService {
             // DTO 생성
             CourseListResponse dto = CourseListResponse.builder()
                     .id(course.getId())
-                    .thumbnail(course.getThumbnail())
+                    .thumbnail(s3FileService.getPublicUrl(course.getFile().getId()))
                     .title(course.getTitle())
                     .subtitle(s3FileService.getPublicUrl(course.getFile().getId()))
                     .teacherName(getTeacherName(course))

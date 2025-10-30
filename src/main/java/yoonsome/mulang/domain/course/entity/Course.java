@@ -5,6 +5,8 @@ import lombok.*;
 import yoonsome.mulang.domain.category.entity.Category;
 import yoonsome.mulang.domain.language.entity.Language;
 import yoonsome.mulang.domain.teacher.entity.Teacher;
+import yoonsome.mulang.infra.file.entity.File;
+
 import java.time.LocalDateTime;
 
 @Entity
@@ -48,8 +50,9 @@ public class Course {
     @Column(name = "lecture_count", nullable = false)
     private Integer lectureCount;
 
-    @Column(name = "thumbnail", nullable = false, length = 255)
-    private String thumbnail;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "file_id")
+    private File file;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "language_id", nullable = false)

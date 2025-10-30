@@ -26,9 +26,6 @@ html {
     --bg-white-hover: rgba(75, 85, 99, 0.1); /* 호버/마우스 오버 효과 */
     --progress-medium: #3d8fd1;
     --progress-low: #a3c9e8;
-
-
-
     /* 텍스트 */
     /* 주 텍스트 */
     --text-primary: #111827; /* 메인 텍스트, 제목, 핵심 등 */
