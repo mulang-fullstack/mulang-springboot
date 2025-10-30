@@ -7,7 +7,7 @@ document.addEventListener("DOMContentLoaded", () => {
     btn.addEventListener("click", () => {
         const courseId = btn.dataset.courseId;
 
-        fetch(`/courseDetail/teacherProfile?id=${courseId}`)
+        fetch(`/course/courseDetail/teacherProfile?id=${courseId}`)
             .then(response => response.text())
             .then(html => {
                 modalBody.innerHTML = html; // 모달 내용 삽입

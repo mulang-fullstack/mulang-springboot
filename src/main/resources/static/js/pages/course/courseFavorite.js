@@ -3,7 +3,7 @@ document.querySelectorAll(".heart-icon").forEach(icon => {
         const courseId = this.dataset.courseId;
         const img = this.querySelector("img");
 
-        fetch("/courseFavorite", {
+        fetch("/course/courseFavorite", {
             method: "POST",
             headers: {
                 "Content-Type": "application/x-www-form-urlencoded",

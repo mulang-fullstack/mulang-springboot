@@ -57,7 +57,7 @@ public class MainServiceImpl implements MainService {
     }
     @Override
     public List<CourseListResponse> getNewCourseList(Long userId) {
-        List<Course> courseList = courseService.getNewCourseList();
+        List<Course> courseList = courseService.getNewCourseList(PageRequest.of(0, 20));
         return makeDTOList(courseList, userId);
     }
     @Override
@@ -66,6 +66,10 @@ public class MainServiceImpl implements MainService {
         request.setStatus(StatusType.PUBLIC);
         //한 페이지에 가져올 강좌 수 4개
         request.setSize(4);
+        //languageId 디폴트 값 영어(1)
+        if (request.getLanguageId() == null) request.setLanguageId(1L);
+        //정렬 디폴트 값 별점순
+        if (request.getSortBy() == null) request.setSortBy("averageRating");
 
         // languageId → categoryId 매핑
         Map<Long, Long> conversationMap = Map.of(

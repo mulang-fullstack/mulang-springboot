@@ -26,11 +26,11 @@
             <section class="course-list">
                 <c:forEach var="course" items="${courses}">
                     <div class="course-card">
-                        <a href="courseDetail?id=${course.id}">
+                        <a href="/course/courseDetail?id=${course.id}">
                             <img src="${course.thumbnail}" alt="course">
                         </a>
                         <div class="course-list-info">
-                            <h2><a href="courseDetail?id=${course.id}">${course.title}</a></h2>
+                            <h2><a href="/course/courseDetail?id=${course.id}">${course.title}</a></h2>
                             <p class="subtitle">${course.subtitle}</p>
                             <p class="teacher">${course.teacherName}</p>
                             <div class="rating">

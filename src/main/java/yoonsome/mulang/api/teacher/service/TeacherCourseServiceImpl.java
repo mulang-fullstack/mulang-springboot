@@ -100,6 +100,8 @@ public class TeacherCourseServiceImpl implements TeacherCourseService {
         course.setLanguage(language);
         course.setStatus(StatusType.PENDING);
         course.setLectureCount(request.getLectureCount() != null ? request.getLectureCount() : 1);
+        course.setAverageRating(0.0);
+        course.setReviewCount(0);
 
         if (request.getThumbnailFile() != null && !request.getThumbnailFile().isEmpty()) {
             File savedThumb = s3FileService.uploadThumbnail(request.getThumbnailFile());
