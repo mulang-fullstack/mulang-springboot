@@ -11,7 +11,7 @@ document.addEventListener("DOMContentLoaded", function() {
                 return;
             }
             // 통합된 공용 URL로 이동
-            window.location.href = `/course/${courseId}/vod`;
+            window.location.href = `/player/${courseId}`;
         });
         // 커서 모양 변경
         el.style.cursor = "pointer";

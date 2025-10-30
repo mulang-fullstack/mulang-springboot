@@ -1,4 +1,4 @@
-package yoonsome.mulang.api.common.dto;
+package yoonsome.mulang.api.player.dto;
 
 import lombok.Builder;
 import lombok.Data;;

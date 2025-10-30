@@ -16,7 +16,8 @@ import yoonsome.mulang.infra.security.CustomUserDetails;
 
 import java.util.Map;
 
-@RequestMapping("/api/qna")
+
+@RequestMapping("/player/{courseId}/api/qna")
 @RequiredArgsConstructor
 @RestController
 public class CourseQnaApiController {
@@ -26,7 +27,7 @@ public class CourseQnaApiController {
     /**
      * 강좌별 Q&A 조회
      */
-    @GetMapping("/course/{courseId}")
+    @GetMapping
     public ResponseEntity<Map<String, Object>> getQnaByCourse(
             @PathVariable Long courseId,
             @RequestParam(defaultValue = "0") int page,

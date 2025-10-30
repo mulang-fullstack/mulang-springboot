@@ -1,4 +1,4 @@
-package yoonsome.mulang.api.common.controller;
+package yoonsome.mulang.api.player.controller;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -7,13 +7,14 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestParam;
-import yoonsome.mulang.api.common.dto.VodLectureResponse;
+import yoonsome.mulang.api.player.dto.VodLectureResponse;
 import yoonsome.mulang.domain.course.entity.Course;
 import yoonsome.mulang.domain.course.service.CourseService;
 import yoonsome.mulang.domain.lecture.entity.Lecture;
 import yoonsome.mulang.domain.lecture.service.LectureService;
 import yoonsome.mulang.domain.progress.service.ProgressShowService;
 import yoonsome.mulang.domain.user.entity.User;
+import yoonsome.mulang.infra.file.service.S3FileService;
 import yoonsome.mulang.infra.security.CustomUserDetails;
 
 import java.util.List;
@@ -38,8 +39,9 @@ public class CommonVodViewController {
     private final CourseService courseService;
     private final LectureService lectureService;
     private final ProgressShowService progressShowService;
+    private final S3FileService s3FileService;
 
-    @GetMapping("/course/{courseId}/vod")
+    @GetMapping("/player/{courseId}")
     public String showVodPage(@PathVariable Long courseId,
                               @RequestParam(required = false) Long lectureId,
                               @AuthenticationPrincipal CustomUserDetails userDetails,
@@ -54,7 +56,11 @@ public class CommonVodViewController {
                 .map(lec -> VodLectureResponse.builder()
                         .id(lec.getId())
                         .title(lec.getTitle())
-                        .fileUrl(lec.getFile() != null ? lec.getFile().getUrl() : null)
+                        .fileUrl(
+                            lec.getFile() != null
+                                    ? s3FileService.getPresignedUrl(lec.getFile().getId(), 2)
+                                    : null
+                        )
                         .build())
                 .collect(Collectors.toList());
 
@@ -67,12 +73,12 @@ public class CommonVodViewController {
                     .orElse(null);
         }
 
-        // ✅ currentLecture가 null이면 첫 번째 강의 선택 (이 부분을 먼저!)
+        //  currentLecture가 null이면 첫 번째 강의 선택 (이 부분을 먼저!)
         if (currentLecture == null && !vodLectureList.isEmpty()) {
             currentLecture = vodLectureList.get(0);
         }
 
-        // ✅ 학생이고 currentLecture가 null이 아닐 때만 진도 처리
+        //  학생이고 currentLecture가 null이 아닐 때만 진도 처리
         User user = userDetails.getUser();
         if (user.getRole() == User.Role.STUDENT && currentLecture != null) {
             progressShowService.LectureCompleted(user.getId(), currentLecture.getId());

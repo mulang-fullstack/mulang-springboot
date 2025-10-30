@@ -15,23 +15,40 @@ const QnaController = {
         this.listContainer = document.getElementById("qna-list");
         this.loadQnaList();
 
-        // 질문 등록 버튼
-        document.getElementById("QnaSubmit").addEventListener("click", async () => {
-            const title = document.getElementById("QnaTitle").value.trim();
-            const content = document.getElementById("QnaContent").value.trim();
+        // 버튼이 DOM에 늦게 생겨도 감지하여 이벤트 연결
+        const waitForButton = (id, callback) => {
+            const btn = document.getElementById(id);
+            if (btn) return callback(btn);
 
-            if (!title) return alert("질문 제목을 입력하세요.");
-            if (!content) return alert("질문 내용을 입력하세요.");
+            const observer = new MutationObserver(() => {
+                const el = document.getElementById(id);
+                if (el) {
+                    callback(el);
+                    observer.disconnect();
+                }
+            });
+            observer.observe(document.body, { childList: true, subtree: true });
+        };
 
-            try {
-                await QnaApi.createQuestion(this.courseId, title, content);
-                document.getElementById("QnaTitle").value = "";
-                document.getElementById("QnaContent").value = "";
-                await this.loadQnaList(this.currentPage);
-            } catch (err) {
-                console.error(err);
-                alert("질문 등록 중 오류가 발생했습니다.");
-            }
+        // 질문 등록 버튼 이벤트 연결
+        waitForButton("QnaSubmit", (btn) => {
+            btn.addEventListener("click", async () => {
+                const title = document.getElementById("QnaTitle").value.trim();
+                const content = document.getElementById("QnaContent").value.trim();
+
+                if (!title) return alert("질문 제목을 입력하세요.");
+                if (!content) return alert("질문 내용을 입력하세요.");
+
+                try {
+                    await QnaApi.createQuestion(this.courseId, title, content);
+                    document.getElementById("QnaTitle").value = "";
+                    document.getElementById("QnaContent").value = "";
+                    await this.loadQnaList(this.currentPage);
+                } catch (err) {
+                    console.error(err);
+                    alert("질문 등록 중 오류가 발생했습니다.");
+                }
+            });
         });
     },
 
@@ -54,8 +71,7 @@ const QnaController = {
     /** 답변 등록 처리 */
     async handleAnswerSubmit(questionId, content) {
         try {
-            await QnaApi.createAnswer(questionId, content);
-            // 동일 페이지에서 유지
+            await QnaApi.createAnswer(this.courseId, questionId, content);
             const questionBox = document.querySelector(`.qna-question-box[data-id="${questionId}"]`);
             const container = questionBox?.querySelector(".qna-answer-container");
             if (container) {
@@ -83,4 +99,9 @@ document.getElementById("QnaWriteBtn").addEventListener("click", () => {
 
 document.getElementById("QnaCancel").addEventListener("click", () => {
     document.getElementById("qna-write-form").style.display = "none";
+});
+document.addEventListener("DOMContentLoaded", () => {
+    if (window.MulangContext && window.MulangContext.courseId) {
+        QnaController.init(window.MulangContext.courseId);
+    }
 });

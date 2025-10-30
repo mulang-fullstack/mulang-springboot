@@ -1,45 +1,60 @@
-/**
- * VOD 메뉴 컨트롤러
- * - 커리큘럼 / Q&A 패널 전환
- * - QnAController 초기화 연동
- */
-
 document.addEventListener("DOMContentLoaded", () => {
-
     const menuButtons = document.querySelectorAll(".menu-btn");
-    const panels = document.querySelectorAll(".panel");
+    const vodPanel = document.querySelector(".vod-panel");
+    const curriculumPanel = document.getElementById("panel-curriculum");
+    const qnaPanel = document.getElementById("panel-qna");
 
-    if (!menuButtons.length) return;
+    if (!vodPanel || !curriculumPanel || !qnaPanel) return;
 
-    /**
-     * 메뉴 클릭 이벤트
-     */
-    menuButtons.forEach(btn => {
-        btn.addEventListener("click", () => {
-            // 1. 메뉴 버튼 active 전환
-            menuButtons.forEach(b => b.classList.remove("active"));
-            btn.classList.add("active");
+    /** 패널 닫기 */
+    const closePanel = () => {
+        vodPanel.classList.remove("slide-open");
+        curriculumPanel.style.display = "none";
+        qnaPanel.style.display = "none";
+    };
 
-            // 2. 패널 표시 전환
-            const target = btn.dataset.target;
-            panels.forEach(p => p.classList.remove("active"));
-            const activePanel = document.getElementById(`panel-${target}`);
-            if (activePanel) activePanel.classList.add("active");
+    /** 패널 열기 */
+    const openPanel = (target) => {
+        // 모든 패널 숨김
+        curriculumPanel.style.display = "none";
+        qnaPanel.style.display = "none";
 
-            // 3. Q&A 패널 클릭 시 QnAController 초기화
-            if (target === "qna" && window.QnaController && window.MulangContext) {
-                // 중복 초기화 방지
-                if (!activePanel.dataset.initialized) {
-                    QnaController.init(window.MulangContext.courseId);
-                    activePanel.dataset.initialized = "true";
-                }
+        // 선택된 패널만 표시
+        if (target === "curriculum") curriculumPanel.style.display = "block";
+        if (target === "qna") qnaPanel.style.display = "block";
+
+        // QnA 초기화 (한 번만 실행)
+        if (target === "qna" && window.QnaController && window.MulangContext) {
+            if (!qnaPanel.dataset.initialized) {
+                QnaController.init(window.MulangContext.courseId);
+                qnaPanel.dataset.initialized = "true";
             }
+        }
+
+        // 슬라이드 오픈
+        vodPanel.classList.add("slide-open");
+    };
+
+    /** 메뉴 클릭 이벤트 */
+    menuButtons.forEach((btn) => {
+        btn.addEventListener("click", () => {
+            const target = btn.dataset.target;
+            const isActive = btn.classList.contains("active");
+
+            // 동일 탭 다시 클릭 → 닫기
+            if (isActive) {
+                btn.classList.remove("active");
+                closePanel();
+                return;
+            }
+
+            // 다른 탭 클릭 → 교체
+            menuButtons.forEach((b) => b.classList.remove("active"));
+            btn.classList.add("active");
+            openPanel(target);
         });
     });
 
-    /**
-     * 초기 상태: 커리큘럼 패널 활성
-     */
-    const defaultPanel = document.getElementById("panel-curriculum");
-    if (defaultPanel) defaultPanel.classList.add("active");
+    // 초기 상태는 닫힘
+    closePanel();
 });

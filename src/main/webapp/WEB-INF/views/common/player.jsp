@@ -16,14 +16,12 @@
 </head>
 <body>
 
-<!-- ===============================
-     헤더 제거 → VOD 전용 뷰
-================================ -->
+
 <div class="vod-layout">
 
     <!-- 상단: 뒤로가기 + 제목 -->
     <header class="vod-header">
-        <button class="vod-back-btn" onclick="history.back()">← 뒤로가기</button>
+        <button class="vod-back-btn" onclick="history.back()">←</button>
         <h3 class="vod-title">${lecture.title}</h3>
     </header>
 
@@ -44,20 +42,6 @@
                     </video>
                 </div>
             </section>
-
-            <!-- 강의목록 (가로버전) -->
-            <section class="lecture-horizontal">
-                <h4 class="lecture-title">강의 목록</h4>
-                <ul class="lecture-list-horizontal">
-                    <c:forEach var="lec" items="${lectureList}">
-                        <li onclick="location.href='/course/${course.id}/vod?lectureId=${lec.id}'"
-                            class="${lec.id == lecture.id ? 'active' : ''}">
-                                ${lec.title}
-                        </li>
-                    </c:forEach>
-                </ul>
-            </section>
-
         </main>
 
         <!-- 오른쪽: 메뉴바 + 패널 (커리큘럼 / Q&A) -->
@@ -65,8 +49,12 @@
 
             <!-- 세로 메뉴바 -->
             <nav class="vod-menu">
-                <button class="menu-btn active" data-target="curriculum" title="커리큘럼">📚</button>
-                <button class="menu-btn" data-target="qna" title="Q&A">💬</button>
+                <button class="menu-btn active" data-target="curriculum" title="커리큘럼">
+                    <img src="/img/icon/bx-list-ul.png" alt="커리큘럼 아이콘" class="menu-icon">
+                </button>
+                <button class="menu-btn" data-target="qna" title="Q&A">
+                    <img src="/img/icon/bx-message-rounded-dots.png" alt="Q&A 아이콘" class="menu-icon">
+                </button>
             </nav>
 
             <!-- 패널 영역 -->
@@ -76,7 +64,7 @@
                 <div id="panel-curriculum" class="panel active">
                     <ul class="lecture-list">
                         <c:forEach var="lec" items="${lectureList}">
-                            <li onclick="location.href='/course/${course.id}/vod?lectureId=${lec.id}'"
+                            <li onclick="location.href='/player/${course.id}?lectureId=${lec.id}'"
                                 class="${lec.id == lecture.id ? 'active' : ''}">
                                     ${lec.title}
                             </li>
@@ -121,13 +109,18 @@
         courseId: ${course.id}
     };
 </script>
-
 <!-- 기존 QnA 스크립트 -->
 <script src="/js/pages/qna/QnaApi.js"></script>
 <script src="/js/pages/qna/QnaView.js"></script>
 <script src="/js/pages/qna/QnaController.js"></script>
 <script src="/js/pages/qna/QnaPagination.js"></script>
 <script src="/js/pages/teacher/vod/VodMenuController.js"></script>
-
+<script>
+    document.addEventListener("DOMContentLoaded", () => {
+        if (window.QnaController && window.MulangContext) {
+            QnaController.init(window.MulangContext.courseId);
+        }
+    });
+</script>
 </body>
 </html>
