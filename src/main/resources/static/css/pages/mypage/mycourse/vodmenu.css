@@ -1,219 +1,129 @@
 @charset "UTF-8";
 
 /* ===============================
-   VOD 전용 레이아웃 (헤더/푸터 제거)
-   - 상단: 뒤로가기 + 제목
-   - 오른쪽: 세로 메뉴바 (커리큘럼 / Q&A 전환)
-   - 왼쪽: 영상
+   VOD MENU (최종형)
+   - 오른쪽 고정 세로 탭
+   - 둥근 모서리 / 카드형 디자인
+   - Hover / Active / Tooltip
+   - player.css와 완전 호환
 ================================ */
 
-/* ===== 기본 리셋 ===== */
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-}
-
-/* ===== 전체 레이아웃 ===== */
-.vod-layout {
-    display: flex;
-    flex-direction: column;
-    height: 100vh;
-    background-color: var(--bg-secondary);
-    font-family: "Noto Sans KR", sans-serif;
-}
-
-/* ===== 상단 헤더 ===== */
-.vod-header {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    padding: 12px 20px;
-    background: var(--bg-white);
-    border-bottom: var(--border-default);
-    box-shadow: var(--shadow-sm);
-}
-
-.vod-back-btn {
-    background: none;
-    border: none;
-    color: var(--text-point-main);
-    font-size: 1rem;
-    font-weight: 600;
-    cursor: pointer;
-    transition: color 0.2s ease;
-}
-.vod-back-btn:hover {
-    color: var(--text-point-sub);
-}
-
-.vod-title {
-    font-size: 1.1rem;
-    font-weight: 700;
-    color: var(--text-primary);
-}
-
-/* ===== 메인 콘텐츠 ===== */
-.vod-main {
-    flex: 1;
-    display: flex;
-    flex-direction: row;
-    height: 100%;
-}
-
-/* ===== 왼쪽: 영상 ===== */
-.player-main {
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    background: var(--bg-secondary);
-    padding: 16px 0;
-}
-
-.video-section {
-    width: 100%;
-    height: 100%;
-    background: var(--text-black);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-
-.video-frame {
-    width: 100%;
-    height: 100%;
-    max-width: 1200px;
-    border-radius: 8px;
-    overflow: hidden;
-    box-shadow: var(--shadow-md);
-}
-
-.video-frame video {
-    width: 100%;
-    height: 100%;
-    object-fit: contain;
-    display: block;
-}
-
-/* ===== 오른쪽: 메뉴바 + 패널 ===== */
-.vod-side {
-    display: flex;
-    height: 100%;
-    background: var(--bg-white);
-    border-left: var(--border-default);
-}
-
-/* ===== 세로 메뉴바 ===== */
+/* ===== 메뉴 컨테이너 ===== */
 .vod-menu {
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: flex-start;
+    justify-content: center; /* 수직 중앙 맞춤 */
     width: 60px;
     background: var(--bg-white);
-    border-right: var(--border-default);
-    box-shadow: var(--shadow-sm);
-    padding: 12px 0;
-    gap: 10px;
+    border-left: var(--border-default);
+    box-shadow: var(--shadow-md);
+    padding: 16px 0;
+    gap: 18px;
+    position: relative;
+    z-index: 5;
+
+    border-top-left-radius: 14px;
+    border-bottom-left-radius: 14px;
+    overflow: hidden;
+    transition: all 0.2s ease-in-out;
 }
 
-.menu-btn {
-    width: 40px;
-    height: 40px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 20px;
-    color: var(--text-secondary);
-    background: none;
-    border: none;
-    border-radius: 8px;
-    cursor: pointer;
-    transition: all 0.2s ease;
+/* hover 시 미세 그림자 강조 */
+.vod-menu:hover {
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.08);
 }
+
+/* ===== 메뉴 버튼 ===== */
+.menu-btn {
+    display: flex;
+    align-items: center;     /* 세로 중앙 */
+    justify-content: center; /* 가로 중앙 */
+    width: 46px;
+    height: 46px;
+    border: none;
+    background: none;
+    border-radius: 12px;
+    cursor: pointer;
+    transition: all 0.25s ease;
+    position: relative;
+    overflow: hidden;
+}
+
+/* hover / active 효과 */
 .menu-btn:hover {
     background: var(--bg-point-sub);
-    color: var(--text-point-main);
 }
 .menu-btn.active {
     background: var(--bg-point-sub);
-    color: var(--text-point-main);
     box-shadow: var(--shadow-sm);
 }
 
-/* ===== 패널 공통 ===== */
-.vod-panel {
-    flex: 1;
-    padding: 16px;
-    overflow-y: auto;
-}
-
-.panel {
-    display: none;
-}
-.panel.active {
+/* ===== 아이콘 ===== */
+.menu-icon {
     display: block;
+    width: 26px;
+    height: 26px;
+    margin: 0 auto;
+    object-fit: contain;     /* 비율 유지 */
+    object-position: center; /* 완전 중앙 정렬 */
+    pointer-events: none;
+    user-select: none;
+    transition: filter 0.2s ease;
 }
 
-/* ===== 커리큘럼 패널 ===== */
-.lecture-list {
-    list-style: none;
-    padding: 0;
-    margin: 0;
+/* hover, active 시 색상 강조 */
+.menu-btn:hover .menu-icon {
+    filter: brightness(0) saturate(100%) invert(28%) sepia(83%) saturate(1992%)
+    hue-rotate(192deg) brightness(92%) contrast(97%);
 }
-.lecture-list li {
-    padding: 10px 12px;
-    margin-bottom: 8px;
-    background: var(--bg-secondary);
-    border-radius: 8px;
-    cursor: pointer;
-    color: var(--text-primary);
-    border: 2px solid transparent;
-    transition: all 0.2s ease;
+.menu-btn.active .menu-icon {
+    filter: brightness(0) saturate(100%) invert(29%) sepia(90%) saturate(2950%)
+    hue-rotate(190deg) brightness(94%) contrast(98%);
 }
-.lecture-list li:hover {
-    background: var(--bg-point-sub);
-    color: var(--text-point-main);
-}
-.lecture-list li.active {
-    background: linear-gradient(135deg, var(--bg-point-main), var(--bg-point-hover));
+
+/* ===== Tooltip ===== */
+.menu-btn::after {
+    content: attr(title);
+    position: absolute;
+    right: 110%;
+    top: 50%;
+    transform: translateY(-50%);
+    background: var(--text-black);
     color: var(--text-white);
-    border-color: var(--bg-point-main);
-    box-shadow: var(--shadow-md);
+    padding: 4px 8px;
+    font-size: 12px;
+    border-radius: 6px;
+    opacity: 0;
+    visibility: hidden;
+    white-space: nowrap;
+    transition: all 0.15s ease-in-out;
+    pointer-events: none;
+}
+.menu-btn:hover::after {
+    opacity: 1;
+    visibility: visible;
 }
 
-/* ===== Q&A 패널 (기존 qna.css 그대로 재활용) ===== */
-#panel-qna {
-    padding: 0;
+/* ===== 위치 정렬 ===== */
+.vod-side,
+.vod-menu {
+    align-items: flex-start;
 }
 
 /* ===== 반응형 ===== */
 @media (max-width: 1280px) {
-    .vod-main {
-        flex-direction: column;
-    }
-    .vod-side {
-        flex-direction: column;
-        height: auto;
-    }
     .vod-menu {
         flex-direction: row;
         width: 100%;
-        height: 50px;
-        border-right: none;
+        height: 54px;
+        border-left: none;
         border-top: var(--border-default);
         justify-content: center;
+        box-shadow: var(--shadow-sm);
+        border-radius: 0;
     }
-    .vod-panel {
-        height: auto;
-        max-height: 60vh;
-    }
-    .video-frame {
-        max-width: 100%;
-    }
-    .video-frame video {
-        height: auto;
+    .menu-btn::after {
+        display: none;
     }
 }

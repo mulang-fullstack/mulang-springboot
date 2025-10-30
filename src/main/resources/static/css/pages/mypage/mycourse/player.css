@@ -1,12 +1,13 @@
 @charset "UTF-8";
 
 /* ===============================
-   PLAYER LAYOUT (변경된 JSP 구조 대응)
-   - 왼쪽: VOD + 가로 강의목록
-   - 오른쪽: Q&A 사이드바
+   PLAYER LAYOUT (최종 완성형)
+   - 헤더 고정
+   - 좌측 영상 / 우측 패널 (Q&A·커리큘럼)
+   - 반응형 인프런 스타일
 ================================ */
 
-/* ===== 기본 리셋 ===== */
+/* ===== Reset ===== */
 * {
     margin: 0;
     padding: 0;
@@ -14,181 +15,249 @@
 }
 
 /* ===== 전체 레이아웃 ===== */
-.player-layout {
-    display: flex;
-    flex-direction: row;
-    align-items: flex-start;
-    justify-content: space-between;
-    width: 90%;              /* 전역 contents 기준 */
-    max-width: 1280px;
-    margin: 0 auto;          /* 헤더 로고 기준 중앙 정렬 */
-    background-color: var(--bg-secondary);
-    font-family: "Noto Sans KR", sans-serif;
-    gap: 32px;
-    padding: 40px 0;         /* 좌우 패딩 제거 */
-}
-
-/* ===== 왼쪽 VOD 영역 ===== */
-.player-main {
-    flex: 3;
+.vod-layout {
     display: flex;
     flex-direction: column;
-    gap: 28px;
+    height: 100vh;
+    background: var(--bg-secondary);
+    font-family: "Noto Sans KR", sans-serif;
 }
 
-/* ===== 영상 섹션 ===== */
+/* ===== 헤더 (뒤로가기 + 제목) ===== */
+.vod-header {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 12px 20px;
+    background: var(--bg-white);
+    border-bottom: 1px solid var(--border-default);
+    box-shadow: var(--shadow-sm);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+}
+.vod-back-btn {
+    background: none;
+    border: none;
+    color: var(--text-point-main);
+    font-size: 18px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: color 0.2s ease;
+}
+.vod-back-btn:hover {
+    color: var(--text-point-sub);
+}
+.vod-title {
+    font-size: 16px;
+    font-weight: 700;
+    color: var(--text-primary);
+}
+
+/* ===== 본문 영역 ===== */
+.vod-main {
+    flex: 1;
+    display: flex;
+    overflow: hidden;
+    background: var(--bg-secondary);
+}
+
+/* ===== 왼쪽: VOD 플레이어 ===== */
+.player-main {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    background: var(--bg-secondary);
+    transition: all 0.3s ease;
+}
 .video-section {
     width: 100%;
-    background: var(--bg-white);
-    border-radius: 14px;
-    border: var(--border-default);
-    box-shadow: var(--shadow-md);
-    padding: 24px 36px;
+    max-width: 1100px;
+    padding: 20px;
 }
-
 .video-frame {
     width: 100%;
-    border-radius: 14px;
+    border-radius: 12px;
     overflow: hidden;
     background: var(--text-black);
-    box-shadow: var(--shadow-lg);
+    box-shadow: var(--shadow-md);
 }
-
-video {
+.video-frame video {
     width: 100%;
-    height: 720px;
+    height: 640px;
     object-fit: contain;
-    border-radius: 14px;
+    border-radius: 12px;
     display: block;
 }
 
-/* ===== 가로 강의목록 ===== */
-.lecture-horizontal {
-    background: var(--bg-white);
-    border-radius: 12px;
-    border: var(--border-default);
-    box-shadow: var(--shadow-sm);
-    padding: 16px 20px;
-}
-
-.lecture-title {
-    font-size: 1.1rem;
-    font-weight: 700;
-    color: var(--text-point-main);
-    margin-bottom: 12px;
-    border-bottom: 3px solid var(--bg-point-sub);
-    padding-bottom: 6px;
-}
-
-.lecture-list-horizontal {
+/* ===== 오른쪽: 사이드 패널 ===== */
+.vod-side {
     display: flex;
-    gap: 12px;
-    overflow-x: auto;
-    padding-bottom: 8px;
+    flex-direction: row;
+    align-items: flex-start;
+    height: 100%;
+    position: relative;
+    transition: width 0.3s ease;
 }
 
-.lecture-list-horizontal::-webkit-scrollbar {
-    height: 6px;
+/* ===== 패널 (기본 닫힘) ===== */
+.vod-panel {
+    position: relative;
+    width: 0;
+    opacity: 0;
+    background: var(--bg-white);
+    border-left: 1px solid var(--border-default);
+    box-shadow: var(--shadow-md);
+    height: 100%;
+    overflow: hidden;
+    transition: all 0.3s ease;
 }
-.lecture-list-horizontal::-webkit-scrollbar-thumb {
+
+/* ===== 패널 열림 상태 ===== */
+.vod-panel.slide-open {
+    width: 400px;
+    opacity: 1;
+    overflow-y: auto;
+}
+
+/* 내부 콘텐츠 폭 통일 */
+.vod-panel > * {
+    width: 100%;
+    max-width: 400px;
+    margin: 0 auto;
+    box-sizing: border-box;
+    padding: 16px;
+}
+
+/* 패널 스크롤바 */
+.vod-panel::-webkit-scrollbar {
+    width: 6px;
+}
+.vod-panel::-webkit-scrollbar-thumb {
     background: var(--text-muted);
     border-radius: 3px;
 }
-.lecture-list-horizontal::-webkit-scrollbar-thumb:hover {
-    background: var(--text-subtle);
+
+/* ===== 메뉴 (커리큘럼/Q&A 버튼) ===== */
+.vod-menu {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 56px;
+    border-right: 1px solid var(--border-default);
+    background: var(--bg-white);
+    padding: 10px 0;
+}
+.menu-btn {
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 10px;
+    margin: 6px 0;
+}
+.menu-btn.active {
+    background: var(--bg-point-sub);
+    border-radius: 10px;
+}
+.menu-icon {
+    width: 24px;
+    height: 24px;
 }
 
-.lecture-list-horizontal li {
+/* ===== 커리큘럼 리스트 ===== */
+.lecture-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+.lecture-list li {
+    padding: 10px 12px;
+    margin-bottom: 8px;
     background: var(--bg-secondary);
     border-radius: 8px;
-    padding: 10px 16px;
     cursor: pointer;
-    font-size: 15px;
-    font-weight: 500;
     color: var(--text-primary);
     border: 2px solid transparent;
-    white-space: nowrap;
-    transition: all 0.25s ease;
+    transition: all 0.2s ease;
 }
-.lecture-list-horizontal li:hover {
+.lecture-list li:hover {
     background: var(--bg-point-sub);
     color: var(--text-point-main);
-    border-color: var(--text-point-main);
-    transform: translateY(-2px);
 }
-.lecture-list-horizontal li.active {
+.lecture-list li.active {
     background: linear-gradient(135deg, var(--bg-point-main), var(--bg-point-hover));
     color: var(--text-white);
     border-color: var(--bg-point-main);
     box-shadow: var(--shadow-md);
 }
 
-/* ===== 오른쪽 Q&A 사이드바 ===== */
-.qna-sidebar {
-    flex: 1;
+/* ===== Q&A 패널 ===== */
+#panel-qna {
+    padding: 0;
+    width: 100%;
+    background: var(--bg-white);
     display: flex;
-    flex-direction: column;
-    background-color: var(--bg-white);
-    border: var(--border-default);
-    border-radius: 12px;
-    box-shadow: var(--shadow-md);
-    padding: 20px 18px;
-    max-height: calc(100vh - 120px);
-    position: sticky;
-    top: 100px;
-    overflow: hidden;
+    justify-content: center;
+}
+#panel-qna .qna-sidebar {
+    width: 100%;
+    max-width: 400px;
+    padding: 16px;
 }
 
-.qna-sidebar .qna-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    border-bottom: var(--border-default);
-    padding-bottom: 8px;
-    margin-bottom: 10px;
-}
-
-.qna-sidebar .qna-title {
-    font-size: 1.2rem;
-    font-weight: 700;
-    color: var(--text-point-main);
-}
-
-.qna-sidebar .qna-body {
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-    overflow-y: auto;
-    padding-right: 6px;
-}
-
-.qna-sidebar .qna-body::-webkit-scrollbar {
-    width: 6px;
-}
-.qna-sidebar .qna-body::-webkit-scrollbar-thumb {
-    background: var(--text-muted);
-    border-radius: 3px;
-}
-.qna-sidebar .qna-body::-webkit-scrollbar-thumb:hover {
-    background: var(--text-subtle);
+/* ===== 패널 전환 공통 ===== */
+.vod-main,
+.player-main,
+.vod-side,
+.vod-panel,
+.vod-menu {
+    align-items: flex-start;
 }
 
 /* ===== 반응형 ===== */
 @media (max-width: 1280px) {
-    .player-layout {
-        flex-direction: column;
-        padding: 30px 24px;
-    }
-    .player-main {
+    .vod-panel.slide-open {
         width: 100%;
+        max-height: 60vh;
     }
-    .qna-sidebar {
-        position: static;
-        width: 100%;
-        max-height: none;
-        margin-top: 20px;
+    .video-section {
+        max-width: 800px;
+        padding: 10px;
     }
-    video {
-        height: 420px;
+    .video-frame video {
+        height: auto;
     }
+}
+
+@media (max-width: 992px) {
+    .vod-panel {
+        position: absolute;
+        right: 0;
+        top: 0;
+        height: 100%;
+        width: 0;
+        opacity: 0;
+        transition: all 0.3s ease;
+        z-index: 50;
+    }
+    .vod-panel.slide-open {
+        width: 320px;
+        opacity: 1;
+    }
+    .vod-menu {
+        z-index: 60;
+    }
+}
+
+/* ===== 활성 패널 표시 ===== */
+.vod-panel > div[id^="panel-"] {
+    display: none;
+}
+.vod-panel > div.active {
+    display: block;
+}
+#panel-curriculum,
+#panel-qna {
+    display: none;
 }
