@@ -12,6 +12,7 @@ import yoonsome.mulang.domain.user.service.UserService;
 import yoonsome.mulang.global.util.UserValidator;
 import yoonsome.mulang.infra.file.entity.File;
 import yoonsome.mulang.infra.file.service.FileService;
+import yoonsome.mulang.infra.file.service.S3FileService;
 
 import java.io.IOException;
 
@@ -20,7 +21,7 @@ import java.io.IOException;
 public class TeacherMypageServiceImpl implements TeacherMypageService {
 
     private final TeacherService teacherService;
-    private final FileService fileService;
+    private final S3FileService s3fileService;
     private final UserService userService;
 
     // 교사 프로필 조회
@@ -29,13 +30,19 @@ public class TeacherMypageServiceImpl implements TeacherMypageService {
         Teacher teacher = teacherService.getTeacherByUserId(userId);
         User user = userService.findById(userId);
 
+        String profileUrl = null;
+        if (user.getFile() != null) {
+            File file = user.getFile();
+            profileUrl = s3fileService.getPublicUrl(file.getId());
+        }
+
         return new TeacherProfileResponse(
                 user.getUsername(),
                 user.getNickname(),
                 user.getEmail(),
                 teacher.getIntroduction(),
                 teacher.getCareer(),
-                user.getFile() != null? user.getFile().getUrl() : null
+                profileUrl
         );
     }
 
@@ -69,7 +76,7 @@ public class TeacherMypageServiceImpl implements TeacherMypageService {
         // 프로필 이미지 수정
         MultipartFile photo = request.getPhoto();
         if (photo != null && !photo.isEmpty()) {
-            File savedPhoto = fileService.createFile(photo);
+            File savedPhoto = s3fileService.uploadProfileImage(photo);
             user.setFile(savedPhoto);
         }
     }

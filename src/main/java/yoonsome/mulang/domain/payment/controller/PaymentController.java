@@ -2,6 +2,7 @@ package yoonsome.mulang.domain.payment.controller;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -22,6 +23,8 @@ public class PaymentController {
     private final PaymentService paymentService;
     private final CourseRepository courseRepository;
 
+    @Value("${toss.payments.client-key}")
+    private String tossClientKey;
     /**
      * 결제 페이지 표시
      * GET /payments/{courseId}
@@ -33,7 +36,7 @@ public class PaymentController {
                 .orElseThrow(() -> new IllegalArgumentException("강좌를 찾을 수 없습니다."));
 
         model.addAttribute("course", course);
-        model.addAttribute("clientKey", "test_ck_P9BRQmyarY50Zx6zY1gXrJ07KzLN");
+        model.addAttribute("clientKey", tossClientKey);
 
         return "payment/payment"; // payment.jsp
     }

@@ -53,9 +53,6 @@ public class PaymentServiceImpl implements PaymentService {
     @Value("${toss.payments.secret-key}")
     private String tossSecretKey;
 
-    @Value("${toss.payments.client-key}")
-    private String tossClientKey;
-
     private static final String TOSS_PAYMENT_URL = "https://api.tosspayments.com/v1/payments/confirm";
 
     /**

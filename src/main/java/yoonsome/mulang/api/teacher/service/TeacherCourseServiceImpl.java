@@ -21,7 +21,8 @@ import yoonsome.mulang.domain.lecture.service.LectureService;
 import yoonsome.mulang.domain.teacher.entity.Teacher;
 import yoonsome.mulang.domain.teacher.service.TeacherService;
 import yoonsome.mulang.infra.file.entity.File;
-import yoonsome.mulang.infra.file.service.FileService;
+import yoonsome.mulang.infra.file.service.S3FileService;
+
 import java.io.IOException;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -32,7 +33,7 @@ import java.util.stream.Collectors;
 public class TeacherCourseServiceImpl implements TeacherCourseService {
 
     private final TeacherService teacherService;
-    private final FileService fileService;
+    private final S3FileService s3FileService;
     private final LectureService lectureService;
     private final CourseService courseService;
     private final CategoryService categoryService;
@@ -48,20 +49,28 @@ public class TeacherCourseServiceImpl implements TeacherCourseService {
         Page<Course> coursePage = courseService.getTeacherCoursePage(teacher, statuses, pageable);
 
         List<TeacherCourseResponse> responseList = coursePage.getContent().stream()
-                .map(course -> TeacherCourseResponse.builder()
-                        .id(course.getId())
-                        .title(course.getTitle())
-                        .subtitle(course.getSubtitle())
-                        .status(course.getStatus().name())
-                        .statusText(course.getStatus().getBadgeText())
-                        .price(course.getPrice())
-                        .language(course.getLanguage().getName())
-                        .category(course.getCategory().getName())
-                        .thumbnail(course.getThumbnail())
-                        .rejectionReason(course.getRejectionReason())
-                        .lectureCount(course.getLectureCount())
-                        .createdAt(course.getCreatedAt())
-                        .build())
+                .map(course -> {
+                    // 썸네일 URL 생성
+                    String thumbnailUrl = null;
+                    if (course.getFile() != null) {
+                        thumbnailUrl = s3FileService.getPublicUrl(course.getFile().getId());
+                    }
+
+                    return TeacherCourseResponse.builder()
+                            .id(course.getId())
+                            .title(course.getTitle())
+                            .subtitle(course.getSubtitle())
+                            .status(course.getStatus().name())
+                            .statusText(course.getStatus().getBadgeText())
+                            .price(course.getPrice())
+                            .language(course.getLanguage().getName())
+                            .category(course.getCategory().getName())
+                            .thumbnail(thumbnailUrl)
+                            .rejectionReason(course.getRejectionReason())
+                            .lectureCount(course.getLectureCount())
+                            .createdAt(course.getCreatedAt())
+                            .build();
+                })
                 .collect(Collectors.toList());
 
         return new PageImpl<>(responseList, pageable, coursePage.getTotalElements());
@@ -93,8 +102,8 @@ public class TeacherCourseServiceImpl implements TeacherCourseService {
         course.setLectureCount(request.getLectureCount() != null ? request.getLectureCount() : 1);
 
         if (request.getThumbnailFile() != null && !request.getThumbnailFile().isEmpty()) {
-            File savedThumb = fileService.createFile(request.getThumbnailFile());
-            course.setThumbnail(savedThumb.getUrl());
+            File savedThumb = s3FileService.uploadThumbnail(request.getThumbnailFile());
+            course.setFile(savedThumb);
         }
 
         Course savedCourse = courseService.registerCourse(course);
@@ -105,7 +114,7 @@ public class TeacherCourseServiceImpl implements TeacherCourseService {
                 MultipartFile video = lectureReq.getVideo();
                 if (video == null || video.isEmpty()) continue;
                 // 파일 업로드 (FileService)
-                File videoFile = fileService.createFile(video);
+                File videoFile = s3FileService.uploadVideo(video);
                 // Lecture 엔티티 조립
                 Lecture lecture = new Lecture();
                 lecture.setCourse(savedCourse);
@@ -146,7 +155,7 @@ public class TeacherCourseServiceImpl implements TeacherCourseService {
                 .price(course.getPrice())
                 .language(course.getLanguage().getName())
                 .category(course.getCategory().getName())
-                .thumbnail(course.getThumbnail())
+                .thumbnail(s3FileService.getPublicUrl(course.getFile().getId()))
                 .content(course.getContent())
                 .htmlContent(course.getHtmlContent())
                 .createdAt(course.getCreatedAt())
@@ -183,8 +192,8 @@ public class TeacherCourseServiceImpl implements TeacherCourseService {
 
         MultipartFile thumbnail = request.getThumbnailFile();
         if (thumbnail != null && !thumbnail.isEmpty()) {
-            File savedThumb = fileService.createFile(thumbnail);
-            course.setThumbnail(savedThumb.getUrl());
+            File savedThumb = s3FileService.uploadThumbnail(thumbnail);
+            course.setFile(savedThumb);
         }
 
         if (request.getCategoryId() != null) {
@@ -223,7 +232,7 @@ public class TeacherCourseServiceImpl implements TeacherCourseService {
                     newLecture.setContent(lectureReq.getContent());
                     newLecture.setOrderIndex(i);
 
-                    File videoFile = fileService.createFile(video);
+                    File videoFile = s3FileService.uploadVideo(video);
                     newLecture.setFile(videoFile);
 
                     lectureService.save(newLecture);
@@ -240,7 +249,7 @@ public class TeacherCourseServiceImpl implements TeacherCourseService {
 
                         MultipartFile video = lectureReq.getVideo();
                         if (video != null && !video.isEmpty()) {
-                            File savedFile = fileService.createFile(video);
+                            File savedFile = s3FileService.uploadVideo(video);
                             existing.setFile(savedFile);
                         }
                     }
@@ -277,7 +286,7 @@ public class TeacherCourseServiceImpl implements TeacherCourseService {
             File file = lecture.getFile();
             lecture.setFile(null);
             lectureService.save(lecture);
-            fileService.deleteFile(file);
+            s3FileService.deleteFile(file);
         }
         lectureService.delete(lectureId);
     }
@@ -293,7 +302,7 @@ public class TeacherCourseServiceImpl implements TeacherCourseService {
             throw new IllegalArgumentException("본인의 강좌만 수정할 수 있습니다.");
         }
         // 새 이미지 업로드
-        File newFile = fileService.createFile(newImage);
+        File newFile = s3FileService.uploadImage(newImage);
 
         // HTML 문자열에서 기존 URL을 새 URL로 교체
         String currentHtml = course.getHtmlContent();

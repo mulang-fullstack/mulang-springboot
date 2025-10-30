@@ -5,5 +5,6 @@ public enum FileType {
     THUMBNAIL,          // 썸네일 (Public)
     VIDEO,              // VOD (Private)
     LECTURE_MATERIAL,   // 강의 자료
-    DOCUMENT            // 일반 문서
+    DOCUMENT,           // 일반 문서
+    IMAGE
 }
