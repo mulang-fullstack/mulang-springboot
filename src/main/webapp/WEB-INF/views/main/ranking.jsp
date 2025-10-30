@@ -23,6 +23,9 @@
             <section class="course-category">
                 <h1>실시간 랭킹</h1>
                 <div class="course-tabs">
+                    <a href="/ranking" class="tab ${empty param.languageId ? 'active' : ''}">
+                        전체
+                    </a>
                     <c:forEach var="language" items="${languages}">
                         <a href="/ranking?languageId=${language.id}" class="tab ${param.languageId == language.id ? 'active' : ''}">
                                 ${language.name}
