@@ -13,7 +13,7 @@ import java.util.List;
 
 public interface CourseService {
     /*
-    admin, course 강좌 정보 페이지 객체 가져오기
+    admin, course, main 일상회화 강좌 정보 페이지 객체 가져오기
     request dto: languageId, categoryId, keyword, status, startDate, endDate, page, size, sortBy, sortDirection
     */
     Page<Course> getCourseList(CourseListRequest request);
@@ -32,4 +32,5 @@ public interface CourseService {
 
     /*신규 클래스 가져오기*/
     List<Course> getNewCourseList();
+
 }

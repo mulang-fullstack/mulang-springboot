@@ -21,7 +21,7 @@
     <div class="contents">
         <div class="course-list-contents">
             <section class="course-category">
-                <h1>신규 클래스</h1>
+                <h1>따끈따끈한 신규 클래스</h1>
             </section>
             <section class="course-list">
                 <c:forEach var="course" items="${courses}">
