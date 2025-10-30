@@ -24,7 +24,7 @@ public class LectureServiceImpl implements LectureService {
     }
     @Override
     public List<Lecture> getLecturesByCourseId(Long courseId) {
-        return lectureRepository.findByCourse_Id(courseId);
+        return lectureRepository.findByCourseId(courseId);
     }
 
     @Override

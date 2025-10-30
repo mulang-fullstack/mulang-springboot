@@ -40,7 +40,7 @@
             <div class="summary-box">
                 <div class="row">
                     <span class="label">강좌명</span>
-                    <span class="value">${payment.orderName}</span>
+                    <span class="value">${payment.courseTitle}</span>
                 </div>
                 <div class="row">
                     <span class="label">결제 금액</span>
@@ -54,12 +54,12 @@
                         <span class="value">
                             <c:choose>
                                 <c:when test="${payment.paymentMethod == 'CARD'}">카드</c:when>
-                                <c:when test="${payment.paymentMethod == 'VIRTUAL_ACCOUNT'}">가상계좌</c:when>
-                                <c:when test="${payment.paymentMethod == 'TRANSFER'}">계좌이체</c:when>
+                                <c:when test="${payment.paymentMethod == 'TOSSPAY'}">토스페이</c:when>
+                                <c:when test="${payment.paymentMethod == 'KAKAOPAY'}">카카오페이</c:when>
                                 <c:when test="${payment.paymentMethod == 'MOBILE_PHONE'}">휴대폰</c:when>
-                                <c:when test="${payment.paymentMethod == 'CULTURE_GIFT_CARD'}">문화상품권</c:when>
-                                <c:otherwise>${payment.paymentMethod}</c:otherwise>
+                                <c:otherwise>카드</c:otherwise>
                             </c:choose>
+
                             <c:if test="${not empty payment.paymentMethodDetail}">
                                 (${payment.paymentMethodDetail})
                             </c:if>
