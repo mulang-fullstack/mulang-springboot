@@ -30,7 +30,7 @@
                 <div class="likes-toolbar">
                     <div class="left">
                         <select class="sel-subject" id="subjectFilter" onchange="filterBySubject()">
-                            <option value="">전체 과목</option>
+                            <option value="0">전체 과목</option>
                             <option value="1" ${languageId == 1 ? 'selected' : ''}>영어</option>
                             <option value="2" ${languageId == 2 ? 'selected' : ''}>중국어</option>
                             <option value="3" ${languageId == 3 ? 'selected' : ''}>일본어</option>

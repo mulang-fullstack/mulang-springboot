@@ -103,8 +103,14 @@
                                             <c:otherwise>
                                                 <button type="button"
                                                         class="verify-btn"
-                                                        onclick="document.getElementById('hiddenEmail').value = document.getElementById('email').value; document.getElementById('emailVerifyForm').submit();">
-                                                    인증하기
+                                                        id="verifyEmailBtn"
+                                                        onclick="verifyEmailWithLoading()">
+                                                    <span class="btn-text">인증하기</span>
+                                                    <span class="spinner" style="display: none;">
+                                                        <svg class="spinner-icon" viewBox="0 0 50 50">
+                                    <circle class="path" cx="25" cy="25" r="20" fill="none" stroke-width="5"></circle>
+                                    </svg>
+                                 </span>
                                                 </button>
                                             </c:otherwise>
                                         </c:choose>

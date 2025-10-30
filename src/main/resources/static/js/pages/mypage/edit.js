@@ -166,3 +166,20 @@ async function submitVerifyCode() {
         verifyBtn.textContent = '확인';
     }
 }
+/**
+ * 인증하기 버튼 클릭 - 로딩 스피너 포함
+ */
+function verifyEmailWithLoading() {
+    const verifyBtn = document.getElementById('verifyEmailBtn');
+    const btnText = verifyBtn.querySelector('.btn-text');
+    const spinner = verifyBtn.querySelector('.spinner');
+
+    // 버튼 비활성화 및 스피너 표시
+    verifyBtn.disabled = true;
+    btnText.style.display = 'none';
+    spinner.style.display = 'inline-block';
+
+    // 이메일 값 설정 후 form submit
+    document.getElementById('hiddenEmail').value = document.getElementById('email').value;
+    document.getElementById('emailVerifyForm').submit();
+}

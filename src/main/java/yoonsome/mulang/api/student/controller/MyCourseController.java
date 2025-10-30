@@ -31,7 +31,8 @@ public class MyCourseController {
 
     @GetMapping("/course")
     public String course(@AuthenticationPrincipal CustomUserDetails userDetails, Model model,
-                         @RequestParam(required = false) Long languageId, @RequestParam(required = false) String keyword) {
+                         @RequestParam(defaultValue = "0") Long languageId,
+                         @RequestParam(required = false) String keyword) {
 
         Long userid = userDetails.getUser().getId();
 
@@ -42,7 +43,7 @@ public class MyCourseController {
 
         List<MycourseResponse> mycourseResponseList;
         if(searchKeyword != null){
-            if(languageId != null){
+            if(languageId != 0){
                 System.out.println("검색, 언어");
                 mycourseResponseList = mycourseInfoService.findByUserIdAndLanguageAndKeyword(userid, languageId, searchKeyword);
             }else{
@@ -50,7 +51,7 @@ public class MyCourseController {
                 mycourseResponseList = mycourseInfoService.findByUserIdAndKeyword(userid, searchKeyword);
             }
         }else{
-            if(languageId != null){
+            if(languageId != 0){
                 System.out.println("언어");
                 mycourseResponseList = mycourseInfoService.findByUserIdAndLanguage(userid, languageId);
 
