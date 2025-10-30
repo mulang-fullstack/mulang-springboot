@@ -39,7 +39,7 @@
 }
 
 /* Best Class */
-.best-class {
+.best-class, .recent-paid, .top20, .new-class{
     width: 1280px;
     padding: 40px 0 80px;
 }
@@ -50,7 +50,20 @@
     gap: 24px;
 }
 
+.class-list a {
+    display: block;
+    text-decoration: none;
+    color: inherit;
+}
+
+.recent-paid .class-list {
+    display: grid;
+    grid-template-columns: repeat(8, 0.5fr);
+    gap: 24px;
+}
+
 .class-card {
+    width: 302px;
     background: #fff;
     border-radius: 12px;
     overflow: hidden;
@@ -64,13 +77,23 @@
 }
 
 .class-info {
+    width: 100%;
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
     padding: 16px;
 }
 
+
 .class-info h4 {
+    width: 100%;
     font-size: 16px;
     font-weight: 600;
     margin-bottom: 6px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
 }
 
 .price {

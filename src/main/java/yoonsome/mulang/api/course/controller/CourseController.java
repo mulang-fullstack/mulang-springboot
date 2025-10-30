@@ -26,6 +26,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+@RequestMapping("/course")
 @RequiredArgsConstructor
 @Controller
 public class CourseController {
@@ -33,7 +34,7 @@ public class CourseController {
     private final DisplayingCourseService displayingCourseService;
 
     /*강좌 리스트 목록*/
-    @GetMapping("course")
+    @GetMapping
     public String getCourseList(
             @AuthenticationPrincipal CustomUserDetails userDetails,
             @ModelAttribute CourseListRequest request,
@@ -78,7 +79,7 @@ public class CourseController {
     }
 
     /*강좌 상세 페이지*/
-    @GetMapping("courseDetail")
+    @GetMapping("/courseDetail")
     public String getCourseDetail(
             @AuthenticationPrincipal CustomUserDetails userDetails,
             Long id,

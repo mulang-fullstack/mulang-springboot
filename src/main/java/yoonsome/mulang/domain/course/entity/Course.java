@@ -66,10 +66,10 @@ public class Course {
     @JoinColumn(name = "teacher_id", nullable = true)
     private Teacher teacher;
 
-    @Column(name = "average_rating")
+    @Column(name = "average_rating", nullable = false)
     private Double averageRating;
 
-    @Column(name = "review_count")
+    @Column(name = "review_count", nullable = false)
     private Integer reviewCount;
 
     @Column(name = "rejection_reason")

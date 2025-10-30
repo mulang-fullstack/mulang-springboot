@@ -1,6 +1,7 @@
 package yoonsome.mulang.api.main.service;
 
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import yoonsome.mulang.api.course.dto.CourseListResponse;
 import yoonsome.mulang.domain.course.dto.CourseListRequest;
 import yoonsome.mulang.domain.language.entity.Language;

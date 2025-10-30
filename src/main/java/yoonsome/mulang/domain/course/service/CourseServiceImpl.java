@@ -76,7 +76,7 @@ public class CourseServiceImpl implements CourseService {
     }
 
     @Override
-    public List<Course> getNewCourseList(){
-        return courseRepository.findAllByOrderByCreatedAtDesc(PageRequest.of(0, 20));
+    public List<Course> getNewCourseList(Pageable pageable){
+        return courseRepository.findAllByOrderByCreatedAtDesc(pageable);
     }
 }

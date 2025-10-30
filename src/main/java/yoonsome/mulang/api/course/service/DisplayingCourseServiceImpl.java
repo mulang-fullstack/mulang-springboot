@@ -100,7 +100,7 @@ public class DisplayingCourseServiceImpl implements DisplayingCourseService {
                     .id(course.getId())
                     .thumbnail(s3FileService.getPublicUrl(course.getFile().getId()))
                     .title(course.getTitle())
-                    .subtitle(s3FileService.getPublicUrl(course.getFile().getId()))
+                    .subtitle(course.getSubtitle())
                     .teacherName(getTeacherName(course))
                     .averageRating(course.getAverageRating())
                     .reviewCount(course.getReviewCount())

@@ -31,6 +31,6 @@ public interface CourseService {
     List<Course> getCourseRankingList(long languageId);
 
     /*신규 클래스 가져오기*/
-    List<Course> getNewCourseList();
+    List<Course> getNewCourseList(Pageable pageable);
 
 }

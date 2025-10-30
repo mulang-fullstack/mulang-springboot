@@ -9,6 +9,8 @@
 .course-name h1 {
     font-size: 36px;
     font-weight: 400;
+    overflow: hidden;
+    word-break: break-word;
 }
 
 /* 요약 박스 */
@@ -41,6 +43,8 @@
 
 .course-desc {
     font-size: 20px;
+    overflow: hidden;
+    word-break: break-word;
 }
 
 .course-meta {

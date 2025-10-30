@@ -109,16 +109,18 @@
     display: flex;
     flex-direction: column;
     flex: 1;
+    min-width: 0;
     gap: 10px;
     padding: 0 180px;
     justify-content: center;
+    overflow: hidden;
 }
 .course-card h2 {
-    //position: absolute;
-    //top: 30px;
-    //left: 377px;
     font-size: 24px;
     font-weight: 400;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
 }
 
 .subtitle, .teacher {

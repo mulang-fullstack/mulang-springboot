@@ -49,13 +49,13 @@
                     <div class="search-icon"></div>
                 </div>
                 <div class="sort-options">
-                    <a href="/course?categoryId=${courseListRequest.categoryId}&keyword=${courseListRequest.keyword}&page=${courseListRequest.sortBy != 'averageRating' ? 0 : courseListRequest.page}&sortBy=averageRating">
+                    <a href="/course/course?categoryId=${courseListRequest.categoryId}&keyword=${courseListRequest.keyword}&page=${courseListRequest.sortBy != 'averageRating' ? 0 : courseListRequest.page}&sortBy=averageRating">
                         <div class="sort-item ${courseListRequest.sortBy == 'averageRating'? 'active':''}">별점순</div>
                     </a>
-                    <a href="/course?categoryId=${courseListRequest.categoryId}&keyword=${courseListRequest.keyword}&page=${courseListRequest.sortBy != 'reviewCount' ? 0 : courseListRequest.page}&sortBy=reviewCount">
+                    <a href="/course/course?categoryId=${courseListRequest.categoryId}&keyword=${courseListRequest.keyword}&page=${courseListRequest.sortBy != 'reviewCount' ? 0 : courseListRequest.page}&sortBy=reviewCount">
                         <div class="sort-item ${courseListRequest.sortBy == 'reviewCount'? 'active':''}">리뷰순</div>
                     </a>
-                    <a href="/course?categoryId=${courseListRequest.categoryId}&keyword=${courseListRequest.keyword}&page=${courseListRequest.sortBy != 'createdAt' ? 0 : courseListRequest.page}&sortBy=createdAt">
+                    <a href="/course/course?categoryId=${courseListRequest.categoryId}&keyword=${courseListRequest.keyword}&page=${courseListRequest.sortBy != 'createdAt' ? 0 : courseListRequest.page}&sortBy=createdAt">
                         <div class="sort-item ${courseListRequest.sortBy == 'createdAt'? 'active':''}">최신순</div>
                     </a>
                 </div>
@@ -66,11 +66,11 @@
                     <c:when test="${not empty courses}">
                         <c:forEach var="course" items="${courses}">
                             <div class="course-card">
-                                <a href="courseDetail?id=${course.id}">
+                                <a href="/course/courseDetail?id=${course.id}">
                                     <img src="${course.thumbnail}" alt="course">
                                 </a>
                                 <div class="course-list-info">
-                                    <h2><a href="courseDetail?id=${course.id}">${course.title}</a></h2>
+                                    <h2><a href="/course/courseDetail?id=${course.id}">${course.title}</a></h2>
                                     <p class="subtitle">${course.subtitle}</p>
                                     <p class="teacher">${course.teacherName}</p>
                                     <div class="rating">

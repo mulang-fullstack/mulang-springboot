@@ -24,7 +24,7 @@
                 <h1>원어민처럼 쓰는 일상 회화</h1>
                 <div class="course-tabs">
                     <c:forEach var="language" items="${languages}">
-                        <a href="/dailyConversation?languageId=${language.id}" class="tab ${param.languageId == language.id ? 'active' : ''}">
+                        <a href="/main/dailyConversation?languageId=${language.id}" class="tab ${courseListRequest.languageId == language.id ? 'active' : ''}">
                                 ${language.name}
                         </a>
                     </c:forEach>
@@ -35,8 +35,8 @@
                 <div class="search-box">
                     <!-- 검색박스 내부 요소들 -->
                     <div class="search-input">
-                        <form action="/course" method="get">
-                            <input type="hidden" name="categoryId" value="${courseListRequest.categoryId}">
+                        <form action="/getDailyConversation" method="get">
+                            <input type="hidden" name="languageId" value="${courseListRequest.languageId}">
                             <input type="text" name="keyword" value="${courseListRequest.keyword}">
                             <button type="submit">
                                 <img src="/img/icon/search.svg" alt="검색 아이콘">
@@ -46,13 +46,13 @@
                     <div class="search-icon"></div>
                 </div>
                 <div class="sort-options">
-                    <a href="/dailyConversation?categoryId=${courseListRequest.categoryId}&keyword=${courseListRequest.keyword}&page=${courseListRequest.sortBy != 'averageRating' ? 0 : courseListRequest.page}&sortBy=averageRating">
+                    <a href="/main/dailyConversation?languageId=${courseListRequest.languageId}&keyword=${courseListRequest.keyword}&page=${courseListRequest.sortBy != 'averageRating' ? 0 : courseListRequest.page}&sortBy=averageRating">
                         <div class="sort-item ${courseListRequest.sortBy == 'averageRating'? 'active':''}">별점순</div>
                     </a>
-                    <a href="/dailyConversation?categoryId=${courseListRequest.categoryId}&keyword=${courseListRequest.keyword}&page=${courseListRequest.sortBy != 'reviewCount' ? 0 : courseListRequest.page}&sortBy=reviewCount">
+                    <a href="/main/dailyConversation?languageId=${courseListRequest.languageId}&keyword=${courseListRequest.keyword}&page=${courseListRequest.sortBy != 'reviewCount' ? 0 : courseListRequest.page}&sortBy=reviewCount">
                         <div class="sort-item ${courseListRequest.sortBy == 'reviewCount'? 'active':''}">리뷰순</div>
                     </a>
-                    <a href="/dailyConversation?categoryId=${courseListRequest.categoryId}&keyword=${courseListRequest.keyword}&page=${courseListRequest.sortBy != 'createdAt' ? 0 : courseListRequest.page}&sortBy=createdAt">
+                    <a href="/main/dailyConversation?languageId=${courseListRequest.languageId}&keyword=${courseListRequest.keyword}&page=${courseListRequest.sortBy != 'createdAt' ? 0 : courseListRequest.page}&sortBy=createdAt">
                         <div class="sort-item ${courseListRequest.sortBy == 'createdAt'? 'active':''}">최신순</div>
                     </a>
                 </div>
@@ -63,11 +63,11 @@
                     <c:when test="${not empty courses}">
                         <c:forEach var="course" items="${courses}">
                             <div class="course-card">
-                                <a href="courseDetail?id=${course.id}">
+                                <a href="/course/courseDetail?id=${course.id}">
                                     <img src="${course.thumbnail}" alt="course">
                                 </a>
                                 <div class="course-list-info">
-                                    <h2><a href="courseDetail?id=${course.id}">${course.title}</a></h2>
+                                    <h2><a href="/course/courseDetail?id=${course.id}">${course.title}</a></h2>
                                     <p class="subtitle">${course.subtitle}</p>
                                     <p class="teacher">${course.teacherName}</p>
                                     <div class="rating">
