@@ -15,6 +15,7 @@ import yoonsome.mulang.domain.course.service.CourseService;
 import yoonsome.mulang.domain.coursefavorite.service.CourseFavoriteService;
 import yoonsome.mulang.domain.language.entity.Language;
 import yoonsome.mulang.domain.language.service.LanguageService;
+import yoonsome.mulang.infra.file.service.S3FileService;
 
 import java.util.*;
 
