@@ -73,39 +73,4 @@ public class MyCourseController {
         return "student/mycourse/course";
     }
 
-
-
-
-
-     /*임시 더미더미
-    @GetMapping("/player")
-    public String player(Model model) {
-        Long testCourseId = 20L;
-        Long testLectureId = 16L;
-
-        Lecture lecture = mycourseService.getLecture(testLectureId);
-        List<Lecture> lectureList = mycourseService.getLectureListByCourseId(testCourseId);
-
-        model.addAttribute("lecture", lecture);
-        model.addAttribute("lectureList", lectureList);
-        return "student/mycourse/player";
-    }
-
-    @GetMapping("/{courseId}/lecture/{lectureId}")
-    public String playLecture(@PathVariable Long courseId,
-                              @PathVariable Long lectureId,
-                              @AuthenticationPrincipal CustomUserDetails userDetails,
-                              Model model) {
-
-        Lecture lecture = mycourseService.getLecture(lectureId);
-        List<Lecture> lectureList = mycourseService.getLectureListByCourseId(courseId);
-
-        model.addAttribute("lecture", lecture);
-        model.addAttribute("lectureList", lectureList);
-        model.addAttribute("user", userDetails);
-
-        return "student/mycourse/player";
-    }
-
-      */
 }

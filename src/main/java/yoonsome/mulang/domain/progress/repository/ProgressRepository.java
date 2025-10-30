@@ -6,6 +6,8 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 import yoonsome.mulang.domain.progress.entity.Progress;
 
+import java.util.Optional;
+
 @Repository
 public interface ProgressRepository extends JpaRepository<Progress, Long> {
 
@@ -36,4 +38,6 @@ public interface ProgressRepository extends JpaRepository<Progress, Long> {
             @Param("userId") Long userId,
             @Param("courseId") Long courseId
     );
+
+    Optional<Progress> findByStudent_IdAndLecture_Id(Long studentId, Long lectureId);
 }

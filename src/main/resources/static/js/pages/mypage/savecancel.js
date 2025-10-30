@@ -1,20 +1,27 @@
-// 과목 필터
 function filterBySubject() {
     const languageId = document.getElementById('subjectFilter').value;
-    const keyword = document.getElementById('searchInput').value.trim();
-    const urlParams = new URLSearchParams();
+    const keyword = document.getElementById('searchInput')?.value.trim();
 
-    if (languageId) {
-        urlParams.set('languageId', languageId);
+    const params = new URLSearchParams();
+
+    // ✅ languageId가 있고 0이 아닐 때만 추가
+    if (languageId && languageId !== '0') {
+        params.set('languageId', languageId);
+        params.set('page', 0);
     }
 
+    // keyword가 있으면 추가
     if (keyword) {
-        urlParams.set('keyword', keyword);
+        params.set('keyword', keyword);
     }
 
-    urlParams.set('page', '0');
-    window.location.href = `/student/save?${urlParams.toString()}`;
+    // ✅ 파라미터가 있으면 쿼리스트링 포함, 없으면 깔끔한 URL
+    const queryString = params.toString();
+    window.location.href = queryString
+        ? `/student/save?${queryString}`
+        : '/student/save';
 }
+
 
 // 검색 함수
 function searchCourse(event) {

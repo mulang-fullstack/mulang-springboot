@@ -1,7 +1,7 @@
 package yoonsome.mulang.api.common.controller;
 
-import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -12,6 +12,9 @@ import yoonsome.mulang.domain.course.entity.Course;
 import yoonsome.mulang.domain.course.service.CourseService;
 import yoonsome.mulang.domain.lecture.entity.Lecture;
 import yoonsome.mulang.domain.lecture.service.LectureService;
+import yoonsome.mulang.domain.progress.service.ProgressShowService;
+import yoonsome.mulang.domain.user.entity.User;
+import yoonsome.mulang.infra.security.CustomUserDetails;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -34,18 +37,19 @@ public class CommonVodViewController {
 
     private final CourseService courseService;
     private final LectureService lectureService;
+    private final ProgressShowService progressShowService;
 
     @GetMapping("/course/{courseId}/vod")
     public String showVodPage(@PathVariable Long courseId,
                               @RequestParam(required = false) Long lectureId,
-                              HttpServletRequest request,
+                              @AuthenticationPrincipal CustomUserDetails userDetails,
                               Model model) {
 
         // [1] 강좌 및 강의 목록 조회
         Course course = courseService.getCourse(courseId);
         List<Lecture> lectureList = lectureService.getLecturesByCourseId(courseId);
 
-        // [2] DTO 변환 (엔티티 직접 노출 금지)
+        // [2] DTO 변환
         List<VodLectureResponse> vodLectureList = lectureList.stream()
                 .map(lec -> VodLectureResponse.builder()
                         .id(lec.getId())
@@ -62,11 +66,19 @@ public class CommonVodViewController {
                     .findFirst()
                     .orElse(null);
         }
+
+        // ✅ currentLecture가 null이면 첫 번째 강의 선택 (이 부분을 먼저!)
         if (currentLecture == null && !vodLectureList.isEmpty()) {
             currentLecture = vodLectureList.get(0);
         }
 
-        // [4] 모델에 DTO만 전달
+        // ✅ 학생이고 currentLecture가 null이 아닐 때만 진도 처리
+        User user = userDetails.getUser();
+        if (user.getRole() == User.Role.STUDENT && currentLecture != null) {
+            progressShowService.LectureCompleted(user.getId(), currentLecture.getId());
+        }
+
+        // [4] 모델에 데이터 전달
         model.addAttribute("course", course);
         model.addAttribute("lectureList", vodLectureList);
         model.addAttribute("lecture", currentLecture);
@@ -74,3 +86,4 @@ public class CommonVodViewController {
         return "common/player";
     }
 }
+
