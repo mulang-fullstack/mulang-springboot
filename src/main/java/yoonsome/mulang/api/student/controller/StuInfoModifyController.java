@@ -173,6 +173,16 @@ public class StuInfoModifyController {
                     model.addAttribute("user", user);
                     return "student/profile/edit";
                 }
+                if(nickname.length()<2) {
+                    model.addAttribute("nicknameError", "닉네임은 2자 이상이어야합니다");
+                    model.addAttribute("user", user);
+                    return "student/profile/edit";
+                }
+                if(nickname.length()>8){
+                    model.addAttribute("nicknameError", "닉네임은 8자 이하이어야합니다");
+                    model.addAttribute("user", user);
+                    return "student/profile/edit";
+                }
             }
         }
 
@@ -184,7 +194,7 @@ public class StuInfoModifyController {
                 model.addAttribute("emailerror", "이메일 인증을 완료해주세요.");
                 return "student/profile/edit";
             }
-            // 여기까지 오면 인증 완료 ✅
+
         }
 
         // 3. 프로필 수정 진행

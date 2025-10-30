@@ -82,10 +82,11 @@ function searchCourse(event) {
     }
 
     urlParams.set('page', '0');
-    window.location.href = `/student/course?${urlParams.toString()}`;
+    window.location.href = `/student/save?${urlParams.toString()}`;
 
     return false;
 }
+
 document.addEventListener("DOMContentLoaded", function() {
 
 // 모든 클래스 제목 영역(title-wrap)에 클릭 이벤트 연결

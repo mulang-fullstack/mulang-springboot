@@ -57,7 +57,7 @@
                     <c:forEach var="favorite" items="${favorites}">
                         <article class="like-item" data-favorite-id="${favorite.id}">
                             <div class="thumb">
-                                <img src="${favorite.course.thumbnail}" alt="${favorite.course.title}">
+                                <img src="${favorite.thumbnailUrl}" alt="${favorite.course.title}">
                             </div>
 
                             <div class="meta">

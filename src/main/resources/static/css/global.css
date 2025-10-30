@@ -20,7 +20,7 @@ html {
     --bg-point-main: #004f9a;              /* 버튼, 강조 영역 */
     --bg-point-hover: #0066CC;        /* 버튼 호버 시 */
     --bg-point-active: #003366;         /* 클릭/활성 상태 */
-    --bg-point-sub: #E5EEF6;          /* 포인트 관련 서브 배경 (버튼 주변 등) */
+    --bg-point-sub: #E5EEF6; /* 포인트 관련 서브 배경 (버튼 주변 등) */
     /* 화이트 / 기본 */
     --bg-white: #ffffff;              /* 카드, 모달, 기본 배경 */
     --bg-white-hover: rgba(75, 85, 99, 0.1); /* 호버/마우스 오버 효과 */

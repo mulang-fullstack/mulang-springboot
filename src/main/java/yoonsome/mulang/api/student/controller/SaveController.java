@@ -26,7 +26,8 @@ public class SaveController {
     @GetMapping("/save")
     public String getFavorites(
             @AuthenticationPrincipal CustomUserDetails userDetails,
-            Model model, @RequestParam(defaultValue = "0") int page, @RequestParam(required = false) Long languageId, @RequestParam(required = false) String keyword) {
+            Model model, @RequestParam(defaultValue = "0") int page, @RequestParam(defaultValue = "0") Long languageId,
+            @RequestParam(required = false) String keyword) {
 
         // CustomUserDetails에서 바로 User ID 가져오기
         Long userId = userDetails.getUser().getId();
@@ -41,13 +42,13 @@ public class SaveController {
         Page<SaveResponse> favorites = null;
 
         if (searchKeyword != null) {
-            if (languageId != null) {
+            if (languageId != 0) {
                 favorites = saveService.findByStudentIdAndLanguageAndKeyword(userId, languageId, searchKeyword, pageable);
             } else {
                 favorites = saveService.findByStudentIdAndKeyword(userId, searchKeyword, pageable);
             }
         }else{
-            if (languageId != null) {
+            if (languageId != 0) {
                 favorites = saveService.findByStudentIdAndLanguage(userId, languageId, pageable);
             } else {
                 favorites = saveService.findByStudentIdWithCoursePage(userId, pageable);
