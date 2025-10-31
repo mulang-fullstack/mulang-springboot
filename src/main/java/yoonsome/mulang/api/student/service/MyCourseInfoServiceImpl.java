@@ -5,6 +5,7 @@ import org.springframework.stereotype.Service;
 import yoonsome.mulang.api.student.dto.MycourseResponse;
 import yoonsome.mulang.domain.enrollment.entity.Enrollment;
 import yoonsome.mulang.domain.enrollment.repository.EnrollmentRepository;
+import yoonsome.mulang.infra.file.service.S3FileService;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -15,6 +16,7 @@ public class MyCourseInfoServiceImpl implements MyCourseInfoService {
 
     private final EnrollmentRepository enrollmentRepository;
     private final ProgressCalculateService progressCalculateService;
+    private final S3FileService s3FileService;
 
     @Override
     public List<MycourseResponse> findByUserId(Long userId) {
@@ -24,17 +26,27 @@ public class MyCourseInfoServiceImpl implements MyCourseInfoService {
 
         return enrollments.stream()
                 .map(enrollment -> {
-                    // DTO 변환
-                    MycourseResponse response = MycourseResponse.from(enrollment);
+                    // 썸네일 URL 생성
+                    String thumbnailUrl = null;
+                    if (enrollment.getCourse().getFile() != null) {
+                        thumbnailUrl = s3FileService.getPublicUrl(
+                                enrollment.getCourse().getFile().getId()
+                        );
+                    }
 
-                    // 진척도 계산 및 설정
+                    // 진척도 계산
                     Integer progress = progressCalculateService.progressCalculate(
                             userId,
                             enrollment.getCourse().getId()
                     );
-                    response.setProgress(progress);
 
-                    return response;
+                    return MycourseResponse.builder()
+                            .id(enrollment.getId())
+                            .course(enrollment.getCourse())
+                            .enrolledAt(enrollment.getEnrolledAt())
+                            .progress(progress)
+                            .thumbnailUrl(thumbnailUrl)  // ← 별도 필드로 관리
+                            .build();
                 })
                 .collect(Collectors.toList());
     }
@@ -45,17 +57,27 @@ public class MyCourseInfoServiceImpl implements MyCourseInfoService {
 
         return enrollments.stream()
                 .map(enrollment -> {
-                    // DTO 변환
-                    MycourseResponse response = MycourseResponse.from(enrollment);
+                    // 썸네일 URL 생성
+                    String thumbnailUrl = null;
+                    if (enrollment.getCourse().getFile() != null) {
+                        thumbnailUrl = s3FileService.getPublicUrl(
+                                enrollment.getCourse().getFile().getId()
+                        );
+                    }
 
-                    // 진척도 계산 및 설정
+                    // 진척도 계산
                     Integer progress = progressCalculateService.progressCalculate(
                             userId,
                             enrollment.getCourse().getId()
                     );
-                    response.setProgress(progress);
 
-                    return response;
+                    return MycourseResponse.builder()
+                            .id(enrollment.getId())
+                            .course(enrollment.getCourse())
+                            .enrolledAt(enrollment.getEnrolledAt())
+                            .progress(progress)
+                            .thumbnailUrl(thumbnailUrl)  // ← 별도 필드로 관리
+                            .build();
                 })
                 .collect(Collectors.toList());
     }
@@ -66,17 +88,27 @@ public class MyCourseInfoServiceImpl implements MyCourseInfoService {
 
         return enrollments.stream()
                 .map(enrollment -> {
-                    // DTO 변환
-                    MycourseResponse response = MycourseResponse.from(enrollment);
+                    // 썸네일 URL 생성
+                    String thumbnailUrl = null;
+                    if (enrollment.getCourse().getFile() != null) {
+                        thumbnailUrl = s3FileService.getPublicUrl(
+                                enrollment.getCourse().getFile().getId()
+                        );
+                    }
 
-                    // 진척도 계산 및 설정
+                    // 진척도 계산
                     Integer progress = progressCalculateService.progressCalculate(
                             userId,
                             enrollment.getCourse().getId()
                     );
-                    response.setProgress(progress);
 
-                    return response;
+                    return MycourseResponse.builder()
+                            .id(enrollment.getId())
+                            .course(enrollment.getCourse())
+                            .enrolledAt(enrollment.getEnrolledAt())
+                            .progress(progress)
+                            .thumbnailUrl(thumbnailUrl)  // ← 별도 필드로 관리
+                            .build();
                 })
                 .collect(Collectors.toList());
     }
@@ -86,17 +118,27 @@ public class MyCourseInfoServiceImpl implements MyCourseInfoService {
                 .findByUserIdAndKeyword(userId, keyword);
         return enrollments.stream()
                 .map(enrollment -> {
-                    // DTO 변환
-                    MycourseResponse response = MycourseResponse.from(enrollment);
+                    // 썸네일 URL 생성
+                    String thumbnailUrl = null;
+                    if (enrollment.getCourse().getFile() != null) {
+                        thumbnailUrl = s3FileService.getPublicUrl(
+                                enrollment.getCourse().getFile().getId()
+                        );
+                    }
 
-                    // 진척도 계산 및 설정
+                    // 진척도 계산
                     Integer progress = progressCalculateService.progressCalculate(
                             userId,
                             enrollment.getCourse().getId()
                     );
-                    response.setProgress(progress);
 
-                    return response;
+                    return MycourseResponse.builder()
+                            .id(enrollment.getId())
+                            .course(enrollment.getCourse())
+                            .enrolledAt(enrollment.getEnrolledAt())
+                            .progress(progress)
+                            .thumbnailUrl(thumbnailUrl)  // ← 별도 필드로 관리
+                            .build();
                 })
                 .collect(Collectors.toList());
     }
@@ -107,17 +149,27 @@ public class MyCourseInfoServiceImpl implements MyCourseInfoService {
 
         return enrollments.stream()
                 .map(enrollment -> {
-                    // DTO 변환
-                    MycourseResponse response = MycourseResponse.from(enrollment);
+                    // 썸네일 URL 생성
+                    String thumbnailUrl = null;
+                    if (enrollment.getCourse().getFile() != null) {
+                        thumbnailUrl = s3FileService.getPublicUrl(
+                                enrollment.getCourse().getFile().getId()
+                        );
+                    }
 
-                    // 진척도 계산 및 설정
+                    // 진척도 계산
                     Integer progress = progressCalculateService.progressCalculate(
                             userId,
                             enrollment.getCourse().getId()
                     );
-                    response.setProgress(progress);
 
-                    return response;
+                    return MycourseResponse.builder()
+                            .id(enrollment.getId())
+                            .course(enrollment.getCourse())
+                            .enrolledAt(enrollment.getEnrolledAt())
+                            .progress(progress)
+                            .thumbnailUrl(thumbnailUrl)  // ← 별도 필드로 관리
+                            .build();
                 })
                 .collect(Collectors.toList());
     }

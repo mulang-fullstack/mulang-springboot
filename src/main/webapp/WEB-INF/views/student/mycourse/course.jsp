@@ -62,7 +62,7 @@
                             <div class="table-row">
                                 <!-- 썸네일 -->
                                 <div class="thumb">
-                                    <img src="${course.course.thumbnail}" alt="썸네일">
+                                    <img src="${course.thumbnailUrl}" alt="썸네일">
                                 </div>
 
                                 <!-- 강좌 제목 -->
