@@ -127,8 +127,6 @@ function renderPaymentTable(payments, currentPage, pageSize) {
         return;
     }
 
-    console.log('🎨 렌더링할 결제 수:', payments.length); // 디버깅용
-
     tbody.innerHTML = payments.map((payment, index) => {
         const rowNumber = currentPage * pageSize + index + 1;
 
@@ -153,11 +151,6 @@ function renderPaymentTable(payments, currentPage, pageSize) {
             case 'CULTURE_GIFT_CARD':
                 paymentMethodText = '문화상품권';
                 break;
-        }
-
-        // 결제 수단 상세 정보 추가
-        if (payment.paymentMethodDetail) {
-            paymentMethodText += ` (${payment.paymentMethodDetail})`;
         }
 
         // 상태 배지
@@ -195,8 +188,8 @@ function renderPaymentTable(payments, currentPage, pageSize) {
         return `
             <tr data-id="${payment.id}">
                 <td>${rowNumber}</td>
-                <td class="course-name">${payment.orderName || '-'}</td>
-                <td>${payment.username || '-'}</td>
+                <td class="course-name">${payment.course.title || '-'}</td>
+                <td>${payment.user.username || '-'}</td>
                 <td class="amount">${formattedAmount}원</td>
                 <td>${paymentMethodText}</td>
                 <td>${approvedAt}</td>

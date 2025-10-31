@@ -58,7 +58,6 @@ public class SaveController {
 
         MypageResponse user = mypageService.getUserInfo(userId);
         model.addAttribute("user", user);
-
         model.addAttribute("favorites", favorites.getContent());  // .getContent() 추가!
         model.addAttribute("currentPage", page);
         model.addAttribute("totalPages", favorites.getTotalPages());

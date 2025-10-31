@@ -21,4 +21,11 @@ public interface EnrollmentService {
      * @return 이미 수강신청했으면 true
      */
     boolean hasEnrollment(Long userId, Long courseId);
+
+    /**
+     * 강의 취소
+     * @param userId 사용자
+     * @param courseId 강좌
+     */
+    void cancelEnrollment(Long userId, Long courseId);
 }

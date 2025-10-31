@@ -7,6 +7,7 @@ import org.springframework.transaction.annotation.Transactional;
 import yoonsome.mulang.api.payments.dto.*;
 import yoonsome.mulang.domain.course.entity.Course;
 import yoonsome.mulang.domain.course.repository.CourseRepository;
+import yoonsome.mulang.domain.coursefavorite.repository.CourseFavoriteRepository;
 import yoonsome.mulang.domain.enrollment.service.EnrollmentService;
 import yoonsome.mulang.domain.payment.entity.Payment;
 import yoonsome.mulang.domain.user.entity.User;
@@ -31,6 +32,7 @@ public class PaymentFacadeService {
     private final CourseRepository courseRepository;
     private final UserRepository userRepository;
     private final S3FileService s3FileService;
+    private final CourseFavoriteRepository courseFavoriteRepository;
 
     /**
      * 1. 결제 페이지 준비
@@ -83,6 +85,12 @@ public class PaymentFacadeService {
         // 수강신청 생성
         enrollmentService.createEnrollment(payment);
 
+        // payment 엔티티에서 유저 아이디와 강좌 아이디를 가지고 찜 서비스에 있는 메서드를 활용해서 각 파라미로 넣고 찜 해제
+        if(courseFavoriteRepository.
+                existsByStudentIdAndCourseId(payment.getUser().getId(), payment.getCourse().getId())) {
+            courseFavoriteRepository.
+                    deleteByStudentIdAndCourseId(payment.getUser().getId(), payment.getCourse().getId());
+        }
         return PaymentSuccessResponse.builder()
                 .orderId(payment.getOrderId())
                 .amount(payment.getAmount())
@@ -113,6 +121,38 @@ public class PaymentFacadeService {
                 .courseId(payment.getCourse().getId())
                 .courseTitle(payment.getCourse().getTitle())
                 .amount(payment.getAmount())
+                .build();
+    }
+
+    /**
+     * 4. 결제 취소 처리 (PENDING 상태)
+     */
+    @Transactional
+    public void cancelPayment(String orderId, Long userId) {
+        Payment payment = paymentService.cancelPayment(orderId, userId);
+    }
+
+    /**
+     * 5. 결제 환불 처리 (COMPLETED 상태)
+     */
+    @Transactional
+    public PaymentRefundResponse refundPayment(PaymentRefundRequest request, Long userId) {
+        Payment payment = paymentService.refundPayment(
+                request.getOrderId(),
+                userId,
+                request.getReason()
+        );
+
+        // 환불 시 수강신청도 취소
+        enrollmentService.cancelEnrollment(payment.getUser().getId(), payment.getCourse().getId());
+
+        return PaymentRefundResponse.builder()
+                .orderId(payment.getOrderId())
+                .status(payment.getStatus().name())
+                .amount(payment.getAmount())
+                .courseTitle(payment.getCourse().getTitle())
+                .refundedAt(formatDateTime(payment.getUpdatedAt()))
+                .message("환불이 완료되었습니다.")
                 .build();
     }
 

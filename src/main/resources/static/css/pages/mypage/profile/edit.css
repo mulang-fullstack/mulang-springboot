@@ -71,7 +71,7 @@
 .camera-btn {
     position: absolute;
     bottom: 5px;
-    right: 5px;
+    left: 80px;
     display: flex;
     justify-content: center;
     align-items: center;

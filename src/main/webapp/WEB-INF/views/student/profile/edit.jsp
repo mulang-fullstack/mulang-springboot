@@ -26,7 +26,7 @@
 
             <section class="content">
                 <div class="profile-main">
-                    <h2>강사 프로필 관리</h2>
+                    <h2>프로필 수정</h2>
 
                     <section class="profile-section">
 
@@ -38,7 +38,7 @@
                         <!-- 프로필 수정 form -->
                         <form action="/student/edit" method="post" enctype="multipart/form-data" id="editForm">
 
-                            <!-- 프로필 이미지 -->
+                            <!-- 프로필 이미지 -->;',;;'
                             <div class="field">
                                 <label>프로필 이미지</label>
                                 <div class="field-content profile-img-area">
@@ -49,7 +49,7 @@
                                     </div>
 
                                     <!-- 카메라 버튼 -->
-                                    <button type="button" class="camera-btn" onclick="document.getElementById('fileInput').click();">
+                                    <button type="button" class="camera-btn" onclick="document.getElementById('fileInput').click()">
                                         <img src="/img/icon/bx-camera.svg" alt="사진 변경">
                                     </button>
 
@@ -72,7 +72,7 @@
                                 <div class="input-wrap">
                                     <input type="text" name="nickname" value="${user.nickname}">
                                 </div>
-                                <!-- ✅ 닉네임 에러 메시지 -->
+                                <!--  닉네임 에러 메시지 -->
                                 <c:if test="${not empty nicknameError}">
                                     <p class="error-text">${nicknameError}</p>
                                 </c:if>

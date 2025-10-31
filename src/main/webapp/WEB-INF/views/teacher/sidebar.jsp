@@ -10,7 +10,7 @@
 <aside class="sidebar">
     <div class="profile">
         <div class="profile-img-wrap">
-            <img src="${teacher.photoUrl != null ? teacher.photoUrl : '/img/dummy/default-profile.png'}"
+            <img src="${teacher.photoUrl != null ? teacher.photoUrl : '/img/dummy/default-profile.jpg'}"
                  alt="프로필 이미지">
         </div>
         <div class="profile-info">

@@ -21,8 +21,7 @@ public class MyCourseInfoServiceImpl implements MyCourseInfoService {
     @Override
     public List<MycourseResponse> findByUserId(Long userId) {
 
-        List<Enrollment> enrollments = enrollmentRepository
-                .findByUserId(userId);
+        List<Enrollment> enrollments = enrollmentRepository.findByUserId(userId);
 
         return enrollments.stream()
                 .map(enrollment -> {

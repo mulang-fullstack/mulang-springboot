@@ -10,6 +10,7 @@ import yoonsome.mulang.domain.user.entity.User;
 import yoonsome.mulang.domain.user.service.UserService;
 import yoonsome.mulang.infra.file.entity.File;
 import yoonsome.mulang.infra.file.service.FileService;
+import yoonsome.mulang.infra.file.service.S3FileService;
 
 import java.io.IOException;
 
@@ -19,6 +20,7 @@ public class MypageServiceImpl implements MypageService {
 
     private final UserService userService;
     private final PasswordEncoder passwordEncoder;
+    private final S3FileService s3fileService;
     private final FileService fileService;
 
     @Override
@@ -33,7 +35,7 @@ public class MypageServiceImpl implements MypageService {
         userSearchInfoDTO.setEmail(user.getEmail());
         // 이 부분 추가!
         if (user.getFile() != null) {
-            userSearchInfoDTO.setPhotoUrl(user.getFile().getUrl());
+            userSearchInfoDTO.setPhotoUrl(s3fileService.getPublicUrl(user.getFile().getId()));
         }
         return userSearchInfoDTO;
     }
@@ -47,30 +49,29 @@ public class MypageServiceImpl implements MypageService {
 
         user.setNickname(nickname);
         user.setEmail(email);
-
         if (photo != null && !photo.isEmpty()) {
-            // 기존 파일 있으면 삭제
-            if (user.getFile() != null) {
-                fileService.deleteFile(user.getFile());
-            }
+
+            File originFile = user.getFile();
 
             // 새 파일 저장
             try {
-                File savedPhoto = fileService.createFile(photo);
+                File savedPhoto = s3fileService.uploadProfileImage(photo);
                 user.setFile(savedPhoto);
+
+                // 기존 파일 있으면 삭제
+                if (user.getFile() != null) {
+                    s3fileService.deleteFile(originFile);
+                }
+
             } catch (IOException e) {
                 throw new RuntimeException("파일 업로드 실패", e);
             }
         }
     }
 
-
     @Transactional
     public void updatepassword(Long userid,String password){
         User user = userService.findById(userid);
         user.setPassword(passwordEncoder.encode(password));
     }
-
-
-
 }

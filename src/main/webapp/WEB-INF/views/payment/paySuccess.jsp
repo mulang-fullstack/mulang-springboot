@@ -82,7 +82,7 @@
         </section>
 
         <div class="button-wrap">
-            <a href="/mypage/enrollments" class="btn-outline">내 강좌 보기</a>
+            <a href="/student/coursedsdferdfdzdzfzxxxxcsxzddzddsad" class="btn-outline">내 강좌 보기</a>
             <a href="/" class="btn-main">홈으로 가기</a>
         </div>
 

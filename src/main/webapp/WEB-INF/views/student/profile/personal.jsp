@@ -67,7 +67,7 @@
 
             <section class="content">
                 <div class="profile-main">
-                    <h2>학생 프로필</h2>
+                    <h2>프로필</h2>
 
                     <section class="profile-section">
 

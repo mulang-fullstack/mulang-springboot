@@ -1,12 +1,14 @@
 package yoonsome.mulang.domain.payment.service;
 
 import org.springframework.data.domain.Page;
+import yoonsome.mulang.api.admin.dashboard.dto.SalesStatisticsResponse;
 import yoonsome.mulang.api.admin.payment.dto.PaymentSearchRequest;
 import yoonsome.mulang.api.payments.dto.*;
 import yoonsome.mulang.domain.course.entity.Course;
 import yoonsome.mulang.domain.payment.entity.Payment;
 import yoonsome.mulang.domain.user.entity.User;
 
+import java.util.*;
 import java.util.List;
 
 /**
@@ -38,4 +40,16 @@ public interface PaymentService {
 
     /** 특정 사용자의 결제 내역 조회 */
     List<PaymentDetailResponse> getPaymentsByUserId(Long userId);
+
+    /** 매출 통계 조회 */
+    SalesStatisticsResponse getSalesStatistics();
+
+    /** 특정 사용자의 결제 강좌 ID 조회 */
+    Set<Long> getCourseIdsByUserId(Long userId);
+
+    /** 결제 취소 */
+    Payment cancelPayment(String orderId, Long userId);
+
+    /** 결제 환불 */
+    Payment refundPayment(String orderId, Long userId, String reason);
 }
