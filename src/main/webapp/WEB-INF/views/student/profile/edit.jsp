@@ -38,7 +38,7 @@
                         <!-- 프로필 수정 form -->
                         <form action="/student/edit" method="post" enctype="multipart/form-data" id="editForm">
 
-                            <!-- 프로필 이미지 -->;',;;'
+                            <!-- 프로필 이미지 -->
                             <div class="field">
                                 <label>프로필 이미지</label>
                                 <div class="field-content profile-img-area">
