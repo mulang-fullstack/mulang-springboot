@@ -116,6 +116,38 @@ public class PaymentFacadeService {
                 .build();
     }
 
+    /**
+     * 4. 결제 취소 처리 (PENDING 상태)
+     */
+    @Transactional
+    public void cancelPayment(String orderId, Long userId) {
+        Payment payment = paymentService.cancelPayment(orderId, userId);
+    }
+
+    /**
+     * 5. 결제 환불 처리 (COMPLETED 상태)
+     */
+    @Transactional
+    public PaymentRefundResponse refundPayment(PaymentRefundRequest request, Long userId) {
+        Payment payment = paymentService.refundPayment(
+                request.getOrderId(),
+                userId,
+                request.getReason()
+        );
+
+        // 환불 시 수강신청도 취소
+        enrollmentService.cancelEnrollment(payment.getUser().getId(), payment.getCourse().getId());
+
+        return PaymentRefundResponse.builder()
+                .orderId(payment.getOrderId())
+                .status(payment.getStatus().name())
+                .amount(payment.getAmount())
+                .courseTitle(payment.getCourse().getTitle())
+                .refundedAt(formatDateTime(payment.getUpdatedAt()))
+                .message("환불이 완료되었습니다.")
+                .build();
+    }
+
     // ==================== Private Methods ====================
 
     /**

@@ -48,8 +48,8 @@
                     </div>
                     <div class="stat-info">
                         <h3>월 매출</h3>
-                        <p class="stat-number">₩35,280,000</p>
-                        <span class="stat-trend up">↑ 12% 전월 대비</span>
+                        <p class="stat-number">₩0</p>
+                        <span class="stat-trend up">데이터 로딩 중...</span>
                     </div>
                 </div>
 
@@ -65,8 +65,8 @@
                     </div>
                     <div class="stat-info">
                         <h3>오늘 매출</h3>
-                        <p class="stat-number">₩1,230,000</p>
-                        <span class="stat-trend up">↑ 8% 어제 대비</span>
+                        <p class="stat-number">₩0</p>
+                        <span class="stat-trend up">데이터 로딩 중...</span>
                     </div>
                 </div>
 
@@ -82,8 +82,8 @@
                     </div>
                     <div class="stat-info">
                         <h3>오늘 결제 건수</h3>
-                        <p class="stat-number">132</p>
-                        <span class="stat-trend up">↑ 6% 어제 대비</span>
+                        <p class="stat-number">0</p>
+                        <span class="stat-trend up">데이터 로딩 중...</span>
                     </div>
                 </div>
 
@@ -100,8 +100,8 @@
                     </div>
                     <div class="stat-info">
                         <h3>환불 건수</h3>
-                        <p class="stat-number">12</p>
-                        <span class="stat-trend down">↓ 3건 전일 대비</span>
+                        <p class="stat-number">0</p>
+                        <span class="stat-trend up">데이터 로딩 중...</span>
                     </div>
                 </div>
             </div>
@@ -128,46 +128,7 @@
                             </thead>
                             <tbody>
                             <tr>
-                                <td>2025-10-10</td>
-                                <td>50,000원</td>
-                                <td>9건</td>
-                                <td>0건</td>
-                            </tr>
-                            <tr>
-                                <td>2025-10-11</td>
-                                <td>80,000원</td>
-                                <td>12건</td>
-                                <td>1건</td>
-                            </tr>
-                            <tr>
-                                <td>2025-10-12</td>
-                                <td>65,000원</td>
-                                <td>10건</td>
-                                <td>0건</td>
-                            </tr>
-                            <tr>
-                                <td>2025-10-13</td>
-                                <td>90,000원</td>
-                                <td>15건</td>
-                                <td>1건</td>
-                            </tr>
-                            <tr>
-                                <td>2025-10-14</td>
-                                <td>110,000원</td>
-                                <td>18건</td>
-                                <td>0건</td>
-                            </tr>
-                            <tr>
-                                <td>2025-10-15</td>
-                                <td>120,000원</td>
-                                <td>21건</td>
-                                <td>2건</td>
-                            </tr>
-                            <tr>
-                                <td>2025-10-16</td>
-                                <td>60,000원</td>
-                                <td>12건</td>
-                                <td>0건</td>
+                                <td colspan="4" style="text-align: center;">데이터 로딩 중...</td>
                             </tr>
                             </tbody>
                         </table>

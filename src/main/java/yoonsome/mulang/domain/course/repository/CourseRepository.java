@@ -67,4 +67,7 @@ public interface CourseRepository extends JpaRepository<Course,Long> {
     List<Course> findTop4ByLanguageIdAndStatusAndAverageRating(@Param("languageId") Long languageId, Pageable pageable);
 
     List<Course> findAllByOrderByCreatedAtDesc(Pageable pageable);
+
+    /*커스텀 보안 강좌 접근 권한*/
+    boolean existsByIdAndTeacherEmail(Long id, String email);
 }

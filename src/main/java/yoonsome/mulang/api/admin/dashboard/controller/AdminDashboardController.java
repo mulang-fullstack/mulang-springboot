@@ -8,7 +8,9 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import yoonsome.mulang.api.admin.dashboard.dto.DashboardResponse;
+import yoonsome.mulang.api.admin.dashboard.dto.SalesStatisticsResponse;
 import yoonsome.mulang.api.admin.dashboard.service.AdminDashboardService;
+import yoonsome.mulang.domain.payment.service.PaymentService;
 
 @Controller
 @RequestMapping("/admin/dashboard")
@@ -16,28 +18,15 @@ import yoonsome.mulang.api.admin.dashboard.service.AdminDashboardService;
 public class AdminDashboardController {
 
     private final AdminDashboardService dashboardService;
+    private final PaymentService paymentService;
 
     /**
      * 방문자 통계 페이지 (동기 JSP)
      */
     @GetMapping("/visitor")
     public String visitor(Model model) {
-        DashboardResponse stats = dashboardService.getDashboardStats();
-
         model.addAttribute("activeMenu", "dashboard");
         model.addAttribute("activeSubmenu", "visitor");
-
-        // 통계 데이터 바인딩
-        model.addAttribute("stats", stats);
-        model.addAttribute("todayLogins", stats.getTodayLogins());
-        model.addAttribute("activeSessions", stats.getActiveSessions());
-        model.addAttribute("todayNewUsers", stats.getTodayNewUsers());
-        model.addAttribute("totalUsers", stats.getTotalUsers());
-        model.addAttribute("weeklyLogins", stats.getWeeklyLogins());
-        model.addAttribute("weeklyNewUsers", stats.getWeeklyNewUsers());
-        model.addAttribute("loginChangeRate", stats.getLoginChangeRate());
-        model.addAttribute("signupChangeRate", stats.getSignupChangeRate());
-
         return "admin/dashboard/visitor";
     }
     /**
@@ -51,12 +40,22 @@ public class AdminDashboardController {
     }
 
     /**
-     * 매출 통계 페이지
+     * 매출 현황 페이지
      */
     @GetMapping("/sales")
-    public String sales(Model model){
-        model.addAttribute("activeMenu","dashboard");
-        model.addAttribute("activeSubmenu","sales");
+    public String sales(Model model) {
+        model.addAttribute("activeMenu", "dashboard");
+        model.addAttribute("activeSubmenu", "sales");
         return "admin/dashboard/sales";
+    }
+
+    /**
+     * 매출 통계 데이터 API
+     */
+    @GetMapping("/sales/api")
+    @ResponseBody
+    public ResponseEntity<SalesStatisticsResponse> getSalesStatistics() {
+        SalesStatisticsResponse statistics = paymentService.getSalesStatistics();
+        return ResponseEntity.ok(statistics);
     }
 }

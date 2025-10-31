@@ -10,7 +10,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import yoonsome.mulang.api.admin.payment.dto.PaymentSearchRequest;
 import yoonsome.mulang.api.payments.dto.PaymentDetailResponse;
-import yoonsome.mulang.api.payments.dto.PaymentSuccessResponse;
 import yoonsome.mulang.domain.payment.service.PaymentService;
 
 import java.util.HashMap;
