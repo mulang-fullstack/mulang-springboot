@@ -5,6 +5,8 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 import yoonsome.mulang.domain.enrollment.entity.Enrollment;
+import yoonsome.mulang.domain.enrollment.entity.EnrollmentStatus;
+
 import java.util.List;
 import java.util.Optional;
 
@@ -14,6 +16,12 @@ public interface EnrollmentRepository extends JpaRepository<Enrollment, Long> {
     List<Enrollment> findByUserId(Long userId);
     List<Enrollment> findByCourseId(Long courseId);
     boolean existsByUserIdAndCourseId(Long userId, Long courseId);
+
+    boolean existsByUserEmailAndCourseIdAndStatus(
+            String email,
+            Long courseId,
+            EnrollmentStatus status
+    );
 
     // ⭐ 전체 조회
     @Query("""

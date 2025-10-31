@@ -5,6 +5,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import yoonsome.mulang.domain.enrollment.entity.Enrollment;
+import yoonsome.mulang.domain.enrollment.entity.EnrollmentStatus;
 import yoonsome.mulang.domain.enrollment.repository.EnrollmentRepository;
 import yoonsome.mulang.domain.lecture.entity.Lecture;
 import yoonsome.mulang.domain.lecture.repository.LectureRepository;
@@ -12,6 +13,7 @@ import yoonsome.mulang.domain.payment.entity.Payment;
 import yoonsome.mulang.domain.progress.entity.Progress;
 import yoonsome.mulang.domain.progress.repository.ProgressRepository;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 /**
@@ -81,5 +83,26 @@ public class EnrollmentServiceImpl implements EnrollmentService {
     @Override
     public boolean hasEnrollment(Long userId, Long courseId) {
         return enrollmentRepository.existsByUserIdAndCourseId(userId, courseId);
+    }
+
+    /**
+     * 강의 취소
+     * @param userId 사용자
+     * @param courseId 강좌
+     */
+    @Override
+    @Transactional
+    public void cancelEnrollment(Long userId, Long courseId) {
+        Enrollment enrollment = enrollmentRepository
+                .findByUserIdAndCourseId(userId, courseId)
+                .orElseThrow(() -> new IllegalArgumentException("수강신청 정보를 찾을 수 없습니다."));
+
+        // 상태만 변경 (삭제 X)
+        enrollment.setStatus(EnrollmentStatus.REFUNDED);
+        enrollment.setCancelledAt(LocalDateTime.now());
+
+        enrollmentRepository.save(enrollment);
+
+        // Progress는 그대로 남아있음!
     }
 }

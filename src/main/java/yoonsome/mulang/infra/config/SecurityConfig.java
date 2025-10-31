@@ -3,6 +3,7 @@ package yoonsome.mulang.infra.config;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.core.session.SessionRegistry;
 import org.springframework.security.core.session.SessionRegistryImpl;
@@ -16,6 +17,7 @@ import yoonsome.mulang.infra.security.CustomLogoutSuccessHandler;
 
 @Configuration
 @RequiredArgsConstructor
+@EnableMethodSecurity
 public class SecurityConfig {
     private final CustomLoginSuccessHandler customLoginSuccessHandler;
     private final CustomLogoutSuccessHandler customLogoutSuccessHandler;
@@ -29,6 +31,7 @@ public class SecurityConfig {
                         .requestMatchers("/admin/**").hasRole("ADMIN")
                         .requestMatchers("/teacher/**").hasRole("TEACHER")
                         .requestMatchers("/student/**").hasRole("STUDENT")
+                        .requestMatchers("/payments/**").hasRole("STUDENT")
                         .anyRequest().permitAll()
                 )
                 .formLogin(login -> login

@@ -33,6 +33,10 @@ public class Enrollment {
     @JoinColumn(name = "payment_id", nullable = false)
     private Payment payment;
 
+    @Enumerated(EnumType.STRING)
+    @Column(nullable = false)
+    private EnrollmentStatus status = EnrollmentStatus.ACTIVE;
+
     @Column(name = "enrolled_at", nullable = false)
     private LocalDateTime enrolledAt;
 
@@ -44,6 +48,9 @@ public class Enrollment {
 
     @Column(name = "completed_at")
     private LocalDateTime completedAt;
+
+    @Column(name = "cancelled_at")  // 추가
+    private LocalDateTime cancelledAt;
 
     @PrePersist
     protected void onCreate() {

@@ -123,4 +123,72 @@ public class PaymentController {
         model.addAttribute("failure", response);
         return "payment/payFail";
     }
+
+    /**
+     * 5. 결제 취소 (PENDING 상태만)
+     * POST /payments/cancel
+     */
+    @PostMapping("/cancel")
+    @ResponseBody
+    public String cancelPayment(
+            @RequestBody PaymentCancelRequest request,
+            @AuthenticationPrincipal CustomUserDetails user) {
+
+        try {
+            paymentFacadeService.cancelPayment(request.getOrderId(), user.getUser().getId());
+            return "성공";
+        } catch (IllegalStateException e) {
+            log.error("결제 취소 실패: {}", e.getMessage());
+            return "결제 취소 오류";
+        } catch (Exception e) {
+            log.error("결제 취소 오류: {}", e.getMessage());
+            return "결제 취소 오류";
+        }
+    }
+
+    /**
+     * 6. 결제 환불 (COMPLETED 상태만)
+     * POST /payments/refund
+     */
+    @PostMapping("/refund")
+    @ResponseBody
+    public ResponseEntity<PaymentRefundResponse> refundPayment(
+            @RequestBody PaymentRefundRequest request,
+            @AuthenticationPrincipal CustomUserDetails user) {
+
+        try {
+            PaymentRefundResponse response =
+                    paymentFacadeService.refundPayment(request, user.getUser().getId());
+
+            return ResponseEntity.ok(response);
+
+        } catch (IllegalStateException e) {
+            log.error("환불 실패: {}", e.getMessage());
+            return ResponseEntity.badRequest().build();
+        } catch (Exception e) {
+            log.error("환불 오류: {}", e.getMessage());
+            return ResponseEntity.internalServerError().build();
+        }
+    }
+
+    /**
+     * 7. 환불 요청 페이지
+     * GET /payments/refund/{orderId}
+     */
+    @GetMapping("/refund/{orderId}")
+    public String showRefundPage(
+            @PathVariable String orderId,
+            @AuthenticationPrincipal CustomUserDetails user,
+            Model model) {
+
+        try {
+            // 결제 정보 조회 로직 추가 필요
+            model.addAttribute("orderId", orderId);
+            return "payment/refund";
+
+        } catch (Exception e) {
+            log.error("환불 페이지 로드 실패: {}", e.getMessage());
+            return "redirect:/mypage/payments";
+        }
+    }
 }
