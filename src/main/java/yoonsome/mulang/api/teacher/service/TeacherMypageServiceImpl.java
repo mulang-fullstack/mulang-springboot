@@ -1,5 +1,6 @@
 package yoonsome.mulang.api.teacher.service;
 
+import jakarta.persistence.EntityManager;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -23,6 +24,8 @@ public class TeacherMypageServiceImpl implements TeacherMypageService {
     private final TeacherService teacherService;
     private final S3FileService s3fileService;
     private final UserService userService;
+    private final EntityManager entityManager;
+
 
     // 교사 프로필 조회
     @Override
@@ -80,7 +83,7 @@ public class TeacherMypageServiceImpl implements TeacherMypageService {
             // ① FK 해제 후 DB 반영
             user.setFile(null);
             userService.saveUser(user);
-
+            entityManager.flush();
             // ② 파일 삭제
             if (oldFile != null) {
                 s3fileService.deleteFile(oldFile);
@@ -96,7 +99,8 @@ public class TeacherMypageServiceImpl implements TeacherMypageService {
             File oldFile = user.getFile();
 
             user.setFile(null);
-            userService.saveUser(user); // <=== 반드시 추가
+            userService.saveUser(user);
+            entityManager.flush();
 
             if (oldFile != null) {
                 s3fileService.deleteFile(oldFile);
