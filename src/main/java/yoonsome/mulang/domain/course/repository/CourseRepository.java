@@ -69,23 +69,20 @@ public interface CourseRepository extends JpaRepository<Course,Long> {
            
     List<Course> findByStatusOrderByCreatedAtDesc(StatusType status, Pageable pageable);
 
-    @Query(value = """
-        SELECT c.*
-        FROM course c
-        JOIN (
-            SELECT p.course_id, MAX(p.approved_at) AS latest_approved
-            FROM payment p
-            WHERE p.status = 'COMPLETED'
-            GROUP BY p.course_id
-        ) recent_pay ON c.course_id = recent_pay.course_id
-        WHERE c.status = 'PUBLIC'
-        ORDER BY recent_pay.latest_approved DESC
-        LIMIT 6
-    """, nativeQuery = true)
+    @Query("""
+                SELECT c FROM Course c
+                WHERE c.id IN (
+                    SELECT p.course.id FROM Payment p
+                    WHERE p.status = 'COMPLETED'
+                    GROUP BY p.course.id
+                    ORDER BY MAX(p.approvedAt) DESC
+                )
+                AND c.status = 'PUBLIC'
+                ORDER BY (
+                    SELECT MAX(p2.approvedAt) FROM Payment p2
+                    WHERE p2.course.id = c.id AND p2.status = 'COMPLETED'
+                ) DESC
+                LIMIT 6
+            """)
     List<Course> findCoursesByLatestApproved();
-           
-    List<Course> findAllByOrderByCreatedAtDesc(Pageable pageable);
-
-    /*커스텀 보안 강좌 접근 권한*/
-    boolean existsByIdAndTeacherEmail(Long id, String email);
 }
