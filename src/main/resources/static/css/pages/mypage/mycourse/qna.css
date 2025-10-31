@@ -308,3 +308,13 @@
     background-color: var(--bg-point-main);
     border-radius: 10px;
 }
+.qna-question-title {
+    font-weight: 600;
+    cursor: pointer;
+    padding: 6px 0;
+}
+
+.qna-question-content {
+    padding: 8px 0;
+    line-height: 1.5;
+}
