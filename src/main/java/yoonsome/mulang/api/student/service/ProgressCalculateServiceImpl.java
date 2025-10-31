@@ -12,13 +12,13 @@ import yoonsome.mulang.domain.progress.repository.ProgressRepository;
 public class ProgressCalculateServiceImpl implements ProgressCalculateService {
 
     private final ProgressRepository progressRepository;
-    private final CourseRepository courseRepository;
+    //private final CourseRepository courseRepository;
 
     @Override
     public Integer progressCalculate(Long userId, Long courseId) {
-        //Long totalcount = progressRepository.countTotalLecturesByCourseId(userId, courseId);
-        Course course = courseRepository.findById(courseId).orElseThrow();
-        int totalcount = course.getLectureCount();
+        //Course course = courseRepository.findById(courseId).orElseThrow(); -- 강사가 추가했을때를 고려한건데 일단 지금은 안해도되용
+        //int totalcount = course.getLectureCount();
+        Long totalcount = progressRepository.countTotalLecturesByCourseId(userId, courseId);
         Long watchcount = progressRepository.countCompletedLecturesByCourseId(userId, courseId);
 
         int progress = (int) Math.round(((double) watchcount / totalcount) * 100);

@@ -1,5 +1,6 @@
 <%@ page contentType="text/html;charset=utf-8" %>
 <%@ taglib prefix="c" uri="jakarta.tags.core" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <!DOCTYPE html>
 <html lang="ko">
 <head>
@@ -68,7 +69,10 @@
                                 <h3 class="title">${favorite.course.title}</h3>
                                 <p class="sub">${favorite.course.subtitle}</p>
                                 <div class="period">
-                                    찜한 날짜: ${favorite.createdAt}
+                                    <c:set var="dateStr" value="${fn:substring(favorite.createdAt, 0, 16)}" />
+                                    <c:set var="formatted" value="${fn:replace(dateStr, 'T', ' ')}" />
+                                    <c:set var="formatted" value="${fn:replace(formatted, '-', '.')}" />
+                                    📌 ${formatted}
                                 </div>
                             </div>
 

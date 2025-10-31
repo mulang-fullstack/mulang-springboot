@@ -1,18 +1,5 @@
 let playerWindow = null;
 
-function openPlayer(courseId) {
-    const url = `/student/course/${courseId}/play`;
-    const options = "width=1200,height=800,top=100,left=200,resizable=yes,scrollbars=no";
-
-    // 이미 열린 창이 있으면 포커스
-    if (playerWindow && !playerWindow.closed) {
-        playerWindow.focus();
-        playerWindow.location.href = url;
-    } else {
-        playerWindow = window.open(url, "lecturePlayer", options);
-    }
-}
-
 document.addEventListener("DOMContentLoaded", () => {
     const video = document.querySelector("video");
     const timeDisplay = document.getElementById("currentTime");
@@ -100,7 +87,7 @@ document.addEventListener("DOMContentLoaded", function() {
                 return;
             }
             // 통합된 공용 URL로 이동
-            window.location.href = `/player/{courseId}`;
+            window.location.href = `/player/${courseId}`;
         });
         // 커서 모양 변경
         el.style.cursor = "pointer";

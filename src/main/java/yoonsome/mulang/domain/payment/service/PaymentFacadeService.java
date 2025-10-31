@@ -7,6 +7,7 @@ import org.springframework.transaction.annotation.Transactional;
 import yoonsome.mulang.api.payments.dto.*;
 import yoonsome.mulang.domain.course.entity.Course;
 import yoonsome.mulang.domain.course.repository.CourseRepository;
+import yoonsome.mulang.domain.coursefavorite.repository.CourseFavoriteRepository;
 import yoonsome.mulang.domain.enrollment.service.EnrollmentService;
 import yoonsome.mulang.domain.payment.entity.Payment;
 import yoonsome.mulang.domain.user.entity.User;
@@ -31,6 +32,7 @@ public class PaymentFacadeService {
     private final CourseRepository courseRepository;
     private final UserRepository userRepository;
     private final S3FileService s3FileService;
+    private final CourseFavoriteRepository courseFavoriteRepository;
 
     /**
      * 1. 결제 페이지 준비
@@ -83,6 +85,12 @@ public class PaymentFacadeService {
         // 수강신청 생성
         enrollmentService.createEnrollment(payment);
 
+        // payment 엔티티에서 유저 아이디와 강좌 아이디를 가지고 찜 서비스에 있는 메서드를 활용해서 각 파라미로 넣고 찜 해제
+        if(courseFavoriteRepository.
+                existsByStudentIdAndCourseId(payment.getUser().getId(), payment.getCourse().getId())) {
+            courseFavoriteRepository.
+                    deleteByStudentIdAndCourseId(payment.getUser().getId(), payment.getCourse().getId());
+        }
         return PaymentSuccessResponse.builder()
                 .orderId(payment.getOrderId())
                 .amount(payment.getAmount())
