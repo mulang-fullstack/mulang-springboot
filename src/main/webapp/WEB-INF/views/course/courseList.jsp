@@ -49,13 +49,13 @@
                     <div class="search-icon"></div>
                 </div>
                 <div class="sort-options">
-                    <a href="/course/course?categoryId=${courseListRequest.categoryId}&keyword=${courseListRequest.keyword}&page=${courseListRequest.sortBy != 'averageRating' ? 0 : courseListRequest.page}&sortBy=averageRating">
+                    <a href="/course?categoryId=${courseListRequest.categoryId}&keyword=${courseListRequest.keyword}&page=${courseListRequest.sortBy != 'averageRating' ? 0 : courseListRequest.page}&sortBy=averageRating">
                         <div class="sort-item ${courseListRequest.sortBy == 'averageRating'? 'active':''}">별점순</div>
                     </a>
-                    <a href="/course/course?categoryId=${courseListRequest.categoryId}&keyword=${courseListRequest.keyword}&page=${courseListRequest.sortBy != 'reviewCount' ? 0 : courseListRequest.page}&sortBy=reviewCount">
+                    <a href="/course?categoryId=${courseListRequest.categoryId}&keyword=${courseListRequest.keyword}&page=${courseListRequest.sortBy != 'reviewCount' ? 0 : courseListRequest.page}&sortBy=reviewCount">
                         <div class="sort-item ${courseListRequest.sortBy == 'reviewCount'? 'active':''}">리뷰순</div>
                     </a>
-                    <a href="/course/course?categoryId=${courseListRequest.categoryId}&keyword=${courseListRequest.keyword}&page=${courseListRequest.sortBy != 'createdAt' ? 0 : courseListRequest.page}&sortBy=createdAt">
+                    <a href="/course?categoryId=${courseListRequest.categoryId}&keyword=${courseListRequest.keyword}&page=${courseListRequest.sortBy != 'createdAt' ? 0 : courseListRequest.page}&sortBy=createdAt">
                         <div class="sort-item ${courseListRequest.sortBy == 'createdAt'? 'active':''}">최신순</div>
                     </a>
                 </div>
@@ -89,7 +89,14 @@
                                     </div>
                                     <div class="course-purchase">
                                         <span class="price"><fmt:formatNumber value="${course.price}" type="number" groupingUsed="true"/>원</span>
-                                        <a href="/payments/${course.id}"><button class="purchase-btn">결제하기</button></a>
+                                        <c:choose>
+                                            <c:when test="${course.paid}">
+                                                <a href="/student/course"><button class="paid-btn">결제완료</button></a>
+                                            </c:when>
+                                            <c:otherwise>
+                                                <a href="/payments/${course.id}"><button class="purchase-btn">결제하기</button></a>
+                                            </c:otherwise>
+                                        </c:choose>
                                     </div>
                                 </div>
                             </div>

@@ -51,12 +51,13 @@ public interface CourseRepository extends JpaRepository<Course,Long> {
             @Param("teacher") Teacher teacher,
             @Param("statuses") List<StatusType> statuses,
             Pageable pageable);
-    /*
+
     @Query("SELECT c FROM Course c " +
-            "WHERE (:languageId = 0 OR c.language.id = :languageId)" +
-            "AND c.status = 'PUBLIC' " +
+            "WHERE c.status = 'PUBLIC' " +
             "AND c.averageRating >= 4 " +
-            "ORDER BY c.reviewCount DESC")*/
+            "ORDER BY c.reviewCount DESC")
+    List<Course> findByAverageRating(Pageable pageable);
+
     @Query("""
         SELECT c
         FROM Course c
@@ -65,7 +66,24 @@ public interface CourseRepository extends JpaRepository<Course,Long> {
         ORDER BY (c.averageRating * 0.6 + c.reviewCount * 0.4) DESC
         """)
     List<Course> findTop4ByLanguageIdAndStatusAndAverageRating(@Param("languageId") Long languageId, Pageable pageable);
+           
+    List<Course> findByStatusOrderByCreatedAtDesc(StatusType status, Pageable pageable);
 
+    @Query(value = """
+        SELECT c.*
+        FROM course c
+        JOIN (
+            SELECT p.course_id, MAX(p.approved_at) AS latest_approved
+            FROM payment p
+            WHERE p.status = 'COMPLETED'
+            GROUP BY p.course_id
+        ) recent_pay ON c.course_id = recent_pay.course_id
+        WHERE c.status = 'PUBLIC'
+        ORDER BY recent_pay.latest_approved DESC
+        LIMIT 6
+    """, nativeQuery = true)
+    List<Course> findCoursesByLatestApproved();
+           
     List<Course> findAllByOrderByCreatedAtDesc(Pageable pageable);
 
     /*커스텀 보안 강좌 접근 권한*/

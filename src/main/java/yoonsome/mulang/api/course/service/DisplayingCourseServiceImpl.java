@@ -6,6 +6,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.*;
 import org.springframework.stereotype.Service;
 import yoonsome.mulang.api.course.dto.CourseDetailResponse;
+import yoonsome.mulang.api.payments.dto.PaymentDetailResponse;
 import yoonsome.mulang.api.review.ReviewResponse;
 import yoonsome.mulang.api.teacher.dto.TeacherProfileResponse;
 import yoonsome.mulang.api.teacher.service.TeacherMypageService;
@@ -19,9 +20,11 @@ import yoonsome.mulang.domain.course.entity.StatusType;
 import yoonsome.mulang.domain.course.service.CourseService;
 import yoonsome.mulang.domain.coursefavorite.entity.CourseFavorite;
 import yoonsome.mulang.domain.coursefavorite.service.CourseFavoriteService;
+import yoonsome.mulang.domain.enrollment.service.EnrollmentService;
 import yoonsome.mulang.domain.language.service.LanguageService;
 import yoonsome.mulang.domain.lecture.entity.Lecture;
 import yoonsome.mulang.domain.lecture.service.LectureService;
+import yoonsome.mulang.domain.payment.service.PaymentService;
 import yoonsome.mulang.domain.review.entity.CourseReview;
 import yoonsome.mulang.domain.review.service.ReviewService;
 import yoonsome.mulang.infra.file.service.S3FileService;
@@ -40,6 +43,8 @@ public class DisplayingCourseServiceImpl implements DisplayingCourseService {
     private final TeacherMypageService teacherMypageService;
     private final CourseFavoriteService courseFavoriteService;
     private final S3FileService s3FileService;
+    private final PaymentService paymentService;
+    private final EnrollmentService enrollmentService;
 
     //언어 이름
     //LanguageId null일 경우에 세션에서 마지막 사용한 값으로 설정, 세션값 null일 경우에 초기값 1로 설정
@@ -83,10 +88,12 @@ public class DisplayingCourseServiceImpl implements DisplayingCourseService {
         List<CourseListResponse> dtoList = new ArrayList<>();
 
         // 로그인 했을 시 찜 여부 정보 가져오기
-        // 다회쿼리 방지 해당 user 찜한 set 모두 가져옴
+        // 다회쿼리 방지 해당 user 찜한 set, 결제 set 모두 가져옴
         Set<Long> favoriteCourseIds = Collections.emptySet();
+        Set<Long> paymentCourseIds = Collections.emptySet();
         if(userId != null){
             favoriteCourseIds = new HashSet<>(courseFavoriteService.getCourseIdsByUserId(userId));
+            paymentCourseIds = new HashSet<>(paymentService.getCourseIdsByUserId(userId));
         }
         for (Course course : coursePage) {
             /* 리뷰 정보 가져오기
@@ -107,6 +114,7 @@ public class DisplayingCourseServiceImpl implements DisplayingCourseService {
                     .price(course.getPrice())
                     .createdAt(course.getCreatedAt())
                     .favorited(favoriteCourseIds.contains(course.getId()))
+                    .paid(paymentCourseIds.contains(course.getId()))
                     .build();
             dtoList.add(dto);
         }
@@ -135,6 +143,7 @@ public class DisplayingCourseServiceImpl implements DisplayingCourseService {
                 .price(course.getPrice())
                 .lectures(getLectureList(course.getId()))
                 .favorited(existsCourseFavorite(userId, course.getId()))
+                .paid(enrollmentService.hasEnrollment(userId, course.getId()))
                 .build();
         return dto;
     }
@@ -155,7 +164,8 @@ public class DisplayingCourseServiceImpl implements DisplayingCourseService {
                     courseReview.getRating(),
                     courseReview.getContent(),
                     courseReview.getCreatedAt(),
-                    courseReview.getUpdatedAt()
+                    courseReview.getUpdatedAt(),
+                    s3FileService.getPublicUrl(courseReview.getStudent().getFile().getId())
             );
             reviewResponses.add(reviewResponse);
         }

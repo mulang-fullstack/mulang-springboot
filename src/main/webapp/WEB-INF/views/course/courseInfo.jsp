@@ -50,7 +50,14 @@
                     <img src="${detail.favorited ? '/img/icon/heart-full.svg' : '/img/icon/heart-empty.svg'}" alt="찜 아이콘">
                 </div>
                 <span class="price"><fmt:formatNumber value="${detail.price}" type="number" groupingUsed="true"/>원</span>
-                <a href="/payments/${detail.id}"><button class="purchase-btn">결제하기</button></a>
+                <c:choose>
+                    <c:when test="${detail.paid}">
+                        <a href="/student/course"><button class="paid-btn">결제완료</button></a>
+                    </c:when>
+                    <c:otherwise>
+                        <a href="/payments/${course.id}"><button class="purchase-btn">결제하기</button></a>
+                    </c:otherwise>
+                </c:choose>
             </div>
     </div>
 </div>

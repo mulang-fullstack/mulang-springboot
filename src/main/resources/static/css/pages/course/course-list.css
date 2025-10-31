@@ -201,6 +201,16 @@
     color: var(--text-secondary);
 }
 
+.paid-btn {
+    width: 120px;
+    height: 50px;
+    background: var(--bg-point-sub);
+    border: var(--bg-point-sub);
+    color: var(--text-point-main);
+    border-radius: 10px;
+    font-size: 20px;
+}
+
 .purchase-btn {
     /*position: absolute;
     left: 1160px;*/

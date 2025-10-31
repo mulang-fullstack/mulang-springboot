@@ -52,7 +52,7 @@
         <section class="recent-paid">
             <h3>방금 결제됐어요!</h3>
             <div class="class-list">
-                <c:forEach var="course" items="${rank}">
+                <c:forEach var="course" items="${recent}">
                     <a href="/course/courseDetail?id=${course.id}">
                         <article class="class-card">
                             <img src="${course.thumbnail}" alt="방금 결제됐어요!">
@@ -71,7 +71,7 @@
         <section class="top20">
             <h3>실시간 랭킹 TOP20</h3>
             <div class="class-list">
-                <c:forEach var="course" items="${courses}">
+                <c:forEach var="course" items="${rank}">
                     <a href="/course/courseDetail?id=${course.id}">
                         <article class="class-card">
                             <img src="${course.thumbnail}" alt="주간 BEST 인기 클래스">

@@ -35,7 +35,7 @@
                 <div class="search-box">
                     <!-- 검색박스 내부 요소들 -->
                     <div class="search-input">
-                        <form action="/getDailyConversation" method="get">
+                        <form action="/main/dailyConversation" method="get">
                             <input type="hidden" name="languageId" value="${courseListRequest.languageId}">
                             <input type="text" name="keyword" value="${courseListRequest.keyword}">
                             <button type="submit">
@@ -103,7 +103,7 @@
             <!-- 페이지네이션 -->
             <section class="pagination">
                 <c:if test="${courseListRequest.page > 0}">
-                    <c:url var="prevUrl" value="/course">
+                    <c:url var="prevUrl" value="/main/dailyConversation">
                         <c:param name="categoryId" value="${courseListRequest.categoryId}" />
                         <c:param name="keyword" value="${courseListRequest.keyword}" />
                         <c:param name="page" value="${courseListRequest.page - 1}" />
@@ -115,7 +115,7 @@
                 <span class="page-numbers">
                     <c:if test="${totalPages > 0}">
                         <c:forEach begin="0" end="${totalPages-1}" var="i">
-                            <c:url var="pageUrl" value="/course">
+                            <c:url var="pageUrl" value="/main/dailyConversation">
                                 <c:param name="categoryId" value="${courseListRequest.categoryId}" />
                                 <c:param name="keyword" value="${courseListRequest.keyword}" />
                                 <c:param name="page" value="${i}" />
@@ -127,7 +127,7 @@
                     </c:if>
                 </span>
                 <c:if test="${courseListRequest.page < totalPages-1}">
-                    <c:url var="nextUrl" value="/course">
+                    <c:url var="nextUrl" value="/main/dailyConversation">
                         <c:param name="categoryId" value="${courseListRequest.categoryId}" />
                         <c:param name="keyword" value="${courseListRequest.keyword}" />
                         <c:param name="page" value="${courseListRequest.page + 1}" />

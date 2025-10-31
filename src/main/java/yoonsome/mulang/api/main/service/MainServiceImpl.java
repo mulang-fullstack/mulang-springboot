@@ -35,20 +35,8 @@ public class MainServiceImpl implements MainService {
 
     @Override
     public List<CourseListResponse> getBestCourseList() {
-        List<Course> courseList = courseService.getCourseRankingList(0);
-        List<CourseListResponse> dtoList = new ArrayList<>();
-        for (Course course : courseList){
-            CourseListResponse dto = CourseListResponse.builder()
-                    .id(course.getId())
-                    .thumbnail(s3FileService.getPublicUrl(course.getFile().getId()))
-                    .title(course.getTitle())
-                    .averageRating(course.getAverageRating())
-                    .reviewCount(course.getReviewCount())
-                    .price(course.getPrice())
-                    .build();
-            dtoList.add(dto);
-        }
-        return dtoList;
+        List<Course> courseList = courseService.getBestCourseList();
+        return makeDTOList(courseList, null);
     }
     @Override
     public List<CourseListResponse> getCourseRanking(Long userId, long languageId) {
@@ -56,8 +44,8 @@ public class MainServiceImpl implements MainService {
         return makeDTOList(courseList, userId);
     }
     @Override
-    public List<CourseListResponse> getNewCourseList(Long userId) {
-        List<Course> courseList = courseService.getNewCourseList(PageRequest.of(0, 20));
+    public List<CourseListResponse> getNewCourseList(Long userId, Pageable pageable) {
+        List<Course> courseList = courseService.getNewCourseList(pageable);
         return makeDTOList(courseList, userId);
     }
     @Override
@@ -113,6 +101,11 @@ public class MainServiceImpl implements MainService {
 
         //** PageImpl로 다시 Page 객체 생성 **//
         return new PageImpl<>(dtoList, pageable, coursePage.getTotalElements());
+    }
+    @Override
+    public List<CourseListResponse> getCourseRecentPaidPage(){
+        List<Course> courseList = courseService.getRecentPaidCourseList();
+        return makeDTOList(courseList, null);
     }
     private Map<Long, Long> getConversationMap(){
         Map<Long, Long> map = new HashMap<>();
