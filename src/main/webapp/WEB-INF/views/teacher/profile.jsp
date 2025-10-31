@@ -45,7 +45,7 @@
                             <div class="field-content">
                                 <div class="profile-img-wrap">
                                     <img id="profileImg"
-                                         src="${teacher.photoUrl != null ? teacher.photoUrl : '/img/dummy/default-profile.png'}">
+                                         src="${teacher.photoUrl != null ? teacher.photoUrl : '/img/dummy/default-profile.jpg'}">
                                 </div>
                             </div>
                         </div>
