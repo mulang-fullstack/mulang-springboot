@@ -87,7 +87,7 @@ async function verifyEmail() {
 
     try {
         // 서버에 인증코드 전송 요청
-        const response = await fetch('/student/send-verification', {
+        const response = await fetch('/student/editemail', {
             method: 'POST',
             headers: {'Content-Type': 'application/x-www-form-urlencoded'},
             body: new URLSearchParams({ email: email })
@@ -169,17 +169,62 @@ async function submitVerifyCode() {
 /**
  * 인증하기 버튼 클릭 - 로딩 스피너 포함
  */
-function verifyEmailWithLoading() {
+async function verifyEmailWithLoading() {
     const verifyBtn = document.getElementById('verifyEmailBtn');
+    if (!verifyBtn) return;
+
     const btnText = verifyBtn.querySelector('.btn-text');
     const spinner = verifyBtn.querySelector('.spinner');
+    const emailInput = document.getElementById('email');
+
+    if (!emailInput) {
+        alert('이메일 입력란을 찾을 수 없습니다.');
+        return;
+    }
+
+    const email = emailInput.value.trim();
+
+    // 이메일 유효성 검사
+    if (!email || !email.includes('@')) {
+        alert('올바른 이메일 주소를 입력해주세요.');
+        return;
+    }
 
     // 버튼 비활성화 및 스피너 표시
     verifyBtn.disabled = true;
-    btnText.style.display = 'none';
-    spinner.style.display = 'inline-block';
+    if (btnText) btnText.style.display = 'none';
+    if (spinner) spinner.style.display = 'inline-block';
 
-    // 이메일 값 설정 후 form submit
-    document.getElementById('hiddenEmail').value = document.getElementById('email').value;
-    document.getElementById('emailVerifyForm').submit();
+    try {
+        const response = await fetch('/student/editemail', {
+            method: 'POST',
+            headers: {'Content-Type': 'application/x-www-form-urlencoded'},
+            body: new URLSearchParams({ email: email })
+        });
+
+        if (response.ok) {
+            // 서버에서 받은 HTML로 페이지 전체 교체
+            const html = await response.text();
+            document.open();
+            document.write(html);
+            document.close();
+        } else {
+            const errorText = await response.text();
+            alert('인증코드 전송에 실패했습니다.');
+            console.error('서버 응답:', errorText);
+
+            // 복원
+            if (btnText) btnText.style.display = 'inline';
+            if (spinner) spinner.style.display = 'none';
+            verifyBtn.disabled = false;
+        }
+    } catch (error) {
+        console.error('에러:', error);
+        alert('서버 요청 중 오류가 발생했습니다.');
+
+        // 복원
+        if (btnText) btnText.style.display = 'inline';
+        if (spinner) spinner.style.display = 'none';
+        verifyBtn.disabled = false;
+    }
 }
