@@ -21,7 +21,7 @@
     <!-- 상단: 뒤로가기 + 제목 -->
     <header class="vod-header">
         <a href="${backUrl}" class="vod-back-btn">←</a>
-        <h3 class="vod-title">${lecture.title}</h3>
+        <h3 class="vod-title">${course.title}</h3>
     </header>
 
     <!-- ===============================
@@ -47,6 +47,11 @@
 
                 <!-- 커리큘럼 -->
                 <div id="panel-curriculum" class="panel active">
+                    <!-- 강좌 정보 -->
+                    <div class="course-info">
+                        <h4 class="course-title">${course.title}</h4>
+                        <p class="course-subtitle">${course.subtitle}</p>
+                    </div>
                     <ul class="lecture-list">
                         <c:forEach var="lec" items="${lectureList}">
                             <li onclick="location.href='/player/${course.courseId}?lectureId=${lec.id}'"

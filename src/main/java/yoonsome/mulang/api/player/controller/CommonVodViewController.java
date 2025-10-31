@@ -23,16 +23,14 @@ public class CommonVodViewController {
         // requestHeader 활용해서 뒤로가기를 history back 말고 진짜 뒤로가기를 구현
         //  사용자 정보 확인
         var user = userDetails != null ? userDetails.getUser() : null;
-
         //  플레이어 화면 데이터 구성
         var data = playerViewService.getPlayerView(courseId, lectureId, user);
         model.addAllAttributes(data);
-
         // 뒤로가기 경로 설정
         if (referer != null && referer.contains("mypage/classes")) {
             model.addAttribute("backUrl", referer); // 올바른 내부 referer
         } else {
-            model.addAttribute("backUrl", "/teacher/mypage/classes/edit"); // fallback
+            model.addAttribute("backUrl", "/teacher/mypage/classes/edit");
         }
         return "common/player";
     }

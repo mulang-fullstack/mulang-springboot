@@ -182,7 +182,6 @@ public class TeacherCourseServiceImpl implements TeacherCourseService {
         if (request.getLectures() != null && request.getLectures().size() > MAX_LECTURE_COUNT) {
             throw new IllegalArgumentException("강의는 최대 " + MAX_LECTURE_COUNT + "개까지 업로드할 수 있습니다.");
         }
-
         // ---------- 기본 필드 수정 ----------
         if (request.getTitle() != null) course.setTitle(request.getTitle());
         if (request.getSubtitle() != null) course.setSubtitle(request.getSubtitle());
@@ -283,6 +282,8 @@ public class TeacherCourseServiceImpl implements TeacherCourseService {
     //lecture 삭제 업데이트 폼에서 -누르면
     @Transactional
     public void deleteLecture(Long lectureId) {
+        if (lectureId == null) {
+            return;}
         Lecture lecture = lectureService.getLectureById(lectureId);
         if (lecture.getFile() != null) {
             File file = lecture.getFile();

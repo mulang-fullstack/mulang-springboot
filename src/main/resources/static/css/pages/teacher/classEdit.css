@@ -82,8 +82,18 @@
     flex-direction: column;
     justify-content: center;
     gap: 8px;
-}
 
+    cursor: pointer;
+    user-select: none;
+    transition: background 0.2s ease;
+}
+.title-wrap:hover {
+    background-color: rgba(0,0,0,0.04);
+}
+.title-wrap .title,
+.title-wrap .subtitle {
+    pointer-events: none;
+}
 .title-wrap .title {
     font-size: 16px;
     font-weight: 600;

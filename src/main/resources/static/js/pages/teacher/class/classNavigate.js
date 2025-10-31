@@ -1,20 +1,17 @@
 document.addEventListener("DOMContentLoaded", function() {
 
-    // 모든 클래스 제목 영역(title-wrap)에 클릭 이벤트 연결
-    const titleWrapList = document.querySelectorAll(".title-wrap");
+    // 문서 전체에 클릭 이벤트 위임
+    document.addEventListener("click", function(e) {
+        const el = e.target.closest(".title-wrap");
+        if (!el) return;
 
-    titleWrapList.forEach(function(el) {
-        el.addEventListener("click", function() {
-            const courseId = el.dataset.id;
-            if (!courseId) {
-                console.warn("courseId 누락됨:", el);
-                return;
-            }
-            // 통합된 공용 URL로 이동
-            window.location.href = `/player/${courseId}`;
-        });
-        // 커서 모양 변경
-        el.style.cursor = "pointer";
+        const courseId = el.dataset.id;
+        if (!courseId) {
+            console.warn("courseId 누락됨:", el);
+            return;
+        }
+
+        window.location.href = `/player/${courseId}`;
     });
 
 });

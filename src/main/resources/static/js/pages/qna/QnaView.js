@@ -31,13 +31,15 @@ const QnaView = {
                 </div>
             `;
 
+            // ✅ 제목 + 내용 분리 구조
             questionBox.innerHTML = `
                 <div class="qna-question-header">
                     <span class="writer">${q.writerName || "익명"}</span>
                     <span class="created">${this.formatDateTime(q.createdAt)}</span>
                     ${actionMenu}
                 </div>
-                <div class="qna-question-content">${q.content}</div>
+                <div class="qna-question-title">${q.title || "(제목 없음)"}</div>
+                <div class="qna-question-content" style="display:none;">${q.content}</div>
                 <div class="qna-answer-container" style="display:none;"></div>
             `;
             container.appendChild(questionBox);
@@ -92,7 +94,7 @@ const QnaView = {
                 });
             }
 
-            /* 질문 클릭 → 답변 로드 */
+            /* 질문 클릭 → 제목/내용 토글 + 답변 로드 */
             questionBox.addEventListener("click", async e => {
                 const ignoreClick =
                     e.target.closest(".qna-answer-container") ||
@@ -100,23 +102,38 @@ const QnaView = {
                     e.target.classList.contains("qna-more-btn");
                 if (ignoreClick) return;
 
-                const currentContainer = questionBox.querySelector(".qna-answer-container");
+                const titleElem = questionBox.querySelector(".qna-question-title");
+                const contentElem = questionBox.querySelector(".qna-question-content");
+                const answerContainer = questionBox.querySelector(".qna-answer-container");
                 const opened = container.querySelector(".qna-answer-container[style*='display: block']");
-                if (currentContainer.style.display === "block") {
-                    currentContainer.style.display = "none";
-                    currentContainer.innerHTML = "";
+
+                // 이미 열려있으면 닫기
+                if (answerContainer.style.display === "block") {
+                    contentElem.style.display = "none";
+                    answerContainer.style.display = "none";
+                    answerContainer.innerHTML = "";
+                    titleElem.style.display = "block";
                     return;
                 }
-                if (opened && opened !== currentContainer) {
+
+                // 다른 열린 항목 닫기
+                if (opened && opened !== answerContainer) {
                     opened.style.display = "none";
                     opened.innerHTML = "";
+                    const otherBox = opened.closest(".qna-question-box");
+                    otherBox.querySelector(".qna-question-title").style.display = "block";
+                    otherBox.querySelector(".qna-question-content").style.display = "none";
                 }
 
                 // 서버에서 최신 데이터 다시 조회
                 const data = await QnaApi.getQnaByCourse(QnaController.courseId, QnaController.currentPage);
                 const updatedQ = data.content.find(item => item.id === q.id);
-                QnaView.renderAnswerSection(updatedQ, currentContainer);
-                currentContainer.style.display = "block";
+
+                // 제목 숨기고 내용 + 답변 표시
+                titleElem.style.display = "none";
+                contentElem.style.display = "block";
+                QnaView.renderAnswerSection(updatedQ, answerContainer);
+                answerContainer.style.display = "block";
             });
         });
     },
