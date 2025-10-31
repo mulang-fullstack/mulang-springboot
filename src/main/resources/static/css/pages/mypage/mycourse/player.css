@@ -56,40 +56,49 @@
 
 /* ===== 본문 영역 ===== */
 .vod-main {
-    flex: 1;
-    display: flex;
-    overflow: hidden;
-    background: var(--bg-secondary);
-}
-
-/* ===== 왼쪽: VOD 플레이어 ===== */
-.player-main {
-    flex: 1;
     display: flex;
     justify-content: center;
-    align-items: flex-start;
     background: var(--bg-secondary);
+    overflow: hidden;
     transition: all 0.3s ease;
 }
-.video-section {
-    width: 100%;
-    max-width: 1100px;
-    padding: 20px;
+
+
+/* ===== 영상 영역 ===== */
+.player-main {
+    width: calc(100% - 60px); /* 오른쪽 메뉴폭 제외 */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: width 0.3s ease;
 }
+.video-section {
+    width: 85%;
+}
+
 .video-frame {
     width: 100%;
+    height: 70vh; /* 세로 높이 고정 */
     border-radius: 12px;
     overflow: hidden;
     background: var(--text-black);
     box-shadow: var(--shadow-md);
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
+/* 영상 비율 유지, 짤림 방지 */
 .video-frame video {
-    width: 100%;
-    height: 640px;
-    object-fit: contain;
+    max-width: 100%;
+    max-height: 100%;
+    width: auto;
+    height: auto;
+    object-fit: contain;  /* 비율 유지하며 여백 허용 */
     border-radius: 12px;
     display: block;
 }
+
 
 /* ===== 오른쪽: 사이드 패널 ===== */
 .vod-side {

@@ -16,24 +16,21 @@
 </head>
 <body>
 
-
 <div class="vod-layout">
 
     <!-- 상단: 뒤로가기 + 제목 -->
     <header class="vod-header">
-        <button class="vod-back-btn" onclick="history.back()">←</button>
+        <a href="${backUrl}" class="vod-back-btn">←</a>
         <h3 class="vod-title">${lecture.title}</h3>
     </header>
 
     <!-- ===============================
-         본문 영역: 왼쪽 VOD + 오른쪽 메뉴바
+         본문: 왼쪽 영상 + 오른쪽 패널
     =============================== -->
     <div class="vod-main">
 
-        <!-- 왼쪽: 영상 + 강의목록 -->
+        <!-- 왼쪽: 영상 -->
         <main class="player-main">
-
-            <!-- 영상 -->
             <section class="video-section">
                 <div class="video-frame">
                     <video controls autoplay id="lectureVideo" controlsList="nodownload">
@@ -44,27 +41,15 @@
             </section>
         </main>
 
-        <!-- 오른쪽: 메뉴바 + 패널 (커리큘럼 / Q&A) -->
+        <!-- 오른쪽: 패널 -->
         <aside class="vod-side">
-
-            <!-- 세로 메뉴바 -->
-            <nav class="vod-menu">
-                <button class="menu-btn active" data-target="curriculum" title="커리큘럼">
-                    <img src="/img/icon/bx-list-ul.png" alt="커리큘럼 아이콘" class="menu-icon">
-                </button>
-                <button class="menu-btn" data-target="qna" title="Q&A">
-                    <img src="/img/icon/bx-message-rounded-dots.png" alt="Q&A 아이콘" class="menu-icon">
-                </button>
-            </nav>
-
-            <!-- 패널 영역 -->
             <div class="vod-panel">
 
                 <!-- 커리큘럼 -->
                 <div id="panel-curriculum" class="panel active">
                     <ul class="lecture-list">
                         <c:forEach var="lec" items="${lectureList}">
-                            <li onclick="location.href='/player/${course.id}?lectureId=${lec.id}'"
+                            <li onclick="location.href='/player/${course.courseId}?lectureId=${lec.id}'"
                                 class="${lec.id == lecture.id ? 'active' : ''}">
                                     ${lec.title}
                             </li>
@@ -74,11 +59,10 @@
 
                 <!-- Q&A -->
                 <div id="panel-qna" class="panel">
-                    <div class="qna-sidebar" data-course-id="${course.id}">
+                    <div class="qna-sidebar" data-course-id="${course.courseId}">
                         <div class="qna-header">
                             <h3 class="qna-title">Q&A 게시판</h3>
                         </div>
-
                         <div class="qna-body scrollable">
                             <div id="qna-list" class="qna-list-wrapper"></div>
                             <div class="qna-pagination"></div>
@@ -96,9 +80,23 @@
                         </div>
                     </div>
                 </div>
+
             </div>
         </aside>
     </div>
+
+    <!-- ===============================
+         메뉴바 (vod-main 밖, 화면 고정)
+    =============================== -->
+    <nav class="vod-menu">
+        <button class="menu-btn active" data-target="curriculum" title="커리큘럼">
+            <img src="/img/icon/bx-list-ul.png" alt="커리큘럼 아이콘" class="menu-icon">
+        </button>
+        <button class="menu-btn" data-target="qna" title="Q&A">
+            <img src="/img/icon/bx-message-rounded-dots.png" alt="Q&A 아이콘" class="menu-icon">
+        </button>
+    </nav>
+
 </div>
 
 <!-- ===============================
@@ -106,10 +104,11 @@
 ================================ -->
 <script>
     window.MulangContext = {
-        courseId: ${course.id}
+        courseId: ${course.courseId}
     };
 </script>
-<!-- 기존 QnA 스크립트 -->
+
+<!-- QnA 스크립트 -->
 <script src="/js/pages/qna/QnaApi.js"></script>
 <script src="/js/pages/qna/QnaView.js"></script>
 <script src="/js/pages/qna/QnaController.js"></script>
@@ -122,5 +121,6 @@
         }
     });
 </script>
+
 </body>
 </html>
