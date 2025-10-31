@@ -14,4 +14,5 @@ public class ReviewResponse {
     private String content;
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
+    private String profileImg;
 }

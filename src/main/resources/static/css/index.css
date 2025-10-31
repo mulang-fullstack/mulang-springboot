@@ -46,7 +46,8 @@
 
 .class-list {
     display: grid;
-    grid-template-columns: repeat(4, 1fr);
+    //grid-template-columns: repeat(4, 1fr);
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
     gap: 24px;
 }
 
@@ -57,13 +58,11 @@
 }
 
 .recent-paid .class-list {
-    display: grid;
-    grid-template-columns: repeat(8, 0.5fr);
-    gap: 24px;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
 }
 
 .class-card {
-    width: 302px;
+    //width: 302px;
     background: #fff;
     border-radius: 12px;
     overflow: hidden;

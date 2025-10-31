@@ -71,12 +71,22 @@ public class CourseServiceImpl implements CourseService {
     }
 
     @Override
+    public List<Course> getBestCourseList(){
+        return courseRepository.findByAverageRating(PageRequest.of(0, 4));
+    }
+
+    @Override
     public List<Course> getCourseRankingList(long languageId) {
         return courseRepository.findTop4ByLanguageIdAndStatusAndAverageRating(languageId, PageRequest.of(0, 4));
     }
 
     @Override
     public List<Course> getNewCourseList(Pageable pageable){
-        return courseRepository.findAllByOrderByCreatedAtDesc(pageable);
+        return courseRepository.findByStatusOrderByCreatedAtDesc(PUBLIC, pageable);
+    }
+
+    @Override
+    public List<Course> getRecentPaidCourseList(){
+        return courseRepository.findCoursesByLatestApproved();
     }
 }

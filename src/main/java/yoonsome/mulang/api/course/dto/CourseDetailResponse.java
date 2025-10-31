@@ -20,4 +20,5 @@ public class CourseDetailResponse {
     private Integer price;                      //  수강비
     private List<CourseLectureResponse> lectures;     //  커리큘럼
     private boolean favorited;                  // 찜
+    private boolean paid;                       // 결제 여부
 }

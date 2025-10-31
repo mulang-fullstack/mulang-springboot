@@ -19,4 +19,5 @@ public class CourseListResponse {
     private Integer price;              // 수강료
     private LocalDateTime createdAt;    // 강의 등록일
     private boolean favorited;          // 찜
+    private boolean paid;               // 결제여부
 }

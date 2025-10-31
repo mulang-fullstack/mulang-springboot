@@ -7,7 +7,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     // 리뷰 불러오기
     function loadReviews(page = 0, sort = sortBy) {
-        fetch(`/courseDetail/reviews?courseId=${courseId}&page=${page}&sortBy=${sort}`)
+        fetch(`/course/courseDetail/reviews?courseId=${courseId}&page=${page}&sortBy=${sort}`)
             .then(res => res.json())
             .then(data => {
                 renderReviews(data);
@@ -36,9 +36,10 @@ document.addEventListener("DOMContentLoaded", () => {
         } else {
             reviews.forEach(review => {
                 html += `
-            <div class="review-item" data-review-id="${review.id}">
-                <img src="/img/icon/review-mulang.svg" alt="머랭 캐릭터" class="review-profile-img">
-                <div class="review-profile-border"></div>
+            <div class="review-item" data-review-id="${review.id}">          
+                <div class="review-profile-border">
+                    <img src="${review.profileImg}" alt="프로필 이미지" class="review-profile-img">      
+                </div>
                 <div class="review-name">${review.studentName}</div>
                 <div class="rating">
                 <span class="stars">

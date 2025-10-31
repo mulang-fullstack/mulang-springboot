@@ -2,6 +2,7 @@ package yoonsome.mulang.api.main.controller;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
@@ -36,11 +37,11 @@ public class MainController {
         model.addAttribute("courses", courseListResponses);
         return "main/ranking";
     }
-    //신규 클래스
+    //신규 클래스:20개
     @GetMapping("/newCourse")
     public String getNewCourseList(@AuthenticationPrincipal CustomUserDetails userDetails, Model model, Pageable pageable){
         Long userId = getUserId(userDetails);
-        List<CourseListResponse> courseListResponses = mainService.getNewCourseList(userId);
+        List<CourseListResponse> courseListResponses = mainService.getNewCourseList(userId, PageRequest.of(0, 20));
         model.addAttribute("courses", courseListResponses);
         return "main/newCourse";
     }

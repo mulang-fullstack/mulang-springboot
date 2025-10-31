@@ -27,10 +27,16 @@ public interface CourseService {
     /* teacher 강사별 강좌 리스트 가져오기 */
     Page<Course> getTeacherCoursePage(Teacher teacher, List<StatusType> statuses, Pageable pageable);
 
-    /*주간BEST 강의, 실시간 랭킹 가져오기*/
+    /*주간BEST 강의*/
+    List<Course> getBestCourseList();
+
+    /*실시간 랭킹 가져오기*/
     List<Course> getCourseRankingList(long languageId);
 
     /*신규 클래스 가져오기*/
     List<Course> getNewCourseList(Pageable pageable);
+
+    /*최근 결제된 강좌 가져오기*/
+    public List<Course> getRecentPaidCourseList();
 
 }
