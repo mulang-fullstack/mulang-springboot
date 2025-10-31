@@ -62,8 +62,8 @@
 
                             <div class="meta">
                                 <div class="topline">
-                                    <span class="teacher">담당강사: -</span>
-                                    <span class="subject">-</span>
+                                    <span class="teacher">담당강사:${favorite.course.teacher.user.username}</span>
+                                    <span class="subject">과목:${favorite.course.language.name}</span>
                                 </div>
                                 <h3 class="title">${favorite.course.title}</h3>
                                 <p class="sub">${favorite.course.subtitle}</p>

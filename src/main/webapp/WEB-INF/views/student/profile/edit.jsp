@@ -26,7 +26,7 @@
 
             <section class="content">
                 <div class="profile-main">
-                    <h2>강사 프로필 관리</h2>
+                    <h2>프로필 수정</h2>
 
                     <section class="profile-section">
 
@@ -72,7 +72,7 @@
                                 <div class="input-wrap">
                                     <input type="text" name="nickname" value="${user.nickname}">
                                 </div>
-                                <!-- ✅ 닉네임 에러 메시지 -->
+                                <!--  닉네임 에러 메시지 -->
                                 <c:if test="${not empty nicknameError}">
                                     <p class="error-text">${nicknameError}</p>
                                 </c:if>
