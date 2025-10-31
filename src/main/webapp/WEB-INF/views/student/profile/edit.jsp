@@ -38,7 +38,7 @@
                         <!-- 프로필 수정 form -->
                         <form action="/student/edit" method="post" enctype="multipart/form-data" id="editForm">
 
-                            <!-- 프로필 이미지 -->
+                            <!-- 프로필 이미지 -->;',;;'
                             <div class="field">
                                 <label>프로필 이미지</label>
                                 <div class="field-content profile-img-area">
@@ -49,7 +49,7 @@
                                     </div>
 
                                     <!-- 카메라 버튼 -->
-                                    <button type="button" class="camera-btn" onclick="document.getElementById('fileInput').click();">
+                                    <button type="button" class="camera-btn" onclick="document.getElementById('fileInput').click()">
                                         <img src="/img/icon/bx-camera.svg" alt="사진 변경">
                                     </button>
 

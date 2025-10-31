@@ -161,6 +161,8 @@ public class StuInfoModifyController {
                        @RequestPart(required = false) MultipartFile photo,
                        RedirectAttributes redirectAttributes) {
 
+        System.out.println("++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++"+photo.getOriginalFilename());
+
         Long userId = userDetails.getUser().getId();
         MypageResponse user = mypageService.getUserInfo(userId);
 

@@ -52,10 +52,9 @@ public class AuthServiceImpl implements AuthService {
     public void sendSignupVerification(String email) {
         // 6자리 인증코드 생성
         String code = generateCode();
-        // 인증 메일 전송 (메일 제목·본문은 MailService에서 처리)
-        mailService.sendVerificationEmail(email, code);
         // 이후 code를 DB에 저장
         emailCodeService.saveCode(email, code);
+
     }
 
     private String generateCode() {
