@@ -129,6 +129,3 @@ desktop.ini
 *.tar.gz
 # temporary exported files
 *.pid
-
-## 깃 애플리케이션 설정
-/src/main/resources/application.properties
