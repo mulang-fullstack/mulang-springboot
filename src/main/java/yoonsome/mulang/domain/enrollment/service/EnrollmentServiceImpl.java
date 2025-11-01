@@ -41,6 +41,7 @@ public class EnrollmentServiceImpl implements EnrollmentService {
                 .course(payment.getCourse())
                 .payment(payment)
                 .progress(0)
+                .status(EnrollmentStatus.ACTIVE)
                 .isCompleted(false)
                 .build();
 
