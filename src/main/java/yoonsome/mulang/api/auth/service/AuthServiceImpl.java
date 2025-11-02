@@ -29,16 +29,12 @@ public class AuthServiceImpl implements AuthService {
     public boolean signup(SignupRequest request) {
         // 비밀번호 암호화
         String encodedPassword = passwordEncoder.encode(request.getPassword());
-        // 기본 프로필 이미지 조회 (ID: 1)
-        File defaultFile = fileRepository.findById(1L)
-                .orElse(null);  // 없으면 null (나중에 처리)
         // User 엔티티 생성
         User newUser = new User();
         newUser.setEmail(request.getEmail());
         newUser.setPassword(encodedPassword);
         newUser.setUsername(request.getUsername());
         newUser.setNickname(request.getNickname());
-        newUser.setFile(defaultFile);
         newUser.setRole(
                 request.getAccountType().equalsIgnoreCase("T")
                         ? User.Role.TEACHER

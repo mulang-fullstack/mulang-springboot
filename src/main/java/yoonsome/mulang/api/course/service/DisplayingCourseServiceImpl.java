@@ -165,11 +165,25 @@ public class DisplayingCourseServiceImpl implements DisplayingCourseService {
                     courseReview.getContent(),
                     courseReview.getCreatedAt(),
                     courseReview.getUpdatedAt(),
-                    s3FileService.getPublicUrl(courseReview.getStudent().getFile().getId())
+                    getProfileImg(courseReview)
             );
             reviewResponses.add(reviewResponse);
         }
         return new PageImpl<>(reviewResponses, pageable, reviews.getTotalElements());
+    }
+    //프로필 이미지 null일 경우 디폴트 값 설정
+    private String getProfileImg(CourseReview courseReview) {
+        if (courseReview == null || courseReview.getStudent() == null) {
+            return "/img/icon/review-mulang.svg";
+        }
+        if (courseReview.getStudent().getFile() == null) {
+            return "/img/icon/review-mulang.svg";
+        }
+        String profileImg = s3FileService.getPublicUrl(courseReview.getStudent().getFile().getId());
+        if (profileImg == null || profileImg.isEmpty()) {
+            profileImg = "/img/icon/review-mulang.svg";
+        }
+        return profileImg;
     }
 
     //강사 프로필 정보
