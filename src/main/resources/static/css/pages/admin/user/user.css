@@ -1,0 +1,43 @@
+/* ==========================================================
+   관리자 회원 관리 페이지 전용 스타일
+   Path: /css/pages/admin/user/user.css
+
+   admin.css에서 공통 스타일을 상속받아 사용하며,
+   이 파일에는 회원 관리 페이지만의 고유한 스타일만 포함됩니다.
+   ========================================================== */
+
+/* 권한 배지 */
+.role-badge {
+    display: inline-block;
+    padding: 3px 8px;
+    border-radius: 6px;
+    font-size: 11px;
+    font-weight: 500;
+}
+
+.role-badge.student {
+    background: var(--admin-badge-student-bg);
+    color: var(--admin-badge-student-text);
+}
+
+.role-badge.tutor {
+    background: var(--admin-badge-tutor-bg);
+    color: var(--admin-badge-tutor-text);
+}
+
+/* 모달 추가 스타일 */
+.modal-body .warning {
+    color: var(--admin-status-failed);
+    margin-top: 10px;
+}
+
+@keyframes modalSlideIn {
+    from {
+        opacity: 0;
+        transform: translateY(-20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}

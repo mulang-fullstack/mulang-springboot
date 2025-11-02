@@ -1,0 +1,268 @@
+/*color: #F4B734; 별점 용 노랑색 */
+.course-category h1 {
+    font-size: 24px;
+    font-weight: 700;
+    display: flex;
+    margin-top: 40px;
+    margin-bottom: 10px;
+}
+
+.course-tabs {
+    display: flex;
+    gap: 40px;
+    padding: 10px;
+    border-bottom: var(--border-default);
+}
+
+.tab {
+    padding: 5px 2px;
+    font-size: 17px;
+    font-weight: 500;
+    color: var(--text-disabled);
+    text-align: center;
+}
+
+.tab.active {
+    color: var(--text-point-main);
+}
+
+/* 정렬/검색 */
+.course-sort {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 30px;
+}
+
+.search-input {
+    position: relative;
+    width: 875px;
+    height: 50px;
+}
+
+.search-input input {
+    display: inline-block;
+    width: 100%;
+    padding: 8px 36px 8px 12px;
+    border: var(--border-default);
+    border-radius: 7px;
+    background: var(--bg-white);
+    font-size: 14px;
+    outline: none;
+    transition: border-color 0.2s;
+}
+
+.search-input button {
+    position: absolute;
+    top: 40%;
+    right: 1px;
+    transform: translateY(-50%);
+    padding: 0;
+    border: none;
+    background: none;
+    cursor: pointer;
+}
+
+.search-input button img {
+    width: 45px;
+    height: 45px;
+}
+
+.sort-options {
+    display: flex;
+    gap: 20px;
+}
+
+.sort-item {
+    font-size: 17px;
+    font-weight: 500;
+}
+
+.sort-item.active {
+    color: var(--text-point-main);
+}
+
+/* 강의 카드 */
+.course-list {
+    display: flex;
+    flex-direction: column;
+    border-top: var(--border-default);
+}
+
+.course-card {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: relative;
+    height: 200px;
+    border-bottom: var(--border-default);
+}
+
+.course-card img {
+    width: 250px;
+    height: 180px;
+    //position: absolute;
+    //top: 10px;
+    //left: 0;
+}
+
+.course-list-info {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    min-width: 0;
+    gap: 10px;
+    padding: 0 180px;
+    justify-content: center;
+    overflow: hidden;
+}
+.course-card h2 {
+    font-size: 24px;
+    font-weight: 400;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.subtitle, .teacher {
+    //position: absolute;
+    //top: 89px;
+    //left: 377px;
+    font-size: 16px;
+    color: var(--text-secondary);
+}
+
+.rating {
+    //position: absolute;
+    //top: 129px;
+    //left: 377px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    color: #F4B734;
+    font-size: 20px;
+}
+
+.rating .stars {
+    display: flex;
+    align-items: center;
+    gap: 2px;
+}
+
+.rating .stars img {
+    position: static;
+    float: none;
+    width: 20px;
+    height: 20px;
+    display: block;
+}
+
+.review-count {
+    font-size: 16px;
+}
+
+.heart-purchase-wrap {
+    position: absolute;
+    right: 0;
+    bottom: 10px;
+    display: flex;
+    align-items: flex-end;
+    gap: 20px;
+}
+
+.course-purchase {
+    //position: absolute;
+    //left: 1160px;
+    //top: 76px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+}
+
+.heart-icon {
+    margin-bottom: 15px;
+}
+
+.heart-icon img {
+    //position: absolute;
+    //left: 1110px;
+    //top: 138px;
+    width: 20px;
+    height: 20px;
+    cursor: pointer;
+}
+
+.heart-icon img:hover {
+    transform: scale(1.2);
+}
+
+.price {
+    font-size: 20px;
+    color: var(--text-secondary);
+}
+
+.paid-btn {
+    width: 120px;
+    height: 50px;
+    background: var(--bg-point-sub);
+    border: var(--bg-point-sub);
+    color: var(--text-point-main);
+    border-radius: 10px;
+    font-size: 20px;
+}
+
+.purchase-btn {
+    /*position: absolute;
+    left: 1160px;*/
+    //top: 129px;
+    width: 120px;
+    height: 50px;
+    background: var(--bg-point-main);
+    border: var(--bg-point-main);
+    color: var(--text-white);
+    border-radius: 10px;
+    font-size: 20px;
+    cursor: pointer;
+}
+.purchase-btn:hover {
+    opacity: 0.9;
+}
+
+.empty-content img{
+    width:1280px;
+}
+
+/* 페이지네이션 */
+.pagination {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    margin: 30px 0;
+}
+
+.pagination a {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.pagination button {
+    border-radius: 50%;
+    width: 30px;
+    height: 30px;
+    border: var(--bg-point-hover);
+    background: transparent;
+    cursor: pointer;
+}
+
+.page-numbers {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 20px;
+    transform: translateY(-1px);
+}
+
+.page-numbers .current {
+    color: var(--text-point-main);
+}

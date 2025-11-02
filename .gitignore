@@ -1,0 +1,131 @@
+# ======================================
+# General
+# ======================================
+# OS / editor temporary
+.DS_Store
+.Trashes
+.AppleDouble
+.LSOverride
+Icon?
+ehthumbs.db
+Thumbs.db
+desktop.ini
+$RECYCLE.BIN/
+
+# temp files
+*~
+*.swp
+*.swo
+*.tmp
+*.bak
+*.orig
+
+# logs
+logs/
+*.log
+
+# env / secrets
+.env
+.env.*
+!.env.example        # 예시 파일은 트래킹 가능하게 할 경우
+secrets.yml
+*.key
+*.pem
+
+# build artifacts
+/build/
+/out/
+/dist/
+/tmp/
+/temp/
+*.class
+*.jar
+*.war
+*.ear
+
+# Maven / Gradle
+/target/
+/.gradle/
+/build/
+!gradle/wrapper/gradle-wrapper.jar
+
+# keep wrapper jar but ignore wrapper files (already present in your file)
+!**/src/main/**/build/
+!**/src/test/**/build/
+
+# ======================================
+# IDEs
+# ======================================
+# STS / Eclipse
+.apt_generated
+.classpath
+.factorypath
+.project
+.settings/
+.springBeans
+.sts4-cache
+bin/
+!**/src/main/**/bin/
+!**/src/test/**/bin/
+
+# IntelliJ
+.idea/
+*.iws
+*.iml
+*.ipr
+out/
+!**/src/main/**/out/
+!**/src/test/**/out/
+
+# NetBeans
+/nbproject/private/
+/nbbuild/
+/dist/
+/nbdist/
+/.nb-gradle/
+
+# VS Code
+.vscode/
+
+# ======================================
+# Node / Frontend (옵션)
+# ======================================
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# ======================================
+# Test / Coverage
+# ======================================
+coverage/
+*.lcov
+.nyc_output/
+
+# ======================================
+# OS specific extras (mac/windows)
+# ======================================
+.DS_Store
+.AppleDouble
+.LSOverride
+.Spotlight-V100
+.Trashes
+Thumbs.db
+desktop.ini
+# Windows recycle bin etc already above
+
+# ======================================
+# Container / packaging
+# ======================================
+*.log
+*.out
+
+# ======================================
+# Others you might want to ignore
+# ======================================
+*.iml
+.idea/
+*.zip
+*.tar.gz
+# temporary exported files
+*.pid

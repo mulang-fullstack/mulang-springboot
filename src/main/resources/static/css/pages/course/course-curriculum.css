@@ -1,0 +1,40 @@
+/* ===============================
+   📦 course-Introduction.css
+   작성 순서: 레이아웃 → 박스모델 → 테두리 → 배경 → 타이포그래피 → 비주얼 → 기타
+================================= */
+.course-curriculum {
+    width: 100%;
+    display: flex;
+    flex-direction: column; /* 항목이 위에서 아래로 쌓임 */
+    padding: 10px 0;
+}
+
+.course-curriculum .curriculum-header,
+.course-curriculum .curriculum-row {
+    display: flex;          /* 가로 배치 */
+    flex-direction: row;    /* 명시적으로 가로 */
+    align-items: center;
+    border-top: 1px solid var(--bg-point-sub);
+    border-bottom: 1px solid var(--bg-point-sub);
+    padding: 5px;          /* 위아래 padding 조금 늘림 */
+}
+
+.course-curriculum .curriculum-header .title {
+    text-align: center;
+}
+
+.course-curriculum .no,
+.course-curriculum .time{
+    width: 100px;
+    text-align: center;
+}
+
+.course-curriculum .title {
+    flex: 1;
+    padding: 0 10px;
+}
+
+.course-curriculum .curriculum-row:hover {
+    background-color: var(--bg-point-sub);
+    //cursor: pointer;
+}

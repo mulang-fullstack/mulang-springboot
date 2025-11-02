@@ -1,0 +1,181 @@
+/* ===============================
+   교사 판매현황 페이지 (정렬 완전 보정)
+   =============================== */
+
+.dashboard {
+    display: flex;
+    gap: 60px;
+    width: 100%;
+    max-width: 1280px;
+    margin: 0 auto;
+}
+
+.content {
+    flex: 1;
+    background: none;
+    border: none;
+    border-radius: 0;
+    box-shadow: none;
+    padding: 0;
+}
+
+/* 제목 */
+.content h2 {
+    font-size: 24px;
+    font-weight: 700;
+    color: var(--text-primary);
+    margin-bottom: 30px;
+}
+
+/* ---------------------
+   정산 요약
+   --------------------- */
+.settlement-summary {
+    display: flex;
+    margin-bottom: 24px;
+}
+
+.summary-box {
+    flex: 1;
+    padding: 20px 24px;
+    border: var(--border-default);
+    border-radius: 8px;
+    background-color: var(--bg-secondary);
+}
+
+.summary-box h3 {
+    font-size: 15px;
+    font-weight: 600;
+    color: var(--text-secondary);
+    margin-bottom: 6px;
+}
+
+.summary-box .amount {
+    font-size: 19px;
+    font-weight: 700;
+    color: var(--text-point-main);
+}
+
+/* ---------------------
+   매출 테이블
+   --------------------- */
+.settlement-table {
+    border: var(--border-default);
+    border-radius: 8px;
+    overflow: hidden;
+    background-color: var(--bg-white);
+    margin-bottom: 32px;
+}
+
+/* 헤더와 데이터 행 공통 grid 설정 */
+.table-header,
+.table-body .row {
+    display: grid;
+    grid-template-columns: 1fr 200px;
+    gap: 16px;
+    padding: 14px 24px;
+    align-items: center;
+}
+
+/* 테이블 헤더 */
+.table-header {
+    border-bottom: var(--border-default);
+    background-color: var(--bg-secondary);
+    font-size: 15px;
+    font-weight: 600;
+    color: var(--text-secondary);
+}
+
+.table-header span:first-child {
+    text-align: left;
+}
+
+.table-header span:last-child {
+    text-align: right;
+}
+
+/* 테이블 바디 */
+.table-body {
+    display: flex;
+    flex-direction: column;
+}
+
+.table-body .row {
+    border-bottom: var(--border-default);
+    font-size: 15px;
+    color: var(--text-primary);
+    background-color: var(--bg-white);
+    transition: background-color 0.2s ease;
+}
+
+.table-body .row:hover {
+    background-color: var(--bg-white-hover);
+}
+
+.table-body .row:last-child {
+    border-bottom: none;
+}
+
+/* 클래스명 (왼쪽 정렬) */
+.course-title {
+    text-align: left;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+/* 클래스 매출 (오른쪽 정렬) */
+.course-amount {
+    text-align: right;
+    font-weight: 600;
+    color: var(--text-point-main);
+    white-space: nowrap;
+}
+
+/* 빈 데이터 */
+.table-body .empty {
+    text-align: center;
+    padding: 36px;
+    font-size: 15px;
+    color: var(--text-muted);
+    background-color: var(--bg-secondary);
+    grid-column: 1 / -1;
+}
+
+/* ---------------------
+   페이징 디자인
+   --------------------- */
+.sales-pagination {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 28px;
+    gap: 8px;
+}
+
+.sales-pagination button {
+    background-color: var(--bg-white);
+    color: var(--text-secondary);
+    border: var(--border-default);
+    border-radius: 6px;
+    padding: 6px 12px;
+    cursor: pointer;
+    font-size: 14px;
+    transition: all 0.2s ease;
+}
+
+.sales-pagination button:hover {
+    background-color: var(--bg-point-sub);
+    color: var(--text-point-main);
+}
+
+.sales-pagination button.active {
+    background-color: var(--bg-point-main);
+    color: var(--text-white);
+    font-weight: 600;
+}
+
+.sales-pagination button:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}

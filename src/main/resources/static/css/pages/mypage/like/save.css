@@ -1,0 +1,122 @@
+.mypage {
+    display: flex;
+    gap: 60px;
+    align-items: flex-start;
+}
+
+.content {
+    flex: 1;
+    border: var(--border-primary);
+    border-radius: 10px;
+    padding: 40px 60px;
+    box-sizing: border-box;
+}
+
+.content h2 {
+    font-size: 28px;
+    font-weight: 700;
+    margin-bottom: 40px;
+    color: var(--text-black);
+}
+/* 툴바 */
+.likes-toolbar {
+    display: flex; justify-content: space-between; align-items: center;
+    gap: 12px; margin-bottom: 16px;
+}
+.likes-toolbar .left, .likes-toolbar .right {
+    display: flex; align-items: center; gap: 10px;
+}
+.sel-subject, .search-input {
+    border: var(--border-primary); border-radius: 8px;
+    background: var(--bg-white); padding: 8px 12px; font-size: 14px; color: var(--text-black);
+}
+.btn.search { background:var(--bg-point-main); color:var(--text-white); }
+.btn.search:hover { background:var(--bg-point-hover); }
+
+/* 리스트 */
+.likes-list {
+    display: flex; flex-direction: column; gap: 12px;
+}
+.like-item {
+    display: grid;
+    grid-template-columns: 160px 1fr auto;
+    gap: 16px;
+    border: var(--border-primary);
+    border-radius: 10px;
+    background: var(--bg-white);
+    padding: 16px;
+}
+.thumb img {
+    width: 160px; height: 90px; object-fit: cover;
+    border-radius: 8px; display:block;
+}
+
+/* 메타 */
+.meta .topline {
+    display:flex; align-items:center; gap:10px; margin-bottom: 4px;
+    font-size: 13px; color:var(--text-secondary);
+}
+.meta .subject { padding-left:10px; border-left:var(--border-primary); }
+.meta .title {
+    font-size: 18px; font-weight: 600; color:var(--text-black); margin: 2px 0 6px;
+    overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+}
+.meta .sub { font-size: 14px; color:var(--text-tertiary); margin-bottom: 6px; }
+.meta .period { font-size: 13px; color:var(--text-muted); }
+
+/* 액션 */
+.actions {
+    display:flex; flex-direction: column; gap:8px; align-items:flex-end; justify-content:center;
+}
+.btn {
+    padding: 8px 14px;
+    border-radius: 8px; border: none;
+    font-size: 13px; font-weight: 500; cursor: pointer;
+    transition: background .2s ease, border-color .2s ease;
+}
+.btn.edit { background:var(--bg-point-main); color:var(--text-white); }
+.btn.edit:hover { background:var(--bg-point-main); }
+.btn.outline { background:var(--text-white); border:var(--text-white); color:var(--text-black); }
+.btn.outline:hover { background:var(--bg-white-hover); }
+
+/* 페이지네이션 - 고급 버전 */
+.pagination {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 6px;
+    margin-top: 40px;
+    padding: 20px 0;
+}
+
+.page-btn {
+    min-width: 40px;
+    height: 40px;
+    padding: 0;
+    border: var(--border-default);
+    border-radius: 8px;
+    background-color: var(--bg-white);
+    color: var(--text-tertiary);
+    text-decoration: none;
+    text-align: center;
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.page-btn:hover:not(.active) {
+    background-color: var(--bg-white);
+    border-color: var(--border-default);
+}
+
+.page-btn.active {
+    background-color: var(--bg-point-main);;
+    color: var(--text-white);
+    border-color: var(--border-primary);
+    font-weight: 600;
+    box-shadow: var(--shadow-default);
+}

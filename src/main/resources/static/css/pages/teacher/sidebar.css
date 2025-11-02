@@ -1,0 +1,135 @@
+@charset "UTF-8";
+
+/* -------------------- 사이드바 -------------------- */
+.sidebar {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    width: 220px;
+    min-height: 600px;
+    flex-shrink: 0;
+    margin: 0;
+    padding: 30px 0;
+    border: var(--border-default);
+    border-radius: 12px;
+    background-color: var(--bg-white);
+
+    /* 추가: 스크롤 고정 */
+    position: sticky;
+    top: 100px; /* 헤더 높이에 맞게 조정 */
+    align-self: flex-start;
+}
+
+
+/* -------------------- 프로필 -------------------- */
+.profile {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.profile-img-wrap {
+    width: 120px;
+    height: 120px;
+    margin-bottom: 20px;
+    border: 2px solid var(--bg-point-sub);
+    border-radius: 50%;
+    overflow: hidden;
+    background-color: var(--bg-white);
+}
+
+.profile-img-wrap img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.nickname {
+    margin-bottom: 40px;
+    font-size: 17px;
+    font-weight: 600;
+    color: var(--text-primary);
+    text-align: center;
+}
+
+/* -------------------- 메뉴 -------------------- */
+.menu {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    gap: 8px;
+}
+
+.menu li {
+    width: 100%;
+    list-style: none;
+}
+
+.menu a {
+    position: relative;
+    display: block;
+    width: 100%;
+    padding: 12px 0;
+    border-radius: 8px;
+    background-color: transparent;
+    font-size: 15px;
+    font-weight: 500;
+    color: var(--text-tertiary);
+    text-decoration: none;
+    transition: background 0.2s ease, color 0.2s ease;
+    text-align: center;
+}
+
+.menu a img {
+    position: absolute;
+    left: 40px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 16px;
+    height: 16px;
+    object-fit: contain;
+}
+
+.menu a:hover {
+    background-color: var(--bg-point-sub);
+    color: var(--text-primary);
+}
+
+.menu .active a {
+    background-color: var(--bg-point-main);
+    color: var(--text-white);
+    font-weight: 600;
+}
+
+/* -------------------- 가이드북 버튼 -------------------- */
+.guidebook {
+    width: 100%;
+    margin-top: 30px;
+}
+
+.guidebook a {
+    display: block;
+    padding: 14px 0;
+    border-radius: 10px;
+    background-color: var(--bg-point-main);
+    font-weight: 600;
+    color: var(--text-white);
+    text-align: center;
+    text-decoration: none;
+    transition: background 0.2s ease;
+}
+
+.guidebook a:hover {
+    background-color: var(--bg-point-hover);
+}
+
+/* -------------------- 반응형 -------------------- */
+@media (max-width: 768px) {
+    .sidebar {
+        display: none;
+    }
+}

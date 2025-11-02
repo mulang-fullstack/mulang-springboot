@@ -1,0 +1,45 @@
+/* ===============================
+   📦 course-Introduction.css
+   작성 순서: 레이아웃 → 박스모델 → 테두리 → 배경 → 타이포그래피 → 비주얼 → 기타
+================================= */
+.leture-detail-contents {
+    position: sticky;
+    top: -290px;
+    //top: 30px; /* header 높이만큼 띄움 (헤더 밑에 붙게) */
+    background-color: #fff;
+    z-index: 10;
+    border-bottom: 1px solid #ddd;
+
+}
+
+/* 탭 메뉴 */
+.course-tabs {
+    display: flex;
+    /*justify-content: center;*/
+    align-items: center;
+    width: 100%;
+    cursor: pointer;
+}
+
+.tab {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex: 1;
+    padding: 10px;
+    font-size: 20px;
+    color: var(--text-primary);
+
+}
+
+.tab.active, .tab:hover {
+    border-bottom: 1px solid var(--bg-point-hover);
+    color: var(--text-point-main);
+}
+
+h2 {
+    font-size: 20px;
+    font-weight: 700;
+    color: var(--text-primary);
+}
+

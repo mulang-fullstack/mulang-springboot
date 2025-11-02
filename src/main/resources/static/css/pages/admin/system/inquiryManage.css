@@ -1,0 +1,80 @@
+/* ==========================================================
+   관리자 문의 관리 페이지 전용 스타일
+   Path: /css/pages/admin/system/inquiryManage.css
+
+   admin.css에서 공통 스타일을 상속받아 사용하며,
+   이 파일에는 문의 관리 페이지만의 고유한 스타일만 포함됩니다.
+   ========================================================== */
+
+/* 제목 - 왼쪽 정렬 */
+.table-wrap td:nth-child(3) {
+    text-align: left;
+    padding-left: 20px;
+}
+
+/* 문의 유형 뱃지 */
+.inquiry-type-badge {
+    display: inline-block;
+    padding: 4px 10px;
+    border-radius: 12px;
+    font-size: 11px;
+    font-weight: 600;
+    color: var(--text-white);
+    text-transform: uppercase;
+}
+
+.inquiry-type-badge.general {
+    background: linear-gradient(135deg, #6b7280 0%, #4b5563 100%);
+}
+
+.inquiry-type-badge.technical {
+    background: var(--admin-gradient-info);
+}
+
+.inquiry-type-badge.payment {
+    background: var(--admin-gradient-warning);
+}
+
+.inquiry-type-badge.course {
+    background: var(--admin-gradient-primary);
+}
+
+/* 제목 스타일 */
+.inquiry-title {
+    font-weight: 500;
+    color: var(--admin-text-primary);
+    cursor: pointer;
+    transition: color 0.2s;
+}
+
+.inquiry-title:hover {
+    color: var(--admin-text-link);
+}
+
+/* 답변 상태 뱃지 */
+.answer-badge {
+    display: inline-block;
+    padding: 4px 10px;
+    border-radius: 12px;
+    font-size: 11px;
+    font-weight: 500;
+    color: var(--text-white);
+}
+
+.answer-badge.answered {
+    background: var(--admin-gradient-success);
+}
+
+.answer-badge.waiting {
+    background: var(--admin-gradient-warning);
+    animation: statusPulse 2s infinite;
+}
+
+@keyframes statusPulse {
+    0%, 100% {
+        box-shadow: 0 0 0 0 rgba(245, 158, 11, 0.4);
+    }
+    50% {
+        box-shadow: 0 0 0 6px rgba(245, 158, 11, 0);
+    }
+}

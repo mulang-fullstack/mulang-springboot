@@ -1,0 +1,186 @@
+@charset "UTF-8";
+
+/* 메인 */
+.ai-main {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    background: var(--bg-primary);
+    color: var(--text-primary);
+}
+
+/* ---------- Hero Section ---------- */
+.ai-hero {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    width: 100%;
+    height: 70vh;
+    background: linear-gradient(
+            180deg,
+            var(--bg-point-sub) 0%,
+            var(--bg-white) 100%
+    );
+    border-radius: 0.8rem;
+    box-shadow: var(--shadow-md);
+    overflow: hidden;
+    z-index: 0;
+}
+
+/* 왼쪽 장식 이미지만 사용 (살짝 크게) */
+.ai-hero::before {
+    content: "";
+    position: absolute;
+    top: 50%;
+    left: 10%;
+    width: 450px;
+    height: 450px;
+    background: url("/img/icon/aipop.png") center/contain no-repeat;
+    opacity: 0.18;
+    transform: translateY(-50%);
+    z-index: 1;
+}
+
+/* 텍스트는 이미지 위 */
+.ai-hero-text {
+    max-width: 960px;
+    width: 90%;
+    margin: 0 auto;
+    position: relative;
+    z-index: 2;
+}
+
+.ai-hero-sub {
+    font-size: 1rem;
+    color: var(--text-secondary);
+    margin-bottom: 0.8rem;
+}
+
+.ai-hero-title {
+    font-size: 1.8rem;
+    font-weight: 700;
+    color: var(--text-point-main);
+    margin-bottom: 1.4rem;
+    line-height: 1.5;
+}
+
+.ai-hero-logo {
+    font-size: 5rem;
+    font-weight: 900;
+    color: var(--text-point-main);
+}
+
+.ai-hero-logo span {
+    display: block;
+    font-size: 1.8rem;
+    font-weight: 700;
+    color: var(--text-secondary);
+    margin-top: 0.2rem;
+}
+
+.ai-hero-desc {
+    font-size: 1rem;
+    color: var(--text-tertiary);
+    margin-top: 1.5rem;
+}
+
+/* ---------- 이하 동일 ---------- */
+.ai-intro {
+    position: relative;
+    overflow: hidden;
+    text-align: center;
+    background: none;
+    padding: 3rem 2rem;
+    border-radius: 1rem;
+    box-shadow: var(--shadow-sm);
+    z-index: 0;
+}
+
+.ai-intro-title {
+    font-size: 1.6rem;
+    font-weight: 700;
+    color: var(--text-point-main);
+    margin-bottom: 1rem;
+}
+
+.ai-intro-desc {
+    font-size: 1.05rem;
+    color: var(--text-secondary);
+    line-height: 1.7;
+}
+
+.ai-intro-desc strong {
+    color: var(--text-point-main);
+}
+
+.ai-features {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 1.5rem;
+}
+
+.feature-card {
+    background: var(--bg-white);
+    border: var(--border-default);
+    border-radius: 1rem;
+    padding: 2rem;
+    text-align: center;
+    box-shadow: var(--shadow-default);
+    transition: transform 0.2s ease, box-shadow 0.3s ease;
+}
+
+.feature-card:hover {
+    transform: translateY(-4px);
+    box-shadow: var(--shadow-md);
+}
+
+.feature-title {
+    font-size: 1.2rem;
+    font-weight: 700;
+    color: var(--text-point-main);
+    margin-bottom: 0.8rem;
+}
+
+.feature-text {
+    font-size: 0.95rem;
+    color: var(--text-secondary);
+    line-height: 1.6;
+}
+
+.ai-start {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 60px;
+}
+
+.ai-start-btn {
+    background: var(--bg-point-main);
+    color: var(--text-white);
+    font-size: 1.1rem;
+    font-weight: 700;
+    padding: 1.2rem 3rem;
+    border-radius: 0.8rem;
+    box-shadow: var(--shadow-md);
+    transition: background 0.3s ease, transform 0.2s ease;
+}
+
+.ai-start-btn:hover {
+    background: var(--bg-point-hover);
+    transform: translateY(-2px);
+}
+
+@media (max-width: 768px) {
+    .ai-hero { height: 60vh; }
+    .ai-hero::before {
+        width: 240px;
+        height: 240px;
+        opacity: 0.16;
+    }
+    .ai-hero-logo { font-size: 3.6rem; }
+    .ai-hero-title { font-size: 1.4rem; }
+    .ai-intro { padding: 2rem 1.5rem; }
+}

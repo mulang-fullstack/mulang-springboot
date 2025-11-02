@@ -1,0 +1,309 @@
+.mypage {
+    display: flex;
+    gap: 60px;
+    align-items: flex-start;
+}
+
+.content {
+    flex: 1;
+    background: var(--bg-white);
+    border: var(--border-default);
+    border-radius: 10px;
+    padding: 40px 60px;
+    box-sizing: border-box;
+    display: flex;  /* ⭐ 추가 */
+    flex-direction: column;  /* ⭐ 추가 */
+}
+
+.content h2 {
+    font-size: 28px;
+    font-weight: 700;
+    margin-bottom: 40px;
+    color: var(--text-black);
+}
+
+/* 툴바 */
+.likes-toolbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 16px;
+    width: 100%;  /* ⭐ 추가 */
+}
+
+.likes-toolbar .left, .likes-toolbar .right {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.sel-subject, .search-input {
+    border: var(--border-primary);
+    border-radius: 8px;
+    background: var(--bg-white);
+    padding: 8px 12px;
+    font-size: 14px;
+    color: var(--text-black);
+}
+.btn {
+    padding: 8px 14px;
+    border-radius: 8px; border: none;
+    font-size: 13px; font-weight: 500; cursor: pointer;
+    transition: background .2s ease, border-color .2s ease;
+}
+
+.btn.search {
+    background:var(--bg-point-main);
+    color:var(--text-white);
+}
+
+.btn.search:hover {
+    background:var(--bg-point-hover);
+}
+
+/* -------------------- 클래스 테이블 -------------------- */
+.class-table {
+    width: 100%;
+    border-top: 2px solid var(--text-point-main);
+    border-collapse: collapse;
+    margin-top: 10px;
+    background-color: var(--bg-white);
+}
+
+/* -------------------- 테이블 헤더 -------------------- */
+.table-header {
+    display: grid;
+    grid-template-columns: 180px 1fr 120px 200px;
+    padding: 15px 20px;
+    font-size: 15px;
+    font-weight: 600;
+    color: var(--text-secondary);
+    border-bottom: var(--border-default);
+    background-color: var(--bg-white);
+    width: 100%;  /* ⭐ 추가 */
+}
+
+/* -------------------- 테이블 바디 -------------------- */
+.table-body {
+    display: flex;
+    flex-direction: column;
+    width: 100%;  /* ⭐ 추가 */
+}
+
+.table-row {
+    display: grid;
+    grid-template-columns: 180px 1fr 120px 200px;
+    align-items: center;
+    padding: 18px 20px;
+    font-size: 15px;
+    color: var(--text-primary);
+    border-bottom: var(--border-default);
+    background-color: var(--bg-white);
+}
+
+/* 나머지 코드는 동일... */
+
+
+/* -------------------- 썸네일 -------------------- */
+.thumb {
+    display: flex;
+    align-items: center;
+    margin-right: 0px;
+}
+
+.thumb img {
+    width: 160px;
+    height: 90px;
+    border-radius: 6px;
+    object-fit: cover;
+}
+
+/* -------------------- 제목 -------------------- */
+/* 공통 */
+.title {
+    font-size: 15px;
+    color: var(--text-primary);
+}
+
+/* 버튼을 div처럼 보이게 + 왼쪽 정렬 강제 */
+button.title {
+    display: block;
+    width: 100%;
+    text-align: left !important;
+    background: none;
+    border: 0;
+    padding: 0;
+    margin: 0;
+    font: inherit;
+    color: inherit;
+    cursor: pointer;
+    transition: color 0.2s;
+}
+
+button.title:hover {
+    color: var(--text-point-main);
+}
+
+/* -------------------- 수강 상태 -------------------- */
+.status {
+    display: flex;
+    justify-content: center;
+}
+
+/* -------------------- 태그 -------------------- */
+.tag {
+    display: inline-block;
+    font-size: 13px;
+    font-weight: 500;
+    padding: 4px 10px;
+    border-radius: 16px;
+}
+
+.tag.gray {
+    background-color: var(--bg-secondary);
+    color: var(--text-subtle);
+}
+
+.tag.blue {
+    background-color: var(--bg-white);
+    color: var(--text-info);
+}
+
+.tag.green {
+    background-color: var(--bg-white);
+    color: var(--text-point-main);
+}
+
+.tag.red {
+    background-color: var(--bg-white);
+    color: var(--text-error);
+}
+
+/* -------------------- 진척도 -------------------- */
+.progress-wrapper {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 0 10px;
+}
+
+.progress-bar {
+    position: relative;
+    width: 100%;
+    height: 30px;
+    background-color: #e0e0e0;
+    border-radius: 15px;
+    overflow: hidden;
+}
+
+.progress-fill {
+    position: relative;
+    height: 100%;
+    border-radius: 15px;
+    transition: width 0.3s ease, background 0.3s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.progress-fill.low {
+    background: var(--progress-low);
+}
+
+.progress-fill.medium {
+    background: var(--progress-medium)
+}
+
+.progress-fill.high {
+    background: var(--bg-point-main);
+}
+
+.progress-text {
+    color: white;
+    font-weight: bold;
+    font-size: 14px;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
+    white-space: nowrap;
+}
+
+/* 수강 정보 없음 */
+.no-progress {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--text-subtle);
+    padding: 8px 16px;
+    background-color: var(--bg-secondary);
+    border-radius: 4px;
+    border: 1px dashed var(--border-default);
+}
+
+/* -------------------- 빈 상태 -------------------- */
+.empty-state {
+    padding: 60px 20px;
+    text-align: center;
+    color: var(--text-secondary);
+}
+
+.empty-state p {
+    font-size: 16px;
+    margin: 0;
+}
+
+/* -------------------- 반응형 -------------------- */
+@media (max-width: 1024px) {
+    .table-header,
+    .table-row {
+        grid-template-columns: 140px 1fr 100px 180px;
+        gap: 12px;
+    }
+
+    .thumb img {
+        width: 140px;
+        height: 79px;
+    }
+}
+
+@media (max-width: 768px) {
+    .content {
+        padding: 30px 20px;
+    }
+
+    .content h2 {
+        font-size: 24px;
+        margin-bottom: 30px;
+    }
+
+    .table-row {
+        grid-template-columns: 1fr;
+        gap: 12px;
+        padding: 16px;
+    }
+
+    .thumb {
+        width: 100%;
+    }
+
+    .thumb img {
+        width: 100%;
+        height: auto;
+        aspect-ratio: 16/9;
+    }
+
+    .title {
+        font-size: 15px;
+    }
+
+    .status {
+        justify-content: flex-start;
+    }
+
+    .progress-wrapper {
+        width: 100%;
+        padding: 0;
+    }
+}

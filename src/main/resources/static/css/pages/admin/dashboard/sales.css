@@ -1,0 +1,182 @@
+/* ==========================================================
+   관리자 회원 관리 페이지 스타일
+   Path: /css/pages/admin/dashboard/sales.css
+   ========================================================== */
+
+/* ==========================================================
+   통계 카드
+   ========================================================== */
+.stats-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 20px;
+    margin-bottom: 30px;
+}
+
+.stat-card {
+    background: #fff;
+    border-radius: 12px;
+    padding: 20px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.stat-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.12);
+}
+
+.stat-icon {
+    width: 50px;
+    height: 50px;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* 오늘 매출: 상승 차트 그라데이션 */
+.stat-icon.today-sales {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: #fff;
+}
+
+/* 전체 매출: 지갑/돈 그라데이션 */
+.stat-icon.total-sales {
+    background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+    color: #fff;
+}
+
+/* 오늘 결제 건수: 카드 결제 그라데이션 */
+.stat-icon.today-payment {
+    background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+    color: #fff;
+}
+
+/* 환불 건수: 환불/반환 그라데이션 */
+.stat-icon.refund {
+    background: linear-gradient(135deg, #fa709a 0%, #fee140 100%);
+    color: #fff;
+}
+
+.stat-info {
+    flex: 1;
+}
+
+.stat-info h3 {
+    font-size: 12px;
+    color: #666;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin-bottom: 8px;
+}
+
+.stat-number {
+    font-size: 24px;
+    font-weight: 700;
+    color: #333;
+    margin: 0;
+}
+
+.stat-trend {
+    font-size: 12px;
+    color: #999;
+}
+
+.stat-trend.up {
+    color: #10b981;
+}
+
+.stat-trend.down {
+    color: #ef4444;
+}
+
+
+/* -------------------- 차트 & 테이블 -------------------- */
+.chart-table {
+    display: flex;
+    gap: 20px;
+}
+
+.chart-section, .table-section {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    width: 100%;
+    border-radius: 16px;
+    padding: 20px 24px;
+    background: linear-gradient(180deg, #ffffff 0%, #f7f9fc 100%);
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.06);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    height: 500px;
+}
+
+.chart-header, .table-header {
+    margin-bottom: 24px;
+}
+
+.chart-header h3, .table-header h3 {
+    font-size: 17px;
+    font-weight: 600;
+    color: #1a1a1a;
+    border-left: 4px solid #4b7bec;
+    padding-left: 12px;
+}
+
+.chart-body, .table-body {
+    flex: 1;
+    position: relative;
+}
+
+.chart-body canvas {
+    width: 100%;
+    height: 100%;
+    display: block;
+}
+
+/* 표 스타일 */
+.table-body table {
+    width: 100%;
+    height: 100%;
+    border-collapse: collapse;
+    background-color: transparent;
+    border-radius: 8px;
+}
+
+.table-body thead {
+    background-color: #eef2f7;
+}
+
+.table-body th,
+.table-body td {
+    padding: 13px 10px;
+    text-align: center;
+    font-size: 14px;
+    border-bottom: 1px solid #e5e8eb;
+}
+
+.table-body th {
+    color: #333;
+    font-weight: 600;
+    letter-spacing: -0.2px;
+}
+
+.table-body td {
+    color: #444;
+}
+
+.table-body tr:last-child td {
+    border-bottom: none;
+}
+
+/* hover */
+.table-body tbody tr {
+    transition: background-color 0.15s ease;
+}
+
+.table-body tbody tr:hover {
+    background-color: #f4f8ff;
+}

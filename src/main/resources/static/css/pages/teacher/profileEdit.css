@@ -1,0 +1,238 @@
+.dashboard {
+    display: flex;
+    width: 1280px;
+    gap: 60px;
+}
+
+.content {
+    flex: 1;
+    background-color: var(--bg-white);
+}
+
+.content h2 {
+    margin-bottom: 30px;
+    font-size: 24px;
+    font-weight: 700;
+    color: var(--text-primary);
+}
+
+/* -------------------- 프로필 섹션 -------------------- */
+.profile-section {
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+}
+
+/* -------------------- 필드 -------------------- */
+.field {
+    display: flex;
+    justify-content: flex-start;
+    align-items: flex-start;
+    padding-bottom: 28px;
+    margin-bottom: 6px;
+    border-bottom: var(--border-default);
+}
+
+.field label {
+    width: 160px;
+    font-size: 15px;
+    font-weight: 600;
+    color: var(--text-secondary);
+}
+
+/* -------------------- 필드 콘텐츠 -------------------- */
+.field-content {
+    position: relative;
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+}
+
+/* -------------------- 프로필 이미지 -------------------- */
+.profile-img-area {
+    position: relative;
+    width: 160px;
+    height: 160px;
+    border-radius: 50%;
+    overflow: hidden;
+    background-color: var(--bg-secondary);
+    border: 2px solid var(--line-border, #ddd);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 1rem;
+}
+
+.profile-img-area .profile-photo {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 50%;
+}
+
+/* -------------------- 카메라 버튼 -------------------- */
+.camera-btn {
+    position: absolute;
+    bottom: 6px;
+    right: 6px;
+    width: 36px;
+    height: 36px;
+    border: 1px solid var(--line-border, #ccc);
+    border-radius: 50%;
+    background: var(--bg-white);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: background 0.2s;
+}
+
+.camera-btn img {
+    width: 20px;
+    height: 20px;
+}
+
+.camera-btn:hover {
+    background: var(--bg-secondary);
+}
+
+/* -------------------- 입력 박스 -------------------- */
+.input-wrap {
+    display: flex;
+    align-items: flex-start;
+    gap: 8px;
+    flex: 1;
+    max-width: 600px;
+    margin-top: 6px;
+}
+
+input,
+textarea,
+select {
+    flex: 1;
+    padding-top: 14px;
+    padding-bottom: 10px;
+    padding-left: 12px;
+    padding-right: 12px;
+    border: var(--border-default);
+    border-radius: 8px;
+    background-color: var(--bg-white);
+    font-size: 14px;
+    color: var(--text-primary);
+    line-height: 1.5;
+    resize: none;
+    vertical-align: top;
+}
+
+/* -------------------- 확인 아이콘 및 에러 -------------------- */
+.check-icon {
+    font-size: 16px;
+    font-weight: 700;
+    color: var(--text-point-main);
+}
+
+.error {
+    color: var(--text-error);
+    font-size: 13px;
+    margin-top: 4px;
+}
+
+/* -------------------- 수정 버튼 -------------------- */
+.edit-btn {
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    padding: 6px 10px;
+    border: var(--border-default);
+    border-radius: 20px;
+    background: var(--bg-white);
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--text-point-main);
+    cursor: pointer;
+    transition: background 0.2s ease;
+}
+
+.edit-btn:hover {
+    background: var(--bg-secondary);
+}
+
+/* -------------------- 일반 버튼 -------------------- */
+.add-btn {
+    padding: 8px 14px;
+    border: var(--border-default);
+    border-radius: 8px;
+    background: var(--bg-white);
+    font-size: 14px;
+    color: var(--text-tertiary);
+    cursor: pointer;
+    transition: background 0.2s ease;
+}
+
+.add-btn:hover {
+    background: var(--bg-secondary);
+}
+
+/* -------------------- 소셜 미디어 -------------------- */
+.social-icons {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.icon-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.icon-item img {
+    width: 24px;
+    height: 24px;
+}
+
+/* -------------------- 수정 완료 버튼 -------------------- */
+.submit-wrap {
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 20px;
+}
+
+.submit-btn {
+    padding: 8px 16px;
+    border: none;
+    border-radius: 6px;
+    background-color: var(--bg-point-main);
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--text-white);
+    cursor: pointer;
+    transition: opacity 0.2s ease, transform 0.1s ease;
+}
+
+.submit-btn:hover {
+    opacity: 0.9;
+}
+
+.submit-btn:active {
+    transform: scale(0.98);
+}
+
+input[readonly],
+input[disabled] {
+    border: none;
+    background-color: transparent;
+    padding-left: 0;
+    color: var(--text-primary);
+    cursor: default;
+}
+/* ===== 에러 메시지 박스 ===== */
+.error-box {
+    display: inline;
+    margin-left: 8px;
+    color: var(--text-error);
+    font-size: 13px;
+    vertical-align: middle;
+}
+
+

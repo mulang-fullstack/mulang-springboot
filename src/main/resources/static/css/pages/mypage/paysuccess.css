@@ -1,0 +1,171 @@
+/* ==================== 전체 컨테이너 ==================== */
+.pay-success {
+    max-width: 600px;
+    margin: 80px auto;
+    text-align: center;
+    background-color: var(--bg-white);
+    border-radius: 16px;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.05);
+    padding: 60px 40px;
+    overflow: hidden;
+    position: relative;
+    animation: fadeIn 0.7s ease;
+}
+
+/* ==================== 체크 아이콘 ==================== */
+.success-icon {
+    width: 80px;
+    height: 80px;
+    background-color: var(--bg-point-sub);
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 0 auto 20px auto;
+    animation: popIn 0.6s ease-out;
+}
+
+.success-icon img {
+    width: 40px;
+    height: 40px;
+}
+
+/* ==================== 텍스트 ==================== */
+.success-title {
+    font-size: 24px;
+    font-weight: 700;
+    color: var(--text-primary);
+    margin-bottom: 8px;
+    animation: fadeUp 0.7s ease 0.2s both;
+}
+
+.success-subtitle {
+    font-size: 15px;
+    color: var(--text-secondary);
+    margin-bottom: 40px;
+    animation: fadeUp 0.7s ease 0.3s both;
+}
+
+/* ==================== 결제 요약 ==================== */
+.pay-summary {
+    text-align: left;
+    margin-bottom: 40px;
+    animation: fadeUp 0.7s ease 0.4s both;
+}
+
+.pay-summary h3 {
+    font-size: 18px;
+    font-weight: 600;
+    margin-bottom: 12px;
+    color: var(--text-primary);
+}
+
+.summary-box {
+    border: 1px solid var(--border-color);
+    border-radius: 10px;
+    background-color: var(--bg-secondary);
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.label {
+    font-size: 14px;
+    color: var(--text-secondary);
+}
+
+.value {
+    font-size: 15px;
+    color: var(--text-primary);
+    font-weight: 500;
+}
+
+.value.point {
+    color: var(--text-point-main);
+    font-weight: 700;
+}
+
+/* ==================== 버튼 ==================== */
+.button-wrap {
+    display: flex;
+    justify-content: center;
+    gap: 16px;
+    animation: fadeUp 0.7s ease 0.5s both;
+}
+
+.btn-main,
+.btn-outline {
+    padding: 10px 24px;
+    border-radius: 8px;
+    font-size: 15px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.2s ease, color 0.2s ease, transform 0.15s ease;
+}
+
+.btn-main {
+    background-color: var(--bg-point-main);
+    color: var(--text-white);
+}
+
+.btn-main:hover {
+    opacity: 0.9;
+    transform: translateY(-2px);
+}
+
+.btn-outline {
+    border: 1px solid var(--bg-point-main);
+    color: var(--bg-point-main);
+    background-color: transparent;
+}
+
+.btn-outline:hover {
+    background-color: var(--bg-point-sub);
+    transform: translateY(-2px);
+}
+
+/* ==================== 애니메이션 ==================== */
+@keyframes fadeIn {
+    from { opacity: 0; transform: scale(0.97); }
+    to { opacity: 1; transform: scale(1); }
+}
+
+@keyframes popIn {
+    0% { transform: scale(0); opacity: 0; }
+    70% { transform: scale(1.1); opacity: 1; }
+    100% { transform: scale(1); }
+}
+
+@keyframes fadeUp {
+    0% { opacity: 0; transform: translateY(20px); }
+    100% { opacity: 1; transform: translateY(0); }
+}
+
+/* ==================== 모바일 대응 ==================== */
+@media (max-width: 600px) {
+    .pay-success {
+        margin: 40px 16px;
+        padding: 40px 20px;
+    }
+
+    .summary-box {
+        padding: 16px;
+    }
+
+    .button-wrap {
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    .btn-main,
+    .btn-outline {
+        width: 100%;
+    }
+}

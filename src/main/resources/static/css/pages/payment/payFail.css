@@ -1,0 +1,238 @@
+/* ==================== 전체 컨테이너 ==================== */
+.contents {
+    height: 100vh;
+}
+
+.pay-fail {
+    max-width: 600px;
+    margin: 80px auto;
+    text-align: center;
+    background-color: var(--bg-white);
+    border-radius: 16px;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.05);
+    padding: 60px 40px;
+    overflow: hidden;
+    position: relative;
+    animation: fadeIn 0.7s ease;
+}
+
+/* ==================== X 아이콘 ==================== */
+.fail-icon {
+    width: 80px;
+    height: 80px;
+    background-color: #FEE2E2; /* 연한 빨강 */
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 0 auto 20px auto;
+    animation: popIn 0.6s ease-out;
+}
+
+.fail-icon svg {
+    color: #DC2626; /* 빨강 */
+}
+
+/* ==================== 텍스트 ==================== */
+.fail-title {
+    font-size: 24px;
+    font-weight: 700;
+    color: var(--text-primary);
+    margin-bottom: 8px;
+    animation: fadeUp 0.7s ease 0.2s both;
+}
+
+.fail-subtitle {
+    font-size: 15px;
+    color: var(--text-secondary);
+    margin-bottom: 40px;
+    animation: fadeUp 0.7s ease 0.3s both;
+}
+
+/* ==================== 실패 요약 ==================== */
+.fail-summary {
+    text-align: left;
+    margin-bottom: 40px;
+    animation: fadeUp 0.7s ease 0.4s both;
+}
+
+.fail-summary h3 {
+    font-size: 18px;
+    font-weight: 600;
+    margin-bottom: 12px;
+    color: var(--text-primary);
+}
+
+.summary-box {
+    border: 1px solid var(--border-color);
+    border-radius: 10px;
+    background-color: var(--bg-secondary);
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    margin-bottom: 20px;
+}
+
+.row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 12px;
+}
+
+.label {
+    font-size: 14px;
+    color: var(--text-secondary);
+    flex-shrink: 0;
+}
+
+.value {
+    font-size: 15px;
+    color: var(--text-primary);
+    font-weight: 500;
+    text-align: right;
+    word-break: break-word;
+}
+
+.value.error {
+    color: #DC2626;
+    font-weight: 600;
+}
+
+/* ==================== 도움말 박스 ==================== */
+.help-box {
+    background-color: #FEF3C7; /* 연한 노랑 */
+    border: 1px solid #FCD34D;
+    border-radius: 10px;
+    padding: 20px;
+    text-align: left;
+}
+
+.help-box h4 {
+    font-size: 16px;
+    font-weight: 600;
+    color: var(--text-primary);
+    margin-bottom: 12px;
+}
+
+.help-box ul {
+    list-style: none;
+    padding: 0;
+    margin: 0 0 12px 0;
+}
+
+.help-box ul li {
+    font-size: 14px;
+    color: var(--text-secondary);
+    padding: 6px 0;
+    padding-left: 20px;
+    position: relative;
+}
+
+.help-box ul li::before {
+    content: "•";
+    position: absolute;
+    left: 6px;
+    color: var(--text-tertiary);
+}
+
+.help-text {
+    font-size: 13px;
+    color: var(--text-tertiary);
+    margin-top: 12px;
+    padding-top: 12px;
+    border-top: 1px solid #FCD34D;
+}
+
+/* ==================== 버튼 ==================== */
+.button-wrap {
+    display: flex;
+    justify-content: center;
+    gap: 16px;
+    animation: fadeUp 0.7s ease 0.5s both;
+}
+
+.btn-main,
+.btn-outline {
+    padding: 10px 24px;
+    border-radius: 8px;
+    font-size: 15px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.2s ease, color 0.2s ease, transform 0.15s ease;
+    text-decoration: none;
+    display: inline-block;
+}
+
+.btn-main {
+    background-color: var(--bg-point-main);
+    color: var(--text-white);
+    border: none;
+}
+
+.btn-main:hover {
+    opacity: 0.9;
+    transform: translateY(-2px);
+}
+
+.btn-outline {
+    border: 1px solid var(--bg-point-main);
+    color: var(--bg-point-main);
+    background-color: transparent;
+}
+
+.btn-outline:hover {
+    background-color: var(--bg-point-sub);
+    transform: translateY(-2px);
+}
+
+/* ==================== 애니메이션 ==================== */
+@keyframes fadeIn {
+    from { opacity: 0; transform: scale(0.97); }
+    to { opacity: 1; transform: scale(1); }
+}
+
+@keyframes popIn {
+    0% { transform: scale(0); opacity: 0; }
+    70% { transform: scale(1.1); opacity: 1; }
+    100% { transform: scale(1); }
+}
+
+@keyframes fadeUp {
+    0% { opacity: 0; transform: translateY(20px); }
+    100% { opacity: 1; transform: translateY(0); }
+}
+
+/* ==================== 모바일 대응 ==================== */
+@media (max-width: 600px) {
+    .pay-fail {
+        margin: 40px 16px;
+        padding: 40px 20px;
+    }
+
+    .summary-box,
+    .help-box {
+        padding: 16px;
+    }
+
+    .button-wrap {
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    .btn-main,
+    .btn-outline {
+        width: 100%;
+    }
+
+    .row {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 4px;
+    }
+
+    .value {
+        text-align: left;
+    }
+}

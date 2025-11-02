@@ -1,0 +1,130 @@
+@charset "UTF-8";
+
+/* ===============================
+   VOD MENU (최종형)
+   - 오른쪽 고정 세로 탭
+   - 둥근 모서리 / 카드형 디자인
+   - Hover / Active / Tooltip
+   - player.css와 완전 호환
+================================ */
+
+/* ===== 메뉴 컨테이너 ===== */
+.vod-menu {
+    position: fixed;          /* 화면 기준 고정 */
+    top: 50%;                 /* 세로 중앙 */
+    right: 0;                 /* 오른쪽 끝 */
+    transform: translateY(-50%);
+    z-index: 9999;            /* 항상 최상단 */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 60px;
+    background: var(--bg-white);
+    border-left: var(--border-default);
+    border-top-left-radius: 14px;
+    border-bottom-left-radius: 14px;
+    box-shadow: var(--shadow-md);
+    padding: 16px 0;
+    gap: 18px;
+}
+
+
+/* hover 시 미세 그림자 강조 */
+.vod-menu:hover {
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.08);
+}
+
+/* ===== 메뉴 버튼 ===== */
+.menu-btn {
+    display: flex;
+    align-items: center;     /* 세로 중앙 */
+    justify-content: center; /* 가로 중앙 */
+    width: 46px;
+    height: 46px;
+    border: none;
+    background: none;
+    border-radius: 12px;
+    cursor: pointer;
+    transition: all 0.25s ease;
+    position: relative;
+    overflow: hidden;
+}
+
+/* hover / active 효과 */
+.menu-btn:hover {
+    background: var(--bg-point-sub);
+}
+.menu-btn.active {
+    background: var(--bg-point-sub);
+    box-shadow: var(--shadow-sm);
+}
+
+/* ===== 아이콘 ===== */
+.menu-icon {
+    display: block;
+    width: 26px;
+    height: 26px;
+    margin: 0 auto;
+    object-fit: contain;     /* 비율 유지 */
+    object-position: center; /* 완전 중앙 정렬 */
+    pointer-events: none;
+    user-select: none;
+    transition: filter 0.2s ease;
+}
+
+/* hover, active 시 색상 강조 */
+.menu-btn:hover .menu-icon {
+    filter: brightness(0) saturate(100%) invert(28%) sepia(83%) saturate(1992%)
+    hue-rotate(192deg) brightness(92%) contrast(97%);
+}
+.menu-btn.active .menu-icon {
+    filter: brightness(0) saturate(100%) invert(29%) sepia(90%) saturate(2950%)
+    hue-rotate(190deg) brightness(94%) contrast(98%);
+}
+
+/* ===== Tooltip ===== */
+.menu-btn::after {
+    content: attr(title);
+    position: absolute;
+    right: 110%;
+    top: 50%;
+    transform: translateY(-50%);
+    background: var(--text-black);
+    color: var(--text-white);
+    padding: 4px 8px;
+    font-size: 12px;
+    border-radius: 6px;
+    opacity: 0;
+    visibility: hidden;
+    white-space: nowrap;
+    transition: all 0.15s ease-in-out;
+    pointer-events: none;
+}
+.menu-btn:hover::after {
+    opacity: 1;
+    visibility: visible;
+}
+
+/* ===== 위치 정렬 ===== */
+.vod-side,
+.vod-menu {
+    align-items: flex-start;
+}
+
+/* ===== 반응형 ===== */
+@media (max-width: 1280px) {
+    .vod-menu {
+        flex-direction: row;
+        width: 100%;
+        height: 54px;
+        border-left: none;
+        border-top: var(--border-default);
+        justify-content: center;
+        box-shadow: var(--shadow-sm);
+        border-radius: 0;
+    }
+    .menu-btn::after {
+        display: none;
+    }
+}

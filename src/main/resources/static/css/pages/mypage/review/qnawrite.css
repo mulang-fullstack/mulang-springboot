@@ -1,0 +1,141 @@
+.mypage {
+    display: flex;
+    gap: 60px;
+    align-items: flex-start;
+}
+
+.content {
+    flex: 1;
+    background: var(--bg-white);
+    border: var(--border-default);
+    border-radius: 10px;
+    padding: 40px 60px;
+    box-sizing: border-box;
+}
+
+.content h2 {
+    font-size: 28px;
+    font-weight: 700;
+    margin-bottom: 40px;
+    color: var(--text-black);
+}
+
+.review-form {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+    margin-top: 30px;
+}
+/* 필드 공통 */
+.form-field {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.form-field label {
+    font-size: 16px;
+    font-weight: 600;
+    color: var(--text-primary);
+}
+
+.form-field input[type="text"],
+.form-field select,
+.form-field textarea {
+    padding: 12px;
+    border: var(--border-default);
+    border-radius: 8px;
+    font-size: 15px;
+    background-color: var(--bg-white);
+    transition: border-color 0.2s ease;
+}
+
+.form-field input:focus,
+.form-field select:focus,
+.form-field textarea:focus {
+    border-color: var(--bg-point-main);
+    outline: none;
+}
+
+/* 버튼 영역 */
+.form-buttons {
+    display: flex;
+    gap: 12px;
+    margin-top: 16px;
+}
+
+.submit-btn {
+    background-color: var(--bg-point-main);
+    color: var(--text-white);
+    border: none;
+    border-radius: 8px;
+    padding: 12px 24px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+}
+
+.submit-btn:hover {
+    background-color: var(--bg-point-hover);
+}
+
+.cancel-btn {
+    display: inline-block;
+    border: var(--border-primary);
+    border-radius: 8px;
+    padding: 12px 24px;
+    font-size: 16px;
+    color: var(--text-subtle);
+    background-color: var(--bg-white);
+    text-decoration: none;
+    text-align: center;
+    transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+.cancel-btn:hover {
+    background-color: var(--bg-white);
+    color: var(--text-placeholder);
+}
+/* 제목 입력 필드 스타일 */
+.form-field input[type="text"] {
+    width: 100%;
+    padding: 12px 16px;
+    border: 1px solid var(--border-default);
+    border-radius: 8px;
+    font-size: 15px;
+    color: var(--text-primary);
+    background-color: var(--bg-white);
+    transition: all 0.2s ease;
+    box-sizing: border-box;
+}
+
+.form-field input[type="text"]:focus {
+    outline: none;
+    border-color: var(--text-point-main);
+    box-shadow: 0 0 0 3px rgba(74, 144, 226, 0.1);
+}
+
+.form-field input[type="text"]::placeholder {
+    color: var(--text-muted);
+    font-size: 14px;
+}
+
+.form-field input[type="text"]:hover {
+    border-color: var(--text-point-main);
+}
+
+/* 에러 상태 */
+.form-field input[type="text"].error {
+    border-color: var(--border-primary);
+}
+
+.form-field input[type="text"].error:focus {
+    box-shadow: 0 0 0 3px rgba(255, 68, 68, 0.1);
+}
+
+/* 비활성화 상태 */
+.form-field input[type="text"]:disabled {
+    background-color: var(--bg-secondary);
+    color: var(--text-subtle);
+    cursor: not-allowed;
+}

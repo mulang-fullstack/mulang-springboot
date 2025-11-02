@@ -1,0 +1,67 @@
+plugins {
+	id 'java'
+	id 'org.springframework.boot' version '3.5.6'
+	id 'io.spring.dependency-management' version '1.1.7'
+    id 'war'
+}
+
+group = 'yoonsome'
+version = '0.0.1-SNAPSHOT'
+description = 'Lecture Reservation System'
+
+java {
+	toolchain {
+		languageVersion = JavaLanguageVersion.of(17)
+	}
+}
+
+configurations {
+	compileOnly {
+		extendsFrom annotationProcessor
+	}
+}
+
+repositories {
+	mavenCentral()
+    maven { url 'https://repo.spring.io/milestone' }
+}
+
+dependencies {
+    /* default  */
+	implementation 'org.springframework.boot:spring-boot-starter-web'
+	testImplementation 'org.springframework.boot:spring-boot-starter-test'
+    testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
+    /* Lombok  */
+    compileOnly 'org.projectlombok:lombok'
+    annotationProcessor 'org.projectlombok:lombok'
+    /* JSP  */
+    implementation 'org.apache.tomcat.embed:tomcat-embed-jasper'
+    implementation 'org.glassfish.web:jakarta.servlet.jsp.jstl'
+    implementation 'jakarta.servlet.jsp.jstl:jakarta.servlet.jsp.jstl-api'
+    /* MariaDB  */
+    implementation 'org.mariadb.jdbc:mariadb-java-client'
+    implementation 'org.springframework.boot:spring-boot-starter-jdbc'
+    /* Spring Data JPA */
+    implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+    /* security */
+    implementation 'org.mindrot:jbcrypt:0.4'
+    implementation 'org.springframework.boot:spring-boot-starter-security'
+    implementation 'org.springframework.security:spring-security-taglibs'
+    /* 소셜 로그인 */
+    implementation 'org.springframework.boot:spring-boot-starter-oauth2-client'
+    /* mail server */
+    implementation 'org.springframework.boot:spring-boot-starter-mail'
+
+    implementation 'org.jsoup:jsoup:1.17.2'
+    /* validation */
+    implementation 'org.springframework.boot:spring-boot-starter-validation'
+    /* AWS S3 의존성 추가 */
+    implementation platform('software.amazon.awssdk:bom:2.20.26')
+    implementation 'software.amazon.awssdk:s3'
+    /* Spring AI OpenAI */
+    implementation 'org.springframework.ai:spring-ai-openai-spring-boot-starter:1.0.0-M4'
+}
+
+tasks.named('test') {
+	useJUnitPlatform()
+}
