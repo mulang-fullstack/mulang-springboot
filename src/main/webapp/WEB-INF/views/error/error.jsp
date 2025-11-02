@@ -4,6 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="/img/favicon.svg" type="image/png">
     <title>오류 발생</title>
     <link rel="stylesheet" href="/css/pages/error/error.css">
 </head>

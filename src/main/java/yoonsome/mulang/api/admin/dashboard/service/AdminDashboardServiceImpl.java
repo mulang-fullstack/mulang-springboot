@@ -22,7 +22,9 @@ public class AdminDashboardServiceImpl implements AdminDashboardService {
         LocalDateTime weekAgo = LocalDateTime.now().minusDays(6).withHour(0).withMinute(0).withSecond(0);
 
         long todayLogins = userLogService.countTodayLogins();
-        long activeSessions = sessionRegistry.getAllPrincipals().size();
+        long activeSessions = sessionRegistry.getAllPrincipals().stream()
+                .mapToLong(p -> sessionRegistry.getAllSessions(p, false).size())
+                .sum();
         long todayNewUsers = userService.countTodayNewUsers();
         long totalUsers = userService.countTotalUsers();
 

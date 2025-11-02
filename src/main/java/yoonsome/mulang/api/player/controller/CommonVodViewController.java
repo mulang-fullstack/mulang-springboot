@@ -29,10 +29,18 @@ public class CommonVodViewController {
         var data = playerViewService.getPlayerView(courseId, lectureId, user);
         model.addAllAttributes(data);
         // 뒤로가기 경로 설정
-        if (referer != null && referer.contains("mypage/classes")) {
-            model.addAttribute("backUrl", referer); // 올바른 내부 referer
+        if (referer != null) {
+            if (referer.contains("/mypage/classes")) {
+                model.addAttribute("backUrl", referer);
+            } else if (referer.contains("/admin/content/pendingCourse")) {
+                model.addAttribute("backUrl", referer);
+            } else if (referer.contains("/student/course")) {
+                model.addAttribute("backUrl", referer);
+            } else {
+                model.addAttribute("backUrl", "/");
+            }
         } else {
-            model.addAttribute("backUrl", "/teacher/mypage/classes/edit");
+            model.addAttribute("backUrl", "/");
         }
         return "common/player";
     }

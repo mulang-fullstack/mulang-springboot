@@ -7,7 +7,7 @@
     <meta name="viewport"
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <link rel="icon" href="img/favicon.svg" type="image/png">
+    <link rel="icon" href="/img/favicon.svg" type="image/png">
     <link rel="stylesheet" href="css/global.css"/>
     <link rel="stylesheet" href="css/index.css"/>
     <title>Mulang?</title>
@@ -24,9 +24,8 @@
             <a href="/main/ranking"><img src="/img/icon/main1.png"/>실시간 랭킹</a>
             <a href="/main/newCourse"><img src="/img/icon/main2.png"/>신규 클래스</a>
             <a href="/main/dailyConversation"><img src="/img/icon/main3.png"/>일상 회화</a>
-            <a href="#"><img src="/img/icon/main4.png"/>자격증 시험</a>
-            <a href="#"><img src="/img/icon/main5.png"/>레벨 테스트</a>
-            <a href="#"><img src="/img/icon/main6.png"/>학습 현황</a>
+            <a href="/ai/level"><img src="/img/icon/main5.png"/>레벨 테스트</a>
+            <a href="/student/course"><img src="/img/icon/main6.png"/>학습 현황</a>
         </section>
 
         <!-- BEST 클래스 -->

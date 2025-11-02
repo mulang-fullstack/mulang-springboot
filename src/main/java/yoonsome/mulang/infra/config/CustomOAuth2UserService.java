@@ -49,6 +49,7 @@ public class CustomOAuth2UserService extends DefaultOAuth2UserService {
                                     .nickname(nickname)
                                     .password(dummyPassword)
                                     .provider(provider)
+                                    .role(User.Role.STUDENT)
                                     .build()
                     );
                 });

@@ -10,6 +10,7 @@ import org.springframework.security.core.session.SessionRegistryImpl;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.session.HttpSessionEventPublisher;
 import yoonsome.mulang.infra.security.CustomAccessDeniedHandler;
 import yoonsome.mulang.infra.security.CustomAuthenticationEntryPoint;
 import yoonsome.mulang.infra.security.CustomFailureHandler;
@@ -35,6 +36,7 @@ public class SecurityConfig {
                         .requestMatchers("/teacher/**").hasRole("TEACHER")
                         .requestMatchers("/student/**").hasRole("STUDENT")
                         .requestMatchers("/payments/**").hasRole("STUDENT")
+                        .requestMatchers("/ai/**").hasAnyRole("STUDENT", "ADMIN")
                         .anyRequest().permitAll()
                 )
                 .formLogin(login -> login
@@ -55,6 +57,8 @@ public class SecurityConfig {
                 )
                 .logout(logout -> logout
                         .logoutUrl("/logout")
+                        .invalidateHttpSession(true)
+                        .clearAuthentication(true)
                         .logoutSuccessHandler(customLogoutSuccessHandler)
                         .deleteCookies("JSESSIONID")
                 )
@@ -80,5 +84,10 @@ public class SecurityConfig {
     @Bean
     public SessionRegistry sessionRegistry() {
         return new SessionRegistryImpl();
+    }
+
+    @Bean
+    public HttpSessionEventPublisher httpSessionEventPublisher() {
+        return new HttpSessionEventPublisher();
     }
 }

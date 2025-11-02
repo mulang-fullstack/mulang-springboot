@@ -38,7 +38,7 @@ async function fetchNoticeList(params) {
 async function fetchNoticeDetail(noticeId) {
     try {
         console.log(`📤 공지 상세 조회: ${noticeId}`);
-        const response = await fetch(`/admin/system/notice/${noticeId}`, {
+        const response = await fetch(`/support/notice/${noticeId}`, {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json',

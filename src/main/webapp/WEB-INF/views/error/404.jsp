@@ -4,6 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="/img/favicon.svg" type="image/png">
     <title>페이지를 찾을 수 없습니다</title>
     <link rel="stylesheet" href="/css/pages/error/error.css">
 </head>

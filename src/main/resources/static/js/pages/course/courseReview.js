@@ -49,10 +49,6 @@ document.addEventListener("DOMContentLoaded", () => {
                 </span>
                     <span class="review-score-text">${review.rating}</span>
                     ${review.studentId === currentUserId ? `
-                <div class="review-actions">
-                    <button class="edit-review">수정</button>
-                    <button class="delete-review">삭제</button>
-                </div>
                 ` : ''}
                 </div>               
                 <div class="review-content-wrapper">

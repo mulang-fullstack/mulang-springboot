@@ -74,9 +74,6 @@
     color: var(--admin-text-primary);
     cursor: pointer;
     transition: color 0.2s;
-    display: flex;
-    align-items: center;
-    gap: 8px;
 }
 
 .notice-title:hover {
