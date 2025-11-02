@@ -10,19 +10,22 @@ import org.springframework.security.core.session.SessionRegistryImpl;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
-import yoonsome.mulang.domain.user.repository.UserRepository;
+import yoonsome.mulang.infra.security.CustomAccessDeniedHandler;
+import yoonsome.mulang.infra.security.CustomAuthenticationEntryPoint;
 import yoonsome.mulang.infra.security.CustomFailureHandler;
 import yoonsome.mulang.infra.security.CustomLoginSuccessHandler;
 import yoonsome.mulang.infra.security.CustomLogoutSuccessHandler;
 
 @Configuration
 @RequiredArgsConstructor
-@EnableMethodSecurity
+@EnableMethodSecurity(prePostEnabled = true)  // prePostEnabled 추가!
 public class SecurityConfig {
     private final CustomLoginSuccessHandler customLoginSuccessHandler;
     private final CustomLogoutSuccessHandler customLogoutSuccessHandler;
     private final CustomOAuth2UserService customOAuth2UserService;
-    private final CustomFailureHandler  customFailureHandler;
+    private final CustomFailureHandler customFailureHandler;
+    private final CustomAccessDeniedHandler customAccessDeniedHandler;
+    private final CustomAuthenticationEntryPoint customAuthenticationEntryPoint;
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
@@ -35,18 +38,18 @@ public class SecurityConfig {
                         .anyRequest().permitAll()
                 )
                 .formLogin(login -> login
-                        .loginPage("/auth/login")              // 로그인 폼 URL (GET)
-                        .loginProcessingUrl("/auth/login")     // 로그인 처리 URL (POST)
-                        .usernameParameter("email")       // 파라미터 이름 변경
+                        .loginPage("/auth/login")
+                        .loginProcessingUrl("/auth/login")
+                        .usernameParameter("email")
                         .passwordParameter("password")
                         .successHandler(customLoginSuccessHandler)
                         .failureHandler(customFailureHandler)
                         .permitAll()
                 )
                 .oauth2Login(oauth -> oauth
-                        .loginPage("/auth/login")                       // 로그인 페이지 공유
+                        .loginPage("/auth/login")
                         .userInfoEndpoint(userInfo -> userInfo
-                                .userService(customOAuth2UserService)      // 사용자 정보 처리
+                                .userService(customOAuth2UserService)
                         )
                         .defaultSuccessUrl("/", true)
                 )
@@ -56,16 +59,15 @@ public class SecurityConfig {
                         .deleteCookies("JSESSIONID")
                 )
                 .sessionManagement(session -> session
-                        .maximumSessions(10)                 // 동시 로그인 최대 수
-                        .sessionRegistry(sessionRegistry())  // SessionRegistry 연결
+                        .maximumSessions(10)
+                        .maxSessionsPreventsLogin(false)
+                        .sessionRegistry(sessionRegistry())
                 )
                 .exceptionHandling(exception -> exception
-                        .accessDeniedHandler((request,
-                                              response,
-                                              ex) -> response
-                                .sendRedirect("/"))
+                        .accessDeniedHandler(customAccessDeniedHandler)  // 403 처리
+                        .authenticationEntryPoint(customAuthenticationEntryPoint)  // 401 처리
                 )
-                .csrf(csrf -> csrf.disable()); // 초기 개발단계만
+                .csrf(csrf -> csrf.disable());
 
         return http.build();
     }

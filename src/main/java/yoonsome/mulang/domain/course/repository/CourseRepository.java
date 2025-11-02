@@ -85,4 +85,15 @@ public interface CourseRepository extends JpaRepository<Course,Long> {
                 LIMIT 6
             """)
     List<Course> findCoursesByLatestApproved();
+
+    // 추가: User ID로 강사의 강의인지 확인
+    @Query("""
+        SELECT CASE WHEN COUNT(c) > 0 THEN true ELSE false END
+        FROM Course c
+        JOIN c.teacher t
+        WHERE c.id = :courseId
+        AND t.user.id = :userId
+        """)
+    boolean existsByIdAndTeacherUserId(@Param("courseId") Long courseId,
+                                       @Param("userId") Long userId);
 }

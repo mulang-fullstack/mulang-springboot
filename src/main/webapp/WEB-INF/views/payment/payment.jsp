@@ -32,10 +32,10 @@
                         <c:choose>
                             <c:when test="${not empty payment.thumbnailUrl}">
                                 <img src="${payment.thumbnailUrl}" alt="${payment.courseTitle}"
-                                     style="width: 100%; height: 100%; object-fit: cover; border-radius: 16px;">
+                                     style="width: 100%; height: 100%; object-fit: cover; border-radius: 12px;">
                             </c:when>
                             <c:otherwise>
-                                <div style="width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; background: #f5f5f5; border-radius: 16px;">
+                                <div style="width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; background: #f5f5f5; border-radius: 12px; font-size: 48px;">
                                     📚
                                 </div>
                             </c:otherwise>
@@ -114,16 +114,8 @@
                         <!-- 일반결제 -->
                         <div class="payment-method-item" data-method="NORMAL" data-type="CARD">
                             <div class="method-content">
-                                <div class="method-icon">💳</div>
+                                 <img class="method-icon" src="/img/icon/cardPayment.png" alt="일반결제" />
                                 <div class="method-name">일반결제</div>
-                            </div>
-                        </div>
-
-                        <!-- 신용·체크카드 -->
-                        <div class="payment-method-item" data-method="CARD" data-type="CARD">
-                            <div class="method-content">
-                                <div class="method-icon">💳</div>
-                                <div class="method-name">신용·체크카드</div>
                             </div>
                         </div>
 
@@ -132,7 +124,7 @@
                             <div class="recommended-badge">적립 혜택</div>
                             <div class="method-content">
                                 <img src="/img/payment/tosspay-logo.png" alt="토스페이" class="method-logo" onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
-                                <div class="method-icon" style="display:none;">🎯</div>
+                                <img class="method-icon" src="/img/icon/logo-toss-symbol-white-fill.png" alt="토스페이" />
                                 <div class="method-name">토스페이</div>
                             </div>
                         </div>
@@ -141,7 +133,7 @@
                         <div class="payment-method-item" data-method="PAYCO" data-type="PAYCO">
                             <div class="method-content">
                                 <img src="/img/payment/payco-logo.png" alt="PAYCO" class="method-logo" onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
-                                <div class="method-icon" style="display:none;">💰</div>
+                                 <img class="method-icon" src="/img/icon/PAYCO_App Icon_rd.svg" alt="PAYCO"  />
                                 <div class="method-name">PAYCO</div>
                             </div>
                         </div>
@@ -149,7 +141,7 @@
                         <!-- 카카오페이 -->
                         <div class="payment-method-item" data-method="KAKAOPAY" data-type="KAKAOPAY">
                             <div class="method-content">
-                                <div class="method-icon">💛</div>
+                                 <img class="method-icon" src="/img/icon/kakaotalk.png" alt="카카오페이"  />
                                 <div class="method-name">카카오페이</div>
                             </div>
                         </div>
@@ -157,7 +149,7 @@
                         <!-- 네이버페이 -->
                         <div class="payment-method-item" data-method="NAVERPAY" data-type="NAVERPAY">
                             <div class="method-content">
-                                <div class="method-icon">💚</div>
+                                 <img class="method-icon" src="/img/icon/naver.png" alt="네이버페이"  />
                                 <div class="method-name">네이버페이</div>
                             </div>
                         </div>
@@ -165,7 +157,7 @@
                         <!-- 휴대폰 -->
                         <div class="payment-method-item" data-method="MOBILE" data-type="MOBILE_PHONE">
                             <div class="method-content">
-                                <div class="method-icon">📱</div>
+                                <img class="method-icon" src="/img/icon/phonePay.png" alt="휴대폰"/>
                                 <div class="method-name">휴대폰</div>
                             </div>
                         </div>
@@ -192,7 +184,7 @@
                 </div>
             </div>
 
-            <!-- 오른쪽: 결제 금액 요약 -->
+            <!-- 오른쪽: 결제 금액 요약 + 보안 정보 + 결제 버튼 -->
             <div class="payment-summary">
                 <h3>결제 금액</h3>
 
@@ -203,11 +195,6 @@
                             <fmt:formatNumber value="${payment.amount}" pattern="#,###"/>원
                         </span>
                     </div>
-
-                    <div class="price-row discount-row" id="discount-row" style="display: none;">
-                        <span class="price-label">쿠폰 할인</span>
-                        <span class="price-value">-5,000원</span>
-                    </div>
                 </div>
 
                 <div class="total-row">
@@ -216,24 +203,24 @@
                         <fmt:formatNumber value="${payment.amount}" pattern="#,###"/>원
                     </span>
                 </div>
-            </div>
 
-            <!-- 보안 정보 -->
-            <div class="security-info">
-                <p>
-                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24"
-                         fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                        <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
-                        <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
-                    </svg>
-                    안전한 결제가 보장됩니다
-                </p>
-            </div>
+                <!-- 보안 정보 -->
+                <div class="security-info">
+                    <p>
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24"
+                             fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
+                            <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
+                        </svg>
+                        안전한 결제가 보장됩니다
+                    </p>
+                </div>
 
-            <!-- 결제하기 버튼 -->
-            <button class="payment-button" id="payment-button">
-                결제하기
-            </button>
+                <!-- 결제하기 버튼 -->
+                <button class="payment-button" id="payment-button">
+                    결제하기
+                </button>
+            </div>
         </div>
     </div>
 </main>
@@ -274,7 +261,6 @@
     window.TOSS_CLIENT_KEY = "${clientKey}";
 </script>
 
-<!-- JavaScript 분리 -->
 <script src="/js/pages/payment/payment.js"></script>
 <script src="/js/common/utils.js"></script>
 </body>

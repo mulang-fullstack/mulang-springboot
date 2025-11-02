@@ -1,73 +1,38 @@
-package yoonsome.mulang.global.exception;
+package yoonsome.mulang.infra.exception;
 
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.AccessDeniedException;
+import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
-import org.springframework.web.bind.annotation.RestControllerAdvice;
-import java.time.LocalDateTime;
-import java.util.HashMap;
-import java.util.Map;
+import org.springframework.web.servlet.ModelAndView;
 
-@RestControllerAdvice
 @Slf4j
+@ControllerAdvice
 public class GlobalExceptionHandler {
 
-    @ExceptionHandler(IllegalArgumentException.class)
-    public ResponseEntity<Map<String, Object>> handleIllegalArgumentException(
-            IllegalArgumentException e) {
+    /**
+     * @PreAuthorize에서 발생하는 AccessDeniedException 처리
+     */
+    @ExceptionHandler(AccessDeniedException.class)
+    public ModelAndView handleAccessDeniedException(AccessDeniedException ex) {
+        log.warn("Access Denied: {}", ex.getMessage());
 
-        log.error("IllegalArgumentException: {}", e.getMessage());
-
-        Map<String, Object> errorResponse = new HashMap<>();
-        errorResponse.put("timestamp", LocalDateTime.now());
-        errorResponse.put("status", HttpStatus.BAD_REQUEST.value());
-        errorResponse.put("error", "Bad Request");
-        errorResponse.put("message", e.getMessage());
-
-        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(errorResponse);
+        ModelAndView mav = new ModelAndView();
+        mav.setViewName("error/access-denied");
+        mav.addObject("errorMessage", "접근 권한이 없습니다.");
+        return mav;
     }
 
-    @ExceptionHandler(IllegalStateException.class)
-    public ResponseEntity<Map<String, Object>> handleIllegalStateException(
-            IllegalStateException e) {
-
-        log.error("IllegalStateException: {}", e.getMessage());
-
-        Map<String, Object> errorResponse = new HashMap<>();
-        errorResponse.put("timestamp", LocalDateTime.now());
-        errorResponse.put("status", HttpStatus.CONFLICT.value());
-        errorResponse.put("error", "Conflict");
-        errorResponse.put("message", e.getMessage());
-
-        return ResponseEntity.status(HttpStatus.CONFLICT).body(errorResponse);
-    }
-
-    @ExceptionHandler(RuntimeException.class)
-    public ResponseEntity<Map<String, Object>> handleRuntimeException(
-            RuntimeException e) {
-
-        log.error("RuntimeException: {}", e.getMessage(), e);
-
-        Map<String, Object> errorResponse = new HashMap<>();
-        errorResponse.put("timestamp", LocalDateTime.now());
-        errorResponse.put("status", HttpStatus.INTERNAL_SERVER_ERROR.value());
-        errorResponse.put("error", "Internal Server Error");
-        errorResponse.put("message", "서버 오류가 발생했습니다. 잠시 후 다시 시도해주세요.");
-
-        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(errorResponse);
-    }
-
+    /**
+     * 기타 모든 예외 처리
+     */
     @ExceptionHandler(Exception.class)
-    public ResponseEntity<Map<String, Object>> handleException(Exception e) {
-        log.error("Unexpected error: {}", e.getMessage(), e);
+    public ModelAndView handleException(Exception ex) {
+        log.error("Unexpected error: ", ex);
 
-        Map<String, Object> errorResponse = new HashMap<>();
-        errorResponse.put("timestamp", LocalDateTime.now());
-        errorResponse.put("status", HttpStatus.INTERNAL_SERVER_ERROR.value());
-        errorResponse.put("error", "Internal Server Error");
-        errorResponse.put("message", "예상치 못한 오류가 발생했습니다.");
-
-        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(errorResponse);
+        ModelAndView mav = new ModelAndView();
+        mav.setViewName("error/error");
+        mav.addObject("errorMessage", "요청을 처리하는 중 오류가 발생했습니다.");
+        return mav;
     }
 }

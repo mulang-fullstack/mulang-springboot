@@ -19,8 +19,8 @@
         <header>
             <h1>콘텐츠 관리 - 강좌 조회</h1>
             <div class="header-info">
-                <div class="info-box"><p>안녕하세요 <span></span>님</p></div>
-                <a class="logout" href="#">로그아웃</a>
+                <div class="info-box"><p>안녕하세요 <span><sec:authentication property="principal.user.username"/></span>님</p></div>
+                <a class="logout" href="logout">로그아웃</a>
             </div>
         </header>
 

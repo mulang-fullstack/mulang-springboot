@@ -29,7 +29,7 @@
     animation: popIn 0.6s ease-out;
 }
 
-.success-icon img {
+.success-icon svg {
     width: 40px;
     height: 40px;
 }

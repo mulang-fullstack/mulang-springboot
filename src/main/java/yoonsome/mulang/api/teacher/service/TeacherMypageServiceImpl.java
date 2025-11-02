@@ -37,6 +37,10 @@ public class TeacherMypageServiceImpl implements TeacherMypageService {
         if (user.getFile() != null) {
             File file = user.getFile();
             profileUrl = s3fileService.getPublicUrl(file.getId());
+        } else {
+            // 없으면 S3의 기본 이미지 반환
+            int avatarNum = (int) (user.getId() % 5) + 1;
+            profileUrl = "https://fs12-mulang-s3.s3.ap-northeast-2.amazonaws.com/public/default/profile.png";
         }
 
         return new TeacherProfileResponse(

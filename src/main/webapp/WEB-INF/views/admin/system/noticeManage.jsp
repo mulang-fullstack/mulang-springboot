@@ -1,5 +1,6 @@
 <%@ page contentType="text/html;charset=utf-8" %>
 <%@ taglib prefix="c" uri="jakarta.tags.core" %>
+<%@ taglib uri="http://www.springframework.org/security/tags" prefix="sec" %>
 <!doctype html>
 <html lang="ko">
 <head>
@@ -18,7 +19,7 @@
         <header>
             <h1>시스템 관리 - 공지사항</h1>
             <div class="header-info">
-                <div class="info-box"><p>안녕하세요 <span>관리자</span>님</p></div>
+                <div class="info-box"><p>안녕하세요 <span><sec:authentication property="principal.user.username"/></span>님</p></div>
                 <a class="logout" href="/logout">로그아웃</a>
             </div>
         </header>
